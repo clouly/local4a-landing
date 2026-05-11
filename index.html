@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Local4A — Local AI Agents on Your Machine</title>
+  <meta name="description" content="Local4A helps you download, manage, and run local AI models and agents on your own computer." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #f5f7fb;
+      --muted: #aab3c5;
+      --primary: #7c5cff;
+      --primary-2: #27d3a2;
+      --line: rgba(255, 255, 255, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(124, 92, 255, 0.25), transparent 32%),
+        radial-gradient(circle at top right, rgba(39, 211, 162, 0.16), transparent 30%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 24px 0;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(16px);
+      background: rgba(11, 16, 32, 0.72);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 10;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 22px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #5f8cff);
+      color: white;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: 0 16px 40px rgba(124, 92, 255, 0.28);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      box-shadow: none;
+    }
+
+    .hero {
+      padding: 92px 0 72px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--card-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #cdd5e7;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 7vw, 76px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      margin: 0 0 24px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: var(--muted);
+      margin: 0 0 32px;
+      max-width: 620px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .product-card {
+      border: 1px solid var(--card-border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+      border-radius: 28px;
+      padding: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.32);
+    }
+
+    .mock-window {
+      background: #10172c;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+    }
+
+    .window-top {
+      display: flex;
+      gap: 8px;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.35); }
+
+    .mock-body { padding: 20px; }
+
+    .model-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 12px;
+    }
+
+    .model-row strong { display: block; }
+    .model-row span { color: var(--muted); font-size: 13px; }
+
+    .status {
+      color: var(--primary-2);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    section { padding: 72px 0; }
+
+    .section-title {
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      margin: 0 0 14px;
+    }
+
+    .section-title p { color: var(--muted); font-size: 18px; margin: 0; }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 24px;
+      border-radius: 22px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+    }
+
+    .feature h3 { margin: 0 0 10px; font-size: 20px; }
+    .feature p { margin: 0; color: var(--muted); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .step {
+      padding: 22px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.045);
+      border: 1px solid var(--card-border);
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: rgba(124, 92, 255, 0.22);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .step h3 { margin: 0 0 8px; }
+    .step p { color: var(--muted); margin: 0; font-size: 15px; }
+
+    .cta {
+      text-align: center;
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 56px 24px;
+      background: linear-gradient(135deg, rgba(124,92,255,0.18), rgba(39,211,162,0.11));
+    }
+
+    .cta h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      margin: 0 0 16px;
+    }
+
+    .cta p {
+      margin: 0 auto 28px;
+      color: var(--muted);
+      max-width: 620px;
+      font-size: 18px;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 32px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 58px; }
+      .grid-3, .steps { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">
+          <span class="logo-mark">4A</span>
+          <span>Local4A</span>
+        </a>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#waitlist" class="button secondary">Join Waitlist</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container hero">
+      <div>
+        <div class="eyebrow">Local-first AI agents · Private by default</div>
+        <h1>Run AI agents on your own machine.</h1>
+        <p>Local4A is a desktop control center for local AI: download small models, manage runtimes, create agents, and automate tasks without relying on cloud APIs.</p>
+        <div class="hero-actions">
+          <a class="button" href="#waitlist">Get Early Access</a>
+          <a class="button secondary" href="#features">See Features</a>
+        </div>
+        <div class="note">Built for makers, developers, researchers, and privacy-conscious power users.</div>
+      </div>
+
+      <div class="product-card">
+        <div class="mock-window">
+          <div class="window-top">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+          <div class="mock-body">
+            <div class="model-row">
+              <div><strong>Qwen 2.5 3B</strong><span>Local model · Agent ready</span></div>
+              <div class="status">Running</div>
+            </div>
+            <div class="model-row">
+              <div><strong>Phi-3 Mini</strong><span>Small model · Fast response</span></div>
+              <div class="status">Installed</div>
+            </div>
+            <div class="model-row">
+              <div><strong>Code Agent</strong><span>Read files · edit code · run tasks</span></div>
+              <div class="status">Active</div>
+            </div>
+            <div class="model-row">
+              <div><strong>Workflow</strong><span>Research → Plan → Execute → Review</span></div>
+              <div class="status">Ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-title">
+          <h2>From model manager to local agent workspace.</h2>
+          <p>Local4A is designed for people who want more than a chatbot. It gives local models tools, memory, workflows, and a clean desktop experience.</p>
+        </div>
+        <div class="grid-3">
+          <div class="feature">
+            <h3>Model management</h3>
+            <p>Download, import, tag, and switch between lightweight local models from one simple interface.</p>
+          </div>
+          <div class="feature">
+            <h3>Agent workflows</h3>
+            <p>Create agents that can use files, prompts, tools, and multi-step workflows to complete real tasks.</p>
+          </div>
+          <div class="feature">
+            <h3>Local-first privacy</h3>
+            <p>Keep sensitive prompts, documents, and workflows on your own machine whenever possible.</p>
+          </div>
+          <div class="feature">
+            <h3>Small-model friendly</h3>
+            <p>Optimized for practical 1B–7B models, not only giant cloud-scale systems.</p>
+          </div>
+          <div class="feature">
+            <h3>Runtime abstraction</h3>
+            <p>Use different backends without turning your desktop into a command-line maintenance project.</p>
+          </div>
+          <div class="feature">
+            <h3>Developer ready</h3>
+            <p>Designed for local coding, research, automation, testing, and repeatable agent tasks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <div class="container">
+        <div class="section-title">
+          <h2>A simple path from install to automation.</h2>
+          <p>No complex setup. Start small, then build more capable local agents as your needs grow.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Install</h3>
+            <p>Set up Local4A as a desktop app on your computer.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Add models</h3>
+            <p>Download or import local models that match your hardware.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Create agents</h3>
+            <p>Connect prompts, tools, files, and workflows into reusable agents.</p>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <h3>Run locally</h3>
+            <p>Execute tasks with local privacy, repeatability, and control.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="waitlist">
+      <div class="container">
+        <div class="cta">
+          <h2>Build with local AI before everyone else does.</h2>
+          <p>Local4A is currently in early development. Join the waitlist to receive product updates, beta access, and launch notes.</p>
+          <a class="button" href="mailto:hello@local4a.com?subject=Local4A%20Early%20Access">Join the Waitlist</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2026 Local4A. All rights reserved.</div>
+      <div>Local AI · Agents · Privacy · Automation</div>
+    </div>
+  </footer>
+</body>
+</html>
