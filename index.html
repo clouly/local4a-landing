@@ -74,6 +74,20 @@
       color: white;
     }
 
+    .lang-btn {
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      border-radius: 999px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .lang-btn:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -305,7 +319,13 @@
           <span class="logo-mark">4A</span>
           <span>Local4A</span>
         </a>
-        <div class="nav-links">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div id="lang-switcher" style="display:flex;gap:8px;align-items:center;">
+            <button onclick="setLanguage('en')" class="lang-btn">EN</button>
+            <button onclick="setLanguage('zh')" class="lang-btn">中文</button>
+            <button onclick="setLanguage('ja')" class="lang-btn">日本語</button>
+          </div>
+          <div class="nav-links">
           <a href="#features">Features</a>
           <a href="#workflow">Workflow</a>
           <a href="#waitlist" class="button secondary">Join Waitlist</a>
@@ -318,8 +338,18 @@
     <div class="container hero">
       <div>
         <div class="eyebrow">Local-first AI agents · Private by default</div>
-        <h1>Run AI agents on your own machine.</h1>
-        <p>Local4A is a desktop control center for local AI: download small models, manage runtimes, create agents, and automate tasks without relying on cloud APIs.</p>
+        <h1 
+          data-en="Run AI agents on your own machine."
+          data-zh="在你的电脑上运行 AI Agent。"
+          data-ja="自分のPCでAIエージェントを実行。">
+          Run AI agents on your own machine.
+        </h1>
+        <p 
+          data-en="Local4A is a desktop control center for local AI: download small models, manage runtimes, create agents, and automate tasks without relying on cloud APIs."
+          data-zh="Local4A 是一个本地 AI 桌面控制中心：下载小模型、管理运行环境、创建 Agent，并在无需云 API 的情况下实现自动化。"
+          data-ja="Local4A はローカルAIのためのデスクトップコントロールセンターです。小型モデルのダウンロード、ランタイム管理、AIエージェント構築、自動化をクラウドAPIなしで実現します。">
+          Local4A is a desktop control center for local AI: download small models, manage runtimes, create agents, and automate tasks without relying on cloud APIs.
+        </p>
         <div class="hero-actions">
           <a class="button" href="#waitlist">Get Early Access</a>
           <a class="button secondary" href="#features">See Features</a>
@@ -423,8 +453,18 @@
     <section id="waitlist">
       <div class="container">
         <div class="cta">
-          <h2>Build with local AI before everyone else does.</h2>
-          <p>Local4A is currently in early development. Join the waitlist to receive product updates, beta access, and launch notes.</p>
+          <h2 
+            data-en="Build with local AI before everyone else does."
+            data-zh="在所有人之前，开始构建本地 AI。"
+            data-ja="誰よりも早く、ローカルAIを構築しよう。">
+            Build with local AI before everyone else does.
+          </h2>
+          <p 
+            data-en="Local4A is currently in early development. Join the waitlist to receive product updates, beta access, and launch notes."
+            data-zh="Local4A 目前仍处于早期开发阶段。加入等待列表以获取产品更新、Beta 测试资格和发布信息。"
+            data-ja="Local4A は現在初期開発段階です。ウェイトリストに参加して、製品アップデート、ベータアクセス、リリース情報を受け取りましょう。">
+            Local4A is currently in early development. Join the waitlist to receive product updates, beta access, and launch notes.
+          </p>
           <a class="button" href="mailto:hello.local4a@gmail.com?subject=Local4A%20Early%20Access">Join the Waitlist</a>
         </div>
       </div>
@@ -437,5 +477,17 @@
       <div>Local AI · Agents · Privacy · Automation</div>
     </div>
   </footer>
+  <script>
+    function setLanguage(lang) {
+      document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      });
+
+      localStorage.setItem('local4a-lang', lang);
+    }
+
+    const savedLang = localStorage.getItem('local4a-lang') || 'en';
+    setLanguage(savedLang);
+  </script>
 </body>
 </html>
