@@ -373,7 +373,7 @@ const I18N = {
     "final.title": "Run AI on your own terms",
     "final.body": "Join the waitlist for early access, beta builds, and launch updates.",
     "final.micro": "No spam. Just launch news.",
-    "final.success": "Thanks! You're on the list — we'll email you when it's ready.",
+    "final.success": "We've opened your email app — just hit send and you're on the list.",
     "email.placeholder": "your@email.com",
     "footer.tagline": "Local-first AI · Private by default"
   },
@@ -443,7 +443,7 @@ const I18N = {
     "final.title": "用你自己的方式跑 AI",
     "final.body": "加入等候名单，获取早期访问、Beta 版本和发布更新。",
     "final.micro": "不发垃圾邮件，只发上线消息。",
-    "final.success": "已加入等候名单！上线时我们会发邮件通知你。",
+    "final.success": "已为你打开邮件应用——点发送即完成加入。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "本地优先 AI · 默认隐私"
   },
@@ -513,7 +513,7 @@ const I18N = {
     "final.title": "AI を、あなたのルールで",
     "final.body": "早期アクセス、ベータ版、リリース情報を受け取るにはウェイトリストへ。",
     "final.micro": "スパムなし。お知らせのみ。",
-    "final.success": "登録ありがとうございます！公開時にメールでお知らせします。",
+    "final.success": "メールアプリを開きました。送信すれば登録完了です。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "ローカルファースト AI · プライバシー第一"
   }
@@ -553,16 +553,20 @@ document.querySelectorAll(".langbar button").forEach(b => {
 });
 applyLang(detectLang());
 
-// Waitlist form — client-side feedback (no backend yet)
+// Waitlist form — opens the visitor's email client (mailto) to send their signup
+const WAITLIST_EMAIL = "hello.local4a@gmail.com"; // 改这里就能换收件邮箱
 const waitlistForm = document.getElementById("waitlist-form");
 if (waitlistForm) {
   waitlistForm.addEventListener("submit", (e) => {
     e.preventDefault();
     if (!waitlistForm.reportValidity()) return;
+    const email = (waitlistForm.querySelector('input[name="email"]').value || "").trim();
+    const subject = encodeURIComponent("LocalGateAI waitlist signup");
+    const body = encodeURIComponent("Please add me to the LocalGateAI waitlist.\n\nEmail: " + email);
+    window.location.href = "mailto:" + WAITLIST_EMAIL + "?subject=" + subject + "&body=" + body;
     waitlistForm.hidden = true;
     const ok = document.getElementById("waitlist-success");
     if (ok) ok.hidden = false;
-    // TODO: 接入真实后端时，在这里把 email 发给 Formspree/Mailchimp/自建 API
   });
 }
 </script>
