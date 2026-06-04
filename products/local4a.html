@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Local4a — Use local AI in the tools you already love</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="Local4a turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default." />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f5f7;
+    --ink: #1d1d1f;
+    --ink-soft: #515154;
+    --ink-faint: #86868b;
+    --accent: #6d4aff;
+    --accent-2: #00c2a8;
+    --line: #e5e5ea;
+    --hero-bg: #0b0b14;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  /* Nav */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.8);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button {
+    border: 0; background: transparent; cursor: pointer; font: inherit;
+    font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft);
+  }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .btn {
+    display: inline-block; background: var(--accent); color: #fff; font-weight: 600;
+    padding: 10px 18px; border-radius: 999px; font-size: 14px; border: 0; cursor: pointer;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .btn:hover { opacity: .92; transform: translateY(-1px); }
+  .btn.small { padding: 8px 14px; font-size: 13px; }
+
+  /* Hero */
+  .hero {
+    background: radial-gradient(1200px 600px at 50% -10%, #1b1340 0%, var(--hero-bg) 60%);
+    color: #fff; text-align: center; padding: 96px 0 104px;
+  }
+  .hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 700; max-width: 16ch; margin: 0 auto; }
+  .hero .sub { color: #c7c7d1; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero .tagline { color: #8f8fa6; font-size: 14px; margin-top: 26px; letter-spacing: .01em; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #c7c7d1; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+
+  /* Sections */
+  section { padding: 84px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 700; margin-top: 8px; max-width: 20ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 60ch; margin-top: 18px; }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 44px; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  section.alt .step { background: #fff; }
+  .step .num {
+    width: 30px; height: 30px; border-radius: 999px; background: rgba(109,74,255,.12);
+    color: var(--accent); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
+  .step h3 { font-size: 18px; margin: 16px 0 8px; }
+  .step p { color: var(--ink-soft); font-size: 15px; }
+
+  /* Feature grid */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature { padding: 4px; }
+  .feature .ico { font-size: 22px; }
+  .feature h3 { font-size: 17px; margin: 12px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* Models table */
+  .models-table { width: 100%; border-collapse: collapse; margin-top: 36px; font-size: 15px; }
+  .models-table th, .models-table td { text-align: left; padding: 14px 12px; border-bottom: 1px solid var(--line); }
+  .models-table th { color: var(--ink-faint); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+  .models-table td.size { color: var(--ink-soft); white-space: nowrap; }
+  .models-note { color: var(--ink-faint); font-size: 13px; margin-top: 16px; }
+
+  /* Privacy */
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy ul { list-style: none; margin-top: 30px; display: grid; gap: 16px; max-width: 64ch; }
+  .privacy li { padding-left: 30px; position: relative; color: #d6d6e0; font-size: 16px; }
+  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
+  .privacy .closer { margin-top: 30px; font-size: 18px; color: #fff; font-weight: 600; }
+
+  /* FAQ */
+  .faq { margin-top: 40px; max-width: 760px; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+  .faq summary { font-weight: 600; font-size: 17px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--ink-faint); font-weight: 400; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { color: var(--ink-soft); margin-top: 12px; font-size: 15.5px; }
+
+  /* Final CTA */
+  .final { text-align: center; }
+  .final h2 { margin: 0 auto; }
+  .final .lede { margin: 18px auto 0; }
+  .signup { margin-top: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .signup input {
+    border: 1px solid var(--line); border-radius: 999px; padding: 11px 18px; font: inherit; font-size: 15px;
+    width: 280px; max-width: 80vw; background: var(--bg);
+  }
+  .micro { color: var(--ink-faint); font-size: 13px; margin-top: 14px; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">⚡</span> Local4a</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
+      <a href="#how" data-i18n="nav.howItWorks">How it works</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#models" data-i18n="nav.models">Models</a>
+      <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+    <a href="#waitlist" class="btn small" data-i18n="cta.waitlist">Join the waitlist</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <h1 data-i18n="hero.title">Use local AI in the tools you already love</h1>
+    <p class="sub" data-i18n="hero.sub">Local4a turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.</p>
+    <div class="cta-row">
+      <a href="#waitlist" class="btn" data-i18n="cta.waitlist">Join the waitlist</a>
+      <a href="#how" class="secondary" data-i18n="hero.ctaSecondary">See how it works ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">Private by default · Zero API cost · Apple Silicon native</p>
+  </div>
+</section>
+
+<!-- WHY -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="why.eyebrow">Why Local4a</span>
+    <h2 class="section-title" data-i18n="why.title">Your tools are great. The cloud bill isn't.</h2>
+    <p class="lede" data-i18n="why.body">The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. Local4a sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.</p>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="how.eyebrow">How it works</span>
+    <h2 class="section-title" data-i18n="how.title">Three steps, then forget it's there</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <h3 data-i18n="how.s1.title">Pick a model</h3>
+        <p data-i18n="how.s1.body">Choose from built-in models tuned for Apple Silicon and click activate. First time downloads automatically; after that it's offline.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3 data-i18n="how.s2.title">Copy your local address</h3>
+        <p data-i18n="how.s2.body">Local4a shows you a Base URL and API Key. One click to copy.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3 data-i18n="how.s3.title">Paste into your tool</h3>
+        <p data-i18n="how.s3.body">Drop them into Cursor, Cherry Studio, Dify, or anything with a custom endpoint field. Done — your tool now runs on the local model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="features.eyebrow">Features</span>
+    <h2 class="section-title" data-i18n="features.title">What you get</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">🧩</div><h3 data-i18n="feat.tools.title">Works with tools you already use</h3><p data-i18n="feat.tools.body">Anything that lets you set a custom base URL — Cursor, Cherry Studio, Dify, Coze, Continue, and more. No plugins, no SDK.</p></div>
+      <div class="feature"><div class="ico">⚡</div><h3 data-i18n="feat.api.title">OpenAI-compatible, streaming included</h3><p data-i18n="feat.api.body">Drop-in replacement for the OpenAI chat API. Real token-by-token streaming, so your tools feel responsive.</p></div>
+      <div class="feature"><div class="ico">🔒</div><h3 data-i18n="feat.privacy.title">Private by default</h3><p data-i18n="feat.privacy.body">The gateway binds to localhost only. Your prompts and responses never touch the network. No telemetry, no accounts, no logs.</p></div>
+      <div class="feature"><div class="ico">🍎</div><h3 data-i18n="feat.mlx.title">Apple Silicon native</h3><p data-i18n="feat.mlx.body">Built on Apple's MLX framework — runs natively on M-series chips. No Python, no containers, no Ollama to install.</p></div>
+      <div class="feature"><div class="ico">📦</div><h3 data-i18n="feat.size.title">Built for 1B–7B models</h3><p data-i18n="feat.size.body">Tuned for the models that actually fit on a laptop. Runs comfortably on 16GB Macs.</p></div>
+      <div class="feature"><div class="ico">🌐</div><h3 data-i18n="feat.lang.title">English · 简体中文 · 日本語</h3><p data-i18n="feat.lang.body">Follows your system language, or switch in one click.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELS -->
+<section id="models" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="models.eyebrow">Models</span>
+    <h2 class="section-title" data-i18n="models.title">Models, ready to go</h2>
+    <table class="models-table">
+      <thead>
+        <tr>
+          <th data-i18n="models.col.model">Model</th>
+          <th data-i18n="models.col.best">Best for</th>
+          <th data-i18n="models.col.size">Size</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Llama 3.2 3B</td><td data-i18n="model.llama.best">Everyday chat &amp; agents</td><td class="size">~2 GB</td></tr>
+        <tr><td>Qwen2.5 1.5B</td><td data-i18n="model.tiny.best">When memory is tight</td><td class="size">~1 GB</td></tr>
+        <tr><td>Qwen2.5 7B</td><td data-i18n="model.qwen.best">Complex reasoning, long text</td><td class="size">~5 GB</td></tr>
+        <tr><td>Qwen2.5-Coder 7B</td><td data-i18n="model.coder.best">Coding, debugging, completion</td><td class="size">~5 GB</td></tr>
+      </tbody>
+    </table>
+    <p class="models-note" data-i18n="models.note">More models over time. All run fully offline once downloaded.</p>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy" class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="privacy.eyebrow">Privacy</span>
+    <h2 class="section-title" data-i18n="privacy.title">Nothing leaves your Mac. We mean it.</h2>
+    <ul>
+      <li data-i18n="privacy.p1">The server only listens on 127.0.0.1 — not reachable from your network, let alone the internet.</li>
+      <li data-i18n="privacy.p2">No account, no sign-in, no cloud sync.</li>
+      <li data-i18n="privacy.p3">We don't collect, transmit, or store your prompts or responses.</li>
+      <li data-i18n="privacy.p4">Models download from Hugging Face once, then run completely offline.</li>
+    </ul>
+    <p class="closer" data-i18n="privacy.closer">Local-first isn't a feature here. It's the whole point.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="faq.eyebrow">FAQ</span>
+    <h2 class="section-title" data-i18n="faq.title">Questions, answered</h2>
+    <div class="faq">
+      <details><summary data-i18n="faq.q1">Do I need to know how to code?</summary><p data-i18n="faq.a1">If you can paste a URL into a settings field, you're set. The hard part — running the model — is handled for you.</p></details>
+      <details><summary data-i18n="faq.q2">Which tools work with it?</summary><p data-i18n="faq.a2">Any tool with a "custom base URL" or "OpenAI-compatible endpoint" option. That includes most modern AI coding and chat apps.</p></details>
+      <details><summary data-i18n="faq.q3">Does it cost anything?</summary><p data-i18n="faq.a3">The app is the only thing you get. There are no API fees, no subscriptions, no per-token charges — the model runs on your own hardware.</p></details>
+      <details><summary data-i18n="faq.q4">What do I need to run it?</summary><p data-i18n="faq.a4">A Mac with Apple Silicon (M1 or later), macOS 14+. 16GB of memory recommended for the 7B models; 8GB is fine for the smaller ones.</p></details>
+      <details><summary data-i18n="faq.q5">Is my data really private?</summary><p data-i18n="faq.a5">Yes. The gateway is localhost-only and there's no telemetry. Your prompts never leave the machine.</p></details>
+      <details><summary data-i18n="faq.q6">Can I use my own models?</summary><p data-i18n="faq.a6">Built-in models cover most needs at launch. Custom model support is on the roadmap.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section id="waitlist" class="alt final">
+  <div class="wrap">
+    <h2 class="section-title" data-i18n="final.title">Run AI on your own terms</h2>
+    <p class="lede" data-i18n="final.body">Join the waitlist for early access, beta builds, and launch updates.</p>
+    <!-- TODO: 把 action 换成你的表单后端（Formspree / Mailchimp / 自建 API） -->
+    <form class="signup" action="#hello.local4a@gmail.com" method="post" onsubmit="return false;">
+      <input type="email" name="email" required data-i18n-attr="placeholder" data-i18n="email.placeholder" placeholder="your@email.com" />
+      <button type="submit" class="btn" data-i18n="cta.waitlist">Join the waitlist</button>
+    </form>
+    <p class="micro" data-i18n="final.micro">No spam. Just launch news.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="logo"><span class="bolt">⚡</span> Local4a</div>
+    <span data-i18n="footer.tagline">Local-first AI · Private by default</span>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.desc": "Local4a turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default.",
+    "nav.portfolio": "← All products",
+    "nav.howItWorks": "How it works", "nav.features": "Features", "nav.models": "Models", "nav.privacy": "Privacy", "nav.faq": "FAQ",
+    "cta.waitlist": "Join the waitlist",
+    "hero.title": "Use local AI in the tools you already love",
+    "hero.sub": "Local4a turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.",
+    "hero.tagline": "Private by default · Zero API cost · Apple Silicon native",
+    "hero.ctaSecondary": "See how it works ↓",
+    "why.eyebrow": "Why Local4a",
+    "why.title": "Your tools are great. The cloud bill isn't.",
+    "why.body": "The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. Local4a sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.",
+    "how.eyebrow": "How it works",
+    "how.title": "Three steps, then forget it's there",
+    "how.s1.title": "Pick a model",
+    "how.s1.body": "Choose from built-in models tuned for Apple Silicon and click activate. First time downloads automatically; after that it's offline.",
+    "how.s2.title": "Copy your local address",
+    "how.s2.body": "Local4a shows you a Base URL and API Key. One click to copy.",
+    "how.s3.title": "Paste into your tool",
+    "how.s3.body": "Drop them into Cursor, Cherry Studio, Dify, or anything with a custom endpoint field. Done — your tool now runs on the local model.",
+    "features.eyebrow": "Features",
+    "features.title": "What you get",
+    "feat.tools.title": "Works with tools you already use",
+    "feat.tools.body": "Anything that lets you set a custom base URL — Cursor, Cherry Studio, Dify, Coze, Continue, and more. No plugins, no SDK.",
+    "feat.api.title": "OpenAI-compatible, streaming included",
+    "feat.api.body": "Drop-in replacement for the OpenAI chat API. Real token-by-token streaming, so your tools feel responsive.",
+    "feat.privacy.title": "Private by default",
+    "feat.privacy.body": "The gateway binds to localhost only. Your prompts and responses never touch the network. No telemetry, no accounts, no logs.",
+    "feat.mlx.title": "Apple Silicon native",
+    "feat.mlx.body": "Built on Apple's MLX framework — runs natively on M-series chips. No Python, no containers, no Ollama to install.",
+    "feat.size.title": "Built for 1B–7B models",
+    "feat.size.body": "Tuned for the models that actually fit on a laptop. Runs comfortably on 16GB Macs.",
+    "feat.lang.title": "English · 简体中文 · 日本語",
+    "feat.lang.body": "Follows your system language, or switch in one click.",
+    "models.eyebrow": "Models",
+    "models.title": "Models, ready to go",
+    "models.col.model": "Model", "models.col.best": "Best for", "models.col.size": "Size",
+    "model.llama.best": "Everyday chat & agents",
+    "model.tiny.best": "When memory is tight",
+    "model.qwen.best": "Complex reasoning, long text",
+    "model.coder.best": "Coding, debugging, completion",
+    "models.note": "More models over time. All run fully offline once downloaded.",
+    "privacy.eyebrow": "Privacy",
+    "privacy.title": "Nothing leaves your Mac. We mean it.",
+    "privacy.p1": "The server only listens on 127.0.0.1 — not reachable from your network, let alone the internet.",
+    "privacy.p2": "No account, no sign-in, no cloud sync.",
+    "privacy.p3": "We don't collect, transmit, or store your prompts or responses.",
+    "privacy.p4": "Models download from Hugging Face once, then run completely offline.",
+    "privacy.closer": "Local-first isn't a feature here. It's the whole point.",
+    "faq.eyebrow": "FAQ",
+    "faq.title": "Questions, answered",
+    "faq.q1": "Do I need to know how to code?",
+    "faq.a1": "If you can paste a URL into a settings field, you're set. The hard part — running the model — is handled for you.",
+    "faq.q2": "Which tools work with it?",
+    "faq.a2": "Any tool with a \"custom base URL\" or \"OpenAI-compatible endpoint\" option. That includes most modern AI coding and chat apps.",
+    "faq.q3": "Does it cost anything?",
+    "faq.a3": "The app is the only thing you get. There are no API fees, no subscriptions, no per-token charges — the model runs on your own hardware.",
+    "faq.q4": "What do I need to run it?",
+    "faq.a4": "A Mac with Apple Silicon (M1 or later), macOS 14+. 16GB of memory recommended for the 7B models; 8GB is fine for the smaller ones.",
+    "faq.q5": "Is my data really private?",
+    "faq.a5": "Yes. The gateway is localhost-only and there's no telemetry. Your prompts never leave the machine.",
+    "faq.q6": "Can I use my own models?",
+    "faq.a6": "Built-in models cover most needs at launch. Custom model support is on the roadmap.",
+    "final.title": "Run AI on your own terms",
+    "final.body": "Join the waitlist for early access, beta builds, and launch updates.",
+    "final.micro": "No spam. Just launch news.",
+    "email.placeholder": "your@email.com",
+    "footer.tagline": "Local-first AI · Private by default"
+  },
+  zh: {
+    "meta.desc": "Local4a 把你的 Mac 变成一个私有的、OpenAI 兼容的 AI 接入点。在 Cursor、Cherry Studio 以及任何支持自定义接入地址的工具里使用本地模型。默认隐私。",
+    "nav.portfolio": "← 全部产品",
+    "nav.howItWorks": "工作原理", "nav.features": "功能", "nav.models": "模型", "nav.privacy": "隐私", "nav.faq": "常见问题",
+    "cta.waitlist": "加入等候名单",
+    "hero.title": "在你已经在用的工具里，用上本地 AI",
+    "hero.sub": "Local4a 把你的 Mac 变成一个私有 AI 接入点。把 Cursor、Cherry Studio，或任何支持自定义接入地址的工具指向你自己的电脑，用本地模型替代云端 API。",
+    "hero.tagline": "默认隐私 · 零 API 费用 · Apple Silicon 原生",
+    "hero.ctaSecondary": "看看怎么用 ↓",
+    "why.eyebrow": "为什么选 Local4a",
+    "why.title": "工具很好，云账单不好。",
+    "why.body": "你每天用的 AI 工具——编程助手、聊天客户端、agent 编辑器——都在连云端 API。这意味着按量付费、速率限制，以及你的输入离开本机。Local4a 安静地待在你的 Mac 上，说的是这些工具早已听懂的那套协议。只改一个设置——接入地址——一切照常运行，只不过现在跑的是你自己硬件上的模型。",
+    "how.eyebrow": "工作原理",
+    "how.title": "三步搞定，然后忘了它的存在",
+    "how.s1.title": "选一个模型",
+    "how.s1.body": "从为 Apple Silicon 调优的内置模型里选一个，点击激活。首次自动下载，之后离线可用。",
+    "how.s2.title": "复制你的本地地址",
+    "how.s2.body": "Local4a 会显示 Base URL 和 API Key，一键复制。",
+    "how.s3.title": "粘贴到你的工具",
+    "how.s3.body": "粘到 Cursor、Cherry Studio、Dify 或任何有自定义接入地址的工具里。完成——你的工具现在用的就是本地模型。",
+    "features.eyebrow": "功能",
+    "features.title": "你能得到什么",
+    "feat.tools.title": "兼容你已经在用的工具",
+    "feat.tools.body": "任何能设置自定义接入地址的工具——Cursor、Cherry Studio、Dify、Coze、Continue 等等。无需插件、无需 SDK。",
+    "feat.api.title": "OpenAI 兼容，支持流式",
+    "feat.api.body": "OpenAI chat API 的即插即用替代。真正逐 token 流式，工具响应跟手。",
+    "feat.privacy.title": "默认隐私",
+    "feat.privacy.body": "网关只绑定本机。你的输入和输出永不触网。无遥测、无账号、不记录。",
+    "feat.mlx.title": "Apple Silicon 原生",
+    "feat.mlx.body": "基于 Apple MLX 框架——在 M 系列芯片上原生运行。无需 Python、容器或安装 Ollama。",
+    "feat.size.title": "为 1B–7B 模型打造",
+    "feat.size.body": "为真正能装进笔记本的模型调优。16GB 的 Mac 跑得很轻松。",
+    "feat.lang.title": "English · 简体中文 · 日本語",
+    "feat.lang.body": "跟随系统语言，也可一键切换。",
+    "models.eyebrow": "模型",
+    "models.title": "开箱即用的模型",
+    "models.col.model": "模型", "models.col.best": "适合", "models.col.size": "大小",
+    "model.llama.best": "日常对话与 agent",
+    "model.tiny.best": "内存紧张时",
+    "model.qwen.best": "复杂推理、长文本",
+    "model.coder.best": "编程、调试、补全",
+    "models.note": "后续会增加更多模型。下载后全部完全离线运行。",
+    "privacy.eyebrow": "隐私",
+    "privacy.title": "数据不出本机。认真的。",
+    "privacy.p1": "服务只监听 127.0.0.1——局域网都访问不到，更别说互联网。",
+    "privacy.p2": "无账号、无登录、无云同步。",
+    "privacy.p3": "我们不收集、不传输、不存储你的输入和输出。",
+    "privacy.p4": "模型从 Hugging Face 下载一次，之后完全离线运行。",
+    "privacy.closer": "本地优先在这里不是一个功能，而是全部意义所在。",
+    "faq.eyebrow": "常见问题",
+    "faq.title": "你的疑问，这里解答",
+    "faq.q1": "我需要会写代码吗？",
+    "faq.a1": "只要会把地址粘到设置框里就行。最难的部分——跑模型——已经替你搞定了。",
+    "faq.q2": "哪些工具能用？",
+    "faq.a2": "任何带「自定义接入地址」或「OpenAI 兼容接入点」选项的工具。大多数现代 AI 编程和聊天应用都支持。",
+    "faq.q3": "要钱吗？",
+    "faq.a3": "你只需要这个 App。没有 API 费用、没有订阅、没有按 token 收费——模型跑在你自己的硬件上。",
+    "faq.q4": "运行需要什么？",
+    "faq.a4": "一台 Apple Silicon（M1 及以后）的 Mac，macOS 14 以上。7B 模型建议 16GB 内存；小模型 8GB 足够。",
+    "faq.q5": "我的数据真的私密吗？",
+    "faq.a5": "是的。网关只在本机，无遥测。你的输入永不离开这台机器。",
+    "faq.q6": "能用我自己的模型吗？",
+    "faq.a6": "内置模型在发布时已能覆盖大部分需求。自定义模型支持在路线图上。",
+    "final.title": "用你自己的方式跑 AI",
+    "final.body": "加入等候名单，获取早期访问、Beta 版本和发布更新。",
+    "final.micro": "不发垃圾邮件，只发上线消息。",
+    "email.placeholder": "your@email.com",
+    "footer.tagline": "本地优先 AI · 默认隐私"
+  },
+  ja: {
+    "meta.desc": "Local4a は、あなたの Mac をプライベートで OpenAI 互換の AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールでローカルモデルを実行。プライバシー第一。",
+    "nav.portfolio": "← すべての製品",
+    "nav.howItWorks": "仕組み", "nav.features": "機能", "nav.models": "モデル", "nav.privacy": "プライバシー", "nav.faq": "よくある質問",
+    "cta.waitlist": "ウェイトリストに登録",
+    "hero.title": "使い慣れたツールで、ローカル AI を",
+    "hero.sub": "Local4a は、あなたの Mac をプライベートな AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールを自分のマシンに向けるだけで、クラウド API の代わりにローカルモデルで動作します。",
+    "hero.tagline": "プライバシー第一 · API 費用ゼロ · Apple Silicon ネイティブ",
+    "hero.ctaSecondary": "仕組みを見る ↓",
+    "why.eyebrow": "Local4a を選ぶ理由",
+    "why.title": "ツールは最高。クラウド料金は最悪。",
+    "why.body": "毎日使う AI ツール — コーディング支援、チャットクライアント、エージェントビルダー — はすべてクラウド API に接続します。つまり従量課金、レート制限、そしてプロンプトがマシンの外へ出ていくということ。Local4a はあなたの Mac で静かに動き、それらのツールがすでに理解している言語を話します。設定をひとつ — ベース URL — 変えるだけで、すべてがそのまま動き、しかも自分のハードウェア上のモデルで実行されます。",
+    "how.eyebrow": "仕組み",
+    "how.title": "3 ステップ、あとは意識しなくて OK",
+    "how.s1.title": "モデルを選ぶ",
+    "how.s1.body": "Apple Silicon 向けに最適化された内蔵モデルから選んで有効化。初回は自動ダウンロード、以降はオフラインで利用できます。",
+    "how.s2.title": "ローカルアドレスをコピー",
+    "how.s2.body": "Local4a が Base URL と API Key を表示します。ワンクリックでコピー。",
+    "how.s3.title": "ツールに貼り付け",
+    "how.s3.body": "Cursor、Cherry Studio、Dify など、カスタムエンドポイント欄のあるツールに貼り付けるだけ。これでツールはローカルモデルで動きます。",
+    "features.eyebrow": "機能",
+    "features.title": "得られるもの",
+    "feat.tools.title": "使い慣れたツールと連携",
+    "feat.tools.body": "カスタムベース URL を設定できるツールならどれでも — Cursor、Cherry Studio、Dify、Coze、Continue など。プラグインも SDK も不要。",
+    "feat.api.title": "OpenAI 互換・ストリーミング対応",
+    "feat.api.body": "OpenAI チャット API のそのまま置き換え。トークン単位の本物のストリーミングで、ツールの反応も軽快。",
+    "feat.privacy.title": "プライバシー第一",
+    "feat.privacy.body": "ゲートウェイは localhost のみにバインド。プロンプトも応答もネットワークに出ません。テレメトリなし、アカウントなし、ログなし。",
+    "feat.mlx.title": "Apple Silicon ネイティブ",
+    "feat.mlx.body": "Apple の MLX フレームワーク上に構築 — M シリーズチップでネイティブ動作。Python もコンテナも Ollama も不要。",
+    "feat.size.title": "1B〜7B モデル向け",
+    "feat.size.body": "ノートに収まるサイズのモデルに最適化。16GB の Mac で快適に動作。",
+    "feat.lang.title": "English · 简体中文 · 日本語",
+    "feat.lang.body": "システム言語に追従、ワンクリックで切り替えも可能。",
+    "models.eyebrow": "モデル",
+    "models.title": "すぐ使えるモデル",
+    "models.col.model": "モデル", "models.col.best": "用途", "models.col.size": "サイズ",
+    "model.llama.best": "日常会話・エージェント",
+    "model.tiny.best": "メモリが厳しい時",
+    "model.qwen.best": "複雑な推論・長文",
+    "model.coder.best": "コーディング・デバッグ・補完",
+    "models.note": "モデルは順次追加予定。ダウンロード後はすべて完全オフラインで動作します。",
+    "privacy.eyebrow": "プライバシー",
+    "privacy.title": "データは Mac の外に出ません。本気です。",
+    "privacy.p1": "サーバーは 127.0.0.1 のみで待ち受け — ローカルネットワークからもアクセス不可、ましてやインターネットからは届きません。",
+    "privacy.p2": "アカウントなし、サインインなし、クラウド同期なし。",
+    "privacy.p3": "プロンプトや応答を収集・送信・保存しません。",
+    "privacy.p4": "モデルは Hugging Face から一度ダウンロードすれば、以降は完全オフラインで動作します。",
+    "privacy.closer": "ローカルファーストは機能ではなく、これがすべての目的です。",
+    "faq.eyebrow": "よくある質問",
+    "faq.title": "疑問にお答えします",
+    "faq.q1": "コーディングの知識は必要ですか？",
+    "faq.a1": "設定欄に URL を貼り付けられれば大丈夫。一番難しいモデルの実行はこちらで処理します。",
+    "faq.q2": "どのツールで使えますか？",
+    "faq.a2": "「カスタムベース URL」や「OpenAI 互換エンドポイント」の設定があるツールならどれでも。最近の AI コーディング・チャットアプリの多くが対応しています。",
+    "faq.q3": "費用はかかりますか？",
+    "faq.a3": "必要なのはアプリだけ。API 料金もサブスクも従量課金もありません — モデルはあなた自身のハードウェアで動きます。",
+    "faq.q4": "動作環境は？",
+    "faq.a4": "Apple Silicon（M1 以降）搭載の Mac、macOS 14 以降。7B モデルにはメモリ 16GB 推奨、小型モデルなら 8GB で十分です。",
+    "faq.q5": "本当にプライバシーは守られますか？",
+    "faq.a5": "はい。ゲートウェイは localhost のみ、テレメトリもありません。プロンプトがマシンの外に出ることはありません。",
+    "faq.q6": "自分のモデルを使えますか？",
+    "faq.a6": "リリース時点では内蔵モデルで大半のニーズをカバー。カスタムモデル対応は予定にあります。",
+    "final.title": "AI を、あなたのルールで",
+    "final.body": "早期アクセス、ベータ版、リリース情報を受け取るにはウェイトリストへ。",
+    "final.micro": "スパムなし。お知らせのみ。",
+    "email.placeholder": "your@email.com",
+    "footer.tagline": "ローカルファースト AI · プライバシー第一"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  // 文本节点
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  // 切换按钮高亮
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+
+function detectLang() {
+  try {
+    const saved = localStorage.getItem("local4a_lang");
+    if (saved && I18N[saved]) return saved;
+  } catch (e) {}
+  const nav = (navigator.language || "en").toLowerCase();
+  if (nav.startsWith("zh")) return "zh";
+  if (nav.startsWith("ja")) return "ja";
+  return "en";
+}
+
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+
+</body>
+</html>
