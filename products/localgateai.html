@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Local4a — Use local AI in the tools you already love</title>
+<title>LocalGateAI — Use local AI in the tools you already love</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
-  content="Local4a turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default." />
+  content="LocalGateAI turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default." />
 <style>
   :root {
     --bg: #ffffff;
@@ -136,6 +136,7 @@
     width: 280px; max-width: 80vw; background: var(--bg);
   }
   .micro { color: var(--ink-faint); font-size: 13px; margin-top: 14px; }
+  .success { color: var(--accent-2); font-weight: 600; font-size: 16px; margin-top: 18px; }
 
   footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
   .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -145,7 +146,7 @@
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a href="../index.html" class="logo"><span class="bolt">⚡</span> Local4a</a>
+    <a href="../index.html" class="logo"><span class="bolt">⚡</span> LocalGateAI</a>
     <nav class="nav-links">
       <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
       <a href="#how" data-i18n="nav.howItWorks">How it works</a>
@@ -167,7 +168,7 @@
 <section class="hero">
   <div class="wrap">
     <h1 data-i18n="hero.title">Use local AI in the tools you already love</h1>
-    <p class="sub" data-i18n="hero.sub">Local4a turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.</p>
+    <p class="sub" data-i18n="hero.sub">LocalGateAI turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.</p>
     <div class="cta-row">
       <a href="#waitlist" class="btn" data-i18n="cta.waitlist">Join the waitlist</a>
       <a href="#how" class="secondary" data-i18n="hero.ctaSecondary">See how it works ↓</a>
@@ -179,9 +180,9 @@
 <!-- WHY -->
 <section>
   <div class="wrap">
-    <span class="eyebrow" data-i18n="why.eyebrow">Why Local4a</span>
+    <span class="eyebrow" data-i18n="why.eyebrow">Why LocalGateAI</span>
     <h2 class="section-title" data-i18n="why.title">Your tools are great. The cloud bill isn't.</h2>
-    <p class="lede" data-i18n="why.body">The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. Local4a sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.</p>
+    <p class="lede" data-i18n="why.body">The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. LocalGateAI sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.</p>
   </div>
 </section>
 
@@ -199,7 +200,7 @@
       <div class="step">
         <div class="num">2</div>
         <h3 data-i18n="how.s2.title">Copy your local address</h3>
-        <p data-i18n="how.s2.body">Local4a shows you a Base URL and API Key. One click to copy.</p>
+        <p data-i18n="how.s2.body">LocalGateAI shows you a Base URL and API Key. One click to copy.</p>
       </div>
       <div class="step">
         <div class="num">3</div>
@@ -287,42 +288,43 @@
     <h2 class="section-title" data-i18n="final.title">Run AI on your own terms</h2>
     <p class="lede" data-i18n="final.body">Join the waitlist for early access, beta builds, and launch updates.</p>
     <!-- TODO: 把 action 换成你的表单后端（Formspree / Mailchimp / 自建 API） -->
-    <form class="signup" action="#hello.local4a@gmail.com" method="post" onsubmit="return false;">
+    <form id="waitlist-form" class="signup" action="#" method="post">
       <input type="email" name="email" required data-i18n-attr="placeholder" data-i18n="email.placeholder" placeholder="your@email.com" />
       <button type="submit" class="btn" data-i18n="cta.waitlist">Join the waitlist</button>
     </form>
+    <p id="waitlist-success" class="success" hidden data-i18n="final.success">Thanks! You're on the list — we'll email you when it's ready.</p>
     <p class="micro" data-i18n="final.micro">No spam. Just launch news.</p>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot-inner">
-    <div class="logo"><span class="bolt">⚡</span> Local4a</div>
+    <div class="logo"><span class="bolt">⚡</span> LocalGateAI</div>
     <span data-i18n="footer.tagline">Local-first AI · Private by default</span>
-    <span>© 2026 Local4a</span>
+    <span>© 2026 LocalGateAI</span>
   </div>
 </footer>
 
 <script>
 const I18N = {
   en: {
-    "meta.desc": "Local4a turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default.",
+    "meta.desc": "LocalGateAI turns your Mac into a private, OpenAI-compatible AI endpoint. Run local models in Cursor, Cherry Studio, and any tool with a custom base URL. Private by default.",
     "nav.portfolio": "← All products",
     "nav.howItWorks": "How it works", "nav.features": "Features", "nav.models": "Models", "nav.privacy": "Privacy", "nav.faq": "FAQ",
     "cta.waitlist": "Join the waitlist",
     "hero.title": "Use local AI in the tools you already love",
-    "hero.sub": "Local4a turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.",
+    "hero.sub": "LocalGateAI turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.",
     "hero.tagline": "Private by default · Zero API cost · Apple Silicon native",
     "hero.ctaSecondary": "See how it works ↓",
-    "why.eyebrow": "Why Local4a",
+    "why.eyebrow": "Why LocalGateAI",
     "why.title": "Your tools are great. The cloud bill isn't.",
-    "why.body": "The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. Local4a sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.",
+    "why.body": "The AI tools you use every day — coding assistants, chat clients, agent builders — all talk to cloud APIs. That means usage fees, rate limits, and your prompts leaving your machine. LocalGateAI sits quietly on your Mac and speaks the same language those tools already understand. Switch one setting — the base URL — and everything keeps working, except now it runs on a model on your own hardware.",
     "how.eyebrow": "How it works",
     "how.title": "Three steps, then forget it's there",
     "how.s1.title": "Pick a model",
     "how.s1.body": "Choose from built-in models tuned for Apple Silicon and click activate. First time downloads automatically; after that it's offline.",
     "how.s2.title": "Copy your local address",
-    "how.s2.body": "Local4a shows you a Base URL and API Key. One click to copy.",
+    "how.s2.body": "LocalGateAI shows you a Base URL and API Key. One click to copy.",
     "how.s3.title": "Paste into your tool",
     "how.s3.body": "Drop them into Cursor, Cherry Studio, Dify, or anything with a custom endpoint field. Done — your tool now runs on the local model.",
     "features.eyebrow": "Features",
@@ -371,27 +373,28 @@ const I18N = {
     "final.title": "Run AI on your own terms",
     "final.body": "Join the waitlist for early access, beta builds, and launch updates.",
     "final.micro": "No spam. Just launch news.",
+    "final.success": "Thanks! You're on the list — we'll email you when it's ready.",
     "email.placeholder": "your@email.com",
     "footer.tagline": "Local-first AI · Private by default"
   },
   zh: {
-    "meta.desc": "Local4a 把你的 Mac 变成一个私有的、OpenAI 兼容的 AI 接入点。在 Cursor、Cherry Studio 以及任何支持自定义接入地址的工具里使用本地模型。默认隐私。",
+    "meta.desc": "LocalGateAI 把你的 Mac 变成一个私有的、OpenAI 兼容的 AI 接入点。在 Cursor、Cherry Studio 以及任何支持自定义接入地址的工具里使用本地模型。默认隐私。",
     "nav.portfolio": "← 全部产品",
     "nav.howItWorks": "工作原理", "nav.features": "功能", "nav.models": "模型", "nav.privacy": "隐私", "nav.faq": "常见问题",
     "cta.waitlist": "加入等候名单",
     "hero.title": "在你已经在用的工具里，用上本地 AI",
-    "hero.sub": "Local4a 把你的 Mac 变成一个私有 AI 接入点。把 Cursor、Cherry Studio，或任何支持自定义接入地址的工具指向你自己的电脑，用本地模型替代云端 API。",
+    "hero.sub": "LocalGateAI 把你的 Mac 变成一个私有 AI 接入点。把 Cursor、Cherry Studio，或任何支持自定义接入地址的工具指向你自己的电脑，用本地模型替代云端 API。",
     "hero.tagline": "默认隐私 · 零 API 费用 · Apple Silicon 原生",
     "hero.ctaSecondary": "看看怎么用 ↓",
-    "why.eyebrow": "为什么选 Local4a",
+    "why.eyebrow": "为什么选 LocalGateAI",
     "why.title": "工具很好，云账单不好。",
-    "why.body": "你每天用的 AI 工具——编程助手、聊天客户端、agent 编辑器——都在连云端 API。这意味着按量付费、速率限制，以及你的输入离开本机。Local4a 安静地待在你的 Mac 上，说的是这些工具早已听懂的那套协议。只改一个设置——接入地址——一切照常运行，只不过现在跑的是你自己硬件上的模型。",
+    "why.body": "你每天用的 AI 工具——编程助手、聊天客户端、agent 编辑器——都在连云端 API。这意味着按量付费、速率限制，以及你的输入离开本机。LocalGateAI 安静地待在你的 Mac 上，说的是这些工具早已听懂的那套协议。只改一个设置——接入地址——一切照常运行，只不过现在跑的是你自己硬件上的模型。",
     "how.eyebrow": "工作原理",
     "how.title": "三步搞定，然后忘了它的存在",
     "how.s1.title": "选一个模型",
     "how.s1.body": "从为 Apple Silicon 调优的内置模型里选一个，点击激活。首次自动下载，之后离线可用。",
     "how.s2.title": "复制你的本地地址",
-    "how.s2.body": "Local4a 会显示 Base URL 和 API Key，一键复制。",
+    "how.s2.body": "LocalGateAI 会显示 Base URL 和 API Key，一键复制。",
     "how.s3.title": "粘贴到你的工具",
     "how.s3.body": "粘到 Cursor、Cherry Studio、Dify 或任何有自定义接入地址的工具里。完成——你的工具现在用的就是本地模型。",
     "features.eyebrow": "功能",
@@ -440,27 +443,28 @@ const I18N = {
     "final.title": "用你自己的方式跑 AI",
     "final.body": "加入等候名单，获取早期访问、Beta 版本和发布更新。",
     "final.micro": "不发垃圾邮件，只发上线消息。",
+    "final.success": "已加入等候名单！上线时我们会发邮件通知你。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "本地优先 AI · 默认隐私"
   },
   ja: {
-    "meta.desc": "Local4a は、あなたの Mac をプライベートで OpenAI 互換の AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールでローカルモデルを実行。プライバシー第一。",
+    "meta.desc": "LocalGateAI は、あなたの Mac をプライベートで OpenAI 互換の AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールでローカルモデルを実行。プライバシー第一。",
     "nav.portfolio": "← すべての製品",
     "nav.howItWorks": "仕組み", "nav.features": "機能", "nav.models": "モデル", "nav.privacy": "プライバシー", "nav.faq": "よくある質問",
     "cta.waitlist": "ウェイトリストに登録",
     "hero.title": "使い慣れたツールで、ローカル AI を",
-    "hero.sub": "Local4a は、あなたの Mac をプライベートな AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールを自分のマシンに向けるだけで、クラウド API の代わりにローカルモデルで動作します。",
+    "hero.sub": "LocalGateAI は、あなたの Mac をプライベートな AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールを自分のマシンに向けるだけで、クラウド API の代わりにローカルモデルで動作します。",
     "hero.tagline": "プライバシー第一 · API 費用ゼロ · Apple Silicon ネイティブ",
     "hero.ctaSecondary": "仕組みを見る ↓",
-    "why.eyebrow": "Local4a を選ぶ理由",
+    "why.eyebrow": "LocalGateAI を選ぶ理由",
     "why.title": "ツールは最高。クラウド料金は最悪。",
-    "why.body": "毎日使う AI ツール — コーディング支援、チャットクライアント、エージェントビルダー — はすべてクラウド API に接続します。つまり従量課金、レート制限、そしてプロンプトがマシンの外へ出ていくということ。Local4a はあなたの Mac で静かに動き、それらのツールがすでに理解している言語を話します。設定をひとつ — ベース URL — 変えるだけで、すべてがそのまま動き、しかも自分のハードウェア上のモデルで実行されます。",
+    "why.body": "毎日使う AI ツール — コーディング支援、チャットクライアント、エージェントビルダー — はすべてクラウド API に接続します。つまり従量課金、レート制限、そしてプロンプトがマシンの外へ出ていくということ。LocalGateAI はあなたの Mac で静かに動き、それらのツールがすでに理解している言語を話します。設定をひとつ — ベース URL — 変えるだけで、すべてがそのまま動き、しかも自分のハードウェア上のモデルで実行されます。",
     "how.eyebrow": "仕組み",
     "how.title": "3 ステップ、あとは意識しなくて OK",
     "how.s1.title": "モデルを選ぶ",
     "how.s1.body": "Apple Silicon 向けに最適化された内蔵モデルから選んで有効化。初回は自動ダウンロード、以降はオフラインで利用できます。",
     "how.s2.title": "ローカルアドレスをコピー",
-    "how.s2.body": "Local4a が Base URL と API Key を表示します。ワンクリックでコピー。",
+    "how.s2.body": "LocalGateAI が Base URL と API Key を表示します。ワンクリックでコピー。",
     "how.s3.title": "ツールに貼り付け",
     "how.s3.body": "Cursor、Cherry Studio、Dify など、カスタムエンドポイント欄のあるツールに貼り付けるだけ。これでツールはローカルモデルで動きます。",
     "features.eyebrow": "機能",
@@ -509,6 +513,7 @@ const I18N = {
     "final.title": "AI を、あなたのルールで",
     "final.body": "早期アクセス、ベータ版、リリース情報を受け取るにはウェイトリストへ。",
     "final.micro": "スパムなし。お知らせのみ。",
+    "final.success": "登録ありがとうございます！公開時にメールでお知らせします。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "ローカルファースト AI · プライバシー第一"
   }
@@ -547,6 +552,19 @@ document.querySelectorAll(".langbar button").forEach(b => {
   b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
 });
 applyLang(detectLang());
+
+// Waitlist form — client-side feedback (no backend yet)
+const waitlistForm = document.getElementById("waitlist-form");
+if (waitlistForm) {
+  waitlistForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!waitlistForm.reportValidity()) return;
+    waitlistForm.hidden = true;
+    const ok = document.getElementById("waitlist-success");
+    if (ok) ok.hidden = false;
+    // TODO: 接入真实后端时，在这里把 email 发给 Formspree/Mailchimp/自建 API
+  });
+}
 </script>
 
 </body>
