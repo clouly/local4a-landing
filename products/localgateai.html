@@ -140,6 +140,8 @@
 
   footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
   .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
 </style>
 </head>
 <body>
@@ -301,6 +303,10 @@
   <div class="wrap foot-inner">
     <div class="logo"><span class="bolt">⚡</span> LocalGateAI</div>
     <span data-i18n="footer.tagline">Local-first AI · Private by default</span>
+    <span class="foot-links">
+      <a href="localgateai-privacy.html" data-i18n="footer.privacy">Privacy</a> ·
+      <a href="localgateai-support.html" data-i18n="footer.support">Support</a>
+    </span>
     <span>© 2026 LocalGateAI</span>
   </div>
 </footer>
@@ -375,7 +381,8 @@ const I18N = {
     "final.micro": "No spam. Just launch news.",
     "final.success": "We've opened your email app — just hit send and you're on the list.",
     "email.placeholder": "your@email.com",
-    "footer.tagline": "Local-first AI · Private by default"
+    "footer.tagline": "Local-first AI · Private by default",
+    "footer.privacy": "Privacy", "footer.support": "Support"
   },
   zh: {
     "meta.desc": "LocalGateAI 把你的 Mac 变成一个私有的、OpenAI 兼容的 AI 接入点。在 Cursor、Cherry Studio 以及任何支持自定义接入地址的工具里使用本地模型。默认隐私。",
@@ -445,7 +452,8 @@ const I18N = {
     "final.micro": "不发垃圾邮件，只发上线消息。",
     "final.success": "已为你打开邮件应用——点发送即完成加入。",
     "email.placeholder": "your@email.com",
-    "footer.tagline": "本地优先 AI · 默认隐私"
+    "footer.tagline": "本地优先 AI · 默认隐私",
+    "footer.privacy": "隐私政策", "footer.support": "支持"
   },
   ja: {
     "meta.desc": "LocalGateAI は、あなたの Mac をプライベートで OpenAI 互換の AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールでローカルモデルを実行。プライバシー第一。",
@@ -515,7 +523,8 @@ const I18N = {
     "final.micro": "スパムなし。お知らせのみ。",
     "final.success": "メールアプリを開きました。送信すれば登録完了です。",
     "email.placeholder": "your@email.com",
-    "footer.tagline": "ローカルファースト AI · プライバシー第一"
+    "footer.tagline": "ローカルファースト AI · プライバシー第一",
+    "footer.privacy": "プライバシー", "footer.support": "サポート"
   }
 };
 

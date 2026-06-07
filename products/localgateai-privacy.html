@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — LocalGateAI</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f5f5f7; --ink: #1d1d1f; --ink-soft: #515154;
+    --ink-faint: #86868b; --accent: #6d4aff; --line: #e5e5ea; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.8); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 64px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .updated { color: var(--ink-faint); font-size: 14px; margin-top: 10px; }
+  .legal h2 { font-size: 20px; margin: 38px 0 10px; letter-spacing: -0.01em; }
+  .legal p { color: var(--ink-soft); margin-top: 10px; }
+  .legal ul { color: var(--ink-soft); margin: 10px 0 0 20px; }
+  .legal li { margin-top: 6px; }
+  .lead { font-size: 18px; color: var(--ink); margin-top: 18px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">⚡</span> Local4a</a>
+    <nav class="nav-links">
+      <a href="localgateai.html" data-i18n="nav.product">LocalGateAI</a>
+      <a href="localgateai-support.html" data-i18n="nav.support">Support</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap legal">
+    <h1 data-i18n="title">Privacy Policy</h1>
+    <p class="updated"><span data-i18n="updated">Last updated</span>: <span data-i18n="date">June 8, 2026</span></p>
+    <p class="lead" data-i18n="lead">LocalGateAI is a Mac app that runs AI models locally on your own device. This policy explains how the app handles your information. The short version: the app is built so your data never leaves your Mac.</p>
+
+    <h2 data-i18n="s1.h">1. Information we collect</h2>
+    <p data-i18n="s1.p">None. LocalGateAI has no account system, no sign-in, and no cloud services. We do not collect, transmit, or store your prompts, the model's responses, your files, or any usage data.</p>
+
+    <h2 data-i18n="s2.h">2. How the app works</h2>
+    <p data-i18n="s2.p">LocalGateAI runs a local server bound to 127.0.0.1 (localhost) on your Mac. All AI processing happens on your device. Your prompts and the model's responses stay on your machine and are never sent to us or any third party.</p>
+
+    <h2 data-i18n="s3.h">3. Network access</h2>
+    <p data-i18n="s3.p">The app connects to the internet only to download model files the first time you activate a model, and to check for app updates. Once a model is downloaded, it runs fully offline. We do not receive any of your content through these connections.</p>
+
+    <h2 data-i18n="s4.h">4. Third-party services</h2>
+    <p data-i18n="s4.p">Model files are hosted by Hugging Face. When you download a model, that request goes to Hugging Face's servers and is subject to their privacy policy. We do not share any personal data with them — downloading a model is a standard file request.</p>
+
+    <h2 data-i18n="s5.h">5. Analytics &amp; telemetry</h2>
+    <p data-i18n="s5.p">There is none. The app contains no analytics, tracking, telemetry, or crash reporting that sends data off your device.</p>
+
+    <h2 data-i18n="s6.h">6. Data storage</h2>
+    <p data-i18n="s6.p">Downloaded models and your app settings are stored locally on your Mac. You can remove them at any time by deleting the app and its data.</p>
+
+    <h2 data-i18n="s7.h">7. Children's privacy</h2>
+    <p data-i18n="s7.p">The app does not collect data from anyone, including children under 13.</p>
+
+    <h2 data-i18n="s8.h">8. Changes to this policy</h2>
+    <p data-i18n="s8.p">We may update this policy from time to time. Any changes will be posted on this page with an updated date above.</p>
+
+    <h2 data-i18n="s9.h">9. Contact</h2>
+    <p data-i18n="s9.p">Questions about this policy? Email us at <a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">⚡</span> Local4a</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "LocalGateAI", "nav.support": "Support",
+    "title": "Privacy Policy", "updated": "Last updated", "date": "June 8, 2026",
+    "lead": "LocalGateAI is a Mac app that runs AI models locally on your own device. This policy explains how the app handles your information. The short version: the app is built so your data never leaves your Mac.",
+    "s1.h": "1. Information we collect",
+    "s1.p": "None. LocalGateAI has no account system, no sign-in, and no cloud services. We do not collect, transmit, or store your prompts, the model's responses, your files, or any usage data.",
+    "s2.h": "2. How the app works",
+    "s2.p": "LocalGateAI runs a local server bound to 127.0.0.1 (localhost) on your Mac. All AI processing happens on your device. Your prompts and the model's responses stay on your machine and are never sent to us or any third party.",
+    "s3.h": "3. Network access",
+    "s3.p": "The app connects to the internet only to download model files the first time you activate a model, and to check for app updates. Once a model is downloaded, it runs fully offline. We do not receive any of your content through these connections.",
+    "s4.h": "4. Third-party services",
+    "s4.p": "Model files are hosted by Hugging Face. When you download a model, that request goes to Hugging Face's servers and is subject to their privacy policy. We do not share any personal data with them — downloading a model is a standard file request.",
+    "s5.h": "5. Analytics & telemetry",
+    "s5.p": "There is none. The app contains no analytics, tracking, telemetry, or crash reporting that sends data off your device.",
+    "s6.h": "6. Data storage",
+    "s6.p": "Downloaded models and your app settings are stored locally on your Mac. You can remove them at any time by deleting the app and its data.",
+    "s7.h": "7. Children's privacy",
+    "s7.p": "The app does not collect data from anyone, including children under 13.",
+    "s8.h": "8. Changes to this policy",
+    "s8.p": "We may update this policy from time to time. Any changes will be posted on this page with an updated date above.",
+    "s9.h": "9. Contact",
+    "s9.p": "Questions about this policy? Email us at "
+  },
+  zh: {
+    "nav.product": "LocalGateAI", "nav.support": "支持",
+    "title": "隐私政策", "updated": "最后更新", "date": "2026 年 6 月 8 日",
+    "lead": "LocalGateAI 是一款在你自己设备上本地运行 AI 模型的 Mac 应用。本政策说明应用如何处理你的信息。简而言之：应用的设计让你的数据永不离开你的 Mac。",
+    "s1.h": "1. 我们收集的信息",
+    "s1.p": "没有。LocalGateAI 没有账号系统、无需登录、没有任何云服务。我们不收集、不传输、不存储你的输入、模型的输出、你的文件或任何使用数据。",
+    "s2.h": "2. 应用如何工作",
+    "s2.p": "LocalGateAI 在你的 Mac 上运行一个仅绑定 127.0.0.1（本机）的本地服务。所有 AI 处理都在你的设备上完成。你的输入和模型的输出都留在本机，绝不会发送给我们或任何第三方。",
+    "s3.h": "3. 网络访问",
+    "s3.p": "应用只在你首次激活某个模型时联网下载模型文件，以及检查应用更新。模型下载完成后即可完全离线运行。我们不会通过这些连接收到你的任何内容。",
+    "s4.h": "4. 第三方服务",
+    "s4.p": "模型文件托管在 Hugging Face。当你下载模型时，该请求会发往 Hugging Face 的服务器，并受其隐私政策约束。我们不会与其分享任何个人数据——下载模型只是一次标准的文件请求。",
+    "s5.h": "5. 分析与遥测",
+    "s5.p": "完全没有。应用不含任何会把数据发出设备的分析、追踪、遥测或崩溃上报。",
+    "s6.h": "6. 数据存储",
+    "s6.p": "已下载的模型和你的应用设置都本地保存在你的 Mac 上。你可以随时通过删除应用及其数据来移除它们。",
+    "s7.h": "7. 儿童隐私",
+    "s7.p": "应用不收集任何人的数据，包括 13 岁以下儿童。",
+    "s8.h": "8. 本政策的变更",
+    "s8.p": "我们可能会不时更新本政策。任何变更都会发布在本页面，并更新上方的日期。",
+    "s9.h": "9. 联系我们",
+    "s9.p": "对本政策有疑问？请发邮件至 "
+  },
+  ja: {
+    "nav.product": "LocalGateAI", "nav.support": "サポート",
+    "title": "プライバシーポリシー", "updated": "最終更新", "date": "2026年6月8日",
+    "lead": "LocalGateAI は、AI モデルをご自身のデバイス上でローカルに実行する Mac アプリです。本ポリシーは、アプリがあなたの情報をどう扱うかを説明します。要点：あなたのデータが Mac の外に出ない設計になっています。",
+    "s1.h": "1. 収集する情報",
+    "s1.p": "ありません。LocalGateAI にはアカウント機能やサインイン、クラウドサービスがありません。プロンプト、モデルの応答、ファイル、利用データなどを収集・送信・保存することは一切ありません。",
+    "s2.h": "2. アプリの仕組み",
+    "s2.p": "LocalGateAI は、あなたの Mac 上で 127.0.0.1（localhost）のみにバインドされたローカルサーバーを実行します。すべての AI 処理はデバイス上で行われます。プロンプトとモデルの応答はマシン内に留まり、当社や第三者に送信されることはありません。",
+    "s3.h": "3. ネットワークアクセス",
+    "s3.p": "アプリがインターネットに接続するのは、モデルを初めて有効化する際にモデルファイルをダウンロードするときと、アプリの更新を確認するときだけです。モデルのダウンロード後は完全オフラインで動作します。これらの接続を通じてあなたのコンテンツを受け取ることはありません。",
+    "s4.h": "4. 第三者サービス",
+    "s4.p": "モデルファイルは Hugging Face によってホストされています。モデルをダウンロードすると、そのリクエストは Hugging Face のサーバーへ送られ、同社のプライバシーポリシーが適用されます。当社が個人データを共有することはなく、ダウンロードは通常のファイルリクエストです。",
+    "s5.h": "5. 分析・テレメトリ",
+    "s5.p": "一切ありません。デバイス外へデータを送る分析、トラッキング、テレメトリ、クラッシュレポートはアプリに含まれていません。",
+    "s6.h": "6. データの保存",
+    "s6.p": "ダウンロードしたモデルとアプリの設定は、あなたの Mac にローカル保存されます。アプリとそのデータを削除すれば、いつでも消去できます。",
+    "s7.h": "7. 子どものプライバシー",
+    "s7.p": "アプリは 13 歳未満の子どもを含め、誰からもデータを収集しません。",
+    "s8.h": "8. 本ポリシーの変更",
+    "s8.p": "本ポリシーは随時更新されることがあります。変更があった場合は、上部の日付を更新のうえ本ページに掲載します。",
+    "s9.h": "9. お問い合わせ",
+    "s9.p": "本ポリシーに関するご質問は "
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    // s9.p is followed by a mailto link — only replace the leading text node
+    if (key === "s9.p") { el.childNodes[0].nodeValue = dict[key]; return; }
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>

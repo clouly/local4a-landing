@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Support — LocalGateAI</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f5f5f7; --ink: #1d1d1f; --ink-soft: #515154;
+    --ink-faint: #86868b; --accent: #6d4aff; --line: #e5e5ea; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.8); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 64px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .lead { font-size: 18px; color: var(--ink-soft); margin-top: 18px; }
+
+  .contact-card {
+    margin-top: 30px; background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 26px;
+  }
+  .contact-card h2 { font-size: 18px; }
+  .contact-card p { color: var(--ink-soft); margin-top: 8px; }
+  .contact-card .email { display: inline-block; margin-top: 12px; font-size: 18px; font-weight: 600; }
+
+  h2.sec { font-size: 22px; margin: 48px 0 14px; letter-spacing: -0.01em; }
+  .reqs { margin: 0 0 0 20px; color: var(--ink-soft); }
+  .reqs li { margin-top: 6px; }
+
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 600; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--ink-faint); font-weight: 400; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { color: var(--ink-soft); margin-top: 10px; font-size: 15.5px; }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">⚡</span> Local4a</a>
+    <nav class="nav-links">
+      <a href="localgateai.html" data-i18n="nav.product">LocalGateAI</a>
+      <a href="localgateai-privacy.html" data-i18n="nav.privacy">Privacy</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 data-i18n="title">Support</h1>
+    <p class="lead" data-i18n="lead">Need a hand with LocalGateAI? Here's how to reach us and answers to the most common questions.</p>
+
+    <div class="contact-card">
+      <h2 data-i18n="contact.h">Get in touch</h2>
+      <p data-i18n="contact.p">Email us and we'll typically reply within 2 business days.</p>
+      <a class="email" href="mailto:hello.local4a@gmail.com?subject=LocalGateAI%20Support">hello.local4a@gmail.com</a>
+    </div>
+
+    <h2 class="sec" data-i18n="req.h">System requirements</h2>
+    <ul class="reqs">
+      <li data-i18n="req.1">Mac with Apple Silicon (M1 or later)</li>
+      <li data-i18n="req.2">macOS 14 or later</li>
+      <li data-i18n="req.3">8 GB RAM minimum — 16 GB recommended for 7B models</li>
+      <li data-i18n="req.4">Internet connection for the first model download (offline after that)</li>
+    </ul>
+
+    <h2 class="sec" data-i18n="faq.h">Common questions</h2>
+    <div class="faq">
+      <details><summary data-i18n="q1">How do I connect my tool to LocalGateAI?</summary><p data-i18n="a1">Copy the Base URL and API Key shown in LocalGateAI, then paste them into any app that supports a custom OpenAI-compatible endpoint (Cursor, Cherry Studio, Dify, and more).</p></details>
+      <details><summary data-i18n="q2">Is my data private?</summary><p data-i18n="a2">Yes. Everything runs locally on your Mac — the gateway is localhost-only and there's no telemetry. See our Privacy Policy for details.</p></details>
+      <details><summary data-i18n="q3">A model won't download or runs slowly. What can I do?</summary><p data-i18n="a3">Make sure you have a stable internet connection for the first download, enough free disk space for the model, and enough free RAM. Smaller models run better on 8 GB Macs.</p></details>
+      <details><summary data-i18n="q4">How do I report a bug or request a feature?</summary><p data-i18n="a4">Email us with as much detail as you can — your macOS version, Mac model, and what happened. It helps us reproduce and fix issues faster.</p></details>
+      <details><summary data-i18n="q5">How do I uninstall it?</summary><p data-i18n="a5">Quit the app and move it to the Trash. Downloaded models and settings are stored locally and are removed with the app's data.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">⚡</span> Local4a</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "LocalGateAI", "nav.privacy": "Privacy",
+    "title": "Support",
+    "lead": "Need a hand with LocalGateAI? Here's how to reach us and answers to the most common questions.",
+    "contact.h": "Get in touch",
+    "contact.p": "Email us and we'll typically reply within 2 business days.",
+    "req.h": "System requirements",
+    "req.1": "Mac with Apple Silicon (M1 or later)",
+    "req.2": "macOS 14 or later",
+    "req.3": "8 GB RAM minimum — 16 GB recommended for 7B models",
+    "req.4": "Internet connection for the first model download (offline after that)",
+    "faq.h": "Common questions",
+    "q1": "How do I connect my tool to LocalGateAI?",
+    "a1": "Copy the Base URL and API Key shown in LocalGateAI, then paste them into any app that supports a custom OpenAI-compatible endpoint (Cursor, Cherry Studio, Dify, and more).",
+    "q2": "Is my data private?",
+    "a2": "Yes. Everything runs locally on your Mac — the gateway is localhost-only and there's no telemetry. See our Privacy Policy for details.",
+    "q3": "A model won't download or runs slowly. What can I do?",
+    "a3": "Make sure you have a stable internet connection for the first download, enough free disk space for the model, and enough free RAM. Smaller models run better on 8 GB Macs.",
+    "q4": "How do I report a bug or request a feature?",
+    "a4": "Email us with as much detail as you can — your macOS version, Mac model, and what happened. It helps us reproduce and fix issues faster.",
+    "q5": "How do I uninstall it?",
+    "a5": "Quit the app and move it to the Trash. Downloaded models and settings are stored locally and are removed with the app's data."
+  },
+  zh: {
+    "nav.product": "LocalGateAI", "nav.privacy": "隐私",
+    "title": "支持",
+    "lead": "使用 LocalGateAI 遇到问题？这里是联系方式和最常见问题的解答。",
+    "contact.h": "联系我们",
+    "contact.p": "给我们发邮件，我们通常会在 2 个工作日内回复。",
+    "req.h": "系统要求",
+    "req.1": "Apple Silicon（M1 及以后）的 Mac",
+    "req.2": "macOS 14 或更高版本",
+    "req.3": "至少 8GB 内存——7B 模型建议 16GB",
+    "req.4": "首次下载模型需要联网（之后可离线使用）",
+    "faq.h": "常见问题",
+    "q1": "如何把我的工具连接到 LocalGateAI？",
+    "a1": "复制 LocalGateAI 里显示的 Base URL 和 API Key，粘贴到任何支持自定义 OpenAI 兼容接入点的应用里（Cursor、Cherry Studio、Dify 等）。",
+    "q2": "我的数据私密吗？",
+    "a2": "是的。一切都在你的 Mac 上本地运行——网关仅限本机，无遥测。详见我们的隐私政策。",
+    "q3": "模型下载不了或运行很慢，怎么办？",
+    "a3": "请确认首次下载时网络稳定、磁盘有足够空间、内存有足够余量。较小的模型在 8GB 的 Mac 上表现更好。",
+    "q4": "如何反馈 Bug 或提出功能建议？",
+    "a4": "给我们发邮件，尽量附上细节——你的 macOS 版本、Mac 型号，以及发生了什么。这能帮我们更快复现并修复问题。",
+    "q5": "如何卸载？",
+    "a5": "退出应用并把它移到废纸篓。已下载的模型和设置都本地保存，会随应用数据一起被删除。"
+  },
+  ja: {
+    "nav.product": "LocalGateAI", "nav.privacy": "プライバシー",
+    "title": "サポート",
+    "lead": "LocalGateAI でお困りですか？お問い合わせ方法と、よくある質問への回答をまとめました。",
+    "contact.h": "お問い合わせ",
+    "contact.p": "メールでご連絡ください。通常 2 営業日以内に返信します。",
+    "req.h": "動作環境",
+    "req.1": "Apple Silicon（M1 以降）搭載の Mac",
+    "req.2": "macOS 14 以降",
+    "req.3": "メモリ 8GB 以上 — 7B モデルには 16GB 推奨",
+    "req.4": "初回のモデルダウンロードにはインターネット接続が必要（以降はオフライン）",
+    "faq.h": "よくある質問",
+    "q1": "ツールを LocalGateAI に接続するには？",
+    "a1": "LocalGateAI に表示される Base URL と API Key をコピーし、カスタムの OpenAI 互換エンドポイントに対応したアプリ（Cursor、Cherry Studio、Dify など）に貼り付けてください。",
+    "q2": "データはプライベートですか？",
+    "a2": "はい。すべてあなたの Mac 上でローカルに動作します。ゲートウェイは localhost のみで、テレメトリもありません。詳しくはプライバシーポリシーをご覧ください。",
+    "q3": "モデルがダウンロードできない／動作が遅いときは？",
+    "a3": "初回ダウンロード時の安定したインターネット接続、モデル用の十分な空きディスク容量、十分な空きメモリをご確認ください。小型モデルは 8GB の Mac でも快適に動作します。",
+    "q4": "不具合の報告や機能リクエストは？",
+    "a4": "macOS のバージョン、Mac の機種、発生した状況など、できるだけ詳しくメールでお知らせください。再現と修正が早くなります。",
+    "q5": "アンインストール方法は？",
+    "a5": "アプリを終了してゴミ箱に移動してください。ダウンロードしたモデルと設定はローカルに保存されており、アプリのデータとともに削除されます。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
