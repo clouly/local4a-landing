@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Speak850 — Speak English with just 850 words</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="Speak850 teaches Basic English — C. K. Ogden's famous 850-word method — with flashcards, spaced repetition, and audio in 22 languages. One-time purchase, no subscription." />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f4f7fb;
+    --ink: #1d1d1f;
+    --ink-soft: #515154;
+    --ink-faint: #86868b;
+    --accent: #2563eb;
+    --accent-2: #10b981;
+    --line: #e5e5ea;
+    --hero-bg: #0a1124;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.8); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 760px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
+    font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .badge:hover { opacity: .92; transform: translateY(-1px); }
+
+  /* Hero */
+  .hero {
+    background: radial-gradient(1200px 600px at 50% -10%, #15224a 0%, var(--hero-bg) 60%);
+    color: #fff; text-align: center; padding: 92px 0 100px;
+  }
+  .hero .kicker { color: #9fb4ff; font-size: 14px; font-weight: 600; letter-spacing: .04em; }
+  .hero h1 { font-size: clamp(34px, 6vw, 58px); font-weight: 700; max-width: 17ch; margin: 14px auto 0; }
+  .hero .sub { color: #c7cede; font-size: clamp(16px, 2.4vw, 21px); max-width: 54ch; margin: 22px auto 0; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #c7cede; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+  .hero .tagline { color: #8893ad; font-size: 14px; margin-top: 26px; }
+
+  section { padding: 84px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(26px, 4vw, 40px); font-weight: 700; margin-top: 8px; max-width: 22ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 44px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature .ico { font-size: 24px; }
+  .feature h3 { font-size: 17px; margin: 12px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* Pro */
+  .pro-card {
+    margin-top: 40px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 36px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; align-items: center;
+  }
+  section.alt .pro-card { background: #fff; }
+  @media (max-width: 760px) { .pro-card { grid-template-columns: 1fr; gap: 24px; } }
+  .pro-list { list-style: none; display: grid; gap: 14px; }
+  .pro-list li { padding-left: 30px; position: relative; color: var(--ink-soft); font-size: 15.5px; }
+  .pro-list li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent-2); font-weight: 700; }
+  .price-box { text-align: center; background: var(--bg-soft); border-radius: var(--radius); padding: 28px; }
+  section.alt .price-box { background: var(--bg-soft); }
+  .price-box .amt { font-size: 38px; font-weight: 700; letter-spacing: -0.02em; }
+  .price-box .per { color: var(--ink-faint); font-size: 14px; margin-top: 4px; }
+  .price-box .free-note { color: var(--ink-soft); font-size: 13.5px; margin-top: 16px; }
+
+  /* Languages */
+  .langs { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .langs span { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; font-size: 14px; color: var(--ink-soft); }
+  section.alt .langs span { background: #fff; }
+
+  /* Privacy strip */
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy .lede { color: #c7cede; }
+  .privacy .links { margin-top: 24px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
+  .privacy .links a { color: #9fb4ff; }
+  .privacy .links a:hover { color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; flex-direction: column; gap: 14px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
+  .disclaimer { color: var(--ink-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">🗣️</span> Speak850</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
+      <a href="#method" data-i18n="nav.method">Method</a>
+      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#pro" data-i18n="nav.pro">Pro</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+    <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+    <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-i18n="hero.kicker">Basic English · 850 words</div>
+    <h1 data-i18n="hero.title">Speak English with just 850 words</h1>
+    <p class="sub" data-i18n="hero.sub">Speak850 teaches Basic English — the famous method created by linguist C. K. Ogden: a small, carefully chosen core of 850 words that can express almost any everyday idea. Learn it in your own language.</p>
+    <div class="cta-row">
+      <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+      <a href="#method" class="secondary" data-i18n="hero.ctaSecondary">See how it works ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">A complete 14-week course · 22 languages · One-time purchase, no subscription</p>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section id="method">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="method.eyebrow">The method</span>
+    <h2 class="section-title" data-i18n="method.title">A small core that says almost anything</h2>
+    <p class="lede" data-i18n="method.body">In 1930, linguist C. K. Ogden chose 850 words that, used well, can express almost any everyday idea. Master this core and you can communicate right away — then grow naturally toward full English. Speak850 turns that method into a guided, modern course you do a little of each day.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="features.eyebrow">What you get</span>
+    <h2 class="section-title" data-i18n="features.title">Everything to build the habit</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">📚</div><h3 data-i18n="feat.course.title">A complete 14-week course</h3><p data-i18n="feat.course.body">All 852 Basic English words, grouped into clear topics — People, Actions, House &amp; Home, The Body, and more.</p></div>
+      <div class="feature"><div class="ico">🧠</div><h3 data-i18n="feat.srs.title">Smart flashcards (SRS)</h3><p data-i18n="feat.srs.body">Spaced repetition brings each word back exactly when you're about to forget it.</p></div>
+      <div class="feature"><div class="ico">🔥</div><h3 data-i18n="feat.habit.title">A daily habit that sticks</h3><p data-i18n="feat.habit.body">A daily review queue, study streak, daily goal, and an optional reminder keep you going.</p></div>
+      <div class="feature"><div class="ico">🔊</div><h3 data-i18n="feat.audio.title">Listen and learn</h3><p data-i18n="feat.audio.body">Clear, natural pronunciation for every word and example sentence.</p></div>
+      <div class="feature"><div class="ico">🌍</div><h3 data-i18n="feat.lang.title">Learn in your language</h3><p data-i18n="feat.lang.body">Every word and example is shown with a translation you understand — 22 native languages.</p></div>
+      <div class="feature"><div class="ico">🔒</div><h3 data-i18n="feat.privacy.title">Private by design</h3><p data-i18n="feat.privacy.body">Progress stays on your device and syncs through your own iCloud. No accounts, no ads, no tracking.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRO -->
+<section id="pro">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="pro.eyebrow">Speak850 Pro</span>
+    <h2 class="section-title" data-i18n="pro.title">Unlock the full experience</h2>
+    <p class="lede" data-i18n="pro.body">The first topics and a daily review are free, so you can feel the method before you decide. Pro unlocks everything — once.</p>
+    <div class="pro-card">
+      <ul class="pro-list">
+        <li data-i18n="pro.1">The complete course — every topic and all 852 words.</li>
+        <li data-i18n="pro.2">Unlimited mixed practice: choose the meaning, pick the word, listen, and spell.</li>
+        <li data-i18n="pro.3">Example Sentences — every word in real context, with audio and a translation in your language.</li>
+        <li data-i18n="pro.4">Word Combinations &amp; Grammar guides — the heart of the method: a few verbs plus direction words (get up, put on, take off…) and a handful of simple rules let you say almost anything.</li>
+      </ul>
+      <div class="price-box" id="get">
+        <div class="amt">$4.99</div>
+        <div class="per" data-i18n="pro.price.note">One-time purchase · No subscription</div>
+        <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+        <a href="#" class="badge" style="margin-top:18px" data-i18n="cta.appstore">Coming to the App Store</a>
+        <div class="free-note" data-i18n="pro.free">Free updates. Start free, upgrade when you're ready.</div>
+      </div>
+    </div>
+    <div class="langs" aria-hidden="true">
+      <span>English</span><span>中文</span><span>Español</span><span>हिन्दी</span><span>العربية</span><span>Português</span><span>Français</span><span>Deutsch</span><span>日本語</span><span>한국어</span><span>Русский</span><span>+12</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#9fb4ff" data-i18n="privacy.eyebrow">Privacy</span>
+    <h2 class="section-title" data-i18n="privacy.title">Your progress is yours alone</h2>
+    <p class="lede" data-i18n="privacy.body">Speak850 collects nothing. Your learning progress and settings are stored on your device and synced only through your own private iCloud. No accounts, no analytics, no advertising, no third-party tracking.</p>
+    <div class="links">
+      <a href="speak850-privacy.html" data-i18n="privacy.link">Read the full Privacy Policy &amp; Terms →</a>
+      <a href="speak850-support.html" data-i18n="support.link">Support →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-top">
+      <div class="logo"><span class="bolt">🗣️</span> Speak850</div>
+      <span class="foot-links">
+        <a href="speak850-privacy.html" data-i18n="footer.privacy">Privacy &amp; Terms</a> ·
+        <a href="speak850-support.html" data-i18n="footer.support">Support</a> ·
+        <a href="../index.html" data-i18n="footer.more">More by Local4a</a>
+      </span>
+    </div>
+    <p class="disclaimer" data-i18n="footer.disclaimer">Speak850 is an independent app that teaches the public-domain Basic English method. It is not affiliated with or endorsed by C. K. Ogden's estate or the Orthological Institute. All example sentences and translations are original. © 2026 Local4a.</p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.desc": "Speak850 teaches Basic English — C. K. Ogden's famous 850-word method — with flashcards, spaced repetition, and audio in 22 languages. One-time purchase, no subscription.",
+    "nav.portfolio": "← All products", "nav.method": "Method", "nav.features": "Features", "nav.pro": "Pro",
+    "cta.appstore": "Coming to the App Store",
+    "hero.kicker": "Basic English · 850 words",
+    "hero.title": "Speak English with just 850 words",
+    "hero.sub": "Speak850 teaches Basic English — the famous method created by linguist C. K. Ogden: a small, carefully chosen core of 850 words that can express almost any everyday idea. Learn it in your own language.",
+    "hero.ctaSecondary": "See how it works ↓",
+    "hero.tagline": "A complete 14-week course · 22 languages · One-time purchase, no subscription",
+    "method.eyebrow": "The method",
+    "method.title": "A small core that says almost anything",
+    "method.body": "In 1930, linguist C. K. Ogden chose 850 words that, used well, can express almost any everyday idea. Master this core and you can communicate right away — then grow naturally toward full English. Speak850 turns that method into a guided, modern course you do a little of each day.",
+    "features.eyebrow": "What you get",
+    "features.title": "Everything to build the habit",
+    "feat.course.title": "A complete 14-week course",
+    "feat.course.body": "All 852 Basic English words, grouped into clear topics — People, Actions, House & Home, The Body, and more.",
+    "feat.srs.title": "Smart flashcards (SRS)",
+    "feat.srs.body": "Spaced repetition brings each word back exactly when you're about to forget it.",
+    "feat.habit.title": "A daily habit that sticks",
+    "feat.habit.body": "A daily review queue, study streak, daily goal, and an optional reminder keep you going.",
+    "feat.audio.title": "Listen and learn",
+    "feat.audio.body": "Clear, natural pronunciation for every word and example sentence.",
+    "feat.lang.title": "Learn in your language",
+    "feat.lang.body": "Every word and example is shown with a translation you understand — 22 native languages.",
+    "feat.privacy.title": "Private by design",
+    "feat.privacy.body": "Progress stays on your device and syncs through your own iCloud. No accounts, no ads, no tracking.",
+    "pro.eyebrow": "Speak850 Pro",
+    "pro.title": "Unlock the full experience",
+    "pro.body": "The first topics and a daily review are free, so you can feel the method before you decide. Pro unlocks everything — once.",
+    "pro.1": "The complete course — every topic and all 852 words.",
+    "pro.2": "Unlimited mixed practice: choose the meaning, pick the word, listen, and spell.",
+    "pro.3": "Example Sentences — every word in real context, with audio and a translation in your language.",
+    "pro.4": "Word Combinations & Grammar guides — the heart of the method: a few verbs plus direction words (get up, put on, take off…) and a handful of simple rules let you say almost anything.",
+    "pro.price.note": "One-time purchase · No subscription",
+    "pro.free": "Free updates. Start free, upgrade when you're ready.",
+    "privacy.eyebrow": "Privacy",
+    "privacy.title": "Your progress is yours alone",
+    "privacy.body": "Speak850 collects nothing. Your learning progress and settings are stored on your device and synced only through your own private iCloud. No accounts, no analytics, no advertising, no third-party tracking.",
+    "privacy.link": "Read the full Privacy Policy & Terms →",
+    "support.link": "Support →",
+    "footer.privacy": "Privacy & Terms", "footer.support": "Support", "footer.more": "More by Local4a",
+    "footer.disclaimer": "Speak850 is an independent app that teaches the public-domain Basic English method. It is not affiliated with or endorsed by C. K. Ogden's estate or the Orthological Institute. All example sentences and translations are original. © 2026 Local4a."
+  },
+  zh: {
+    "meta.desc": "Speak850 用闪卡、间隔重复和真人发音，教你 Basic English——C. K. Ogden 著名的 850 词方法，支持 22 种语言。一次买断，无订阅。",
+    "nav.portfolio": "← 全部产品", "nav.method": "方法", "nav.features": "功能", "nav.pro": "Pro",
+    "cta.appstore": "即将登陆 App Store",
+    "hero.kicker": "Basic English · 850 词",
+    "hero.title": "用 850 个词，就能开口说英语",
+    "hero.sub": "Speak850 教你 Basic English——语言学家 C. K. Ogden 创立的著名方法：精心挑选的 850 个核心词，几乎能表达任何日常意思。用你自己的母语来学。",
+    "hero.ctaSecondary": "看看怎么学 ↓",
+    "hero.tagline": "完整 14 周课程 · 22 种语言 · 一次买断，无订阅",
+    "method.eyebrow": "方法",
+    "method.title": "一个小内核，几乎能表达一切",
+    "method.body": "1930 年，语言学家 C. K. Ogden 选出了 850 个词——用得好，几乎能表达任何日常意思。掌握这个内核，你立刻就能交流，再自然地扩展到完整英语。Speak850 把这套方法做成了一门有引导的现代课程，每天学一点。",
+    "features.eyebrow": "你能得到什么",
+    "features.title": "养成习惯所需的一切",
+    "feat.course.title": "完整的 14 周课程",
+    "feat.course.body": "全部 852 个 Basic English 词汇，按清晰的主题分组——人物、动作、家居、身体等等。",
+    "feat.srs.title": "智能闪卡（间隔重复）",
+    "feat.srs.body": "间隔重复会在你即将遗忘的那一刻，正好把这个词带回来。",
+    "feat.habit.title": "能坚持的每日习惯",
+    "feat.habit.body": "每日复习队列、学习连胜、每日目标，以及可选的提醒，帮你坚持下去。",
+    "feat.audio.title": "边听边学",
+    "feat.audio.body": "每个单词和例句都有清晰、自然的发音。",
+    "feat.lang.title": "用母语学习",
+    "feat.lang.body": "每个单词和例句都配有你看得懂的翻译——支持 22 种母语。",
+    "feat.privacy.title": "天生注重隐私",
+    "feat.privacy.body": "学习进度留在你的设备上，只通过你自己的 iCloud 同步。无账号、无广告、无追踪。",
+    "pro.eyebrow": "Speak850 Pro",
+    "pro.title": "解锁完整体验",
+    "pro.body": "开头的几个主题和每日复习免费，先感受方法再决定。Pro 一次性解锁全部内容。",
+    "pro.1": "完整课程——所有主题、全部 852 个词。",
+    "pro.2": "无限混合练习：选含义、选单词、听音、拼写。",
+    "pro.3": "例句——在真实语境中看到每个词，带音频和你母语的翻译。",
+    "pro.4": "词语搭配与语法指南——方法的精髓：几个动词加上方向词（get up、put on、take off……）和几条简单规则，就几乎能表达一切。",
+    "pro.price.note": "一次买断 · 无订阅",
+    "pro.free": "免费更新。先免费上手，准备好了再升级。",
+    "privacy.eyebrow": "隐私",
+    "privacy.title": "你的进度，只属于你",
+    "privacy.body": "Speak850 不收集任何数据。你的学习进度和设置保存在设备上，只通过你自己的私有 iCloud 同步。无账号、无分析、无广告、无第三方追踪。",
+    "privacy.link": "阅读完整隐私政策与使用条款 →",
+    "support.link": "支持 →",
+    "footer.privacy": "隐私与条款", "footer.support": "支持", "footer.more": "Local4a 更多产品",
+    "footer.disclaimer": "Speak850 是一款独立 App，教授属于公共领域的 Basic English 方法。它与 C. K. Ogden 遗产管理方或 Orthological Institute 无关联，也未获其背书。所有例句和翻译均为原创。© 2026 Local4a。"
+  },
+  ja: {
+    "meta.desc": "Speak850 は、フラッシュカード・間隔反復・音声で Basic English（C. K. Ogden の有名な 850 語メソッド）を教えます。22 言語対応。買い切り、サブスクなし。",
+    "nav.portfolio": "← すべての製品", "nav.method": "メソッド", "nav.features": "機能", "nav.pro": "Pro",
+    "cta.appstore": "App Store に近日登場",
+    "hero.kicker": "Basic English · 850 語",
+    "hero.title": "850 語だけで、英語を話す",
+    "hero.sub": "Speak850 は Basic English を教えます——言語学者 C. K. Ogden が生んだ有名なメソッド。厳選された 850 語のコアで、日常のほとんどの考えを表現できます。あなたの母語で学べます。",
+    "hero.ctaSecondary": "学び方を見る ↓",
+    "hero.tagline": "完全な 14 週間コース · 22 言語 · 買い切り、サブスクなし",
+    "method.eyebrow": "メソッド",
+    "method.title": "小さなコアで、ほぼ何でも言える",
+    "method.body": "1930 年、言語学者 C. K. Ogden は、うまく使えば日常のほとんどの考えを表現できる 850 語を選びました。このコアを身につければすぐに伝えられ、やがて自然に完全な英語へと広がります。Speak850 はそのメソッドを、毎日少しずつ進めるガイド付きのモダンなコースにしました。",
+    "features.eyebrow": "得られるもの",
+    "features.title": "習慣化に必要なすべて",
+    "feat.course.title": "完全な 14 週間コース",
+    "feat.course.body": "852 語すべての Basic English を、わかりやすいトピック（人、動作、家、体など）に整理。",
+    "feat.srs.title": "スマートなフラッシュカード（SRS）",
+    "feat.srs.body": "間隔反復が、忘れかけたちょうどそのときに各単語を呼び戻します。",
+    "feat.habit.title": "続く毎日の習慣",
+    "feat.habit.body": "毎日の復習キュー、連続記録、デイリーゴール、任意のリマインダーが継続を支えます。",
+    "feat.audio.title": "聴いて学ぶ",
+    "feat.audio.body": "すべての単語と例文に、クリアで自然な発音。",
+    "feat.lang.title": "母語で学ぶ",
+    "feat.lang.body": "すべての単語と例文に、あなたがわかる翻訳付き——22 の母語に対応。",
+    "feat.privacy.title": "設計からしてプライベート",
+    "feat.privacy.body": "進捗はデバイスに保存され、あなた自身の iCloud だけで同期。アカウント・広告・トラッキングなし。",
+    "pro.eyebrow": "Speak850 Pro",
+    "pro.title": "すべての体験をアンロック",
+    "pro.body": "最初のトピックと毎日の復習は無料。メソッドを体験してから決められます。Pro は一度ですべてをアンロック。",
+    "pro.1": "完全なコース——すべてのトピックと 852 語すべて。",
+    "pro.2": "無制限のミックス練習：意味を選ぶ、単語を選ぶ、聴く、つづる。",
+    "pro.3": "例文——すべての単語を実際の文脈で。音声とあなたの言語の翻訳付き。",
+    "pro.4": "語の組み合わせ＆文法ガイド——メソッドの核心：いくつかの動詞と方向語（get up、put on、take off…）、そしてわずかなルールで、ほぼ何でも言えます。",
+    "pro.price.note": "買い切り · サブスクなし",
+    "pro.free": "アップデート無料。無料で始めて、準備ができたらアップグレード。",
+    "privacy.eyebrow": "プライバシー",
+    "privacy.title": "進捗はあなただけのもの",
+    "privacy.body": "Speak850 は何も収集しません。学習の進捗と設定はデバイスに保存され、あなた自身のプライベートな iCloud だけで同期されます。アカウント・分析・広告・第三者トラッキングはありません。",
+    "privacy.link": "プライバシーポリシーと利用規約を読む →",
+    "support.link": "サポート →",
+    "footer.privacy": "プライバシーと規約", "footer.support": "サポート", "footer.more": "Local4a の他の製品",
+    "footer.disclaimer": "Speak850 は、パブリックドメインの Basic English メソッドを教える独立したアプリです。C. K. Ogden の遺産管理団体や Orthological Institute とは提携・推奨関係にありません。すべての例文と翻訳はオリジナルです。© 2026 Local4a。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
