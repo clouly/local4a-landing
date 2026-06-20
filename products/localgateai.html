@@ -162,7 +162,7 @@
       <button data-lang="zh">中</button>
       <button data-lang="ja">日</button>
     </div>
-    <a href="#waitlist" class="btn small" data-i18n="cta.waitlist">Join the waitlist</a>
+    <a href="https://apps.apple.com/app/localgate-ai/id6777746336" target="_blank" rel="noopener" class="btn small" data-i18n="cta.download">Download on the App Store</a>
   </div>
 </header>
 
@@ -172,7 +172,7 @@
     <h1 data-i18n="hero.title">Use local AI in the tools you already love</h1>
     <p class="sub" data-i18n="hero.sub">LocalGateAI turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.</p>
     <div class="cta-row">
-      <a href="#waitlist" class="btn" data-i18n="cta.waitlist">Join the waitlist</a>
+      <a href="https://apps.apple.com/app/localgate-ai/id6777746336" target="_blank" rel="noopener" class="btn" data-i18n="cta.download"> Download on the App Store</a>
       <a href="#how" class="secondary" data-i18n="hero.ctaSecondary">See how it works ↓</a>
     </div>
     <p class="tagline" data-i18n="hero.tagline">Private by default · Zero API cost · Apple Silicon native</p>
@@ -285,17 +285,14 @@
 </section>
 
 <!-- FINAL CTA -->
-<section id="waitlist" class="alt final">
+<section id="get" class="alt final">
   <div class="wrap">
     <h2 class="section-title" data-i18n="final.title">Run AI on your own terms</h2>
-    <p class="lede" data-i18n="final.body">Join the waitlist for early access, beta builds, and launch updates.</p>
-    <!-- TODO: 把 action 换成你的表单后端（Formspree / Mailchimp / 自建 API） -->
-    <form id="waitlist-form" class="signup" action="#" method="post">
-      <input type="email" name="email" required data-i18n-attr="placeholder" data-i18n="email.placeholder" placeholder="your@email.com" />
-      <button type="submit" class="btn" data-i18n="cta.waitlist">Join the waitlist</button>
-    </form>
-    <p id="waitlist-success" class="success" hidden data-i18n="final.success">Thanks! You're on the list — we'll email you when it's ready.</p>
-    <p class="micro" data-i18n="final.micro">No spam. Just launch news.</p>
+    <p class="lede" data-i18n="final.body">LocalGateAI is available now on the App Store. Free to download.</p>
+    <div class="signup">
+      <a href="https://apps.apple.com/app/localgate-ai/id6777746336" target="_blank" rel="noopener" class="btn" data-i18n="cta.download"> Download on the App Store</a>
+    </div>
+    <p class="micro" data-i18n="final.micro">Apple Silicon · macOS 14+</p>
   </div>
 </section>
 
@@ -318,6 +315,7 @@ const I18N = {
     "nav.portfolio": "← All products",
     "nav.howItWorks": "How it works", "nav.features": "Features", "nav.models": "Models", "nav.privacy": "Privacy", "nav.faq": "FAQ",
     "cta.waitlist": "Join the waitlist",
+    "cta.download": "Download on the App Store",
     "hero.title": "Use local AI in the tools you already love",
     "hero.sub": "LocalGateAI turns your Mac into a private AI endpoint. Point Cursor, Cherry Studio, or any tool that supports a custom base URL at your own machine — and run on local models instead of cloud APIs.",
     "hero.tagline": "Private by default · Zero API cost · Apple Silicon native",
@@ -377,8 +375,8 @@ const I18N = {
     "faq.q6": "Can I use my own models?",
     "faq.a6": "Built-in models cover most needs at launch. Custom model support is on the roadmap.",
     "final.title": "Run AI on your own terms",
-    "final.body": "Join the waitlist for early access, beta builds, and launch updates.",
-    "final.micro": "No spam. Just launch news.",
+    "final.body": "LocalGateAI is available now on the App Store. Free to download.",
+    "final.micro": "Apple Silicon · macOS 14+",
     "final.success": "We've opened your email app — just hit send and you're on the list.",
     "email.placeholder": "your@email.com",
     "footer.tagline": "Local-first AI · Private by default",
@@ -389,6 +387,7 @@ const I18N = {
     "nav.portfolio": "← 全部产品",
     "nav.howItWorks": "工作原理", "nav.features": "功能", "nav.models": "模型", "nav.privacy": "隐私", "nav.faq": "常见问题",
     "cta.waitlist": "加入等候名单",
+    "cta.download": "在 App Store 下载",
     "hero.title": "在你已经在用的工具里，用上本地 AI",
     "hero.sub": "LocalGateAI 把你的 Mac 变成一个私有 AI 接入点。把 Cursor、Cherry Studio，或任何支持自定义接入地址的工具指向你自己的电脑，用本地模型替代云端 API。",
     "hero.tagline": "默认隐私 · 零 API 费用 · Apple Silicon 原生",
@@ -448,8 +447,8 @@ const I18N = {
     "faq.q6": "能用我自己的模型吗？",
     "faq.a6": "内置模型在发布时已能覆盖大部分需求。自定义模型支持在路线图上。",
     "final.title": "用你自己的方式跑 AI",
-    "final.body": "加入等候名单，获取早期访问、Beta 版本和发布更新。",
-    "final.micro": "不发垃圾邮件，只发上线消息。",
+    "final.body": "LocalGateAI 现已在 App Store 上线，免费下载。",
+    "final.micro": "Apple Silicon · macOS 14+",
     "final.success": "已为你打开邮件应用——点发送即完成加入。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "本地优先 AI · 默认隐私",
@@ -460,6 +459,7 @@ const I18N = {
     "nav.portfolio": "← すべての製品",
     "nav.howItWorks": "仕組み", "nav.features": "機能", "nav.models": "モデル", "nav.privacy": "プライバシー", "nav.faq": "よくある質問",
     "cta.waitlist": "ウェイトリストに登録",
+    "cta.download": "App Store でダウンロード",
     "hero.title": "使い慣れたツールで、ローカル AI を",
     "hero.sub": "LocalGateAI は、あなたの Mac をプライベートな AI エンドポイントに変えます。Cursor や Cherry Studio など、カスタムベース URL に対応したツールを自分のマシンに向けるだけで、クラウド API の代わりにローカルモデルで動作します。",
     "hero.tagline": "プライバシー第一 · API 費用ゼロ · Apple Silicon ネイティブ",
@@ -519,8 +519,8 @@ const I18N = {
     "faq.q6": "自分のモデルを使えますか？",
     "faq.a6": "リリース時点では内蔵モデルで大半のニーズをカバー。カスタムモデル対応は予定にあります。",
     "final.title": "AI を、あなたのルールで",
-    "final.body": "早期アクセス、ベータ版、リリース情報を受け取るにはウェイトリストへ。",
-    "final.micro": "スパムなし。お知らせのみ。",
+    "final.body": "LocalGateAI は App Store で配信中。無料でダウンロードできます。",
+    "final.micro": "Apple Silicon · macOS 14+",
     "final.success": "メールアプリを開きました。送信すれば登録完了です。",
     "email.placeholder": "your@email.com",
     "footer.tagline": "ローカルファースト AI · プライバシー第一",
@@ -561,23 +561,6 @@ document.querySelectorAll(".langbar button").forEach(b => {
   b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
 });
 applyLang(detectLang());
-
-// Waitlist form — opens the visitor's email client (mailto) to send their signup
-const WAITLIST_EMAIL = "hello.local4a@gmail.com"; // 改这里就能换收件邮箱
-const waitlistForm = document.getElementById("waitlist-form");
-if (waitlistForm) {
-  waitlistForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!waitlistForm.reportValidity()) return;
-    const email = (waitlistForm.querySelector('input[name="email"]').value || "").trim();
-    const subject = encodeURIComponent("LocalGateAI waitlist signup");
-    const body = encodeURIComponent("Please add me to the LocalGateAI waitlist.\n\nEmail: " + email);
-    window.location.href = "mailto:" + WAITLIST_EMAIL + "?subject=" + subject + "&body=" + body;
-    waitlistForm.hidden = true;
-    const ok = document.getElementById("waitlist-success");
-    if (ok) ok.hidden = false;
-  });
-}
 </script>
 
 </body>
