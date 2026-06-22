@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brain Recovery — Gentle cognitive & speech practice after stroke</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="Brain Recovery is a calm daily training aid for life after stroke — attention, memory, and speech exercises with big, simple screens, in 12 languages. Private and offline." />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f1f7f6;
+    --ink: #1d2b2a;
+    --ink-soft: #4a5b59;
+    --ink-faint: #8a9b99;
+    --accent: #0d9488;
+    --accent-2: #f59e0b;
+    --line: #e3ecea;
+    --hero-bg: #0a1f1d;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.82); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 800px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
+    font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .badge:hover { opacity: .92; transform: translateY(-1px); }
+
+  .hero {
+    background: radial-gradient(1200px 600px at 50% -10%, #123c38 0%, var(--hero-bg) 60%);
+    color: #fff; text-align: center; padding: 92px 0 100px;
+  }
+  .hero .kicker { color: #7fd1c8; font-size: 14px; font-weight: 600; letter-spacing: .04em; }
+  .hero h1 { font-size: clamp(32px, 5.6vw, 56px); font-weight: 700; max-width: 18ch; margin: 14px auto 0; }
+  .hero .sub { color: #c3d6d3; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #c3d6d3; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+  .hero .tagline { color: #6f8b87; font-size: 14px; margin-top: 26px; }
+
+  section { padding: 80px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 24ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px; }
+  @media (max-width: 700px) { .features { grid-template-columns: 1fr; } }
+  .feature { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  section.alt .feature { background: #fff; }
+  .feature .ico { font-size: 24px; }
+  .feature h3 { font-size: 17px; margin: 12px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  @media (max-width: 760px) { .pillars { grid-template-columns: 1fr; } }
+  .pillar .ico { font-size: 22px; }
+  .pillar h3 { font-size: 16px; margin: 10px 0 5px; }
+  .pillar p { color: var(--ink-soft); font-size: 14px; }
+
+  /* Disclaimer band */
+  .note {
+    margin-top: 48px; background: #fff7ed; border: 1px solid #fde6c8; border-radius: var(--radius);
+    padding: 22px 24px; color: #8a5a13; font-size: 14.5px; line-height: 1.6;
+  }
+  .note strong { color: #6b4310; }
+
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy .lede { color: #c3d6d3; }
+  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 64ch; }
+  .privacy li { padding-left: 30px; position: relative; color: #d4e3e1; font-size: 16px; }
+  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
+  .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
+  .privacy .links a { color: #7fd1c8; }
+  .privacy .links a:hover { color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; flex-direction: column; gap: 14px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
+  .disclaimer { color: var(--ink-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">🧠</span> Brain Recovery</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
+      <a href="#cognitive" data-i18n="nav.cognitive">Cognitive</a>
+      <a href="#speech" data-i18n="nav.speech">Speech</a>
+      <a href="#design" data-i18n="nav.design">Design</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+    <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+    <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-i18n="hero.kicker">For life after stroke</div>
+    <h1 data-i18n="hero.title">A few gentle minutes of practice each day</h1>
+    <p class="sub" data-i18n="hero.sub">Brain Recovery is a cognitive and speech training aid for people recovering after a stroke. Big text, big buttons, simple steps, and an encouraging tone — something to do together with family.</p>
+    <div class="cta-row">
+      <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+      <a href="#cognitive" class="secondary" data-i18n="hero.ctaSecondary">See the exercises ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">12 languages · Works offline · No account · Privacy first</p>
+  </div>
+</section>
+
+<!-- COGNITIVE -->
+<section id="cognitive">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="cog.eyebrow">Cognitive training</span>
+    <h2 class="section-title" data-i18n="cog.title">Practice attention, memory, and number sense</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">🔢</div><h3 data-i18n="cog.1.t">Schulte Table</h3><p data-i18n="cog.1.b">Tap the numbers in order to train attention and visual scanning.</p></div>
+      <div class="feature"><div class="ico">🃏</div><h3 data-i18n="cog.2.t">Memory Match</h3><p data-i18n="cog.2.b">Flip cards and match the pairs to train memory.</p></div>
+      <div class="feature"><div class="ico">➕</div><h3 data-i18n="cog.3.t">Calculation</h3><p data-i18n="cog.3.b">Simple add, subtract, and multiply to keep number sense sharp.</p></div>
+      <div class="feature"><div class="ico">🔁</div><h3 data-i18n="cog.4.t">Sequence Memory</h3><p data-i18n="cog.4.b">Recall a number sequence and tap it back to train working memory.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEECH -->
+<section id="speech" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="sp.eyebrow">Speech training</span>
+    <h2 class="section-title" data-i18n="sp.title">Practice speaking and understanding</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">🖼️</div><h3 data-i18n="sp.1.t">Name the Picture</h3><p data-i18n="sp.1.b">Say what you see. On-device speech recognition can check your pronunciation, or you can self-assess.</p></div>
+      <div class="feature"><div class="ico">👂</div><h3 data-i18n="sp.2.t">Listen &amp; Choose</h3><p data-i18n="sp.2.b">Hear a word and tap the matching picture to practice comprehension.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN / KEEP GOING -->
+<section id="design">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="dsn.eyebrow">Built to keep going</span>
+    <h2 class="section-title" data-i18n="dsn.title">Gentle by design, easy to stick with</h2>
+    <div class="pillars">
+      <div class="pillar"><div class="ico">📅</div><h3 data-i18n="dsn.1.t">A daily plan &amp; streak</h3><p data-i18n="dsn.1.b">A simple plan for today and a day streak help build a calm daily habit.</p></div>
+      <div class="pillar"><div class="ico">👨‍👩‍👧</div><h3 data-i18n="dsn.2.t">A family view</h3><p data-i18n="dsn.2.b">Family can follow progress charts, training mix, and history — switch views with one tap.</p></div>
+      <div class="pillar"><div class="ico">🔤</div><h3 data-i18n="dsn.3.t">Large, simple screens</h3><p data-i18n="dsn.3.b">Big text and big buttons, designed for patients, with an encouraging tone throughout.</p></div>
+      <div class="pillar"><div class="ico">🌍</div><h3 data-i18n="dsn.4.t">12 languages</h3><p data-i18n="dsn.4.b">Switch the interface language anytime, right inside the app.</p></div>
+      <div class="pillar"><div class="ico">✈️</div><h3 data-i18n="dsn.5.t">Offline, no account</h3><p data-i18n="dsn.5.b">Everything works offline. No sign-up, no registration needed.</p></div>
+      <div class="pillar"><div class="ico">🔒</div><h3 data-i18n="dsn.6.t">Private by design</h3><p data-i18n="dsn.6.b">All training data stays on your device. Nothing is uploaded to a server.</p></div>
+    </div>
+
+    <div class="note" id="get">
+      <strong data-i18n="note.h">Please note.</strong>
+      <span data-i18n="note.b"> Brain Recovery is a rehabilitation training aid. It is not a medical device and does not provide diagnosis or treatment, and it does not replace professional medical or rehabilitation care. Please follow your doctor's or therapist's guidance, and seek medical care if you feel unwell.</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#7fd1c8" data-i18n="pri.eyebrow">Privacy</span>
+    <h2 class="section-title" data-i18n="pri.title">Your data stays on your device</h2>
+    <p class="lede" data-i18n="pri.body">Brain Recovery keeps all training data on your own device. No servers, no personal information, no ads, no third-party tracking.</p>
+    <ul>
+      <li data-i18n="pri.1">Training records and settings are stored only on your device.</li>
+      <li data-i18n="pri.2">The microphone is used only during "Name the Picture" — audio is never stored or uploaded.</li>
+      <li data-i18n="pri.3">No account, no analytics, no advertising SDKs.</li>
+      <li data-i18n="pri.4">Clear your data anytime in Settings, or by deleting the app.</li>
+    </ul>
+    <div class="links">
+      <a href="brainrecovery-privacy.html" data-i18n="pri.link">Read the full Privacy Policy →</a>
+      <a href="brainrecovery-support.html" data-i18n="support.link">Support →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-top">
+      <div class="logo"><span class="bolt">🧠</span> Brain Recovery</div>
+      <span class="foot-links">
+        <a href="brainrecovery-privacy.html" data-i18n="footer.privacy">Privacy</a> ·
+        <a href="brainrecovery-support.html" data-i18n="footer.support">Support</a> ·
+        <a href="../index.html" data-i18n="footer.more">More by Local4a</a>
+      </span>
+    </div>
+    <p class="disclaimer" data-i18n="footer.disclaimer">Brain Recovery is a rehabilitation training aid, not a medical device, and does not replace professional medical care. © 2026 Local4a.</p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.desc": "Brain Recovery is a calm daily training aid for life after stroke — attention, memory, and speech exercises with big, simple screens, in 12 languages. Private and offline.",
+    "nav.portfolio": "← All products", "nav.cognitive": "Cognitive", "nav.speech": "Speech", "nav.design": "Design",
+    "cta.appstore": "Coming to the App Store",
+    "hero.kicker": "For life after stroke",
+    "hero.title": "A few gentle minutes of practice each day",
+    "hero.sub": "Brain Recovery is a cognitive and speech training aid for people recovering after a stroke. Big text, big buttons, simple steps, and an encouraging tone — something to do together with family.",
+    "hero.ctaSecondary": "See the exercises ↓",
+    "hero.tagline": "12 languages · Works offline · No account · Privacy first",
+    "cog.eyebrow": "Cognitive training",
+    "cog.title": "Practice attention, memory, and number sense",
+    "cog.1.t": "Schulte Table", "cog.1.b": "Tap the numbers in order to train attention and visual scanning.",
+    "cog.2.t": "Memory Match", "cog.2.b": "Flip cards and match the pairs to train memory.",
+    "cog.3.t": "Calculation", "cog.3.b": "Simple add, subtract, and multiply to keep number sense sharp.",
+    "cog.4.t": "Sequence Memory", "cog.4.b": "Recall a number sequence and tap it back to train working memory.",
+    "sp.eyebrow": "Speech training",
+    "sp.title": "Practice speaking and understanding",
+    "sp.1.t": "Name the Picture", "sp.1.b": "Say what you see. On-device speech recognition can check your pronunciation, or you can self-assess.",
+    "sp.2.t": "Listen & Choose", "sp.2.b": "Hear a word and tap the matching picture to practice comprehension.",
+    "dsn.eyebrow": "Built to keep going",
+    "dsn.title": "Gentle by design, easy to stick with",
+    "dsn.1.t": "A daily plan & streak", "dsn.1.b": "A simple plan for today and a day streak help build a calm daily habit.",
+    "dsn.2.t": "A family view", "dsn.2.b": "Family can follow progress charts, training mix, and history — switch views with one tap.",
+    "dsn.3.t": "Large, simple screens", "dsn.3.b": "Big text and big buttons, designed for patients, with an encouraging tone throughout.",
+    "dsn.4.t": "12 languages", "dsn.4.b": "Switch the interface language anytime, right inside the app.",
+    "dsn.5.t": "Offline, no account", "dsn.5.b": "Everything works offline. No sign-up, no registration needed.",
+    "dsn.6.t": "Private by design", "dsn.6.b": "All training data stays on your device. Nothing is uploaded to a server.",
+    "note.h": "Please note.",
+    "note.b": " Brain Recovery is a rehabilitation training aid. It is not a medical device and does not provide diagnosis or treatment, and it does not replace professional medical or rehabilitation care. Please follow your doctor's or therapist's guidance, and seek medical care if you feel unwell.",
+    "pri.eyebrow": "Privacy",
+    "pri.title": "Your data stays on your device",
+    "pri.body": "Brain Recovery keeps all training data on your own device. No servers, no personal information, no ads, no third-party tracking.",
+    "pri.1": "Training records and settings are stored only on your device.",
+    "pri.2": "The microphone is used only during \"Name the Picture\" — audio is never stored or uploaded.",
+    "pri.3": "No account, no analytics, no advertising SDKs.",
+    "pri.4": "Clear your data anytime in Settings, or by deleting the app.",
+    "pri.link": "Read the full Privacy Policy →",
+    "support.link": "Support →",
+    "footer.privacy": "Privacy", "footer.support": "Support", "footer.more": "More by Local4a",
+    "footer.disclaimer": "Brain Recovery is a rehabilitation training aid, not a medical device, and does not replace professional medical care. © 2026 Local4a."
+  },
+  zh: {
+    "meta.desc": "脑康复是一款面向脑卒中后人群的认知与言语训练辅助工具——注意力、记忆与言语练习，大字简单界面，支持 12 种语言。数据本地、可离线。",
+    "nav.portfolio": "← 全部产品", "nav.cognitive": "认知", "nav.speech": "言语", "nav.design": "设计",
+    "cta.appstore": "即将登陆 App Store",
+    "hero.kicker": "为脑卒中后而设计",
+    "hero.title": "每天几分钟，温和地练一练",
+    "hero.sub": "脑康复是一款面向脑卒中（脑梗、中风）后人群的认知与言语训练辅助工具。大字体、大按钮、操作简单、以鼓励为主——可以和家人一起坚持。",
+    "hero.ctaSecondary": "看看练习内容 ↓",
+    "hero.tagline": "12 种语言 · 可离线 · 无需账号 · 注重隐私",
+    "cog.eyebrow": "认知训练",
+    "cog.title": "练注意力、记忆力和计算力",
+    "cog.1.t": "舒尔特方格", "cog.1.b": "按顺序点数字，练注意力和视觉搜索。",
+    "cog.2.t": "记忆配对", "cog.2.b": "翻牌找一对，练记忆力。",
+    "cog.3.t": "计算练习", "cog.3.b": "简单加减乘，保持数感。",
+    "cog.4.t": "顺序记忆", "cog.4.b": "记住数字再依次点出，练工作记忆。",
+    "sp.eyebrow": "言语训练",
+    "sp.title": "练习说出来，也练习听懂",
+    "sp.1.t": "看图说话", "sp.1.b": "看图说出名称。可用设备本地的语音识别判断发音，也可自我评估。",
+    "sp.2.t": "听词选图", "sp.2.b": "听到发音，点出对应的图，练语言理解。",
+    "dsn.eyebrow": "为坚持而设计",
+    "dsn.title": "温和的设计，更容易坚持",
+    "dsn.1.t": "今日计划与连续打卡", "dsn.1.b": "简单的今日计划加上连续打卡，帮助养成平和的每日习惯。",
+    "dsn.2.t": "家属端", "dsn.2.b": "家属可查看进度图表、训练分布与历史记录——一键切换患者端 / 家属端。",
+    "dsn.3.t": "大字、简单界面", "dsn.3.b": "大字体、大按钮，专为患者设计，全程以鼓励为主。",
+    "dsn.4.t": "12 种语言", "dsn.4.b": "App 内随时切换界面语言。",
+    "dsn.5.t": "离线、无需账号", "dsn.5.b": "全部功能离线可用，无需注册账号。",
+    "dsn.6.t": "天生注重隐私", "dsn.6.b": "所有训练数据都保存在本机，不上传服务器。",
+    "note.h": "温馨提示。",
+    "note.b": " 脑康复是一款康复辅助训练工具。它不是医疗器械，不提供诊断或治疗，也不能替代专业医疗与康复治疗。请遵循医生或康复治疗师的指导；如有不适请及时就医。",
+    "pri.eyebrow": "隐私",
+    "pri.title": "你的数据，留在你的设备上",
+    "pri.body": "脑康复把所有训练数据保存在你自己的设备上。不上传服务器、不收集个人信息、没有广告、没有第三方追踪。",
+    "pri.1": "训练记录和设置只保存在你的设备本机。",
+    "pri.2": "麦克风仅在「看图说话」中使用——录音内容不会被保存、不会上传。",
+    "pri.3": "无账号、无统计分析、无广告 SDK。",
+    "pri.4": "可随时在「设置」中清除数据，或删除应用即清除全部数据。",
+    "pri.link": "阅读完整隐私政策 →",
+    "support.link": "支持 →",
+    "footer.privacy": "隐私", "footer.support": "支持", "footer.more": "Local4a 更多产品",
+    "footer.disclaimer": "脑康复是一款康复辅助训练工具，不是医疗器械，不能替代专业医疗。© 2026 Local4a。"
+  },
+  ja: {
+    "meta.desc": "Brain Recovery は脳卒中後のための、おだやかな毎日のトレーニング補助です。注意・記憶・言語の練習を、大きく簡単な画面で。12 言語対応。データは端末内・オフライン。",
+    "nav.portfolio": "← すべての製品", "nav.cognitive": "認知", "nav.speech": "言語", "nav.design": "設計",
+    "cta.appstore": "App Store に近日登場",
+    "hero.kicker": "脳卒中後の毎日に",
+    "hero.title": "毎日、数分のやさしい練習を",
+    "hero.sub": "Brain Recovery は、脳卒中後の方のための認知・言語トレーニング補助です。大きな文字、大きなボタン、簡単な手順、はげましのトーン——ご家族と一緒に続けられます。",
+    "hero.ctaSecondary": "練習内容を見る ↓",
+    "hero.tagline": "12 言語 · オフライン対応 · アカウント不要 · プライバシー第一",
+    "cog.eyebrow": "認知トレーニング",
+    "cog.title": "注意・記憶・数の感覚を練習",
+    "cog.1.t": "シュルテ表", "cog.1.b": "数字を順番にタップして、注意力と視覚的な探索を鍛えます。",
+    "cog.2.t": "記憶マッチ", "cog.2.b": "カードをめくってペアを合わせ、記憶力を鍛えます。",
+    "cog.3.t": "計算練習", "cog.3.b": "簡単な足し算・引き算・かけ算で数の感覚を保ちます。",
+    "cog.4.t": "順序記憶", "cog.4.b": "数字の並びを覚えて順にタップし、ワーキングメモリを鍛えます。",
+    "sp.eyebrow": "言語トレーニング",
+    "sp.title": "話す練習と、聞いて理解する練習",
+    "sp.1.t": "絵の名前を言う", "sp.1.b": "見たものを声に出します。端末内の音声認識で発音を確認したり、自己評価もできます。",
+    "sp.2.t": "聞いて選ぶ", "sp.2.b": "言葉を聞いて、対応する絵をタップし、理解力を練習します。",
+    "dsn.eyebrow": "続けるための設計",
+    "dsn.title": "やさしい設計で、続けやすく",
+    "dsn.1.t": "今日のプランと連続記録", "dsn.1.b": "シンプルな今日のプランと連続記録が、おだやかな毎日の習慣づくりを助けます。",
+    "dsn.2.t": "家族ビュー", "dsn.2.b": "家族が進捗グラフ・トレーニングの内訳・履歴を確認できます。ワンタップで切り替え。",
+    "dsn.3.t": "大きく簡単な画面", "dsn.3.b": "大きな文字と大きなボタン。患者さんのための設計で、全体をはげますトーンに。",
+    "dsn.4.t": "12 言語", "dsn.4.b": "アプリ内でいつでもインターフェース言語を切り替えられます。",
+    "dsn.5.t": "オフライン・アカウント不要", "dsn.5.b": "すべてオフラインで動作。サインアップや登録は不要です。",
+    "dsn.6.t": "設計からプライベート", "dsn.6.b": "すべてのトレーニングデータは端末内に保存。サーバーへアップロードしません。",
+    "note.h": "ご注意。",
+    "note.b": " Brain Recovery はリハビリのトレーニング補助です。医療機器ではなく、診断や治療を行うものではありません。専門的な医療・リハビリの代わりにはなりません。医師や療法士の指導に従い、体調がすぐれないときは医療機関を受診してください。",
+    "pri.eyebrow": "プライバシー",
+    "pri.title": "データは端末内にとどまります",
+    "pri.body": "Brain Recovery は、すべてのトレーニングデータをあなた自身の端末内に保存します。サーバーなし、個人情報なし、広告なし、第三者トラッキングなし。",
+    "pri.1": "トレーニング記録と設定は、端末内にのみ保存されます。",
+    "pri.2": "マイクは「絵の名前を言う」でのみ使用——音声は保存も送信もされません。",
+    "pri.3": "アカウントなし、分析なし、広告 SDK なし。",
+    "pri.4": "設定からいつでもデータを消去でき、アプリを削除すればすべて消えます。",
+    "pri.link": "プライバシーポリシー全文を読む →",
+    "support.link": "サポート →",
+    "footer.privacy": "プライバシー", "footer.support": "サポート", "footer.more": "Local4a の他の製品",
+    "footer.disclaimer": "Brain Recovery はリハビリのトレーニング補助であり、医療機器ではなく、専門的な医療の代わりにはなりません。© 2026 Local4a。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>

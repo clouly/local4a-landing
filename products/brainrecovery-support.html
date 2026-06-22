@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Support — Brain Recovery</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f1f7f6; --ink: #1d2b2a; --ink-soft: #4a5b59;
+    --ink-faint: #8a9b99; --accent: #0d9488; --line: #e3ecea; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.82); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 56px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .lead { font-size: 18px; color: var(--ink-soft); margin-top: 18px; }
+  .contact-card { margin-top: 30px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .contact-card h2 { font-size: 18px; }
+  .contact-card p { color: var(--ink-soft); margin-top: 8px; }
+  .contact-card .email { display: inline-block; margin-top: 12px; font-size: 18px; font-weight: 600; }
+  h2.sec { font-size: 22px; margin: 48px 0 14px; letter-spacing: -0.01em; }
+  .reqs { margin: 0 0 0 20px; color: var(--ink-soft); }
+  .reqs li { margin-top: 6px; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 600; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--ink-faint); font-weight: 400; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { color: var(--ink-soft); margin-top: 10px; font-size: 15.5px; }
+  .med { margin-top: 40px; background: #fff7ed; border: 1px solid #fde6c8; border-radius: var(--radius); padding: 18px 20px; color: #8a5a13; font-size: 14px; line-height: 1.6; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="brainrecovery.html" class="logo"><span class="bolt">🧠</span> Brain Recovery</a>
+    <nav class="nav-links">
+      <a href="brainrecovery.html" data-i18n="nav.product">Overview</a>
+      <a href="brainrecovery-privacy.html" data-i18n="nav.privacy">Privacy</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 data-i18n="title">Support</h1>
+    <p class="lead" data-i18n="lead">Need a hand with Brain Recovery? Here's how to reach us and answers to common questions.</p>
+
+    <div class="contact-card">
+      <h2 data-i18n="contact.h">Get in touch</h2>
+      <p data-i18n="contact.p">Email us and we'll typically reply within 2 business days.</p>
+      <a class="email" href="mailto:hello.local4a@gmail.com?subject=Brain%20Recovery%20Support">hello.local4a@gmail.com</a>
+    </div>
+
+    <h2 class="sec" data-i18n="req.h">Requirements</h2>
+    <ul class="reqs">
+      <li data-i18n="req.1">iPhone or iPad running iOS / iPadOS 18 or later</li>
+      <li data-i18n="req.2">Works fully offline — no account or internet connection required</li>
+      <li data-i18n="req.3">Microphone access (optional) for the "Name the Picture" speech exercise</li>
+    </ul>
+
+    <h2 class="sec" data-i18n="faq.h">Common questions</h2>
+    <div class="faq">
+      <details><summary data-i18n="q1">How do I get started?</summary><p data-i18n="a1">Open the app, choose your language, and start with today's plan. Exercises are short — a few minutes a day is enough to build a habit. There's no account to create.</p></details>
+      <details><summary data-i18n="q2">What's the difference between the patient and family views?</summary><p data-i18n="a2">The patient view focuses on simple, encouraging exercises. The family view shows progress charts, training mix, and history so family can follow along. Switch between them with one tap.</p></details>
+      <details><summary data-i18n="q3">Is my data private?</summary><p data-i18n="a3">Yes. All training data stays on your device — nothing is uploaded to a server. The microphone is used only during the speech exercise, and audio is never stored or uploaded. See our Privacy Policy for details.</p></details>
+      <details><summary data-i18n="q4">How do I clear my data?</summary><p data-i18n="a4">Go to Settings → Clear training data inside the app, or delete the app to remove everything.</p></details>
+      <details><summary data-i18n="q5">Which languages are supported?</summary><p data-i18n="a5">12 languages, switchable anytime in the app's settings.</p></details>
+      <details><summary data-i18n="q6">What is "Support us" in the settings?</summary><p data-i18n="a6">It's a fully optional tip to support development, handled by Apple's in-app purchase. It's voluntary and does not unlock any features — the app's exercises are the same with or without it.</p></details>
+    </div>
+
+    <div class="med" data-i18n="med">Brain Recovery is a rehabilitation training aid. It is not a medical device and does not replace professional medical diagnosis or therapy. Please follow your doctor's or therapist's guidance, and seek medical care if you feel unwell.</div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">🧠</span> Brain Recovery</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "Overview", "nav.privacy": "Privacy",
+    "title": "Support",
+    "lead": "Need a hand with Brain Recovery? Here's how to reach us and answers to common questions.",
+    "contact.h": "Get in touch",
+    "contact.p": "Email us and we'll typically reply within 2 business days.",
+    "req.h": "Requirements",
+    "req.1": "iPhone or iPad running iOS / iPadOS 18 or later",
+    "req.2": "Works fully offline — no account or internet connection required",
+    "req.3": "Microphone access (optional) for the \"Name the Picture\" speech exercise",
+    "faq.h": "Common questions",
+    "q1": "How do I get started?",
+    "a1": "Open the app, choose your language, and start with today's plan. Exercises are short — a few minutes a day is enough to build a habit. There's no account to create.",
+    "q2": "What's the difference between the patient and family views?",
+    "a2": "The patient view focuses on simple, encouraging exercises. The family view shows progress charts, training mix, and history so family can follow along. Switch between them with one tap.",
+    "q3": "Is my data private?",
+    "a3": "Yes. All training data stays on your device — nothing is uploaded to a server. The microphone is used only during the speech exercise, and audio is never stored or uploaded. See our Privacy Policy for details.",
+    "q4": "How do I clear my data?",
+    "a4": "Go to Settings → Clear training data inside the app, or delete the app to remove everything.",
+    "q5": "Which languages are supported?",
+    "a5": "12 languages, switchable anytime in the app's settings.",
+    "q6": "What is \"Support us\" in the settings?",
+    "a6": "It's a fully optional tip to support development, handled by Apple's in-app purchase. It's voluntary and does not unlock any features — the app's exercises are the same with or without it.",
+    "med": "Brain Recovery is a rehabilitation training aid. It is not a medical device and does not replace professional medical diagnosis or therapy. Please follow your doctor's or therapist's guidance, and seek medical care if you feel unwell."
+  },
+  zh: {
+    "nav.product": "产品概览", "nav.privacy": "隐私",
+    "title": "支持",
+    "lead": "使用脑康复遇到问题？这里是联系方式和常见问题的解答。",
+    "contact.h": "联系我们",
+    "contact.p": "给我们发邮件，我们通常会在 2 个工作日内回复。",
+    "req.h": "使用要求",
+    "req.1": "运行 iOS / iPadOS 18 或更高版本的 iPhone 或 iPad",
+    "req.2": "完全离线可用——无需账号或网络连接",
+    "req.3": "「看图说话」言语练习需要麦克风权限（可选）",
+    "faq.h": "常见问题",
+    "q1": "如何开始？",
+    "a1": "打开应用，选择语言，从「今日计划」开始。每个练习都很短——每天几分钟就能养成习惯。无需注册账号。",
+    "q2": "患者端和家属端有什么区别？",
+    "a2": "患者端专注于简单、鼓励为主的练习；家属端可查看进度图表、训练分布与历史记录，方便家人陪伴。一键即可切换。",
+    "q3": "我的数据私密吗？",
+    "a3": "是的。所有训练数据都保存在你的设备上——不上传服务器。麦克风仅在言语练习时使用，录音内容不会被保存或上传。详见我们的隐私政策。",
+    "q4": "如何清除数据？",
+    "a4": "在应用内进入「设置 → 清除训练数据」，或删除应用即可清除全部数据。",
+    "q5": "支持哪些语言？",
+    "a5": "支持 12 种语言，可随时在应用设置中切换。",
+    "q6": "设置里的「支持我们」是什么？",
+    "a6": "这是完全自愿的赞赏，用于支持开发，由 Apple 内购处理。它是自愿的，不会解锁任何功能——无论是否赞赏，应用的练习内容完全一样。",
+    "med": "脑康复是一款康复辅助训练工具。它不是医疗器械，不能替代专业医疗诊断与康复治疗。请遵循医生或康复治疗师的指导；如有不适请及时就医。"
+  },
+  ja: {
+    "nav.product": "概要", "nav.privacy": "プライバシー",
+    "title": "サポート",
+    "lead": "Brain Recovery でお困りですか？お問い合わせ方法と、よくある質問への回答です。",
+    "contact.h": "お問い合わせ",
+    "contact.p": "メールでご連絡ください。通常 2 営業日以内に返信します。",
+    "req.h": "動作環境",
+    "req.1": "iOS / iPadOS 18 以降を搭載した iPhone または iPad",
+    "req.2": "完全オフラインで動作——アカウントやインターネット接続は不要",
+    "req.3": "「絵の名前を言う」練習にはマイクへのアクセス（任意）が必要",
+    "faq.h": "よくある質問",
+    "q1": "どうやって始めますか？",
+    "a1": "アプリを開いて言語を選び、「今日のプラン」から始めてください。各練習は短く、1 日数分で習慣になります。アカウント登録は不要です。",
+    "q2": "患者ビューと家族ビューの違いは？",
+    "a2": "患者ビューはシンプルではげましのある練習に集中します。家族ビューでは進捗グラフ・トレーニングの内訳・履歴を確認でき、家族が見守れます。ワンタップで切り替えられます。",
+    "q3": "データはプライベートですか？",
+    "a3": "はい。すべてのトレーニングデータは端末内に保存され、サーバーへアップロードされません。マイクは言語練習中のみ使用し、音声は保存も送信もされません。詳しくはプライバシーポリシーをご覧ください。",
+    "q4": "データを消去するには？",
+    "a4": "アプリ内の「設定 → トレーニングデータを消去」から消去するか、アプリを削除するとすべて消えます。",
+    "q5": "対応言語は？",
+    "a5": "12 言語に対応し、アプリの設定でいつでも切り替えられます。",
+    "q6": "設定の「応援する」とは？",
+    "a6": "開発を応援するための完全に任意のチップで、Apple のアプリ内課金で処理されます。任意であり、機能はアンロックされません——支払っても支払わなくても、練習内容は同じです。",
+    "med": "Brain Recovery はリハビリのトレーニング補助です。医療機器ではなく、専門的な医療の診断や治療の代わりにはなりません。医師や療法士の指導に従い、体調がすぐれないときは医療機関を受診してください。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
