@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Chess Arcana</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f5f3fb; --ink: #1b1726; --ink-soft: #4d4660;
+    --ink-faint: #8b829e; --accent: #6d28d9; --line: #e8e3f2; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.82); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 56px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .updated { color: var(--ink-faint); font-size: 14px; margin-top: 10px; }
+  .summary { margin-top: 18px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; font-size: 16px; color: var(--ink); }
+  .legal h2 { font-size: 21px; margin: 40px 0 6px; letter-spacing: -0.01em; }
+  .legal p { color: var(--ink-soft); margin-top: 8px; }
+  .legal ul { color: var(--ink-soft); margin: 8px 0 0 20px; }
+  .legal li { margin-top: 6px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="chessarcana.html" class="logo"><span class="bolt">♛</span> Chess Arcana</a>
+    <nav class="nav-links">
+      <a href="chessarcana.html" data-i18n="nav.product">Overview</a>
+      <a href="chessarcana-support.html" data-i18n="nav.support">Support</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap legal">
+    <h1 data-i18n="title">Privacy Policy</h1>
+    <p class="updated"><span data-i18n="effective">Effective date</span>: 2026-06-30 · <span data-i18n="appname">Chess Arcana</span></p>
+    <p class="summary" data-i18n="summary">In one line: Chess Arcana has no servers of its own. Your profile and game data stay on your device, online play runs through Apple's Game Center, and there is no third-party tracking.</p>
+
+    <h2 data-i18n="collect.h">Data we process</h2>
+    <ul>
+      <li data-i18n="collect.1"><b>Game data</b> (rating, win/loss/draw records, streaks, recent games, settings): stored only on your device using the system's local storage.</li>
+      <li data-i18n="collect.2"><b>Online play</b>: matchmaking and real-time moves are handled by Apple's Game Center and peer-to-peer connections. We do not run our own servers and do not store your matches.</li>
+      <li data-i18n="collect.3"><b>Purchases</b>: hero packs are processed by Apple's In-App Purchase. We receive only whether an item was purchased — never your payment details.</li>
+    </ul>
+
+    <h2 data-i18n="dont.h">What we do not do</h2>
+    <ul>
+      <li data-i18n="dont.1">We do not collect names, emails, phone numbers, location, or other personally identifying information.</li>
+      <li data-i18n="dont.2">No third-party advertising, analytics, or tracking SDKs.</li>
+      <li data-i18n="dont.3">We do not track you across apps or websites.</li>
+      <li data-i18n="dont.4">We never sell or share your data.</li>
+    </ul>
+
+    <h2 data-i18n="gc.h">Game Center</h2>
+    <p data-i18n="gc.p">Online matches use Apple's Game Center (sign-in, matchmaking, friend invites) and Apple's peer-to-peer connectivity. Your use of Game Center is governed by Apple's privacy policy. Within a match, only the information needed to play — such as moves and your Game Center display name — is exchanged with your opponent through Apple's services.</p>
+
+    <h2 data-i18n="store.h">Storage &amp; deletion</h2>
+    <p data-i18n="store.p">Your game data lives on your device. Deleting the app removes it. You can manage Game Center data in your device's Settings under Game Center.</p>
+
+    <h2 data-i18n="child.h">Children</h2>
+    <p data-i18n="child.p">This app is not directed at children under 13 and does not knowingly collect their personal information.</p>
+
+    <h2 data-i18n="contact.h">Contact</h2>
+    <p data-i18n="contact.p">For privacy questions, contact us at <a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a>.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">♛</span> Chess Arcana</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "Overview", "nav.support": "Support",
+    "title": "Privacy Policy", "effective": "Effective date", "appname": "Chess Arcana",
+    "summary": "In one line: Chess Arcana has no servers of its own. Your profile and game data stay on your device, online play runs through Apple's Game Center, and there is no third-party tracking.",
+    "collect.h": "Data we process",
+    "collect.1": "Game data (rating, win/loss/draw records, streaks, recent games, settings): stored only on your device using the system's local storage.",
+    "collect.2": "Online play: matchmaking and real-time moves are handled by Apple's Game Center and peer-to-peer connections. We do not run our own servers and do not store your matches.",
+    "collect.3": "Purchases: hero packs are processed by Apple's In-App Purchase. We receive only whether an item was purchased — never your payment details.",
+    "dont.h": "What we do not do",
+    "dont.1": "We do not collect names, emails, phone numbers, location, or other personally identifying information.",
+    "dont.2": "No third-party advertising, analytics, or tracking SDKs.",
+    "dont.3": "We do not track you across apps or websites.",
+    "dont.4": "We never sell or share your data.",
+    "gc.h": "Game Center",
+    "gc.p": "Online matches use Apple's Game Center (sign-in, matchmaking, friend invites) and Apple's peer-to-peer connectivity. Your use of Game Center is governed by Apple's privacy policy. Within a match, only the information needed to play — such as moves and your Game Center display name — is exchanged with your opponent through Apple's services.",
+    "store.h": "Storage & deletion",
+    "store.p": "Your game data lives on your device. Deleting the app removes it. You can manage Game Center data in your device's Settings under Game Center.",
+    "child.h": "Children",
+    "child.p": "This app is not directed at children under 13 and does not knowingly collect their personal information.",
+    "contact.h": "Contact",
+    "contact.p": "For privacy questions, contact us at "
+  },
+  zh: {
+    "nav.product": "产品概览", "nav.support": "支持",
+    "title": "隐私政策", "effective": "生效日期", "appname": "Chess Arcana",
+    "summary": "一句话总结：Chess Arcana 没有自己的服务器。你的资料和游戏数据保存在设备上，联机对战通过 Apple 的 Game Center 进行，且没有任何第三方追踪。",
+    "collect.h": "我们处理哪些数据",
+    "collect.1": "游戏数据（积分、胜/负/和战绩、连胜连败、最近对局、设置）：仅使用系统本地存储保存在你的设备上。",
+    "collect.2": "联机对战：匹配和实时走子由 Apple 的 Game Center 与点对点连接处理。我们不运营自有服务器，也不存储你的对局。",
+    "collect.3": "购买：角色包由 Apple 内购处理。我们只会知道某个商品是否已购买——从不接触你的支付信息。",
+    "dont.h": "我们不做的事",
+    "dont.1": "不收集姓名、邮箱、电话、位置等个人身份信息。",
+    "dont.2": "不接入第三方广告、统计或追踪 SDK。",
+    "dont.3": "不会跨应用或网站追踪你。",
+    "dont.4": "不会把任何数据出售或分享给第三方。",
+    "gc.h": "Game Center",
+    "gc.p": "联机对战使用 Apple 的 Game Center（登录、匹配、好友邀请）以及 Apple 的点对点连接。你对 Game Center 的使用受 Apple 隐私政策约束。在一局对战中，只有进行游戏所需的信息——例如走子和你的 Game Center 显示名——会通过 Apple 的服务与对手交换。",
+    "store.h": "数据存储与删除",
+    "store.p": "你的游戏数据保存在设备本地，删除应用即清除。你可在设备「设置 → Game Center」中管理 Game Center 数据。",
+    "child.h": "儿童",
+    "child.p": "本应用不面向 13 岁以下儿童，也不会刻意收集其个人信息。",
+    "contact.h": "联系我们",
+    "contact.p": "如有隐私相关问题，请联系： "
+  },
+  ja: {
+    "nav.product": "概要", "nav.support": "サポート",
+    "title": "プライバシーポリシー", "effective": "発効日", "appname": "Chess Arcana",
+    "summary": "要点：Chess Arcana は独自のサーバーを持ちません。プロフィールとゲームデータは端末内に保存され、オンライン対戦は Apple の Game Center を通じて行われ、第三者トラッキングはありません。",
+    "collect.h": "処理するデータ",
+    "collect.1": "ゲームデータ（レーティング、勝/敗/分の戦績、連勝連敗、最近の対局、設定）：システムのローカルストレージを使い、端末内にのみ保存されます。",
+    "collect.2": "オンライン対戦：マッチングとリアルタイムの手は、Apple の Game Center と P2P 接続が処理します。当社は独自サーバーを運用せず、対局を保存しません。",
+    "collect.3": "購入：ヒーローパックは Apple のアプリ内課金で処理されます。当社が受け取るのは購入の有無のみで、支払い情報には一切触れません。",
+    "dont.h": "行わないこと",
+    "dont.1": "氏名、メール、電話番号、位置情報などの個人を特定できる情報を収集しません。",
+    "dont.2": "第三者の広告・分析・トラッキング SDK はありません。",
+    "dont.3": "アプリやサイトをまたいであなたを追跡しません。",
+    "dont.4": "データを販売・共有することは決してありません。",
+    "gc.h": "Game Center",
+    "gc.p": "オンライン対戦は Apple の Game Center（サインイン、マッチング、友達招待）と Apple の P2P 接続を使用します。Game Center の利用には Apple のプライバシーポリシーが適用されます。対戦中は、プレイに必要な情報——手や Game Center の表示名など——のみが Apple のサービスを通じて相手と交換されます。",
+    "store.h": "保存と削除",
+    "store.p": "ゲームデータは端末内に保存され、アプリを削除すると消えます。Game Center のデータは端末の「設定 → Game Center」で管理できます。",
+    "child.h": "子どもについて",
+    "child.p": "本アプリは 13 歳未満の子どもを対象としておらず、その個人情報を意図的に収集することはありません。",
+    "contact.h": "お問い合わせ",
+    "contact.p": "プライバシーに関するご質問は "
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    if (key === "contact.p") { el.childNodes[0].nodeValue = dict[key]; return; }
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>

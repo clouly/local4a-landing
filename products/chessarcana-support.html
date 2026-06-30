@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Support — Chess Arcana</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f5f3fb; --ink: #1b1726; --ink-soft: #4d4660;
+    --ink-faint: #8b829e; --accent: #6d28d9; --line: #e8e3f2; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.82); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 56px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .lead { font-size: 18px; color: var(--ink-soft); margin-top: 18px; }
+  .contact-card { margin-top: 30px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .contact-card h2 { font-size: 18px; }
+  .contact-card p { color: var(--ink-soft); margin-top: 8px; }
+  .contact-card .email { display: inline-block; margin-top: 12px; font-size: 18px; font-weight: 600; }
+  h2.sec { font-size: 22px; margin: 48px 0 14px; letter-spacing: -0.01em; }
+  .reqs { margin: 0 0 0 20px; color: var(--ink-soft); }
+  .reqs li { margin-top: 6px; }
+  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+  .faq summary { font-weight: 600; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--ink-faint); font-weight: 400; }
+  .faq details[open] summary::after { content: "–"; }
+  .faq p { color: var(--ink-soft); margin-top: 10px; font-size: 15.5px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="chessarcana.html" class="logo"><span class="bolt">♛</span> Chess Arcana</a>
+    <nav class="nav-links">
+      <a href="chessarcana.html" data-i18n="nav.product">Overview</a>
+      <a href="chessarcana-privacy.html" data-i18n="nav.privacy">Privacy</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <h1 data-i18n="title">Support</h1>
+    <p class="lead" data-i18n="lead">Need a hand with Chess Arcana? Here's how to reach us and answers to common questions.</p>
+
+    <div class="contact-card">
+      <h2 data-i18n="contact.h">Get in touch</h2>
+      <p data-i18n="contact.p">Email us and we'll typically reply within 2 business days.</p>
+      <a class="email" href="mailto:hello.local4a@gmail.com?subject=Chess%20Arcana%20Support">hello.local4a@gmail.com</a>
+    </div>
+
+    <h2 class="sec" data-i18n="req.h">Requirements</h2>
+    <ul class="reqs">
+      <li data-i18n="req.1">iPhone or iPad running iOS / iPadOS 17 or later</li>
+      <li data-i18n="req.2">A Game Center sign-in and an internet connection for online matches</li>
+      <li data-i18n="req.3">For online play with a friend, both players need their own device and Game Center account</li>
+    </ul>
+
+    <h2 class="sec" data-i18n="faq.h">Common questions</h2>
+    <div class="faq">
+      <details><summary data-i18n="q1">How do I play online?</summary><p data-i18n="a1">Sign in to Game Center, then choose a mode to auto-match an opponent, or invite a friend. Matches are real-time and peer-to-peer through Apple's Game Center.</p></details>
+      <details><summary data-i18n="q2">Do the paid heroes give a competitive advantage?</summary><p data-i18n="a2">No. Hero packs unlock new skills and flavor, never a base stat boost. Pieces keep their standard values and every skill plays by the real rules. You can win with the free hero.</p></details>
+      <details><summary data-i18n="q3">I bought a hero but it's not showing on my other device.</summary><p data-i18n="a3">Open the store in the app and tap "Restore Purchases" using the same Apple ID you bought with. Hero packs are non-consumable and restore at no extra cost.</p></details>
+      <details><summary data-i18n="q4">Online play won't connect.</summary><p data-i18n="a4">Make sure you're signed in to Game Center (device Settings → Game Center), have a stable internet connection, and that Game Center isn't restricted by Screen Time. Then try matchmaking again.</p></details>
+      <details><summary data-i18n="q5">How is a winner decided?</summary><p data-i18n="a5">By checkmate, using full FIDE rules — including stalemate, the fifty-move rule, threefold repetition, and insufficient material for draws. Skills never change how a win is decided.</p></details>
+      <details><summary data-i18n="q6">Which languages are supported?</summary><p data-i18n="a6">Ten languages, switchable in the app's settings.</p></details>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">♛</span> Chess Arcana</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "Overview", "nav.privacy": "Privacy",
+    "title": "Support",
+    "lead": "Need a hand with Chess Arcana? Here's how to reach us and answers to common questions.",
+    "contact.h": "Get in touch",
+    "contact.p": "Email us and we'll typically reply within 2 business days.",
+    "req.h": "Requirements",
+    "req.1": "iPhone or iPad running iOS / iPadOS 17 or later",
+    "req.2": "A Game Center sign-in and an internet connection for online matches",
+    "req.3": "For online play with a friend, both players need their own device and Game Center account",
+    "faq.h": "Common questions",
+    "q1": "How do I play online?",
+    "a1": "Sign in to Game Center, then choose a mode to auto-match an opponent, or invite a friend. Matches are real-time and peer-to-peer through Apple's Game Center.",
+    "q2": "Do the paid heroes give a competitive advantage?",
+    "a2": "No. Hero packs unlock new skills and flavor, never a base stat boost. Pieces keep their standard values and every skill plays by the real rules. You can win with the free hero.",
+    "q3": "I bought a hero but it's not showing on my other device.",
+    "a3": "Open the store in the app and tap \"Restore Purchases\" using the same Apple ID you bought with. Hero packs are non-consumable and restore at no extra cost.",
+    "q4": "Online play won't connect.",
+    "a4": "Make sure you're signed in to Game Center (device Settings → Game Center), have a stable internet connection, and that Game Center isn't restricted by Screen Time. Then try matchmaking again.",
+    "q5": "How is a winner decided?",
+    "a5": "By checkmate, using full FIDE rules — including stalemate, the fifty-move rule, threefold repetition, and insufficient material for draws. Skills never change how a win is decided.",
+    "q6": "Which languages are supported?",
+    "a6": "Ten languages, switchable in the app's settings."
+  },
+  zh: {
+    "nav.product": "产品概览", "nav.privacy": "隐私",
+    "title": "支持",
+    "lead": "使用 Chess Arcana 遇到问题？这里是联系方式和常见问题的解答。",
+    "contact.h": "联系我们",
+    "contact.p": "给我们发邮件，我们通常会在 2 个工作日内回复。",
+    "req.h": "使用要求",
+    "req.1": "运行 iOS / iPadOS 17 或更高版本的 iPhone 或 iPad",
+    "req.2": "联机对战需要登录 Game Center 并联网",
+    "req.3": "与好友联机时，双方各自需要一台设备和各自的 Game Center 账号",
+    "faq.h": "常见问题",
+    "q1": "如何联机对战？",
+    "a1": "登录 Game Center，然后选择一种模式自动匹配对手，或邀请好友。对局通过 Apple 的 Game Center 实时点对点进行。",
+    "q2": "付费角色会带来竞技优势吗？",
+    "a2": "不会。角色包解锁的是新技能与风格，绝不是基础数值加成。棋子保持标准价值，每个技能都按真实规则运行。用免费角色也能取胜。",
+    "q3": "我买了角色，但在另一台设备上没显示。",
+    "a3": "在应用商店页点击「恢复购买」，使用你购买时的同一个 Apple ID。角色包为非消耗型，可免费恢复。",
+    "q4": "联机连不上怎么办？",
+    "a4": "请确认已登录 Game Center（设备「设置 → Game Center」）、网络稳定，且 Game Center 未被「屏幕使用时间」限制，然后重新匹配。",
+    "q5": "胜负如何判定？",
+    "a5": "以将死判定，采用完整 FIDE 规则——和棋包含逼和、五十回合、三次重复局面与子力不足。技能不会改变胜负的判定方式。",
+    "q6": "支持哪些语言？",
+    "a6": "支持十种语言，可在应用设置中切换。"
+  },
+  ja: {
+    "nav.product": "概要", "nav.privacy": "プライバシー",
+    "title": "サポート",
+    "lead": "Chess Arcana でお困りですか？お問い合わせ方法と、よくある質問への回答です。",
+    "contact.h": "お問い合わせ",
+    "contact.p": "メールでご連絡ください。通常 2 営業日以内に返信します。",
+    "req.h": "動作環境",
+    "req.1": "iOS / iPadOS 17 以降を搭載した iPhone または iPad",
+    "req.2": "オンライン対戦には Game Center へのサインインとインターネット接続が必要",
+    "req.3": "友達とのオンライン対戦には、双方にそれぞれの端末と Game Center アカウントが必要",
+    "faq.h": "よくある質問",
+    "q1": "オンライン対戦の方法は？",
+    "a1": "Game Center にサインインし、モードを選んで自動マッチするか、友達を招待します。対戦は Apple の Game Center を通じたリアルタイムの P2P です。",
+    "q2": "有料ヒーローは対戦で有利になりますか？",
+    "a2": "いいえ。ヒーローパックが解放するのは新しいスキルと趣で、基礎数値の強化ではありません。駒は標準の価値を保ち、どのスキルも本物のルールで動きます。無料ヒーローでも勝てます。",
+    "q3": "ヒーローを購入したのに、別の端末で表示されません。",
+    "a3": "アプリのストアで「購入を復元」を、購入時と同じ Apple ID でタップしてください。ヒーローパックは非消耗型で、追加料金なしで復元できます。",
+    "q4": "オンラインに接続できません。",
+    "a4": "Game Center にサインインしているか（端末の「設定 → Game Center」）、安定したネット接続があるか、スクリーンタイムで Game Center が制限されていないかを確認し、もう一度マッチングしてください。",
+    "q5": "勝敗はどう決まりますか？",
+    "a5": "チェックメイトで決まり、完全な FIDE ルールを使います——引き分けはステイルメイト、50 手ルール、3 回同形反復、駒不足を含みます。スキルが勝敗の決め方を変えることはありません。",
+    "q6": "対応言語は？",
+    "a6": "10 言語に対応し、アプリの設定で切り替えられます。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>

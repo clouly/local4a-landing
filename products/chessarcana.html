@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chess Arcana — Fantasy chess, real chess mastery</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="Chess Arcana is online fantasy chess: full FIDE rules with a fair skill layer, six heroes, and real-time matches via Game Center. In 10 languages." />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f3fb;
+    --ink: #1b1726;
+    --ink-soft: #4d4660;
+    --ink-faint: #8b829e;
+    --accent: #6d28d9;
+    --accent-2: #e0a430;
+    --line: #e8e3f2;
+    --hero-bg: #0c0817;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.82); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 820px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
+    font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .badge:hover { opacity: .92; transform: translateY(-1px); }
+
+  .hero {
+    background: radial-gradient(1200px 600px at 50% -10%, #2a1659 0%, var(--hero-bg) 62%);
+    color: #fff; text-align: center; padding: 92px 0 100px;
+  }
+  .hero .kicker { color: #b79bff; font-size: 14px; font-weight: 600; letter-spacing: .04em; }
+  .hero h1 { font-size: clamp(33px, 5.6vw, 56px); font-weight: 700; max-width: 17ch; margin: 14px auto 0; }
+  .hero .sub { color: #cabfe4; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #cabfe4; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+  .hero .tagline { color: #7d6fa0; font-size: 14px; margin-top: 26px; }
+
+  section { padding: 80px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 24ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  section.alt .feature { background: #fff; }
+  .feature .ico { font-size: 24px; }
+  .feature h3 { font-size: 17px; margin: 12px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* Heroes */
+  .heroes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  @media (max-width: 860px) { .heroes { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .heroes { grid-template-columns: 1fr; } }
+  .heroc { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; background: var(--bg); }
+  section.alt .heroc { background: #fff; }
+  .heroc .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .heroc h3 { font-size: 17px; }
+  .heroc .pill { font-size: 11px; font-weight: 600; letter-spacing: .03em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .pill.free { color: var(--accent); background: rgba(109,40,217,.1); }
+  .pill.quest { color: #9a6b00; background: rgba(224,164,48,.16); }
+  .pill.paid { color: var(--ink-soft); background: var(--bg-soft); }
+  section.alt .pill.paid { background: var(--bg-soft); }
+  .heroc .skill { color: var(--ink); font-weight: 600; font-size: 14.5px; margin-top: 12px; }
+  .heroc p { color: var(--ink-soft); font-size: 14px; margin-top: 4px; }
+
+  .fair {
+    margin-top: 40px; background: #faf7ff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .fair h3 { font-size: 18px; }
+  .fair p { color: var(--ink-soft); font-size: 15px; margin-top: 8px; max-width: 70ch; }
+
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy .lede { color: #cabfe4; }
+  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 66ch; }
+  .privacy li { padding-left: 30px; position: relative; color: #d8cfee; font-size: 16px; }
+  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
+  .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
+  .privacy .links a { color: #b79bff; }
+  .privacy .links a:hover { color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; flex-direction: column; gap: 14px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
+  .disclaimer { color: var(--ink-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">♛</span> Chess Arcana</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
+      <a href="#layers" data-i18n="nav.layers">Gameplay</a>
+      <a href="#heroes" data-i18n="nav.heroes">Heroes</a>
+      <a href="#online" data-i18n="nav.online">Online</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+    <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+    <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-i18n="hero.kicker">Online fantasy chess</div>
+    <h1 data-i18n="hero.title">Fantasy chess, real chess mastery</h1>
+    <p class="sub" data-i18n="hero.sub">A full FIDE-rules chess engine with a fair fantasy skill layer on top. Six heroes, real-time online matches, and a board that always plays by the real rules.</p>
+    <div class="cta-row">
+      <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+      <a href="#layers" class="secondary" data-i18n="hero.ctaSecondary">See how it plays ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">10 languages · Game Center online · No stat-selling, ever</p>
+  </div>
+</section>
+
+<!-- LAYERS / GAMEPLAY -->
+<section id="layers">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="lay.eyebrow">How it plays</span>
+    <h2 class="section-title" data-i18n="lay.title">Serious chess underneath, magic on top</h2>
+    <p class="lede" data-i18n="lay.body">A pure rules engine handles legal moves, castling, en passant, promotion, check, checkmate, stalemate, the fifty-move rule, threefold repetition, and insufficient material — wins are decided by checkmate. On top sits an optional fantasy skill layer, and every skill move still obeys the real rules: you can never leave your own king in check.</p>
+    <div class="features">
+      <div class="feature"><div class="ico">♟️</div><h3 data-i18n="lay.1.t">Complete FIDE rules</h3><p data-i18n="lay.1.b">A tested, pure-function rules engine — the same correct chess across every mode.</p></div>
+      <div class="feature"><div class="ico">⏱️</div><h3 data-i18n="lay.2.t">Three timed modes</h3><p data-i18n="lay.2.b">Blitz 3+2, Rapid 10 min, and Fantasy 8 min — each with its own clock and queue.</p></div>
+      <div class="feature"><div class="ico">✨</div><h3 data-i18n="lay.3.t">Energy, not advantage</h3><p data-i18n="lay.3.b">Skill energy is earned by making moves — never bought. Skills add tactics, not raw power.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HEROES -->
+<section id="heroes" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="her.eyebrow">Six heroes</span>
+    <h2 class="section-title" data-i18n="her.title">Each hero brings one signature skill</h2>
+    <div class="heroes">
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.1.n">Timeweaver</h3><span class="pill free" data-i18n="badge.free">Free</span></div>
+        <div class="skill" data-i18n="her.1.s">Time Freeze</div>
+        <p data-i18n="her.1.b">Drain 8 seconds from your opponent's clock. Yours from the start.</p>
+      </div>
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.2.n">Phantom Knight</h3><span class="pill quest" data-i18n="badge.quest">Quest unlock</span></div>
+        <div class="skill" data-i18n="her.2.s">Knight Leap</div>
+        <p data-i18n="her.2.b">Unlock free by finishing your first Fantasy match.</p>
+      </div>
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.3.n">Aegis Queen</h3><span class="pill paid" data-i18n="badge.paid">Hero pack</span></div>
+        <div class="skill" data-i18n="her.3.s">Aegis Guard</div>
+        <p data-i18n="her.3.b">Shield one of your pieces from a single capture.</p>
+      </div>
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.4.n">Ember Bishop</h3><span class="pill paid" data-i18n="badge.paid">Hero pack</span></div>
+        <div class="skill" data-i18n="her.4.s">Ember Slash</div>
+        <p data-i18n="her.4.b">A blazing diagonal strike along the bishop's line.</p>
+      </div>
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.5.n">Tempest Rook</h3><span class="pill paid" data-i18n="badge.paid">Hero pack</span></div>
+        <div class="skill" data-i18n="her.5.s">Tempest Charge</div>
+        <p data-i18n="her.5.b">A thunderous rushing advance down the file.</p>
+      </div>
+      <div class="heroc">
+        <div class="top"><h3 data-i18n="her.6.n">Star Oracle</h3><span class="pill paid" data-i18n="badge.paid">Hero pack</span></div>
+        <div class="skill" data-i18n="her.6.s">Fate Swap</div>
+        <p data-i18n="her.6.b">Swap the fate of two pieces on the board.</p>
+      </div>
+    </div>
+
+    <div class="fair" id="get">
+      <h3 data-i18n="fair.h">Fair by design</h3>
+      <p data-i18n="fair.b">The four hero packs are separate one-time purchases at different prices. They unlock new skills and flavor — never a base stat boost. Pieces keep their standard values, and every skill still plays by the real rules. You can win the whole game with the free hero.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ONLINE -->
+<section id="online">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="onl.eyebrow">Play anyone</span>
+    <h2 class="section-title" data-i18n="onl.title">Real-time matches, all Apple</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">🌐</div><h3 data-i18n="onl.1.t">Game Center matchmaking</h3><p data-i18n="onl.1.b">Sign in with Game Center, auto-match a rival, or invite a friend — real-time, peer-to-peer.</p></div>
+      <div class="feature"><div class="ico">🏆</div><h3 data-i18n="onl.2.t">Ranks &amp; records</h3><p data-i18n="onl.2.b">A local rating (starting at 1200), win/loss/draw, streaks, and your recent games in the Arena.</p></div>
+      <div class="feature"><div class="ico">🎓</div><h3 data-i18n="onl.3.t">Academy</h3><p data-i18n="onl.3.b">Learn the rules and each hero's skill, so newcomers and club players both feel at home.</p></div>
+      <div class="feature"><div class="ico">🌍</div><h3 data-i18n="onl.4.t">10 languages</h3><p data-i18n="onl.4.b">Every screen fully localized across ten languages, switchable in the app.</p></div>
+      <div class="feature"><div class="ico">🎵</div><h3 data-i18n="onl.5.t">Music &amp; effects</h3><p data-i18n="onl.5.b">Lobby and match loops, move and capture sounds, per-hero skill audio, and haptics.</p></div>
+      <div class="feature"><div class="ico">♿</div><h3 data-i18n="onl.6.t">Accessible</h3><p data-i18n="onl.6.b">VoiceOver descriptions for board squares and comfortably sized controls.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#b79bff" data-i18n="pri.eyebrow">Privacy</span>
+    <h2 class="section-title" data-i18n="pri.title">No accounts of ours. No tracking.</h2>
+    <p class="lede" data-i18n="pri.body">Chess Arcana has no servers of its own. Your profile and stats stay on your device, online play runs through Apple's Game Center, and there's no third-party tracking.</p>
+    <ul>
+      <li data-i18n="pri.1">Your rating, records, and settings are stored on your device.</li>
+      <li data-i18n="pri.2">Online matches use Apple's Game Center, subject to Apple's privacy policy.</li>
+      <li data-i18n="pri.3">No third-party advertising, analytics, or tracking SDKs.</li>
+      <li data-i18n="pri.4">Purchases are handled by Apple; we never see your payment details.</li>
+    </ul>
+    <div class="links">
+      <a href="chessarcana-privacy.html" data-i18n="pri.link">Read the full Privacy Policy →</a>
+      <a href="chessarcana-support.html" data-i18n="support.link">Support →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-top">
+      <div class="logo"><span class="bolt">♛</span> Chess Arcana</div>
+      <span class="foot-links">
+        <a href="chessarcana-privacy.html" data-i18n="footer.privacy">Privacy</a> ·
+        <a href="chessarcana-support.html" data-i18n="footer.support">Support</a> ·
+        <a href="../index.html" data-i18n="footer.more">More by Local4a</a>
+      </span>
+    </div>
+    <p class="disclaimer" data-i18n="footer.disclaimer">Chess Arcana is an original game. Online play uses Apple Game Center. © 2026 Local4a.</p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.desc": "Chess Arcana is online fantasy chess: full FIDE rules with a fair skill layer, six heroes, and real-time matches via Game Center. In 10 languages.",
+    "nav.portfolio": "← All products", "nav.layers": "Gameplay", "nav.heroes": "Heroes", "nav.online": "Online",
+    "cta.appstore": "Coming to the App Store",
+    "badge.free": "Free", "badge.quest": "Quest unlock", "badge.paid": "Hero pack",
+    "hero.kicker": "Online fantasy chess",
+    "hero.title": "Fantasy chess, real chess mastery",
+    "hero.sub": "A full FIDE-rules chess engine with a fair fantasy skill layer on top. Six heroes, real-time online matches, and a board that always plays by the real rules.",
+    "hero.ctaSecondary": "See how it plays ↓",
+    "hero.tagline": "10 languages · Game Center online · No stat-selling, ever",
+    "lay.eyebrow": "How it plays",
+    "lay.title": "Serious chess underneath, magic on top",
+    "lay.body": "A pure rules engine handles legal moves, castling, en passant, promotion, check, checkmate, stalemate, the fifty-move rule, threefold repetition, and insufficient material — wins are decided by checkmate. On top sits an optional fantasy skill layer, and every skill move still obeys the real rules: you can never leave your own king in check.",
+    "lay.1.t": "Complete FIDE rules", "lay.1.b": "A tested, pure-function rules engine — the same correct chess across every mode.",
+    "lay.2.t": "Three timed modes", "lay.2.b": "Blitz 3+2, Rapid 10 min, and Fantasy 8 min — each with its own clock and queue.",
+    "lay.3.t": "Energy, not advantage", "lay.3.b": "Skill energy is earned by making moves — never bought. Skills add tactics, not raw power.",
+    "her.eyebrow": "Six heroes",
+    "her.title": "Each hero brings one signature skill",
+    "her.1.n": "Timeweaver", "her.1.s": "Time Freeze", "her.1.b": "Drain 8 seconds from your opponent's clock. Yours from the start.",
+    "her.2.n": "Phantom Knight", "her.2.s": "Knight Leap", "her.2.b": "Unlock free by finishing your first Fantasy match.",
+    "her.3.n": "Aegis Queen", "her.3.s": "Aegis Guard", "her.3.b": "Shield one of your pieces from a single capture.",
+    "her.4.n": "Ember Bishop", "her.4.s": "Ember Slash", "her.4.b": "A blazing diagonal strike along the bishop's line.",
+    "her.5.n": "Tempest Rook", "her.5.s": "Tempest Charge", "her.5.b": "A thunderous rushing advance down the file.",
+    "her.6.n": "Star Oracle", "her.6.s": "Fate Swap", "her.6.b": "Swap the fate of two pieces on the board.",
+    "fair.h": "Fair by design",
+    "fair.b": "The four hero packs are separate one-time purchases at different prices. They unlock new skills and flavor — never a base stat boost. Pieces keep their standard values, and every skill still plays by the real rules. You can win the whole game with the free hero.",
+    "onl.eyebrow": "Play anyone",
+    "onl.title": "Real-time matches, all Apple",
+    "onl.1.t": "Game Center matchmaking", "onl.1.b": "Sign in with Game Center, auto-match a rival, or invite a friend — real-time, peer-to-peer.",
+    "onl.2.t": "Ranks & records", "onl.2.b": "A local rating (starting at 1200), win/loss/draw, streaks, and your recent games in the Arena.",
+    "onl.3.t": "Academy", "onl.3.b": "Learn the rules and each hero's skill, so newcomers and club players both feel at home.",
+    "onl.4.t": "10 languages", "onl.4.b": "Every screen fully localized across ten languages, switchable in the app.",
+    "onl.5.t": "Music & effects", "onl.5.b": "Lobby and match loops, move and capture sounds, per-hero skill audio, and haptics.",
+    "onl.6.t": "Accessible", "onl.6.b": "VoiceOver descriptions for board squares and comfortably sized controls.",
+    "pri.eyebrow": "Privacy",
+    "pri.title": "No accounts of ours. No tracking.",
+    "pri.body": "Chess Arcana has no servers of its own. Your profile and stats stay on your device, online play runs through Apple's Game Center, and there's no third-party tracking.",
+    "pri.1": "Your rating, records, and settings are stored on your device.",
+    "pri.2": "Online matches use Apple's Game Center, subject to Apple's privacy policy.",
+    "pri.3": "No third-party advertising, analytics, or tracking SDKs.",
+    "pri.4": "Purchases are handled by Apple; we never see your payment details.",
+    "pri.link": "Read the full Privacy Policy →",
+    "support.link": "Support →",
+    "footer.privacy": "Privacy", "footer.support": "Support", "footer.more": "More by Local4a",
+    "footer.disclaimer": "Chess Arcana is an original game. Online play uses Apple Game Center. © 2026 Local4a."
+  },
+  zh: {
+    "meta.desc": "Chess Arcana 是一款联网奇幻国际象棋：完整 FIDE 规则 + 公平技能层，六位角色，通过 Game Center 实时对战。支持 10 种语言。",
+    "nav.portfolio": "← 全部产品", "nav.layers": "玩法", "nav.heroes": "角色", "nav.online": "联机",
+    "cta.appstore": "即将登陆 App Store",
+    "badge.free": "免费", "badge.quest": "任务解锁", "badge.paid": "角色包",
+    "hero.kicker": "联网奇幻国际象棋",
+    "hero.title": "奇幻外衣，真实棋力",
+    "hero.sub": "底层是完整 FIDE 规则的象棋引擎，之上叠加一层公平的奇幻技能。六位角色、实时联机对战，棋盘始终按真实规则运行。",
+    "hero.ctaSecondary": "看看怎么玩 ↓",
+    "hero.tagline": "10 种语言 · Game Center 联机 · 绝不贩卖数值",
+    "lay.eyebrow": "玩法",
+    "lay.title": "底层是硬核象棋，上层是魔法",
+    "lay.body": "纯函数规则引擎处理合法走子、王车易位、吃过路兵、升变、将军、将死、逼和、五十回合、三次重复局面与子力不足——以将死判定胜负。之上是可选的奇幻技能层，而每一个技能走子同样遵守真实规则：永远不能让己方国王处于被将状态。",
+    "lay.1.t": "完整 FIDE 规则", "lay.1.b": "经过测试的纯函数规则引擎——每种模式都是同样正确的象棋。",
+    "lay.2.t": "三种计时模式", "lay.2.b": "闪电战 3+2、快棋 10 分钟、奇幻 8 分钟——各有独立计时器与匹配队列。",
+    "lay.3.t": "靠能量，不靠优势", "lay.3.b": "技能能量通过走棋积攒——绝不出售。技能带来的是战术，而非蛮力。",
+    "her.eyebrow": "六位角色",
+    "her.title": "每位角色一项招牌技能",
+    "her.1.n": "时界术士", "her.1.s": "时间冻结", "her.1.b": "抽走对手 8 秒钟点。默认即拥有。",
+    "her.2.n": "幻影骑士", "her.2.s": "骑士跳跃", "her.2.b": "完成首局奇幻对战即可免费解锁。",
+    "her.3.n": "圣盾女王", "her.3.s": "圣盾守护", "her.3.b": "为选定的己方棋子抵挡一次被吃。",
+    "her.4.n": "炽焰主教", "her.4.s": "炽焰斜行", "her.4.b": "沿主教斜线发动一次炽焰打击。",
+    "her.5.n": "雷霆城主", "her.5.s": "雷霆突进", "her.5.b": "沿直线发动一次雷霆般的冲锋。",
+    "her.6.n": "星穹先知", "her.6.s": "命运交换", "her.6.b": "交换棋盘上两枚棋子的命运。",
+    "fair.h": "公平为本",
+    "fair.b": "四个角色包是不同价格的独立一次性购买。它们解锁的是新技能与风格——绝不是基础数值加成。棋子保持标准价值，每个技能也都按真实规则运行。只用免费角色，你也能赢下整盘棋。",
+    "onl.eyebrow": "和任何人对战",
+    "onl.title": "实时对战，纯 Apple 生态",
+    "onl.1.t": "Game Center 匹配", "onl.1.b": "用 Game Center 登录，自动匹配对手，或邀请好友——实时点对点。",
+    "onl.2.t": "段位与战绩", "onl.2.b": "本地积分（默认 1200）、胜/负/和、连胜连败，以及竞技场里的最近对局。",
+    "onl.3.t": "学院", "onl.3.b": "讲解规则与每位角色的技能，新手和棋友都能上手。",
+    "onl.4.t": "10 种语言", "onl.4.b": "全部界面在十种语言下完整本地化，App 内可切换。",
+    "onl.5.t": "音乐与音效", "onl.5.b": "大厅与对局循环音乐、走子吃子音效、六角色独立技能音效与触感反馈。",
+    "onl.6.t": "无障碍", "onl.6.b": "棋盘格带 VoiceOver 描述，主要控件保持舒适的触控面积。",
+    "pri.eyebrow": "隐私",
+    "pri.title": "我们没有账号，也不追踪你",
+    "pri.body": "Chess Arcana 没有自己的服务器。你的资料和战绩保存在设备上，联机对战通过 Apple 的 Game Center 进行，且没有任何第三方追踪。",
+    "pri.1": "你的积分、战绩和设置都保存在你的设备上。",
+    "pri.2": "联机对战使用 Apple 的 Game Center，受 Apple 隐私政策约束。",
+    "pri.3": "无第三方广告、统计或追踪 SDK。",
+    "pri.4": "购买由 Apple 处理，我们从不接触你的支付信息。",
+    "pri.link": "阅读完整隐私政策 →",
+    "support.link": "支持 →",
+    "footer.privacy": "隐私", "footer.support": "支持", "footer.more": "Local4a 更多产品",
+    "footer.disclaimer": "Chess Arcana 是一款原创游戏。联机对战使用 Apple Game Center。© 2026 Local4a。"
+  },
+  ja: {
+    "meta.desc": "Chess Arcana はオンラインのファンタジーチェス。完全な FIDE ルールに公平なスキル層を重ね、6 人のヒーローと Game Center 経由のリアルタイム対戦。10 言語対応。",
+    "nav.portfolio": "← すべての製品", "nav.layers": "遊び方", "nav.heroes": "ヒーロー", "nav.online": "オンライン",
+    "cta.appstore": "App Store に近日登場",
+    "badge.free": "無料", "badge.quest": "クエスト解放", "badge.paid": "ヒーローパック",
+    "hero.kicker": "オンライン・ファンタジーチェス",
+    "hero.title": "ファンタジーの装い、本物の棋力",
+    "hero.sub": "土台は完全な FIDE ルールのチェスエンジン。その上に公平なファンタジースキル層を重ねます。6 人のヒーロー、リアルタイムのオンライン対戦、そして常に本物のルールで動く盤面。",
+    "hero.ctaSecondary": "遊び方を見る ↓",
+    "hero.tagline": "10 言語 · Game Center オンライン · 数値は決して売りません",
+    "lay.eyebrow": "遊び方",
+    "lay.title": "土台は本格チェス、上にマジック",
+    "lay.body": "純関数のルールエンジンが、合法手・キャスリング・アンパッサン・プロモーション・チェック・チェックメイト・ステイルメイト・50 手ルール・3 回同形反復・駒不足を処理し、勝敗はチェックメイトで決まります。その上に任意のファンタジースキル層があり、どのスキル手も本物のルールに従います——自分のキングをチェックのまま放置することはできません。",
+    "lay.1.t": "完全な FIDE ルール", "lay.1.b": "テスト済みの純関数ルールエンジン——どのモードでも同じ正しいチェス。",
+    "lay.2.t": "3 つの時間制モード", "lay.2.b": "ブリッツ 3+2、ラピッド 10 分、ファンタジー 8 分——それぞれ独立した時計とキュー。",
+    "lay.3.t": "優位ではなくエナジー", "lay.3.b": "スキルのエナジーは手を指して貯まり、決して購入できません。スキルは戦術を加え、力そのものは加えません。",
+    "her.eyebrow": "6 人のヒーロー",
+    "her.title": "各ヒーローに 1 つの代名詞スキル",
+    "her.1.n": "時界術士", "her.1.s": "タイムフリーズ", "her.1.b": "相手の時計から 8 秒を奪う。最初から使えます。",
+    "her.2.n": "幻影の騎士", "her.2.s": "ナイトリープ", "her.2.b": "初めてのファンタジー対戦を終えると無料で解放。",
+    "her.3.n": "聖盾の女王", "her.3.s": "イージスガード", "her.3.b": "選んだ自分の駒を 1 回の捕獲から守る。",
+    "her.4.n": "炎の司教", "her.4.s": "エンバースラッシュ", "her.4.b": "ビショップの斜線に沿った燃える一撃。",
+    "her.5.n": "雷鳴の城主", "her.5.s": "テンペストチャージ", "her.5.b": "縦の列を駆け抜ける雷鳴のような突進。",
+    "her.6.n": "星詠みの賢者", "her.6.s": "フェイトスワップ", "her.6.b": "盤上の 2 つの駒の運命を入れ替える。",
+    "fair.h": "公平な設計",
+    "fair.b": "4 つのヒーローパックは、価格の異なる個別の買い切りです。解放されるのは新しいスキルと趣——基礎数値の強化ではありません。駒は標準の価値を保ち、どのスキルも本物のルールで動きます。無料ヒーローだけでも一局を勝ち切れます。",
+    "onl.eyebrow": "誰とでも対戦",
+    "onl.title": "リアルタイム対戦、すべて Apple",
+    "onl.1.t": "Game Center マッチング", "onl.1.b": "Game Center でサインインし、自動マッチや友達招待——リアルタイムの P2P。",
+    "onl.2.t": "ランクと戦績", "onl.2.b": "ローカルのレーティング（初期 1200）、勝/敗/分、連勝連敗、アリーナの最近の対局。",
+    "onl.3.t": "アカデミー", "onl.3.b": "ルールと各ヒーローのスキルを解説。初心者もクラブ級も馴染めます。",
+    "onl.4.t": "10 言語", "onl.4.b": "すべての画面が 10 言語で完全ローカライズ。アプリ内で切り替え可能。",
+    "onl.5.t": "音楽と効果音", "onl.5.b": "ロビーと対局のループ、移動・捕獲音、ヒーローごとのスキル音、触覚フィードバック。",
+    "onl.6.t": "アクセシブル", "onl.6.b": "盤面マスの VoiceOver 説明と、十分な大きさのコントロール。",
+    "pri.eyebrow": "プライバシー",
+    "pri.title": "当社のアカウントなし。トラッキングなし。",
+    "pri.body": "Chess Arcana は独自のサーバーを持ちません。プロフィールと戦績は端末内に保存され、オンライン対戦は Apple の Game Center を通じて行われ、第三者トラッキングはありません。",
+    "pri.1": "レーティング・戦績・設定は端末内に保存されます。",
+    "pri.2": "オンライン対戦は Apple の Game Center を使用し、Apple のプライバシーポリシーが適用されます。",
+    "pri.3": "第三者の広告・分析・トラッキング SDK はありません。",
+    "pri.4": "購入は Apple が処理し、当社が支払い情報を見ることはありません。",
+    "pri.link": "プライバシーポリシー全文を読む →",
+    "support.link": "サポート →",
+    "footer.privacy": "プライバシー", "footer.support": "サポート", "footer.more": "Local4a の他の製品",
+    "footer.disclaimer": "Chess Arcana はオリジナルゲームです。オンライン対戦は Apple Game Center を使用します。© 2026 Local4a。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
