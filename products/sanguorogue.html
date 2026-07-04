@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Three Kingdoms: Tides of Chaos — A text roguelike of the warring realm</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="A single-player text roguelike set in the Three Kingdoms. Make choices, roll the dice, build your renown, and carve a name into history — across three acts, in 12 languages." />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f3ea;
+    --ink: #241c14;
+    --ink-soft: #5a4c3c;
+    --ink-faint: #9a8a76;
+    --accent: #b23a2e;
+    --accent-2: #b8892b;
+    --line: #ece3d3;
+    --hero-bg: #14100c;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 860px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
+    font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .badge:hover { opacity: .92; transform: translateY(-1px); }
+
+  .hero {
+    background: radial-gradient(1200px 600px at 50% -10%, #3a2016 0%, var(--hero-bg) 62%);
+    color: #fff; text-align: center; padding: 92px 0 100px;
+  }
+  .hero .kicker { color: #e0b877; font-size: 14px; font-weight: 600; letter-spacing: .08em; }
+  .hero h1 { font-size: clamp(32px, 5.4vw, 54px); font-weight: 700; max-width: 18ch; margin: 14px auto 0; }
+  .hero .sub { color: #d8cbb8; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #d8cbb8; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+  .hero .tagline { color: #97836a; font-size: 14px; margin-top: 26px; }
+
+  section { padding: 80px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 24ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  section.alt .feature { background: #fff; }
+  .feature .ico { font-size: 24px; }
+  .feature h3 { font-size: 17px; margin: 12px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* Acts */
+  .acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+  @media (max-width: 760px) { .acts { grid-template-columns: 1fr; } }
+  .act { border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; background: var(--bg); }
+  section.alt .act { background: #fff; }
+  .act .n { font-size: 13px; font-weight: 700; color: var(--accent-2); letter-spacing: .06em; text-transform: uppercase; }
+  .act h3 { font-size: 19px; margin: 8px 0 8px; }
+  .act p { color: var(--ink-soft); font-size: 14.5px; }
+
+  .fair {
+    margin-top: 40px; background: #fbf7ee; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .fair h3 { font-size: 18px; }
+  .fair p { color: var(--ink-soft); font-size: 15px; margin-top: 8px; max-width: 72ch; }
+
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy .lede { color: #d8cbb8; }
+  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 66ch; }
+  .privacy li { padding-left: 30px; position: relative; color: #e0d5c4; font-size: 16px; }
+  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
+  .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
+  .privacy .links a { color: #e0b877; }
+  .privacy .links a:hover { color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; flex-direction: column; gap: 14px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
+  .disclaimer { color: var(--ink-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">⚔️</span> Tides of Chaos</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← All products</a>
+      <a href="#play" data-i18n="nav.play">Gameplay</a>
+      <a href="#acts" data-i18n="nav.acts">Three acts</a>
+      <a href="#arms" data-i18n="nav.arms">Divine Arms</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+    <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+    <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-i18n="hero.kicker">Three Kingdoms · Text roguelike</div>
+    <h1 data-i18n="hero.title">A nobody in a broken age. A name for the ages.</h1>
+    <p class="sub" data-i18n="hero.sub">Three Kingdoms: Tides of Chaos is a single-player text roguelike. You start as a commoner in a collapsing empire — make choices through a chain of random events, roll against your wits and might, build your renown, and try to carve your name into history.</p>
+    <div class="cta-row">
+      <a href="#get" class="badge" data-i18n="cta.appstore">Coming to the App Store</a>
+      <a href="#play" class="secondary" data-i18n="hero.ctaSecondary">See how it plays ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">Single-player &amp; offline · 12 languages · Every run is different</p>
+  </div>
+</section>
+
+<!-- GAMEPLAY -->
+<section id="play">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="play.eyebrow">How it plays</span>
+    <h2 class="section-title" data-i18n="play.title">Every choice is a roll of the dice</h2>
+    <p class="lede" data-i18n="play.body">Each step is a story event with real decisions. Take the safe path, or gamble on a check — roll a d6 plus one of your three attributes against the difficulty. Manage your health, troops, and supplies; grow your Might, Wits, and Charm; and chase renown. One bad gamble can end the run — and every run is drawn fresh.</p>
+    <div class="features">
+      <div class="feature"><div class="ico">📜</div><h3 data-i18n="play.1.t">Choice-driven events</h3><p data-i18n="play.1.b">Dozens of hand-written events across the campaign, each with branching outcomes.</p></div>
+      <div class="feature"><div class="ico">🎲</div><h3 data-i18n="play.2.t">Attribute checks</h3><p data-i18n="play.2.b">Roll d6 + Might / Wits / Charm against the difficulty. Fortune favors the bold — sometimes.</p></div>
+      <div class="feature"><div class="ico">💀</div><h3 data-i18n="play.3.t">Permadeath &amp; many endings</h3><p data-i18n="play.3.b">Death traps, glorious victories, and endings that depend on the path you walked.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTS -->
+<section id="acts" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="acts.eyebrow">The campaign</span>
+    <h2 class="section-title" data-i18n="acts.title">Three acts, from rebellion to a realm split in three</h2>
+    <div class="acts">
+      <div class="act"><div class="n" data-i18n="acts.1.n">Act I</div><h3 data-i18n="acts.1.t">The Yellow Turban Rebellion</h3><p data-i18n="acts.1.b">The empire cracks. A commoner picks up a blade — or a brush — and steps into history.</p></div>
+      <div class="act"><div class="n" data-i18n="acts.2.n">Act II</div><h3 data-i18n="acts.2.t">Warlords Divide the Land</h3><p data-i18n="acts.2.b">Alliances form and break. Choose your patrons, pick your battles, and build a name.</p></div>
+      <div class="act"><div class="n" data-i18n="acts.3.n">Act III</div><h3 data-i18n="acts.3.t">The Realm Split in Three</h3><p data-i18n="acts.3.b">The final reckoning. Your choices across the age decide how your story ends.</p></div>
+    </div>
+    <p class="lede" data-i18n="acts.note">Historical figures — the oath-brothers, the tyrant, the strategists — appear as cameo characters. Your hero is your own.</p>
+  </div>
+</section>
+
+<!-- DIVINE ARMS -->
+<section id="arms">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="arms.eyebrow">Divine Arms &amp; leaderboards</span>
+    <h2 class="section-title" data-i18n="arms.title">Legendary arms, and a place on the board</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">⚔️</div><h3 data-i18n="arms.1.t">Hero-exclusive Divine Arms</h3><p data-i18n="arms.1.b">Each optional Divine Arm unlocks a distinct build style tied to a legendary lord — a new way to play.</p></div>
+      <div class="feature"><div class="ico">🏆</div><h3 data-i18n="arms.2.t">Game Center leaderboards</h3><p data-i18n="arms.2.b">Climb the Heroes of the Realm board, plus weekly and seasonal races and a board for each Divine Arm.</p></div>
+      <div class="feature"><div class="ico">🌍</div><h3 data-i18n="arms.3.t">12 languages</h3><p data-i18n="arms.3.b">UI and the full story localized into 12 languages, switchable in-app and following your system.</p></div>
+    </div>
+    <div class="fair" id="get">
+      <h3 data-i18n="fair.h">Play it your way</h3>
+      <p data-i18n="fair.b">The core campaign is a complete single-player game. Divine Arms are optional one-time unlocks that open up new build styles and their own leaderboards, for players who want to chase a high score a dozen different ways. Leaderboards are optional and use Apple's Game Center.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" style="color:#e0b877" data-i18n="pri.eyebrow">Privacy</span>
+    <h2 class="section-title" data-i18n="pri.title">A single-player game that collects nothing</h2>
+    <p class="lede" data-i18n="pri.body">Tides of Chaos is offline at its core and collects no personal data. Your progress stays on your device. The only online feature is the optional Game Center leaderboard.</p>
+    <ul>
+      <li data-i18n="pri.1">No personal data collected, stored, or transmitted.</li>
+      <li data-i18n="pri.2">Progress (best score, campaigns, language) is stored only on your device.</li>
+      <li data-i18n="pri.3">Scores are sent to Apple's Game Center only if you sign in and submit them.</li>
+      <li data-i18n="pri.4">No third-party analytics, advertising, or tracking SDKs.</li>
+    </ul>
+    <div class="links">
+      <a href="sanguorogue-privacy.html" data-i18n="pri.link">Read the full Privacy Policy →</a>
+      <a href="sanguorogue-support.html" data-i18n="support.link">Support →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-top">
+      <div class="logo"><span class="bolt">⚔️</span> Tides of Chaos</div>
+      <span class="foot-links">
+        <a href="sanguorogue-privacy.html" data-i18n="footer.privacy">Privacy</a> ·
+        <a href="sanguorogue-support.html" data-i18n="footer.support">Support</a> ·
+        <a href="../index.html" data-i18n="footer.more">More by Local4a</a>
+      </span>
+    </div>
+    <p class="disclaimer" data-i18n="footer.disclaimer">Three Kingdoms: Tides of Chaos is an original game set in general Three Kingdoms history. Online leaderboards use Apple Game Center. © 2026 Local4a.</p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "meta.desc": "A single-player text roguelike set in the Three Kingdoms. Make choices, roll the dice, build your renown, and carve a name into history — across three acts, in 12 languages.",
+    "nav.portfolio": "← All products", "nav.play": "Gameplay", "nav.acts": "Three acts", "nav.arms": "Divine Arms",
+    "cta.appstore": "Coming to the App Store",
+    "hero.kicker": "Three Kingdoms · Text roguelike",
+    "hero.title": "A nobody in a broken age. A name for the ages.",
+    "hero.sub": "Three Kingdoms: Tides of Chaos is a single-player text roguelike. You start as a commoner in a collapsing empire — make choices through a chain of random events, roll against your wits and might, build your renown, and try to carve your name into history.",
+    "hero.ctaSecondary": "See how it plays ↓",
+    "hero.tagline": "Single-player & offline · 12 languages · Every run is different",
+    "play.eyebrow": "How it plays",
+    "play.title": "Every choice is a roll of the dice",
+    "play.body": "Each step is a story event with real decisions. Take the safe path, or gamble on a check — roll a d6 plus one of your three attributes against the difficulty. Manage your health, troops, and supplies; grow your Might, Wits, and Charm; and chase renown. One bad gamble can end the run — and every run is drawn fresh.",
+    "play.1.t": "Choice-driven events", "play.1.b": "Dozens of hand-written events across the campaign, each with branching outcomes.",
+    "play.2.t": "Attribute checks", "play.2.b": "Roll d6 + Might / Wits / Charm against the difficulty. Fortune favors the bold — sometimes.",
+    "play.3.t": "Permadeath & many endings", "play.3.b": "Death traps, glorious victories, and endings that depend on the path you walked.",
+    "acts.eyebrow": "The campaign",
+    "acts.title": "Three acts, from rebellion to a realm split in three",
+    "acts.1.n": "Act I", "acts.1.t": "The Yellow Turban Rebellion", "acts.1.b": "The empire cracks. A commoner picks up a blade — or a brush — and steps into history.",
+    "acts.2.n": "Act II", "acts.2.t": "Warlords Divide the Land", "acts.2.b": "Alliances form and break. Choose your patrons, pick your battles, and build a name.",
+    "acts.3.n": "Act III", "acts.3.t": "The Realm Split in Three", "acts.3.b": "The final reckoning. Your choices across the age decide how your story ends.",
+    "acts.note": "Historical figures — the oath-brothers, the tyrant, the strategists — appear as cameo characters. Your hero is your own.",
+    "arms.eyebrow": "Divine Arms & leaderboards",
+    "arms.title": "Legendary arms, and a place on the board",
+    "arms.1.t": "Hero-exclusive Divine Arms", "arms.1.b": "Each optional Divine Arm unlocks a distinct build style tied to a legendary lord — a new way to play.",
+    "arms.2.t": "Game Center leaderboards", "arms.2.b": "Climb the Heroes of the Realm board, plus weekly and seasonal races and a board for each Divine Arm.",
+    "arms.3.t": "12 languages", "arms.3.b": "UI and the full story localized into 12 languages, switchable in-app and following your system.",
+    "fair.h": "Play it your way",
+    "fair.b": "The core campaign is a complete single-player game. Divine Arms are optional one-time unlocks that open up new build styles and their own leaderboards, for players who want to chase a high score a dozen different ways. Leaderboards are optional and use Apple's Game Center.",
+    "pri.eyebrow": "Privacy",
+    "pri.title": "A single-player game that collects nothing",
+    "pri.body": "Tides of Chaos is offline at its core and collects no personal data. Your progress stays on your device. The only online feature is the optional Game Center leaderboard.",
+    "pri.1": "No personal data collected, stored, or transmitted.",
+    "pri.2": "Progress (best score, campaigns, language) is stored only on your device.",
+    "pri.3": "Scores are sent to Apple's Game Center only if you sign in and submit them.",
+    "pri.4": "No third-party analytics, advertising, or tracking SDKs.",
+    "pri.link": "Read the full Privacy Policy →",
+    "support.link": "Support →",
+    "footer.privacy": "Privacy", "footer.support": "Support", "footer.more": "More by Local4a",
+    "footer.disclaimer": "Three Kingdoms: Tides of Chaos is an original game set in general Three Kingdoms history. Online leaderboards use Apple Game Center. © 2026 Local4a."
+  },
+  zh: {
+    "meta.desc": "一款以三国为背景的单机文字 Roguelike。做抉择、掷骰子、攒声望，博一个名垂青史——三幕剧情，支持 12 种语言。",
+    "nav.portfolio": "← 全部产品", "nav.play": "玩法", "nav.acts": "三幕", "nav.arms": "神兵",
+    "cta.appstore": "即将登陆 App Store",
+    "hero.kicker": "三国 · 文字 Roguelike",
+    "hero.title": "乱世一介布衣，博一个名垂青史",
+    "hero.sub": "《三国·乱世行》是一款单机文字 Roguelike。你扮演乱世中的一介布衣，在一连串随机事件里做抉择、以智勇一搏、积攒声望，博一个名垂青史。",
+    "hero.ctaSecondary": "看看怎么玩 ↓",
+    "hero.tagline": "单机离线 · 12 种语言 · 每一局都不一样",
+    "play.eyebrow": "玩法",
+    "play.title": "每一次抉择，都是一次掷骰",
+    "play.body": "每一程都是一个带真实抉择的剧情事件。可以走稳妥的路，也可以搏一次检定——掷 d6 加上你三项属性之一，去对抗难度。管理生命、兵力与钱粮；成长你的武、智、魅；追逐声望。一次失手的豪赌就可能终结本局——而每一局的事件都是重新抽取的。",
+    "play.1.t": "抉择驱动的事件", "play.1.b": "整局数十个手写事件，各有分支结局。",
+    "play.2.t": "属性检定", "play.2.b": "掷 d6 + 武 / 智 / 魅 对抗难度。天道酬勇——有时候。",
+    "play.3.t": "永久死亡与多结局", "play.3.b": "必死陷阱、功成名就，以及取决于你所走之路的多种结局。",
+    "acts.eyebrow": "征程",
+    "acts.title": "三幕，从黄巾之乱到三分天下",
+    "acts.1.n": "第一幕", "acts.1.t": "黄巾之乱", "acts.1.b": "帝国崩裂。一介布衣提起刀——或提起笔——踏入历史。",
+    "acts.2.n": "第二幕", "acts.2.t": "群雄割据", "acts.2.b": "结盟又背盟。选择你的主公，挑选你的战场，博出一个名号。",
+    "acts.3.n": "第三幕", "acts.3.t": "三分天下", "acts.3.b": "最终清算。你贯穿乱世的抉择，决定你的故事如何收尾。",
+    "acts.note": "历史人物——桃园结义的兄弟、董卓、谋士们——以客串角色登场。而主角，是你自己的原创。",
+    "arms.eyebrow": "神兵与排行榜",
+    "arms.title": "传世神兵，与榜上之名",
+    "arms.1.t": "主公专属神兵", "arms.1.b": "每件可选神兵解锁一条与传奇主公绑定的独特构筑流派——一种全新的玩法。",
+    "arms.2.t": "Game Center 排行榜", "arms.2.b": "冲击「天下英雄榜」，另有周榜、赛季榜，以及每件神兵各自的排行榜。",
+    "arms.3.t": "12 种语言", "arms.3.b": "界面与全部剧情本地化为 12 种语言，App 内可切换并跟随系统。",
+    "fair.h": "随你怎么玩",
+    "fair.b": "核心征程本身就是一款完整的单机游戏。神兵是可选的一次性解锁，为想用十几种不同流派冲击高分的玩家，开启新的构筑流派和各自的排行榜。排行榜为可选功能，使用 Apple 的 Game Center。",
+    "pri.eyebrow": "隐私",
+    "pri.title": "一款什么都不收集的单机游戏",
+    "pri.body": "《乱世行》核心为单机离线，不收集任何个人数据。你的进度保存在设备上。唯一的联网功能是可选的 Game Center 排行榜。",
+    "pri.1": "不收集、不存储、不传输任何个人数据。",
+    "pri.2": "进度（最高分、征战次数、语言）仅保存在你的设备本地。",
+    "pri.3": "只有当你登录并上传时，分数才会提交至 Apple 的 Game Center。",
+    "pri.4": "无第三方分析、广告或追踪 SDK。",
+    "pri.link": "阅读完整隐私政策 →",
+    "support.link": "支持 →",
+    "footer.privacy": "隐私", "footer.support": "支持", "footer.more": "Local4a 更多产品",
+    "footer.disclaimer": "《三国·乱世行》是一款以通用三国历史为背景的原创游戏。联网排行榜使用 Apple Game Center。© 2026 Local4a。"
+  },
+  ja: {
+    "meta.desc": "三国志を舞台にした一人用テキスト・ローグライク。選択し、サイコロを振り、名声を高め、歴史に名を刻む——三幕の物語、12 言語対応。",
+    "nav.portfolio": "← すべての製品", "nav.play": "遊び方", "nav.acts": "三幕", "nav.arms": "神兵",
+    "cta.appstore": "App Store に近日登場",
+    "hero.kicker": "三国志 · テキスト・ローグライク",
+    "hero.title": "乱世の一介の民から、歴史に残る名へ",
+    "hero.sub": "『三国・乱世行』は一人用のテキスト・ローグライクです。崩れゆく帝国の一介の民として、連なる出来事の中で選択し、知と勇で賭けに出て、名声を高め、歴史に名を刻むことを目指します。",
+    "hero.ctaSecondary": "遊び方を見る ↓",
+    "hero.tagline": "一人用・オフライン · 12 言語 · 毎回異なる展開",
+    "play.eyebrow": "遊び方",
+    "play.title": "すべての選択が、サイコロの一振り",
+    "play.body": "各ステップは、実際の選択がある物語の出来事です。安全な道を選ぶか、判定に賭けるか——d6 に 3 つの能力のいずれかを足し、難易度に挑みます。体力・兵力・兵糧を管理し、武・知・魅を伸ばし、名声を追う。ひとつの賭けの失敗が一局を終わらせることも——そして毎回、出来事は新たに引かれます。",
+    "play.1.t": "選択で進む出来事", "play.1.b": "一局に数十の手書きイベント。それぞれに分岐する結末。",
+    "play.2.t": "能力判定", "play.2.b": "d6 + 武 / 知 / 魅 で難易度に挑戦。運は勇者に味方する——時には。",
+    "play.3.t": "パーマデスと多彩な結末", "play.3.b": "死の罠、栄光の勝利、そして歩んだ道で変わる結末。",
+    "acts.eyebrow": "遠征",
+    "acts.title": "三幕、反乱から天下三分へ",
+    "acts.1.n": "第一幕", "acts.1.t": "黄巾の乱", "acts.1.b": "帝国が裂ける。一介の民が刀を——あるいは筆を——手に取り、歴史に踏み出す。",
+    "acts.2.n": "第二幕", "acts.2.t": "群雄割拠", "acts.2.b": "同盟は結ばれ、また破れる。主君を選び、戦を選び、名を築く。",
+    "acts.3.n": "第三幕", "acts.3.t": "天下三分", "acts.3.b": "最後の清算。乱世を貫くあなたの選択が、物語の結末を決める。",
+    "acts.note": "歴史上の人物——義兄弟、暴君、軍師たち——は客演として登場します。主人公はあなた自身のオリジナルです。",
+    "arms.eyebrow": "神兵とリーダーボード",
+    "arms.title": "伝説の武器と、盤上の名",
+    "arms.1.t": "主君専用の神兵", "arms.1.b": "各任意の神兵は、伝説の主君に結びついた独自のビルドスタイルを解放——新しい遊び方。",
+    "arms.2.t": "Game Center リーダーボード", "arms.2.b": "「天下英雄榜」に挑み、さらに週間・シーズン戦、各神兵ごとのボードも。",
+    "arms.3.t": "12 言語", "arms.3.b": "UI と物語全編を 12 言語にローカライズ。アプリ内で切替、システムに追従。",
+    "fair.h": "あなたの遊び方で",
+    "fair.b": "コアの遠征そのものが完結した一人用ゲームです。神兵は任意の買い切り解放で、十数通りの流派でハイスコアを狙いたい人に、新しいビルドスタイルとそれぞれのリーダーボードを開きます。リーダーボードは任意で、Apple の Game Center を使用します。",
+    "pri.eyebrow": "プライバシー",
+    "pri.title": "何も収集しない一人用ゲーム",
+    "pri.body": "『乱世行』は基本オフラインで、個人データを一切収集しません。進捗は端末内に保存されます。唯一のオンライン機能は任意の Game Center リーダーボードです。",
+    "pri.1": "個人データの収集・保存・送信は一切ありません。",
+    "pri.2": "進捗（ハイスコア、遠征回数、言語）は端末内にのみ保存されます。",
+    "pri.3": "スコアは、サインインして送信した場合のみ Apple の Game Center に送られます。",
+    "pri.4": "第三者の分析・広告・トラッキング SDK はありません。",
+    "pri.link": "プライバシーポリシー全文を読む →",
+    "support.link": "サポート →",
+    "footer.privacy": "プライバシー", "footer.support": "サポート", "footer.more": "Local4a の他の製品",
+    "footer.disclaimer": "『三国・乱世行』は、一般的な三国志の歴史を舞台にしたオリジナルゲームです。オンラインのリーダーボードは Apple Game Center を使用します。© 2026 Local4a。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
