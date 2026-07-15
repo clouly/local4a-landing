@@ -83,17 +83,22 @@
     </ul>
 
     <h2 data-i18n="net.h">Network access</h2>
-    <p data-i18n="net.p">The app's core is fully offline and makes no network requests of its own. Currency conversion uses offline rates bundled with the app. The only time anything leaves your device is if you explicitly turn on iCloud sync, or explicitly export a backup — both described below.</p>
+    <p data-i18n="net.p">Nexora is offline by default. It never sends your data anywhere on its own. There are exactly two things that use the network, and neither one includes any of your information:</p>
+    <ul>
+      <li data-i18n="net.1"><b>Public exchange rates.</b> To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free, key-less public sources delivered over public CDNs. This is a plain download of public data — no account, no identifier, and none of your assets, documents or family information are included in the request. As with any internet request, the provider can see your device's IP address. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.</li>
+      <li data-i18n="net.2"><b>iCloud sync and backups you turn on.</b> Optional, off by default, and end-to-end encrypted — described in the next two sections.</li>
+    </ul>
 
     <h2 data-i18n="sync.h">iCloud sync (optional, end-to-end encrypted)</h2>
     <p data-i18n="sync.p">If you turn on iCloud sync, your records are encrypted on your device with AES-GCM and only then uploaded to your own private CloudKit database. The encryption key is stored in your syncable iCloud Keychain, which Apple end-to-end encrypts between your devices. Apple stores only ciphertext and cannot read your data; neither can we, since we operate no servers and hold no keys. Your use of iCloud is governed by Apple's privacy policy. Sync is off unless you enable it.</p>
     <p data-i18n="sync.p2">Note: document scans and images are excluded from sync and from backups. They remain encrypted on the device that created them.</p>
 
     <h2 data-i18n="backup.h">Encrypted backups (optional)</h2>
-    <p data-i18n="backup.p">You can export an encrypted <code>.nexora</code> archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase. If you lose the passphrase, the archive cannot be recovered — not by us, not by anyone.</p>
+    <p data-i18n="backup.p">You can export an encrypted <code>.nexora</code> archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase.</p>
+    <p data-i18n="backup.p2">You may optionally save the passphrase to your iCloud Keychain so you can recover on another of your devices; Apple end-to-end encrypts the Keychain and we never see it. If you do not save it and you lose it, the archive cannot be recovered — not by us, not by anyone.</p>
 
     <h2 data-i18n="family.h">Family sharing (optional, Pro)</h2>
-    <p data-i18n="family.p">If you invite family members, sharing is carried out through Apple's CloudKit sharing between the Apple IDs you invite. The shared data remains encrypted, and we have no visibility into who you share with or what you share.</p>
+    <p data-i18n="family.p">If you invite family members, sharing runs through Apple's CloudKit sharing between the Apple IDs you invite. The shared data is encrypted with a family key derived from a passphrase you set, so Apple still only stores ciphertext. You can send read-only invites, and rotating the passphrase re-encrypts the data and cuts off anyone you've removed. We have no visibility into who you share with or what you share.</p>
 
     <h2 data-i18n="ai.h">AI capture — on device only</h2>
     <p data-i18n="ai.p">When you import a photo, PDF, or camera scan of a document, recognition runs entirely on your device using Apple's Vision OCR and, where the device supports it, Apple Intelligence (Foundation Models). Where those are unavailable, an on-device heuristic is used instead. No image, document, or extracted text is ever sent to us or to any third party.</p>
@@ -142,14 +147,17 @@ const I18N = {
     "local.3": "Preferences such as language and base currency are stored locally.",
     "local.4": "Access is protected by Face ID / Touch ID on cold start and on every return from the background.",
     "net.h": "Network access",
-    "net.p": "The app's core is fully offline and makes no network requests of its own. Currency conversion uses offline rates bundled with the app. The only time anything leaves your device is if you explicitly turn on iCloud sync, or explicitly export a backup — both described below.",
+    "net.p": "Nexora is offline by default. It never sends your data anywhere on its own. There are exactly two things that use the network, and neither one includes any of your information:",
+    "net.1": "Public exchange rates. To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free, key-less public sources delivered over public CDNs. This is a plain download of public data — no account, no identifier, and none of your assets, documents or family information are included in the request. As with any internet request, the provider can see your device's IP address. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.",
+    "net.2": "iCloud sync and backups you turn on. Optional, off by default, and end-to-end encrypted — described in the next two sections.",
     "sync.h": "iCloud sync (optional, end-to-end encrypted)",
     "sync.p": "If you turn on iCloud sync, your records are encrypted on your device with AES-GCM and only then uploaded to your own private CloudKit database. The encryption key is stored in your syncable iCloud Keychain, which Apple end-to-end encrypts between your devices. Apple stores only ciphertext and cannot read your data; neither can we, since we operate no servers and hold no keys. Your use of iCloud is governed by Apple's privacy policy. Sync is off unless you enable it.",
     "sync.p2": "Note: document scans and images are excluded from sync and from backups. They remain encrypted on the device that created them.",
     "backup.h": "Encrypted backups (optional)",
-    "backup.p": "You can export an encrypted .nexora archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase. If you lose the passphrase, the archive cannot be recovered — not by us, not by anyone.",
+    "backup.p": "You can export an encrypted .nexora archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase.",
+    "backup.p2": "You may optionally save the passphrase to your iCloud Keychain so you can recover on another of your devices; Apple end-to-end encrypts the Keychain and we never see it. If you do not save it and you lose it, the archive cannot be recovered — not by us, not by anyone.",
     "family.h": "Family sharing (optional, Pro)",
-    "family.p": "If you invite family members, sharing is carried out through Apple's CloudKit sharing between the Apple IDs you invite. The shared data remains encrypted, and we have no visibility into who you share with or what you share.",
+    "family.p": "If you invite family members, sharing runs through Apple's CloudKit sharing between the Apple IDs you invite. The shared data is encrypted with a family key derived from a passphrase you set, so Apple still only stores ciphertext. You can send read-only invites, and rotating the passphrase re-encrypts the data and cuts off anyone you've removed. We have no visibility into who you share with or what you share.",
     "ai.h": "AI capture — on device only",
     "ai.p": "When you import a photo, PDF, or camera scan of a document, recognition runs entirely on your device using Apple's Vision OCR and, where the device supports it, Apple Intelligence (Foundation Models). Where those are unavailable, an on-device heuristic is used instead. No image, document, or extracted text is ever sent to us or to any third party.",
     "third.h": "No third parties",
@@ -178,14 +186,17 @@ const I18N = {
     "local.3": "语言、基准货币等偏好设置仅保存在本机。",
     "local.4": "冷启动与每次从后台返回时，均需 Face ID / Touch ID 解锁。",
     "net.h": "网络访问",
-    "net.p": "应用核心完全离线，自身不发起任何网络请求。货币折算使用随应用内置的离线汇率。只有当你主动开启 iCloud 同步、或主动导出备份时，才会有数据离开你的设备——详见下文。",
+    "net.p": "Nexora 默认离线，自身绝不会把你的数据发往任何地方。只有两类功能会用到网络，且它们都不含你的任何信息：",
+    "net.1": "公开汇率。为了把你的净值跨币种合并折算，应用会从免费、无需 Key 的公开源（经公开 CDN 分发）下载一份公开汇率数据集（含黄金现货价）。这只是一次对公开数据的普通下载——没有账号、没有标识符，请求中也不含你的任何资产、文件或家族信息。与任何互联网请求一样，数据提供方能看到你设备的 IP 地址。你可以关闭自动更新、离线沿用上次下载的汇率，也可以手动编辑汇率。",
+    "net.2": "你主动开启的 iCloud 同步与备份。可选、默认关闭，且端到端加密——详见下面两节。",
     "sync.h": "iCloud 同步（可选 · 端到端加密）",
     "sync.p": "若你开启 iCloud 同步，你的记录会先在设备上用 AES-GCM 加密，然后才上传到你自己的 CloudKit 私有数据库。加密密钥存放在你的「可同步 iCloud 钥匙串」中，由苹果在你的各设备之间做端到端加密。苹果只存储密文、无法读取你的数据；我们同样无法——因为我们既不运营服务器，也不持有任何密钥。你对 iCloud 的使用受 Apple 隐私政策约束。除非你主动开启，同步默认关闭。",
     "sync.p2": "注意：证件影像不进入同步、也不进入备份，它们始终加密保存在创建它们的那台设备上。",
     "backup.h": "加密备份（可选）",
-    "backup.p": "你可以导出一个加密的 .nexora 归档。密钥由你自己设定的口令派生（PBKDF2-SHA256，60 万轮），归档经 AES-GCM 加密。通过系统分享面板，你自行决定保存到哪里——iCloud 云盘、文件、AirDrop 或其它。我们从不接收该归档，也从不接收你的口令。若你遗失口令，该归档将无法恢复——我们不能，任何人都不能。",
+    "backup.p": "你可以导出一个加密的 .nexora 归档。密钥由你自己设定的口令派生（PBKDF2-SHA256，60 万轮），归档经 AES-GCM 加密。通过系统分享面板，你自行决定保存到哪里——iCloud 云盘、文件、AirDrop 或其它。我们从不接收该归档，也从不接收你的口令。",
+    "backup.p2": "你可以选择把口令存入 iCloud 钥匙串，以便在你的另一台设备上恢复；钥匙串由苹果端到端加密，我们同样看不到。若你没有保存又把它遗失，该归档将无法恢复——我们不能，任何人都不能。",
     "family.h": "家庭共享（可选 · Pro）",
-    "family.p": "若你邀请家人，共享通过 Apple 的 CloudKit 共享在你邀请的 Apple ID 之间进行。共享的数据仍为加密状态，我们无从得知你与谁共享、共享了什么。",
+    "family.p": "若你邀请家人，共享通过 Apple 的 CloudKit 共享在你邀请的 Apple ID 之间进行。共享数据由你设定的口令派生出的「家庭密钥」加密，因此苹果依然只会存到密文。你可以发出只读邀请；更换口令会对数据重新加密，并让被你移除的人彻底断开。我们无从得知你与谁共享、共享了什么。",
     "ai.h": "AI 识别——仅在设备上",
     "ai.p": "当你导入证件的照片、PDF 或相机扫描件时，识别全程在你的设备上完成：使用 Apple 的 Vision OCR，以及在设备支持时使用 Apple Intelligence（Foundation Models）。当二者不可用时，改用端上启发式方法。任何图像、文件或提取出的文字，都不会发送给我们或任何第三方。",
     "third.h": "无第三方",
@@ -214,14 +225,17 @@ const I18N = {
     "local.3": "言語や基準通貨などの設定は端末内にのみ保存されます。",
     "local.4": "コールドスタート時とバックグラウンド復帰のたびに、Face ID / Touch ID による保護がかかります。",
     "net.h": "ネットワークアクセス",
-    "net.p": "アプリのコアは完全にオフラインで、独自のネットワーク通信を行いません。通貨換算にはアプリに同梱されたオフラインレートを使用します。端末からデータが出るのは、あなたが iCloud 同期を明示的に有効にしたとき、またはバックアップを明示的に書き出したときだけです——いずれも下記のとおりです。",
+    "net.p": "Nexora は既定でオフラインで、アプリ自身があなたのデータをどこかへ送ることは決してありません。ネットワークを使うのは次の 2 つだけで、そのどちらにもあなたの情報は含まれません：",
+    "net.1": "公開為替レート。通貨をまたいで純資産を統合するため、無料・キー不要の公開ソース（公開 CDN 経由）から、公開の為替レートデータセット（金の現物価格を含む）をダウンロードします。これは公開データの単なるダウンロードであり、アカウントも識別子もなく、あなたの資産・書類・家族情報はリクエストに一切含まれません。なお、あらゆるインターネット通信と同様、提供元は端末の IP アドレスを見ることができます。自動更新をオフにして前回のレートをオフラインで使い続けることも、手動で編集することもできます。",
+    "net.2": "あなたが有効にした iCloud 同期とバックアップ。任意で既定はオフ、エンドツーエンド暗号化です——次の 2 つの節で説明します。",
     "sync.h": "iCloud 同期（任意・エンドツーエンド暗号化）",
     "sync.p": "iCloud 同期を有効にすると、記録はまず端末上で AES-GCM により暗号化され、そのうえであなた自身のプライベートな CloudKit データベースにアップロードされます。暗号鍵は同期可能な iCloud キーチェーンに保存され、Apple があなたの各端末間でエンドツーエンド暗号化します。Apple が保存するのは暗号文のみで、内容を読むことはできません。私たちもサーバーを運用せず鍵も持たないため、同様に読めません。iCloud の利用には Apple のプライバシーポリシーが適用されます。同期は、有効にしない限りオフです。",
     "sync.p2": "注意：書類のスキャンや画像は、同期にもバックアップにも含まれません。作成した端末内に暗号化されたまま残ります。",
     "backup.h": "暗号化バックアップ（任意）",
-    "backup.p": "暗号化された .nexora アーカイブを書き出せます。鍵はあなたが決めたパスフレーズから導出され（PBKDF2-SHA256、60 万回）、アーカイブは AES-GCM で暗号化されます。保存先はシステムの共有シートから自由に選べます——iCloud Drive、ファイル、AirDrop など。私たちがアーカイブやパスフレーズを受け取ることはありません。パスフレーズを失うと、そのアーカイブは復元できません——私たちにも、誰にも。",
+    "backup.p": "暗号化された .nexora アーカイブを書き出せます。鍵はあなたが決めたパスフレーズから導出され（PBKDF2-SHA256、60 万回）、アーカイブは AES-GCM で暗号化されます。保存先はシステムの共有シートから自由に選べます——iCloud Drive、ファイル、AirDrop など。私たちがアーカイブやパスフレーズを受け取ることはありません。",
+    "backup.p2": "パスフレーズは任意で iCloud キーチェーンに保存でき、あなたの別の端末で復元できます。キーチェーンは Apple がエンドツーエンド暗号化し、私たちが見ることはありません。保存せずに紛失した場合、そのアーカイブは復元できません——私たちにも、誰にも。",
     "family.h": "ファミリー共有（任意・Pro）",
-    "family.p": "家族を招待した場合、共有は招待した Apple ID 間で Apple の CloudKit 共有を通じて行われます。共有されるデータは暗号化されたままで、誰と何を共有しているかを私たちが知ることはありません。",
+    "family.p": "家族を招待した場合、共有は招待した Apple ID 間で Apple の CloudKit 共有を通じて行われます。共有データはあなたが設定したパスフレーズから導出したファミリー鍵で暗号化されるため、Apple が保存するのは依然として暗号文だけです。読み取り専用の招待も送れ、パスフレーズを更新するとデータが再暗号化され、外したメンバーは遮断されます。誰と何を共有しているかを私たちが知ることはありません。",
     "ai.h": "AI 取り込み——端末内のみ",
     "ai.p": "書類の写真・PDF・カメラスキャンを取り込むと、認識はすべてあなたの端末内で実行されます。Apple の Vision OCR を使用し、端末が対応していれば Apple Intelligence（Foundation Models）を利用します。いずれも利用できない場合は、端末内のヒューリスティックが使われます。画像・書類・抽出されたテキストが、私たちや第三者に送信されることはありません。",
     "third.h": "第三者なし",
