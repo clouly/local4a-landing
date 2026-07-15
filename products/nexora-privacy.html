@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy Policy — Nexora</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f4f6fa; --ink: #10192e; --ink-soft: #46536e;
+    --ink-faint: #8b95ab; --accent: #1c3563; --accent-2: #b08d3f; --line: #e3e8f0;
+    --radius: 16px; --maxw: 760px; font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent-2); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 56px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .updated { color: var(--ink-faint); font-size: 14px; margin-top: 10px; }
+  .summary { margin-top: 18px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; font-size: 16px; color: var(--ink); font-weight: 600; }
+  .legal h2 { font-size: 21px; margin: 40px 0 6px; letter-spacing: -0.01em; }
+  .legal p { color: var(--ink-soft); margin-top: 8px; }
+  .legal ul { color: var(--ink-soft); margin: 8px 0 0 20px; }
+  .legal li { margin-top: 6px; }
+  .disc { margin-top: 24px; background: #fbfaf6; border: 1px solid #eee6d3; border-radius: var(--radius); padding: 18px 20px; color: #6d5a2f; font-size: 14px; line-height: 1.6; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="nexora.html" class="logo"><span class="bolt">◆</span> Nexora</a>
+    <nav class="nav-links">
+      <a href="nexora.html" data-i18n="nav.product">Overview</a>
+      <a href="nexora-support.html" data-i18n="nav.support">Support</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="en">EN</button>
+      <button data-lang="zh">中</button>
+      <button data-lang="ja">日</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap legal">
+    <h1 data-i18n="title">Privacy Policy</h1>
+    <p class="updated"><span data-i18n="effective">Effective date</span>: 2026-07-15 · <span data-i18n="appname">Nexora</span></p>
+    <p class="summary" data-i18n="summary">In one line: Nexora collects nothing. Your data is stored and encrypted on your own device, and if you turn on iCloud sync, it is encrypted before it leaves — Apple only ever sees ciphertext.</p>
+
+    <h2 data-i18n="collect.h">Data we collect</h2>
+    <p data-i18n="collect.p">None. Nexora has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, or store your assets, documents, family information, structures, or any usage data. There is nothing for us to sell or share, because nothing ever reaches us.</p>
+
+    <h2 data-i18n="local.h">What stays on your device</h2>
+    <ul>
+      <li data-i18n="local.1"><b>Your records</b> — assets, identity documents, family members, trust structures, risk alerts, and net-worth snapshots — are stored in the app's on-device database.</li>
+      <li data-i18n="local.2"><b>Document scans and images</b> are encrypted with AES-GCM before they are written to disk. The key is held in the device Keychain and never leaves the device.</li>
+      <li data-i18n="local.3"><b>Preferences</b> such as language and base currency are stored locally.</li>
+      <li data-i18n="local.4">Access is protected by Face ID / Touch ID on cold start and on every return from the background.</li>
+    </ul>
+
+    <h2 data-i18n="net.h">Network access</h2>
+    <p data-i18n="net.p">The app's core is fully offline and makes no network requests of its own. Currency conversion uses offline rates bundled with the app. The only time anything leaves your device is if you explicitly turn on iCloud sync, or explicitly export a backup — both described below.</p>
+
+    <h2 data-i18n="sync.h">iCloud sync (optional, end-to-end encrypted)</h2>
+    <p data-i18n="sync.p">If you turn on iCloud sync, your records are encrypted on your device with AES-GCM and only then uploaded to your own private CloudKit database. The encryption key is stored in your syncable iCloud Keychain, which Apple end-to-end encrypts between your devices. Apple stores only ciphertext and cannot read your data; neither can we, since we operate no servers and hold no keys. Your use of iCloud is governed by Apple's privacy policy. Sync is off unless you enable it.</p>
+    <p data-i18n="sync.p2">Note: document scans and images are excluded from sync and from backups. They remain encrypted on the device that created them.</p>
+
+    <h2 data-i18n="backup.h">Encrypted backups (optional)</h2>
+    <p data-i18n="backup.p">You can export an encrypted <code>.nexora</code> archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase. If you lose the passphrase, the archive cannot be recovered — not by us, not by anyone.</p>
+
+    <h2 data-i18n="family.h">Family sharing (optional, Pro)</h2>
+    <p data-i18n="family.p">If you invite family members, sharing is carried out through Apple's CloudKit sharing between the Apple IDs you invite. The shared data remains encrypted, and we have no visibility into who you share with or what you share.</p>
+
+    <h2 data-i18n="ai.h">AI capture — on device only</h2>
+    <p data-i18n="ai.p">When you import a photo, PDF, or camera scan of a document, recognition runs entirely on your device using Apple's Vision OCR and, where the device supports it, Apple Intelligence (Foundation Models). Where those are unavailable, an on-device heuristic is used instead. No image, document, or extracted text is ever sent to us or to any third party.</p>
+
+    <h2 data-i18n="third.h">No third parties</h2>
+    <ul>
+      <li data-i18n="third.1">No third-party analytics, advertising, or tracking SDKs.</li>
+      <li data-i18n="third.2">We do not track you across apps or websites.</li>
+      <li data-i18n="third.3">Subscriptions are processed by Apple's In-App Purchase. We receive only whether a subscription is active — never your payment details.</li>
+    </ul>
+
+    <h2 data-i18n="del.h">Storage &amp; deletion</h2>
+    <p data-i18n="del.p">You can reset or erase your data at any time in Settings → Data, or by deleting the app. If you used iCloud sync, deleting the data on a synced device propagates that deletion; you can also remove the app's data from iCloud in your device's iCloud settings.</p>
+
+    <h2 data-i18n="child.h">Children</h2>
+    <p data-i18n="child.p">Nexora is not directed at children under 13 and does not knowingly collect their information — it collects no information from anyone.</p>
+
+    <h2 data-i18n="changes.h">Changes to this policy</h2>
+    <p data-i18n="changes.p">If a future version introduces any data-related feature, we will update this policy and note the change here with a new effective date.</p>
+
+    <h2 data-i18n="contact.h">Contact</h2>
+    <p data-i18n="contact.p">Questions about this policy? Email us at <a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a>.</p>
+
+    <div class="disc" data-i18n="disc">Nexora is an information-organizing tool. It does not provide financial, legal, or tax advice and is not a substitute for qualified professional advisors.</div>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">◆</span> Nexora</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  en: {
+    "nav.product": "Overview", "nav.support": "Support",
+    "title": "Privacy Policy", "effective": "Effective date", "appname": "Nexora",
+    "summary": "In one line: Nexora collects nothing. Your data is stored and encrypted on your own device, and if you turn on iCloud sync, it is encrypted before it leaves — Apple only ever sees ciphertext.",
+    "collect.h": "Data we collect",
+    "collect.p": "None. Nexora has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, or store your assets, documents, family information, structures, or any usage data. There is nothing for us to sell or share, because nothing ever reaches us.",
+    "local.h": "What stays on your device",
+    "local.1": "Your records — assets, identity documents, family members, trust structures, risk alerts, and net-worth snapshots — are stored in the app's on-device database.",
+    "local.2": "Document scans and images are encrypted with AES-GCM before they are written to disk. The key is held in the device Keychain and never leaves the device.",
+    "local.3": "Preferences such as language and base currency are stored locally.",
+    "local.4": "Access is protected by Face ID / Touch ID on cold start and on every return from the background.",
+    "net.h": "Network access",
+    "net.p": "The app's core is fully offline and makes no network requests of its own. Currency conversion uses offline rates bundled with the app. The only time anything leaves your device is if you explicitly turn on iCloud sync, or explicitly export a backup — both described below.",
+    "sync.h": "iCloud sync (optional, end-to-end encrypted)",
+    "sync.p": "If you turn on iCloud sync, your records are encrypted on your device with AES-GCM and only then uploaded to your own private CloudKit database. The encryption key is stored in your syncable iCloud Keychain, which Apple end-to-end encrypts between your devices. Apple stores only ciphertext and cannot read your data; neither can we, since we operate no servers and hold no keys. Your use of iCloud is governed by Apple's privacy policy. Sync is off unless you enable it.",
+    "sync.p2": "Note: document scans and images are excluded from sync and from backups. They remain encrypted on the device that created them.",
+    "backup.h": "Encrypted backups (optional)",
+    "backup.p": "You can export an encrypted .nexora archive. The key is derived from a passphrase you choose (PBKDF2-SHA256, 600,000 iterations) and the archive is encrypted with AES-GCM. You choose where it goes through the system share sheet — iCloud Drive, Files, AirDrop, or elsewhere. We never receive the archive or your passphrase. If you lose the passphrase, the archive cannot be recovered — not by us, not by anyone.",
+    "family.h": "Family sharing (optional, Pro)",
+    "family.p": "If you invite family members, sharing is carried out through Apple's CloudKit sharing between the Apple IDs you invite. The shared data remains encrypted, and we have no visibility into who you share with or what you share.",
+    "ai.h": "AI capture — on device only",
+    "ai.p": "When you import a photo, PDF, or camera scan of a document, recognition runs entirely on your device using Apple's Vision OCR and, where the device supports it, Apple Intelligence (Foundation Models). Where those are unavailable, an on-device heuristic is used instead. No image, document, or extracted text is ever sent to us or to any third party.",
+    "third.h": "No third parties",
+    "third.1": "No third-party analytics, advertising, or tracking SDKs.",
+    "third.2": "We do not track you across apps or websites.",
+    "third.3": "Subscriptions are processed by Apple's In-App Purchase. We receive only whether a subscription is active — never your payment details.",
+    "del.h": "Storage & deletion",
+    "del.p": "You can reset or erase your data at any time in Settings → Data, or by deleting the app. If you used iCloud sync, deleting the data on a synced device propagates that deletion; you can also remove the app's data from iCloud in your device's iCloud settings.",
+    "child.h": "Children",
+    "child.p": "Nexora is not directed at children under 13 and does not knowingly collect their information — it collects no information from anyone.",
+    "changes.h": "Changes to this policy",
+    "changes.p": "If a future version introduces any data-related feature, we will update this policy and note the change here with a new effective date.",
+    "contact.h": "Contact",
+    "contact.p": "Questions about this policy? Email us at ",
+    "disc": "Nexora is an information-organizing tool. It does not provide financial, legal, or tax advice and is not a substitute for qualified professional advisors."
+  },
+  zh: {
+    "nav.product": "产品概览", "nav.support": "支持",
+    "title": "隐私政策", "effective": "生效日期", "appname": "Nexora",
+    "summary": "一句话总结：Nexora 什么都不收集。你的数据加密存储在你自己的设备上；若开启 iCloud 同步，数据也是在离开设备前就已加密——苹果只会看到密文。",
+    "collect.h": "我们收集哪些数据",
+    "collect.p": "没有。Nexora 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不存储你的资产、文件、家族信息、架构或任何使用数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。",
+    "local.h": "哪些数据留在你的设备上",
+    "local.1": "你的记录——资产、身份文件、家族成员、信托结构、风险提醒与净值快照——保存在应用的本机数据库中。",
+    "local.2": "证件影像在写入磁盘前经 AES-GCM 加密。密钥保存在设备的 Keychain 中，永不离开设备。",
+    "local.3": "语言、基准货币等偏好设置仅保存在本机。",
+    "local.4": "冷启动与每次从后台返回时，均需 Face ID / Touch ID 解锁。",
+    "net.h": "网络访问",
+    "net.p": "应用核心完全离线，自身不发起任何网络请求。货币折算使用随应用内置的离线汇率。只有当你主动开启 iCloud 同步、或主动导出备份时，才会有数据离开你的设备——详见下文。",
+    "sync.h": "iCloud 同步（可选 · 端到端加密）",
+    "sync.p": "若你开启 iCloud 同步，你的记录会先在设备上用 AES-GCM 加密，然后才上传到你自己的 CloudKit 私有数据库。加密密钥存放在你的「可同步 iCloud 钥匙串」中，由苹果在你的各设备之间做端到端加密。苹果只存储密文、无法读取你的数据；我们同样无法——因为我们既不运营服务器，也不持有任何密钥。你对 iCloud 的使用受 Apple 隐私政策约束。除非你主动开启，同步默认关闭。",
+    "sync.p2": "注意：证件影像不进入同步、也不进入备份，它们始终加密保存在创建它们的那台设备上。",
+    "backup.h": "加密备份（可选）",
+    "backup.p": "你可以导出一个加密的 .nexora 归档。密钥由你自己设定的口令派生（PBKDF2-SHA256，60 万轮），归档经 AES-GCM 加密。通过系统分享面板，你自行决定保存到哪里——iCloud 云盘、文件、AirDrop 或其它。我们从不接收该归档，也从不接收你的口令。若你遗失口令，该归档将无法恢复——我们不能，任何人都不能。",
+    "family.h": "家庭共享（可选 · Pro）",
+    "family.p": "若你邀请家人，共享通过 Apple 的 CloudKit 共享在你邀请的 Apple ID 之间进行。共享的数据仍为加密状态，我们无从得知你与谁共享、共享了什么。",
+    "ai.h": "AI 识别——仅在设备上",
+    "ai.p": "当你导入证件的照片、PDF 或相机扫描件时，识别全程在你的设备上完成：使用 Apple 的 Vision OCR，以及在设备支持时使用 Apple Intelligence（Foundation Models）。当二者不可用时，改用端上启发式方法。任何图像、文件或提取出的文字，都不会发送给我们或任何第三方。",
+    "third.h": "无第三方",
+    "third.1": "无第三方统计分析、广告或追踪 SDK。",
+    "third.2": "我们不会跨应用或网站追踪你。",
+    "third.3": "订阅由 Apple 内购处理。我们只会知道订阅是否有效——从不接触你的支付信息。",
+    "del.h": "数据存储与删除",
+    "del.p": "你可随时在「设置 → 数据」中重置或清空数据，或删除应用即清除全部数据。若你使用了 iCloud 同步，在任一已同步设备上删除数据会同步传播该删除；你也可以在设备的 iCloud 设置中移除本应用的 iCloud 数据。",
+    "child.h": "儿童",
+    "child.p": "Nexora 不面向 13 岁以下儿童，也不会刻意收集其信息——事实上它不收集任何人的任何信息。",
+    "changes.h": "本政策的变更",
+    "changes.p": "若未来版本引入任何与数据相关的功能，我们会更新本政策，并在此以新的生效日期注明变更。",
+    "contact.h": "联系我们",
+    "contact.p": "对本政策有疑问？请发邮件至 ",
+    "disc": "Nexora 是一款信息整理工具。它不提供财务、法律或税务建议，也不能替代有资质的专业顾问。"
+  },
+  ja: {
+    "nav.product": "概要", "nav.support": "サポート",
+    "title": "プライバシーポリシー", "effective": "発効日", "appname": "Nexora",
+    "summary": "要点：Nexora は何も収集しません。データはあなた自身の端末内で暗号化して保存され、iCloud 同期を有効にした場合も、端末を出る前に暗号化されます——Apple が見るのは暗号文だけです。",
+    "collect.h": "収集するデータ",
+    "collect.p": "ありません。Nexora にはアカウント機能もサインインも、独自のサーバーもありません。あなたの資産、書類、家族情報、ストラクチャー、利用データを収集・受信・送信・保存することは一切ありません。私たちのもとには何も届かないため、売るものも共有するものもありません。",
+    "local.h": "端末内にとどまるもの",
+    "local.1": "あなたの記録——資産、身分証明書、家族メンバー、信託ストラクチャー、リスク通知、純資産スナップショット——はアプリの端末内データベースに保存されます。",
+    "local.2": "書類のスキャンや画像は、ディスクに書き込まれる前に AES-GCM で暗号化されます。鍵は端末の Keychain にあり、端末の外に出ることはありません。",
+    "local.3": "言語や基準通貨などの設定は端末内にのみ保存されます。",
+    "local.4": "コールドスタート時とバックグラウンド復帰のたびに、Face ID / Touch ID による保護がかかります。",
+    "net.h": "ネットワークアクセス",
+    "net.p": "アプリのコアは完全にオフラインで、独自のネットワーク通信を行いません。通貨換算にはアプリに同梱されたオフラインレートを使用します。端末からデータが出るのは、あなたが iCloud 同期を明示的に有効にしたとき、またはバックアップを明示的に書き出したときだけです——いずれも下記のとおりです。",
+    "sync.h": "iCloud 同期（任意・エンドツーエンド暗号化）",
+    "sync.p": "iCloud 同期を有効にすると、記録はまず端末上で AES-GCM により暗号化され、そのうえであなた自身のプライベートな CloudKit データベースにアップロードされます。暗号鍵は同期可能な iCloud キーチェーンに保存され、Apple があなたの各端末間でエンドツーエンド暗号化します。Apple が保存するのは暗号文のみで、内容を読むことはできません。私たちもサーバーを運用せず鍵も持たないため、同様に読めません。iCloud の利用には Apple のプライバシーポリシーが適用されます。同期は、有効にしない限りオフです。",
+    "sync.p2": "注意：書類のスキャンや画像は、同期にもバックアップにも含まれません。作成した端末内に暗号化されたまま残ります。",
+    "backup.h": "暗号化バックアップ（任意）",
+    "backup.p": "暗号化された .nexora アーカイブを書き出せます。鍵はあなたが決めたパスフレーズから導出され（PBKDF2-SHA256、60 万回）、アーカイブは AES-GCM で暗号化されます。保存先はシステムの共有シートから自由に選べます——iCloud Drive、ファイル、AirDrop など。私たちがアーカイブやパスフレーズを受け取ることはありません。パスフレーズを失うと、そのアーカイブは復元できません——私たちにも、誰にも。",
+    "family.h": "ファミリー共有（任意・Pro）",
+    "family.p": "家族を招待した場合、共有は招待した Apple ID 間で Apple の CloudKit 共有を通じて行われます。共有されるデータは暗号化されたままで、誰と何を共有しているかを私たちが知ることはありません。",
+    "ai.h": "AI 取り込み——端末内のみ",
+    "ai.p": "書類の写真・PDF・カメラスキャンを取り込むと、認識はすべてあなたの端末内で実行されます。Apple の Vision OCR を使用し、端末が対応していれば Apple Intelligence（Foundation Models）を利用します。いずれも利用できない場合は、端末内のヒューリスティックが使われます。画像・書類・抽出されたテキストが、私たちや第三者に送信されることはありません。",
+    "third.h": "第三者なし",
+    "third.1": "第三者の分析・広告・トラッキング SDK はありません。",
+    "third.2": "アプリやサイトをまたいであなたを追跡しません。",
+    "third.3": "サブスクリプションは Apple のアプリ内課金で処理されます。私たちが受け取るのは有効かどうかのみで、支払い情報には一切触れません。",
+    "del.h": "保存と削除",
+    "del.p": "「設定 → データ」からいつでもリセット・消去でき、アプリを削除すればすべて消えます。iCloud 同期を使っていた場合、同期済み端末でデータを削除するとその削除が伝播します。端末の iCloud 設定から本アプリの iCloud データを削除することもできます。",
+    "child.h": "子どもについて",
+    "child.p": "Nexora は 13 歳未満の子どもを対象としておらず、その情報を意図的に収集することもありません——そもそも誰の情報も収集しません。",
+    "changes.h": "本ポリシーの変更",
+    "changes.p": "将来のバージョンでデータに関わる機能が導入される場合は、本ポリシーを更新し、新しい発効日とともにここに明記します。",
+    "contact.h": "お問い合わせ",
+    "contact.p": "本ポリシーに関するご質問は ",
+    "disc": "Nexora は情報整理のためのツールです。財務・法務・税務のアドバイスを提供するものではなく、有資格の専門家の代わりにもなりません。"
+  }
+};
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.en;
+  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    if (key === "contact.p") { el.childNodes[0].nodeValue = dict[key]; return; }
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "en").toLowerCase();
+  if (n.startsWith("zh")) return "zh";
+  if (n.startsWith("ja")) return "ja";
+  return "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
