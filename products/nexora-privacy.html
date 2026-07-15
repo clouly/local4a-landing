@@ -85,7 +85,7 @@
     <h2 data-i18n="net.h">Network access</h2>
     <p data-i18n="net.p">Nexora is offline by default. It never sends your data anywhere on its own. There are exactly two things that use the network, and neither one includes any of your information:</p>
     <ul>
-      <li data-i18n="net.1"><b>Public exchange rates.</b> To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free, key-less public sources delivered over public CDNs. This is a plain download of public data — no account, no identifier, and none of your assets, documents or family information are included in the request. As with any internet request, the provider can see your device's IP address. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.</li>
+      <li data-i18n="net.1"><b>Public exchange rates.</b> To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free public sources. Only public exchange rates are fetched — your asset data never leaves this device. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.</li>
       <li data-i18n="net.2"><b>iCloud sync and backups you turn on.</b> Optional, off by default, and end-to-end encrypted — described in the next two sections.</li>
     </ul>
 
@@ -148,7 +148,7 @@ const I18N = {
     "local.4": "Access is protected by Face ID / Touch ID on cold start and on every return from the background.",
     "net.h": "Network access",
     "net.p": "Nexora is offline by default. It never sends your data anywhere on its own. There are exactly two things that use the network, and neither one includes any of your information:",
-    "net.1": "Public exchange rates. To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free, key-less public sources delivered over public CDNs. This is a plain download of public data — no account, no identifier, and none of your assets, documents or family information are included in the request. As with any internet request, the provider can see your device's IP address. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.",
+    "net.1": "Public exchange rates. To consolidate your net worth across currencies, the app downloads a public exchange-rate dataset (including the spot gold price) from free public sources. Only public exchange rates are fetched — your asset data never leaves this device. You can turn auto-update off and keep using the last downloaded rates offline, or edit rates manually.",
     "net.2": "iCloud sync and backups you turn on. Optional, off by default, and end-to-end encrypted — described in the next two sections.",
     "sync.h": "iCloud sync (optional, end-to-end encrypted)",
     "sync.p": "If you turn on iCloud sync, your records are encrypted on your device with AES-GCM and only then uploaded to your own private CloudKit database. The encryption key is stored in your syncable iCloud Keychain, which Apple end-to-end encrypts between your devices. Apple stores only ciphertext and cannot read your data; neither can we, since we operate no servers and hold no keys. Your use of iCloud is governed by Apple's privacy policy. Sync is off unless you enable it.",
@@ -187,7 +187,7 @@ const I18N = {
     "local.4": "冷启动与每次从后台返回时，均需 Face ID / Touch ID 解锁。",
     "net.h": "网络访问",
     "net.p": "Nexora 默认离线，自身绝不会把你的数据发往任何地方。只有两类功能会用到网络，且它们都不含你的任何信息：",
-    "net.1": "公开汇率。为了把你的净值跨币种合并折算，应用会从免费、无需 Key 的公开源（经公开 CDN 分发）下载一份公开汇率数据集（含黄金现货价）。这只是一次对公开数据的普通下载——没有账号、没有标识符，请求中也不含你的任何资产、文件或家族信息。与任何互联网请求一样，数据提供方能看到你设备的 IP 地址。你可以关闭自动更新、离线沿用上次下载的汇率，也可以手动编辑汇率。",
+    "net.1": "公开汇率。为了把你的净值跨币种合并折算，应用会从免费的公开源下载一份公开汇率数据集（含黄金现货价）。仅拉取公开汇率——你的资产数据不会离开本机。你可以关闭自动更新、离线沿用上次下载的汇率，也可以手动编辑汇率。",
     "net.2": "你主动开启的 iCloud 同步与备份。可选、默认关闭，且端到端加密——详见下面两节。",
     "sync.h": "iCloud 同步（可选 · 端到端加密）",
     "sync.p": "若你开启 iCloud 同步，你的记录会先在设备上用 AES-GCM 加密，然后才上传到你自己的 CloudKit 私有数据库。加密密钥存放在你的「可同步 iCloud 钥匙串」中，由苹果在你的各设备之间做端到端加密。苹果只存储密文、无法读取你的数据；我们同样无法——因为我们既不运营服务器，也不持有任何密钥。你对 iCloud 的使用受 Apple 隐私政策约束。除非你主动开启，同步默认关闭。",
@@ -226,7 +226,7 @@ const I18N = {
     "local.4": "コールドスタート時とバックグラウンド復帰のたびに、Face ID / Touch ID による保護がかかります。",
     "net.h": "ネットワークアクセス",
     "net.p": "Nexora は既定でオフラインで、アプリ自身があなたのデータをどこかへ送ることは決してありません。ネットワークを使うのは次の 2 つだけで、そのどちらにもあなたの情報は含まれません：",
-    "net.1": "公開為替レート。通貨をまたいで純資産を統合するため、無料・キー不要の公開ソース（公開 CDN 経由）から、公開の為替レートデータセット（金の現物価格を含む）をダウンロードします。これは公開データの単なるダウンロードであり、アカウントも識別子もなく、あなたの資産・書類・家族情報はリクエストに一切含まれません。なお、あらゆるインターネット通信と同様、提供元は端末の IP アドレスを見ることができます。自動更新をオフにして前回のレートをオフラインで使い続けることも、手動で編集することもできます。",
+    "net.1": "公開為替レート。通貨をまたいで純資産を統合するため、無料の公開ソースから公開の為替レートデータセット（金の現物価格を含む）をダウンロードします。取得するのは公開為替レートのみで、あなたの資産データが端末を出ることはありません。自動更新をオフにして前回のレートをオフラインで使い続けることも、手動で編集することもできます。",
     "net.2": "あなたが有効にした iCloud 同期とバックアップ。任意で既定はオフ、エンドツーエンド暗号化です——次の 2 つの節で説明します。",
     "sync.h": "iCloud 同期（任意・エンドツーエンド暗号化）",
     "sync.p": "iCloud 同期を有効にすると、記録はまず端末上で AES-GCM により暗号化され、そのうえであなた自身のプライベートな CloudKit データベースにアップロードされます。暗号鍵は同期可能な iCloud キーチェーンに保存され、Apple があなたの各端末間でエンドツーエンド暗号化します。Apple が保存するのは暗号文のみで、内容を読むことはできません。私たちもサーバーを運用せず鍵も持たないため、同様に読めません。iCloud の利用には Apple のプライバシーポリシーが適用されます。同期は、有効にしない限りオフです。",
