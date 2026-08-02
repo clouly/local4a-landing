@@ -15,7 +15,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+      "PingFang SC", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans CJK SC", sans-serif;
     color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -60,6 +60,7 @@
       <button data-lang="en">EN</button>
       <button data-lang="zh">中</button>
       <button data-lang="ja">日</button>
+      <button data-lang="ko">한</button>
     </div>
   </div>
 </header>
@@ -190,12 +191,40 @@ const I18N = {
     "changes.p": "本ポリシーが変更される場合は、更新版を新しい発効日とともにこの URL に掲載します。",
     "contact.h": "お問い合わせ",
     "contact.p": "本ポリシーに関するご質問は "
+  },
+  ko: {
+    "nav.product": "개요", "nav.support": "지원",
+    "title": "개인정보 처리방침", "effective": "시행일", "appname": "Usay",
+    "summary": "한 줄 요약: Usay는 모든 처리가 기기 안에서 이뤄지도록 설계되었습니다. 우리는 아무것도 수집하지 않습니다 — 계정 없음, 분석 없음, 광고 없음, 서드파티 SDK 없음.",
+    "collect.h": "수집하는 데이터",
+    "collect.p": "없습니다. Usay에는 계정 시스템도, 로그인도, 자체 서버도 없습니다. 우리는 개인정보를 수집·수신·전송·판매·공유하지 않습니다. 우리에게 도달하는 것이 아무것도 없으므로, 팔거나 공유할 것도 없습니다.",
+    "mic.h": "마이크와 음성 인식",
+    "mic.p": "Usay는 녹음 버튼을 눌렀을 때만, 오직 발음을 평가하기 위해 목소리를 녹음합니다. 현재 버전에서는 Apple의 기기 내 음성 인식을 사용해 인식과 채점이 전부 기기 안에서 이뤄집니다. 녹음은 기기에만 저장되고 오래된 것은 자동으로 삭제되며, 우리에게도 다른 누구에게도 업로드되지 않습니다.",
+    "mic.p2": "향후 버전에서 더 높은 정확도를 위해 선택형 클라우드 인식을 추가할 수 있습니다. 그럴 경우 앱에서 명확히 표시하고, 사용 여부를 직접 선택할 수 있게 하며, 무엇이 어디로 전송되는지 본 방침에 미리 반영해 갱신합니다.",
+    "practice.h": "연습 데이터",
+    "practice.p": "연습 기록·점수·통계·설정은 기기에만(시스템 로컬 저장소를 사용해) 저장되며, 아래 Game Center의 경우를 제외하고 기기를 벗어나지 않습니다. 앱을 삭제하면 이 데이터도 삭제됩니다.",
+    "gc.h": "Game Center (선택)",
+    "gc.p": "Apple의 Game Center에 로그인하기로 선택하면, 연습 포인트 합계가 랭킹 표시를 위해 Apple로 전송됩니다. 이는 Apple 개인정보 처리방침에 따라 Apple이 처리하며, 우리는 이 데이터를 받지 않습니다. Game Center 없이도 앱의 모든 기능을 사용할 수 있습니다.",
+    "sub.h": "구독",
+    "sub.p": "Usay Pro 구독은 Apple이 App Store를 통해 처리합니다. 우리는 결제 정보를 받거나 저장하지 않으며, 구독이 활성 상태인지 여부만 알 수 있습니다.",
+    "third.h": "서드파티 없음",
+    "third.1": "서드파티 분석·광고·트래킹 SDK가 없습니다.",
+    "third.2": "앱이나 웹사이트를 넘나들며 사용자를 추적하지 않습니다.",
+    "third.3": "발음 데이터는 앱에 포함된 CMU 발음 사전(카네기멜런대학교)에 기반하며, 사용 시 네트워크 요청이 발생하지 않습니다.",
+    "child.h": "어린이",
+    "child.p": "Usay는 어린이를 포함해 누구의 정보도 수집하지 않습니다.",
+    "changes.h": "본 방침의 변경",
+    "changes.p": "본 방침이 변경되면, 새 시행일과 함께 갱신된 내용을 이 주소에 게시합니다.",
+    "contact.h": "문의",
+    "contact.p": "본 방침에 대한 문의는 "
   }
 };
 
+const HTML_LANG = { zh: "zh-Hans", ja: "ja", ko: "ko", en: "en" };
+
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.en;
-  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.documentElement.lang = HTML_LANG[lang] || "en";
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (dict[key] == null) return;
@@ -212,6 +241,7 @@ function detectLang() {
   const n = (navigator.language || "en").toLowerCase();
   if (n.startsWith("zh")) return "zh";
   if (n.startsWith("ja")) return "ja";
+  if (n.startsWith("ko")) return "ko";
   return "en";
 }
 document.querySelectorAll(".langbar button").forEach(b => {

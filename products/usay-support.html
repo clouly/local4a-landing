@@ -15,7 +15,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+      "PingFang SC", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans CJK SC", sans-serif;
     color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -68,6 +68,7 @@
       <button data-lang="en">EN</button>
       <button data-lang="zh">中</button>
       <button data-lang="ja">日</button>
+      <button data-lang="ko">한</button>
     </div>
   </div>
 </header>
@@ -95,7 +96,7 @@
       <details><summary data-i18n="q1">How do I practice?</summary><p data-i18n="a1">Listen to the model, tap record and say it back, then read your score. Usay grades each word and shows the exact phoneme to fix. Work through the phonemes course and minimal pairs, and check your weak sounds under your progress.</p></details>
       <details><summary data-i18n="q2">Is my voice recording private?</summary><p data-i18n="a2">Yes. The mic is used only while you record, recognition and scoring run entirely on your device, and recordings stay on your phone and are deleted automatically. Nothing is uploaded to us. See the Privacy Policy for the full detail.</p></details>
       <details><summary data-i18n="q3">Scoring or the microphone isn't working.</summary><p data-i18n="a3">Check that Usay has Microphone and Speech Recognition permission in Settings → Usay. On-device recognition also needs the matching language to be available on your device. Restarting the app after granting permission usually helps.</p></details>
-      <details><summary data-i18n="q4">What's free, and what does Pro add?</summary><p data-i18n="a4">The daily limit counts new items only — anything you've already practised can be repeated as often as you like, on either plan. Free gives you 30 new items a day; Usay Pro doubles that to 60 and gives you a stronger position on the leaderboards. Pro is ¥12/month or ¥68/year (about ¥5.7 a month).</p></details>
+      <details><summary data-i18n="q4">What's free, and what does Pro add?</summary><p data-i18n="a4">The daily limit counts new items only — anything you've already practised can be repeated as often as you like, on either plan. Free gives you 30 new items a day; Usay Pro doubles that to 60 and gives you a stronger position on the leaderboards. Pro is $1.99/month or $9.99/year (about $0.83 a month); prices vary by region.</p></details>
       <details><summary data-i18n="q4b">What happens when I hit the daily limit?</summary><p data-i18n="a4b">New items are locked until tomorrow, but everything you have already practised stays open. You can keep polishing it as long as you like.</p></details>
       <details><summary data-i18n="q4c">How accurate is the score?</summary><p data-i18n="a4c">Scores come from on-device speech recognition, so treat them as a guide rather than a verdict. A recogniser can occasionally "correct" a mispronounced word back to the expected one — that is why Usay also flags unclear words and tracks your sounds over the long run. The trend matters more than any single attempt.</p></details>
       <details><summary data-i18n="q5">How do I manage or cancel Pro?</summary><p data-i18n="a5">Subscriptions are handled by Apple. Manage or cancel anytime in the App Store app → your account → Subscriptions. If Pro isn't showing on a new device, tap "Restore Purchase" with the same Apple ID.</p></details>
@@ -133,7 +134,7 @@ const I18N = {
     "q3": "Scoring or the microphone isn't working.",
     "a3": "Check that Usay has Microphone and Speech Recognition permission in Settings → Usay. On-device recognition also needs the matching language to be available on your device. Restarting the app after granting permission usually helps.",
     "q4": "What's free, and what does Pro add?",
-    "a4": "The daily limit counts new items only — anything you've already practised can be repeated as often as you like, on either plan. Free gives you 30 new items a day; Usay Pro doubles that to 60 and gives you a stronger position on the leaderboards. Pro is ¥12/month or ¥68/year (about ¥5.7 a month).",
+    "a4": "The daily limit counts new items only — anything you've already practised can be repeated as often as you like, on either plan. Free gives you 30 new items a day; Usay Pro doubles that to 60 and gives you a stronger position on the leaderboards. Pro is $1.99/month or $9.99/year (about $0.83 a month); prices vary by region.",
     "q4b": "What happens when I hit the daily limit?",
     "a4b": "New items are locked until tomorrow, but everything you have already practised stays open. You can keep polishing it as long as you like.",
     "q4c": "How accurate is the score?",
@@ -197,7 +198,7 @@ const I18N = {
     "q3": "採点やマイクが動きません。",
     "a3": "「設定 → Usay」でマイクと音声認識の許可が有効かをご確認ください。端末内認識には、対応する言語が端末で利用可能である必要もあります。許可後にアプリを再起動すると解決することが多いです。",
     "q4": "無料の範囲と、Pro で増えるものは？",
-    "a4": "1 日の上限は「新しい」内容だけを数えます——練習済みの内容はどちらのプランでも何度でも復習できます。無料版は 1 日 30 件、Usay Pro はその 2 倍の 60 件で、ランキングでも有利になります。Pro は月額 ¥12 または年額 ¥68（1 か月あたり約 ¥5.7）です。",
+    "a4": "1 日の上限は「新しい」内容だけを数えます——練習済みの内容はどちらのプランでも何度でも復習できます。無料版は 1 日 30 件、Usay Pro はその 2 倍の 60 件で、ランキングでも有利になります。Pro は月額 ¥300 または年額 ¥1,500（1 か月あたり約 ¥125）です。",
     "q4b": "1 日の上限に達したらどうなりますか？",
     "a4b": "新しい内容は翌日まで開きませんが、練習済みの内容はいつでも使えます。納得いくまで磨けます。",
     "q4c": "スコアはどのくらい正確ですか？",
@@ -210,12 +211,46 @@ const I18N = {
     "a6b": "不要です。認識・採点・コンテンツはすべてオフラインで動作します。通信はサブスクリプションと Game Center ランキングにのみ使います。",
     "q7": "発音データはどこから？",
     "a7": "CMU 発音辞書（カーネギーメロン大学）という、広く使われている公開の発音リソースに基づいています。アプリに同梱されており、アプリ内の「ライセンス」ページに詳細があります。"
+  },
+  ko: {
+    "nav.product": "개요", "nav.privacy": "개인정보",
+    "title": "지원",
+    "lead": "Usay 사용에 도움이 필요하신가요? 문의 방법과 자주 묻는 질문에 대한 답변입니다.",
+    "contact.h": "문의하기",
+    "contact.p": "메일로 연락 주시면 보통 영업일 기준 2일 이내에 답변드립니다.",
+    "req.h": "사용 요건",
+    "req.1": "iOS 17 이상을 실행하는 iPhone — 약 5 MB",
+    "req.2": "발음 채점을 위한 마이크 및 음성 인식 권한",
+    "req.3": "인식·채점·모든 콘텐츠가 오프라인으로 작동하며, 연결은 구독과 Game Center에만 사용됩니다",
+    "faq.h": "자주 묻는 질문",
+    "q1": "어떻게 연습하나요?",
+    "a1": "예시를 듣고 녹음을 눌러 따라 읽은 뒤 점수를 확인하세요. Usay는 단어마다 채점하고 고쳐야 할 음소를 정확히 보여줍니다. 발음기호 수업과 최소 대립쌍을 진행하고, 내 진행 상황에서 약한 소리를 확인하세요.",
+    "q2": "녹음한 목소리는 안전한가요?",
+    "a2": "네. 마이크는 녹음하는 동안에만 사용되고, 인식과 채점은 전부 기기 안에서 이뤄지며, 녹음은 기기에 남아 자동으로 삭제됩니다. 우리에게 업로드되는 것은 없습니다. 자세한 내용은 개인정보 처리방침을 확인하세요.",
+    "q3": "채점이나 마이크가 작동하지 않아요.",
+    "a3": "설정 → Usay에서 마이크와 음성 인식 권한이 허용되어 있는지 확인하세요. 기기 내 인식에는 해당 언어가 기기에서 사용 가능해야 합니다. 권한을 허용한 뒤 앱을 다시 실행하면 대개 해결됩니다.",
+    "q4": "무료 범위와 Pro의 차이는?",
+    "a4": "일일 한도는 '새' 콘텐츠만 셉니다 — 이미 연습한 내용은 어느 요금제에서든 원하는 만큼 반복할 수 있습니다. 무료는 하루 30개, Usay Pro는 두 배인 60개이며 랭킹 경쟁에서도 유리합니다. Pro는 월 ₩3,000 또는 연 ₩15,000(월 약 ₩1,250)입니다.",
+    "q4b": "일일 한도에 도달하면 어떻게 되나요?",
+    "a4b": "새 콘텐츠는 다음 날까지 잠기지만, 이미 연습한 내용은 계속 열려 있어 원하는 만큼 다듬을 수 있습니다.",
+    "q4c": "점수는 얼마나 정확한가요?",
+    "a4c": "점수는 기기 내 음성 인식에 기반하므로 판정이 아니라 참고치로 보세요. 인식기가 잘못 발음한 단어를 예상 단어로 '교정'해버리는 경우가 있습니다. 그래서 Usay는 '불명확' 단어도 표시하고 음소별 추세를 장기간 기록합니다. 한 번의 점수보다 추세가 중요합니다.",
+    "q5": "Pro 관리나 해지는 어떻게 하나요?",
+    "a5": "구독은 Apple이 처리합니다. App Store 앱 → 계정 → 구독에서 언제든 관리하거나 해지할 수 있습니다. 새 기기에서 Pro가 보이지 않으면 같은 Apple ID로 '구매 복원'을 누르세요.",
+    "q6": "어떤 모국어를 지원하나요?",
+    "a6": "중국어, 일본어, 한국어입니다. 화면과 번역은 물론 발음 설명까지 바뀝니다. 모국어마다 어려워하는 소리가 다르기 때문입니다. 가르치는 발음은 미국식 영어입니다.",
+    "q6b": "인터넷 연결이 필요한가요?",
+    "a6b": "아닙니다. 인식·채점·모든 콘텐츠가 오프라인으로 작동합니다. 연결은 구독과 Game Center 랭킹에만 사용됩니다.",
+    "q7": "발음 데이터는 어디서 오나요?",
+    "a7": "널리 쓰이는 공개 발음 자료인 CMU 발음 사전(카네기멜런대학교)에 기반합니다. 앱에 포함되어 있으며, 앱 내 '라이선스' 페이지에 자세한 내용이 있습니다."
   }
 };
 
+const HTML_LANG = { zh: "zh-Hans", ja: "ja", ko: "ko", en: "en" };
+
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.en;
-  document.documentElement.lang = (lang === "zh" ? "zh-Hans" : lang);
+  document.documentElement.lang = HTML_LANG[lang] || "en";
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (dict[key] == null) return;
@@ -231,6 +266,7 @@ function detectLang() {
   const n = (navigator.language || "en").toLowerCase();
   if (n.startsWith("zh")) return "zh";
   if (n.startsWith("ja")) return "ja";
+  if (n.startsWith("ko")) return "ko";
   return "en";
 }
 document.querySelectorAll(".langbar button").forEach(b => {
