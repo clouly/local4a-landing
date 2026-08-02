@@ -74,7 +74,8 @@
     <p data-i18n="collect.p">None. Usay has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, sell, or share any personal data. There is nothing for us to sell or share, because nothing ever reaches us.</p>
 
     <h2 data-i18n="mic.h">Microphone &amp; speech recognition</h2>
-    <p data-i18n="mic.p">Usay records your voice only when you tap the record button, solely to evaluate your pronunciation. Scoring prefers Apple's on-device speech recognition. On devices or languages where on-device recognition is not available, recognition may be performed by Apple's speech recognition service, which is handled by Apple and governed by the Apple Privacy Policy; in that case audio is processed by Apple only to return a transcription and is not received or stored by us. Your recordings are stored only on your device, older recordings are deleted automatically, and nothing is ever uploaded to us.</p>
+    <p data-i18n="mic.p">Usay records your voice only when you tap the record button, solely to evaluate your pronunciation. In the current version, recognition and scoring run entirely on your device using Apple's on-device speech recognition. Your recordings are stored only on your device, older recordings are deleted automatically, and nothing is uploaded to us or to anyone else.</p>
+    <p data-i18n="mic.p2">A future version may add optional cloud-based recognition for greater accuracy. If that happens, it will be clearly indicated in the app, you will be able to choose whether to use it, and this policy will be updated beforehand to describe exactly what is sent and to whom.</p>
 
     <h2 data-i18n="practice.h">Practice data</h2>
     <p data-i18n="practice.p">Your practice history, scores, statistics and settings are stored only on your device (using the system's local storage) and never leave it, except as described below for Game Center. Removing the app removes this data.</p>
@@ -119,7 +120,8 @@ const I18N = {
     "collect.h": "Data we collect",
     "collect.p": "None. Usay has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, sell, or share any personal data. There is nothing for us to sell or share, because nothing ever reaches us.",
     "mic.h": "Microphone & speech recognition",
-    "mic.p": "Usay records your voice only when you tap the record button, solely to evaluate your pronunciation. Scoring prefers Apple's on-device speech recognition. On devices or languages where on-device recognition is not available, recognition may be performed by Apple's speech recognition service, which is handled by Apple and governed by the Apple Privacy Policy; in that case audio is processed by Apple only to return a transcription and is not received or stored by us. Your recordings are stored only on your device, older recordings are deleted automatically, and nothing is ever uploaded to us.",
+    "mic.p": "Usay records your voice only when you tap the record button, solely to evaluate your pronunciation. In the current version, recognition and scoring run entirely on your device using Apple's on-device speech recognition. Your recordings are stored only on your device, older recordings are deleted automatically, and nothing is uploaded to us or to anyone else.",
+    "mic.p2": "A future version may add optional cloud-based recognition for greater accuracy. If that happens, it will be clearly indicated in the app, you will be able to choose whether to use it, and this policy will be updated beforehand to describe exactly what is sent and to whom.",
     "practice.h": "Practice data",
     "practice.p": "Your practice history, scores, statistics and settings are stored only on your device (using the system's local storage) and never leave it, except as described below for Game Center. Removing the app removes this data.",
     "gc.h": "Game Center (optional)",
@@ -144,7 +146,8 @@ const I18N = {
     "collect.h": "我们收集哪些数据",
     "collect.p": "没有。Usay 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不出售、不分享任何个人数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。",
     "mic.h": "麦克风与语音识别",
-    "mic.p": "Usay 仅在你按下录音键时录制你的声音，只用于评估你的发音。评分优先使用 Apple 的本机（离线）语音识别。在不支持本机识别的设备或语言上，识别可能由 Apple 的语音识别服务完成——这部分由 Apple 处理，并受 Apple 隐私政策约束；此时音频仅由 Apple 用于返回转写文本，我们既不接收也不存储。你的录音只保存在你的设备上，旧录音会自动清理，任何内容都不会上传给我们。",
+    "mic.p": "Usay 仅在你按下录音键时录制你的声音，只用于评估你的发音。在当前版本中，识别与评分全部在你的设备上完成，使用 Apple 的本机语音识别。你的录音只保存在你的设备上，旧录音会自动清理，任何内容都不会上传给我们或任何人。",
+    "mic.p2": "未来版本可能会增加可选的云端识别，以获得更高的准确度。若届时启用，应用内会有清晰标示，你可以自行选择是否使用，并且我们会提前更新本政策，写明具体上传了什么、发送给谁。",
     "practice.h": "练习数据",
     "practice.p": "你的练习记录、评分、统计与设置只保存在你的设备上（使用系统本地存储），除下述 Game Center 情形外绝不离开设备。删除应用即清除这些数据。",
     "gc.h": "Game Center（可选）",
@@ -169,7 +172,8 @@ const I18N = {
     "collect.h": "収集するデータ",
     "collect.p": "ありません。Usay にはアカウント機能もサインインも、独自のサーバーもありません。個人データを収集・受信・送信・販売・共有することは一切ありません。私たちのもとには何も届かないため、売るものも共有するものもありません。",
     "mic.h": "マイクと音声認識",
-    "mic.p": "Usay は録音ボタンをタップしたときのみ、発音を評価する目的で音声を録音します。採点は Apple の端末内（オフライン）音声認識を優先します。端末内認識が利用できない端末や言語では、Apple の音声認識サービスによって認識が行われることがあります——これは Apple が処理し、Apple のプライバシーポリシーが適用されます。その場合、音声は文字起こしを返すためだけに Apple が処理し、私たちが受け取ったり保存したりすることはありません。録音は端末内にのみ保存され、古いものは自動的に削除され、私たちにアップロードされることは一切ありません。",
+    "mic.p": "Usay は録音ボタンをタップしたときのみ、発音を評価する目的で音声を録音します。現在のバージョンでは、認識と採点は Apple の端末内音声認識を使い、すべて端末内で完結します。録音は端末内にのみ保存され、古いものは自動的に削除され、私たちにも第三者にもアップロードされることはありません。",
+    "mic.p2": "将来のバージョンで、より高い精度のために任意のクラウド認識を追加する可能性があります。その場合はアプリ内で明示し、利用するかどうかを選べるようにしたうえで、何がどこへ送られるかを本ポリシーに事前に記載して更新します。",
     "practice.h": "練習データ",
     "practice.p": "練習履歴・スコア・統計・設定は端末内にのみ（システムのローカルストレージを使って）保存され、以下の Game Center の場合を除き端末を出ることはありません。アプリを削除すると、このデータも消去されます。",
     "gc.h": "Game Center（任意）",
