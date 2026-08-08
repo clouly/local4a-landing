@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>URead — 长难句，拆开就懂了</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
+  content="URead 把英语长难句拆成主干和意群，标出每一块的语法角色。90 句精校句库覆盖 9 大语法专题，句库之外由端上 Apple Intelligence 实时拆解。全程离线，不联网。" />
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f6f5f1;
+    --ink: #16161a;
+    --ink-soft: #4b4b55;
+    --ink-faint: #8b8b96;
+    --accent: #4338ca;
+    --accent-2: #0d9488;
+    --line: #e7e5df;
+    --hero-bg: #0d0d16;
+    --radius: 16px;
+    --maxw: 1080px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); }
+  @media (max-width: 860px) { .nav-links { display: none; } }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
+    font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
+    transition: transform .12s ease, opacity .12s ease;
+  }
+  .badge:hover { opacity: .92; transform: translateY(-1px); }
+
+  .hero {
+    background: radial-gradient(1100px 560px at 50% -10%, #241f5e 0%, #14121f 46%, var(--hero-bg) 74%);
+    color: #fff; text-align: center; padding: 92px 0 100px;
+  }
+  .hero .kicker { color: #a5a0f5; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .hero h1 { font-size: clamp(33px, 5.6vw, 56px); font-weight: 700; max-width: 18ch; margin: 16px auto 0; }
+  .hero .sub { color: #c9c6d6; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .hero .cta-row a.secondary { color: #c9c6d6; font-size: 14px; }
+  .hero .cta-row a.secondary:hover { color: #fff; }
+  .hero .tagline { color: #86829a; font-size: 14px; margin-top: 26px; }
+
+  section { padding: 82px 0; }
+  section.alt { background: var(--bg-soft); }
+  .eyebrow { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 24ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+
+  /* Sentence demo */
+  .demo { margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
+  section.alt .demo { background: #fff; }
+  .demo .row { padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .demo .row:last-child { border-bottom: 0; }
+  .demo .lab { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .demo .en { font-size: 17px; margin-top: 6px; line-height: 1.55; }
+  .demo .zhtr { color: var(--ink-soft); font-size: 15px; margin-top: 6px; }
+  .demo .skel { font-size: 16px; margin-top: 6px; color: var(--accent); font-weight: 600; }
+  .chunks { display: grid; gap: 8px; margin-top: 10px; }
+  .chunk { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; padding: 9px 12px; border-radius: 10px; background: var(--bg-soft); }
+  section.alt .chunk { background: var(--bg-soft); }
+  .chunk.core { background: rgba(67,56,202,.08); }
+  .chunk .t { font-size: 15px; }
+  .chunk .r { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .chunk.core .r { color: var(--accent); }
+  .gps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .gps span { font-size: 12.5px; color: var(--ink-soft); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; }
+  section.alt .gps span { background: #fff; }
+
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 42px; }
+  @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .features { grid-template-columns: 1fr; } }
+  .feature { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  section.alt .feature { background: #fff; }
+  .feature .ico { font-size: 22px; }
+  .feature h3 { font-size: 16.5px; margin: 10px 0 6px; }
+  .feature p { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* Topics */
+  .topics { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .topics span { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: 14.5px; color: var(--ink-soft); }
+  section.alt .topics span { background: #fff; }
+
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  @media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
+  .stat { text-align: center; padding: 24px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+  section.alt .stat { background: #fff; }
+  .stat .big { font-size: clamp(26px, 4.4vw, 36px); font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
+  .stat .lab { color: var(--ink-soft); font-size: 14.5px; margin-top: 6px; }
+
+  /* Plans */
+  .plans { display: grid; grid-template-columns: 1fr 1.1fr; gap: 22px; margin-top: 42px; }
+  @media (max-width: 780px) { .plans { grid-template-columns: 1fr; } }
+  .plan { border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; background: var(--bg); }
+  section.alt .plan { background: #fff; }
+  .plan.pro { border-color: var(--accent); box-shadow: 0 6px 24px rgba(67,56,202,.10); }
+  .plan .name { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); }
+  .plan.pro .name { color: var(--accent); }
+  .plan h3 { font-size: 22px; margin: 6px 0 6px; }
+  .plan .price { font-size: 15px; color: var(--ink-soft); margin-bottom: 14px; }
+  .plan .price b { color: var(--ink); font-size: 19px; }
+  .plan ul { list-style: none; display: grid; gap: 11px; }
+  .plan li { padding-left: 26px; position: relative; color: var(--ink-soft); font-size: 14.5px; }
+  .plan li::before { content: "✓"; position: absolute; left: 0; top: 0; color: var(--ink-faint); font-weight: 700; }
+  .plan.pro li::before { color: var(--accent); }
+  .plan .note { color: var(--ink-faint); font-size: 13px; margin-top: 18px; }
+
+  .privacy { background: var(--hero-bg); color: #fff; }
+  .privacy h2 { color: #fff; }
+  .privacy .eyebrow { color: #a5a0f5; }
+  .privacy .lede { color: #c9c6d6; }
+  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 66ch; }
+  .privacy li { padding-left: 30px; position: relative; color: #ded9e6; font-size: 16px; }
+  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
+  .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
+  .privacy .links a { color: #a5a0f5; }
+  .privacy .links a:hover { color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; flex-direction: column; gap: 14px; }
+  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .foot-links a { color: var(--ink-soft); }
+  .foot-links a:hover { color: var(--ink); }
+  .disclaimer { color: var(--ink-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="../index.html" class="logo"><span class="bolt">📖</span> URead</a>
+    <nav class="nav-links">
+      <a href="../index.html" data-i18n="nav.portfolio">← 全部产品</a>
+      <a href="#how" data-i18n="nav.how">怎么拆</a>
+      <a href="#library" data-i18n="nav.library">句库</a>
+      <a href="#plans" data-i18n="nav.plans">价格</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="zh">中</button>
+      <button data-lang="en">EN</button>
+    </div>
+    <!-- TODO: 上架后把 href 换成 App Store 链接 -->
+    <a href="#plans" class="badge" data-i18n="cta.appstore">即将登陆 App Store</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="kicker" data-i18n="hero.kicker">英语长难句拆解</div>
+    <h1 data-i18n="hero.title">长难句，拆开就懂了</h1>
+    <p class="sub" data-i18n="hero.sub">一句话读三遍还是绕不出来？URead 把它拆成主干和意群，标出每一块在句子里扮演什么角色——你看到的不只是译文，而是这句话的结构。</p>
+    <div class="cta-row">
+      <a href="#plans" class="badge" data-i18n="cta.appstore">即将登陆 App Store</a>
+      <a href="#how" class="secondary" data-i18n="hero.ctaSecondary">看看怎么拆 ↓</a>
+    </div>
+    <p class="tagline" data-i18n="hero.tagline">全程离线 · 不联网 · 无账号 · iPhone</p>
+  </div>
+</section>
+
+<!-- HOW / DEMO -->
+<section id="how">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="how.eyebrow">怎么拆</span>
+    <h2 class="section-title" data-i18n="how.title">先剥出主干，再看每一块修饰谁</h2>
+    <p class="lede" data-i18n="how.body">长难句难在修饰成分把主谓宾撑开了。URead 先给你一条去掉所有修饰的主干，再把原句切成意群，逐块标注它的语法角色、修饰对象和作用——这是一条真实的拆解结果：</p>
+
+    <div class="demo">
+      <div class="row">
+        <div class="lab" data-i18n="demo.lab.sentence">原句</div>
+        <div class="en">The teacher who had encouraged her to apply never learned that she got in.</div>
+        <div class="zhtr" data-i18n="demo.translation">那位曾鼓励她去申请的老师，始终不知道她被录取了。</div>
+      </div>
+      <div class="row">
+        <div class="lab" data-i18n="demo.lab.skeleton">主干</div>
+        <div class="skel">The teacher never learned that she got in.</div>
+      </div>
+      <div class="row">
+        <div class="lab" data-i18n="demo.lab.chunks">意群拆解</div>
+        <div class="chunks">
+          <div class="chunk core"><span class="t">The teacher</span><span class="r" data-i18n="demo.c1">主语</span></div>
+          <div class="chunk"><span class="t">who had encouraged her to apply</span><span class="r" data-i18n="demo.c2">定语从句 · 修饰 teacher</span></div>
+          <div class="chunk core"><span class="t">never learned</span><span class="r" data-i18n="demo.c3">谓语</span></div>
+          <div class="chunk core"><span class="t">that she got in</span><span class="r" data-i18n="demo.c4">宾语从句</span></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="lab" data-i18n="demo.lab.grammar">语法点</div>
+        <div class="gps">
+          <span data-i18n="demo.g1">who 引导的限定性定语从句</span>
+          <span data-i18n="demo.g2">定语从句分隔主谓</span>
+          <span data-i18n="demo.g3">that 引导宾语从句</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="lib.eyebrow">句库</span>
+    <h2 class="section-title" data-i18n="lib.title">90 句精校拆解，覆盖九大语法专题</h2>
+    <p class="lede" data-i18n="lib.body">每个专题 10 句，从入门到外刊难度递进。句子取自科技报道、学术写作、外刊评论、政经外刊与文学叙事——都是真实语料里会绊住你的那种句子。</p>
+    <div class="topics">
+      <span data-i18n="lib.t1">定语从句</span>
+      <span data-i18n="lib.t2">名词性从句</span>
+      <span data-i18n="lib.t3">状语从句</span>
+      <span data-i18n="lib.t4">非谓语动词</span>
+      <span data-i18n="lib.t5">倒装与强调</span>
+      <span data-i18n="lib.t6">虚拟语气</span>
+      <span data-i18n="lib.t7">比较结构</span>
+      <span data-i18n="lib.t8">并列与省略</span>
+      <span data-i18n="lib.t9">插入与同位</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="big" data-i18n="lib.s1.v">90</div><div class="lab" data-i18n="lib.s1.l">条人工精校的完整拆解</div></div>
+      <div class="stat"><div class="big" data-i18n="lib.s2.v">9 × 10</div><div class="lab" data-i18n="lib.s2.l">九大语法专题，每题 10 句</div></div>
+      <div class="stat"><div class="big" data-i18n="lib.s3.v">1–5</div><div class="lab" data-i18n="lib.s3.l">难度分级，由易到难</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="ft.eyebrow">不止句库</span>
+    <h2 class="section-title" data-i18n="ft.title">你自己遇到的句子，也能拆</h2>
+    <div class="features">
+      <div class="feature"><div class="ico">🧠</div><h3 data-i18n="ft.1.t">端上智能兜底</h3><p data-i18n="ft.1.b">句库没收录的句子，交给设备本机的 Apple Intelligence 实时拆解。需要支持该功能的机型；句库本身则在所有设备上都能用。</p></div>
+      <div class="feature"><div class="ico">📷</div><h3 data-i18n="ft.2.t">图片取句</h3><p data-i18n="ft.2.b">从相册选一张截图或书页照片，用本机 OCR 把句子识别出来，不用手打。</p></div>
+      <div class="feature"><div class="ico">📤</div><h3 data-i18n="ft.3.t">从任何 App 分享进来</h3><p data-i18n="ft.3.b">在浏览器、阅读器、邮件里选中一句，分享到 URead 直接开拆。</p></div>
+      <div class="feature"><div class="ico">🔊</div><h3 data-i18n="ft.4.t">按意群朗读</h3><p data-i18n="ft.4.b">不是一口气读完整句，而是按拆出来的意群一块一块读——耳朵也能听出结构。</p></div>
+      <div class="feature"><div class="ico">🔖</div><h3 data-i18n="ft.5.t">收藏句子</h3><p data-i18n="ft.5.b">把绊住过你的句子存下来，之后随时回看它的拆解。</p></div>
+      <div class="feature"><div class="ico">✈️</div><h3 data-i18n="ft.6.t">彻底离线</h3><p data-i18n="ft.6.b">应用不访问任何外部服务，没有账号、不需要 API Key，飞行模式下照样拆。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANS -->
+<section id="plans" class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="pl.eyebrow">价格</span>
+    <h2 class="section-title" data-i18n="pl.title">先免费试，再一次买断</h2>
+    <p class="lede" data-i18n="pl.body">每个语法专题都开放最容易的前 2 句，一共 18 句免费——足够你判断这套拆解方式是不是对你有用。</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="name" data-i18n="pl.free.n">免费</div>
+        <h3 data-i18n="pl.free.h">先看看合不合用</h3>
+        <div class="price"><b data-i18n="pl.free.p">¥0</b></div>
+        <ul>
+          <li data-i18n="pl.free.1">18 句完整拆解（每个专题前 2 句）</li>
+          <li data-i18n="pl.free.2">九大语法专题都能试到</li>
+          <li data-i18n="pl.free.3">图片取句、分享进来、朗读、收藏</li>
+          <li data-i18n="pl.free.4">端上智能拆解自己的句子</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <div class="name" data-i18n="pl.pro.n">完整句库</div>
+        <h3 data-i18n="pl.pro.h">解锁全部 90 句</h3>
+        <div class="price"><b data-i18n="pl.pro.p1">¥18</b> <span data-i18n="pl.pro.p2">一次买断，不是订阅</span></div>
+        <ul>
+          <li data-i18n="pl.pro.1">解锁余下 72 句，共 90 句完整拆解</li>
+          <li data-i18n="pl.pro.2">九大专题各 10 句，难度由易到难</li>
+          <li data-i18n="pl.pro.3">买断永久有效，后续更新免费</li>
+          <li data-i18n="pl.pro.4">换设备用同一 Apple ID 可恢复购买</li>
+        </ul>
+        <p class="note" data-i18n="pl.pro.note">一次性内购 · 无订阅、不续费 · 各地区价格不同，以 App Store 显示为准。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section class="privacy">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="pri.eyebrow">隐私</span>
+    <h2 class="section-title" data-i18n="pri.title">你读什么，我们无从知道</h2>
+    <p class="lede" data-i18n="pri.body">URead 没有服务器、没有账号，也不做任何统计。应用不访问任何外部服务——你的句子从头到尾都留在设备上。</p>
+    <ul>
+      <li data-i18n="pri.1">应用不发起任何网络请求，句库与拆解全部在本机完成。</li>
+      <li data-i18n="pri.2">端上智能拆解由设备本机的 Apple Intelligence 执行，句子不会上传。</li>
+      <li data-i18n="pri.3">图片识别使用本机 OCR；你选中的图片和识别结果都不离开设备。</li>
+      <li data-i18n="pri.4">收藏的句子只存在你的设备上，删除应用即清除。</li>
+      <li data-i18n="pri.5">无账号、无统计分析、无广告、无第三方追踪 SDK。</li>
+    </ul>
+    <div class="links">
+      <a href="uread-privacy.html" data-i18n="pri.link">阅读完整隐私政策 →</a>
+      <a href="uread-support.html" data-i18n="support.link">支持 →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-top">
+      <div class="logo"><span class="bolt">📖</span> URead</div>
+      <span class="foot-links">
+        <a href="uread-privacy.html" data-i18n="footer.privacy">隐私</a> ·
+        <a href="uread-support.html" data-i18n="footer.support">支持</a> ·
+        <a href="../index.html" data-i18n="footer.more">Local4a 更多产品</a>
+      </span>
+    </div>
+    <p class="disclaimer" data-i18n="footer.disclaimer">URead 应用界面为简体中文，拆解对象为英语句子。© 2026 Local4a。</p>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  zh: {
+    "meta.desc": "URead 把英语长难句拆成主干和意群，标出每一块的语法角色。90 句精校句库覆盖 9 大语法专题，句库之外由端上 Apple Intelligence 实时拆解。全程离线，不联网。",
+    "nav.portfolio": "← 全部产品", "nav.how": "怎么拆", "nav.library": "句库", "nav.plans": "价格",
+    "cta.appstore": "即将登陆 App Store",
+    "hero.kicker": "英语长难句拆解",
+    "hero.title": "长难句，拆开就懂了",
+    "hero.sub": "一句话读三遍还是绕不出来？URead 把它拆成主干和意群，标出每一块在句子里扮演什么角色——你看到的不只是译文，而是这句话的结构。",
+    "hero.ctaSecondary": "看看怎么拆 ↓",
+    "hero.tagline": "全程离线 · 不联网 · 无账号 · iPhone",
+    "how.eyebrow": "怎么拆",
+    "how.title": "先剥出主干，再看每一块修饰谁",
+    "how.body": "长难句难在修饰成分把主谓宾撑开了。URead 先给你一条去掉所有修饰的主干，再把原句切成意群，逐块标注它的语法角色、修饰对象和作用——这是一条真实的拆解结果：",
+    "demo.lab.sentence": "原句", "demo.lab.skeleton": "主干", "demo.lab.chunks": "意群拆解", "demo.lab.grammar": "语法点",
+    "demo.translation": "那位曾鼓励她去申请的老师，始终不知道她被录取了。",
+    "demo.c1": "主语", "demo.c2": "定语从句 · 修饰 teacher", "demo.c3": "谓语", "demo.c4": "宾语从句",
+    "demo.g1": "who 引导的限定性定语从句", "demo.g2": "定语从句分隔主谓", "demo.g3": "that 引导宾语从句",
+    "lib.eyebrow": "句库",
+    "lib.title": "90 句精校拆解，覆盖九大语法专题",
+    "lib.body": "每个专题 10 句，从入门到外刊难度递进。句子取自科技报道、学术写作、外刊评论、政经外刊与文学叙事——都是真实语料里会绊住你的那种句子。",
+    "lib.t1": "定语从句", "lib.t2": "名词性从句", "lib.t3": "状语从句", "lib.t4": "非谓语动词", "lib.t5": "倒装与强调",
+    "lib.t6": "虚拟语气", "lib.t7": "比较结构", "lib.t8": "并列与省略", "lib.t9": "插入与同位",
+    "lib.s1.v": "90", "lib.s1.l": "条人工精校的完整拆解",
+    "lib.s2.v": "9 × 10", "lib.s2.l": "九大语法专题，每题 10 句",
+    "lib.s3.v": "1–5", "lib.s3.l": "难度分级，由易到难",
+    "ft.eyebrow": "不止句库",
+    "ft.title": "你自己遇到的句子，也能拆",
+    "ft.1.t": "端上智能兜底", "ft.1.b": "句库没收录的句子，交给设备本机的 Apple Intelligence 实时拆解。需要支持该功能的机型；句库本身则在所有设备上都能用。",
+    "ft.2.t": "图片取句", "ft.2.b": "从相册选一张截图或书页照片，用本机 OCR 把句子识别出来，不用手打。",
+    "ft.3.t": "从任何 App 分享进来", "ft.3.b": "在浏览器、阅读器、邮件里选中一句，分享到 URead 直接开拆。",
+    "ft.4.t": "按意群朗读", "ft.4.b": "不是一口气读完整句，而是按拆出来的意群一块一块读——耳朵也能听出结构。",
+    "ft.5.t": "收藏句子", "ft.5.b": "把绊住过你的句子存下来，之后随时回看它的拆解。",
+    "ft.6.t": "彻底离线", "ft.6.b": "应用不访问任何外部服务，没有账号、不需要 API Key，飞行模式下照样拆。",
+    "pl.eyebrow": "价格",
+    "pl.title": "先免费试，再一次买断",
+    "pl.body": "每个语法专题都开放最容易的前 2 句，一共 18 句免费——足够你判断这套拆解方式是不是对你有用。",
+    "pl.free.n": "免费", "pl.free.h": "先看看合不合用", "pl.free.p": "¥0",
+    "pl.free.1": "18 句完整拆解（每个专题前 2 句）",
+    "pl.free.2": "九大语法专题都能试到",
+    "pl.free.3": "图片取句、分享进来、朗读、收藏",
+    "pl.free.4": "端上智能拆解自己的句子",
+    "pl.pro.n": "完整句库", "pl.pro.h": "解锁全部 90 句",
+    "pl.pro.p1": "¥18", "pl.pro.p2": "一次买断，不是订阅",
+    "pl.pro.1": "解锁余下 72 句，共 90 句完整拆解",
+    "pl.pro.2": "九大专题各 10 句，难度由易到难",
+    "pl.pro.3": "买断永久有效，后续更新免费",
+    "pl.pro.4": "换设备用同一 Apple ID 可恢复购买",
+    "pl.pro.note": "一次性内购 · 无订阅、不续费 · 各地区价格不同，以 App Store 显示为准。",
+    "pri.eyebrow": "隐私",
+    "pri.title": "你读什么，我们无从知道",
+    "pri.body": "URead 没有服务器、没有账号，也不做任何统计。应用不访问任何外部服务——你的句子从头到尾都留在设备上。",
+    "pri.1": "应用不发起任何网络请求，句库与拆解全部在本机完成。",
+    "pri.2": "端上智能拆解由设备本机的 Apple Intelligence 执行，句子不会上传。",
+    "pri.3": "图片识别使用本机 OCR；你选中的图片和识别结果都不离开设备。",
+    "pri.4": "收藏的句子只存在你的设备上，删除应用即清除。",
+    "pri.5": "无账号、无统计分析、无广告、无第三方追踪 SDK。",
+    "pri.link": "阅读完整隐私政策 →",
+    "support.link": "支持 →",
+    "footer.privacy": "隐私", "footer.support": "支持", "footer.more": "Local4a 更多产品",
+    "footer.disclaimer": "URead 应用界面为简体中文，拆解对象为英语句子。© 2026 Local4a。"
+  },
+  en: {
+    "meta.desc": "URead breaks a long English sentence into its skeleton and thought groups, labelling the grammatical role of every piece. A 90-sentence curated library across 9 grammar topics, with on-device Apple Intelligence for anything else. Fully offline.",
+    "nav.portfolio": "← All products", "nav.how": "How it works", "nav.library": "Library", "nav.plans": "Pricing",
+    "cta.appstore": "Coming to the App Store",
+    "hero.kicker": "English sentence breakdown",
+    "hero.title": "Long sentences, taken apart",
+    "hero.sub": "Read it three times and still lost? URead splits the sentence into its skeleton and thought groups, and labels what each piece is doing — you don't just get a translation, you get the structure.",
+    "hero.ctaSecondary": "See a breakdown ↓",
+    "hero.tagline": "Fully offline · No network · No account · iPhone",
+    "how.eyebrow": "How it works",
+    "how.title": "Strip it to the skeleton, then see what modifies what",
+    "how.body": "Long sentences are hard because modifiers push the subject, verb and object apart. URead first shows you the skeleton with every modifier removed, then cuts the original into thought groups and labels each one's grammatical role and what it attaches to. Here's a real breakdown:",
+    "demo.lab.sentence": "Sentence", "demo.lab.skeleton": "Skeleton", "demo.lab.chunks": "Thought groups", "demo.lab.grammar": "Grammar points",
+    "demo.translation": "The teacher who once encouraged her to apply never found out that she was admitted.",
+    "demo.c1": "Subject", "demo.c2": "Relative clause · modifies teacher", "demo.c3": "Predicate", "demo.c4": "Object clause",
+    "demo.g1": "Restrictive relative clause with who", "demo.g2": "Relative clause splitting subject and verb", "demo.g3": "Object clause introduced by that",
+    "lib.eyebrow": "Library",
+    "lib.title": "90 curated breakdowns across nine grammar topics",
+    "lib.body": "Ten sentences per topic, rising from beginner to serious journalism. They're drawn from tech reporting, academic writing, magazine commentary, political and economic press, and literary narrative — the kind of sentence that actually trips you up in the wild.",
+    "lib.t1": "Relative clauses", "lib.t2": "Noun clauses", "lib.t3": "Adverbial clauses", "lib.t4": "Non-finite verbs", "lib.t5": "Inversion & emphasis",
+    "lib.t6": "Subjunctive", "lib.t7": "Comparatives", "lib.t8": "Coordination & ellipsis", "lib.t9": "Parenthesis & apposition",
+    "lib.s1.v": "90", "lib.s1.l": "hand-checked full breakdowns",
+    "lib.s2.v": "9 × 10", "lib.s2.l": "nine grammar topics, ten sentences each",
+    "lib.s3.v": "1–5", "lib.s3.l": "graded difficulty, easiest first",
+    "ft.eyebrow": "Beyond the library",
+    "ft.title": "Bring your own sentence",
+    "ft.1.t": "On-device intelligence", "ft.1.b": "For a sentence the library doesn't cover, Apple Intelligence breaks it down right on your device. That needs a supported model; the library itself works on every device.",
+    "ft.2.t": "Capture from an image", "ft.2.b": "Pick a screenshot or a photo of a page and on-device OCR lifts the sentence out — no retyping.",
+    "ft.3.t": "Share from any app", "ft.3.b": "Select a sentence in your browser, reader or mail app, share it to URead, and it opens ready to break down.",
+    "ft.4.t": "Read by thought group", "ft.4.b": "Not one breathless run through the sentence — it reads chunk by chunk, so you can hear the structure too.",
+    "ft.5.t": "Save sentences", "ft.5.b": "Keep the ones that caught you out and come back to their breakdowns whenever you like.",
+    "ft.6.t": "Properly offline", "ft.6.b": "The app talks to no external service. No account, no API key — it works in airplane mode.",
+    "pl.eyebrow": "Pricing",
+    "pl.title": "Try it free, then buy it once",
+    "pl.body": "The two easiest sentences in every grammar topic are free — 18 in all, enough to tell whether this way of breaking sentences down works for you.",
+    "pl.free.n": "Free", "pl.free.h": "See if it suits you", "pl.free.p": "$0",
+    "pl.free.1": "18 full breakdowns (the first 2 of every topic)",
+    "pl.free.2": "A taste of all nine grammar topics",
+    "pl.free.3": "Image capture, share-in, read-aloud and saving",
+    "pl.free.4": "On-device breakdown of your own sentences",
+    "pl.pro.n": "Full library", "pl.pro.h": "Unlock all 90 sentences",
+    "pl.pro.p1": "$2.99", "pl.pro.p2": "one-time purchase, not a subscription",
+    "pl.pro.1": "Unlocks the remaining 72 — 90 full breakdowns in all",
+    "pl.pro.2": "Ten sentences in each of the nine topics, easiest first",
+    "pl.pro.3": "Yours for good, with free updates",
+    "pl.pro.4": "Restore on a new device with the same Apple ID",
+    "pl.pro.note": "One-time in-app purchase · No subscription, no renewal · Prices vary by region — the App Store shows yours.",
+    "pri.eyebrow": "Privacy",
+    "pri.title": "We have no idea what you read",
+    "pri.body": "URead has no servers, no account and no analytics. The app talks to no external service — your sentences stay on your device from start to finish.",
+    "pri.1": "The app makes no network requests; the library and every breakdown run on your device.",
+    "pri.2": "On-device breakdowns are performed by Apple Intelligence on your device — sentences are not uploaded.",
+    "pri.3": "Image capture uses on-device OCR; neither the image you pick nor the recognised text leaves your device.",
+    "pri.4": "Saved sentences live only on your device and are removed with the app.",
+    "pri.5": "No account, no analytics, no advertising, no third-party tracking SDKs.",
+    "pri.link": "Read the full Privacy Policy →",
+    "support.link": "Support →",
+    "footer.privacy": "Privacy", "footer.support": "Support", "footer.more": "More by Local4a",
+    "footer.disclaimer": "URead's interface is in Simplified Chinese; the sentences it breaks down are English. © 2026 Local4a."
+  }
+};
+
+const HTML_LANG = { zh: "zh-Hans", en: "en" };
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.zh;
+  document.documentElement.lang = HTML_LANG[lang] || "zh-Hans";
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    const attr = el.getAttribute("data-i18n-attr");
+    if (dict[key] == null) return;
+    if (attr) el.setAttribute(attr, dict[key]);
+    else el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "zh").toLowerCase();
+  return n.startsWith("zh") ? "zh" : "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>

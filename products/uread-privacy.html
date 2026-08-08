@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>隐私政策 — URead</title>
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --bg: #ffffff; --bg-soft: #f6f5f1; --ink: #16161a; --ink-soft: #4b4b55;
+    --ink-faint: #8b8b96; --accent: #4338ca; --line: #e7e5df; --radius: 16px; --maxw: 760px;
+    font-synthesis: none;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
+      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+    color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header.nav {
+    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
+    background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
+  .logo .bolt { color: var(--accent); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--ink-soft); }
+  .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+  main { padding: 56px 0 96px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.02em; }
+  .updated { color: var(--ink-faint); font-size: 14px; margin-top: 10px; }
+  .summary { margin-top: 18px; background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; font-size: 16px; color: var(--ink); font-weight: 600; }
+  .legal h2 { font-size: 21px; margin: 40px 0 6px; letter-spacing: -0.01em; }
+  .legal p { color: var(--ink-soft); margin-top: 8px; }
+  .legal ul { color: var(--ink-soft); margin: 8px 0 0 20px; }
+  .legal li { margin-top: 6px; }
+  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="uread.html" class="logo"><span class="bolt">📖</span> URead</a>
+    <nav class="nav-links">
+      <a href="uread.html" data-i18n="nav.product">产品概览</a>
+      <a href="uread-support.html" data-i18n="nav.support">支持</a>
+    </nav>
+    <div class="langbar" role="group" aria-label="Language">
+      <button data-lang="zh">中</button>
+      <button data-lang="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap legal">
+    <h1 data-i18n="title">隐私政策</h1>
+    <p class="updated"><span data-i18n="effective">生效日期</span>: 2026-08-08 · <span data-i18n="appname">URead</span></p>
+    <p class="summary" data-i18n="summary">一句话总结：URead 不联网。它没有服务器、没有账号，也不收集任何数据——你的句子从头到尾都留在你的设备上。</p>
+
+    <h2 data-i18n="collect.h">我们收集哪些数据</h2>
+    <p data-i18n="collect.p">没有。URead 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。</p>
+
+    <h2 data-i18n="net.h">网络访问</h2>
+    <p data-i18n="net.p">应用不发起任何网络请求。句库随应用内置，拆解、朗读与识别全部在你的设备上完成。你无需注册账号，也不需要任何 API Key。飞行模式下，应用的全部功能照常可用。</p>
+
+    <h2 data-i18n="ai.h">端上智能拆解</h2>
+    <p data-i18n="ai.p">当你输入的句子不在内置句库中时，拆解由你设备本机的 Apple Intelligence（Foundation Models）完成。该处理全程在设备上进行，句子不会被上传给我们或任何第三方。此功能需要支持 Apple Intelligence 的机型；不支持时，内置句库依然可以正常使用。</p>
+
+    <h2 data-i18n="img.h">图片与文字识别</h2>
+    <p data-i18n="img.p">你可以从系统相册选择器中挑选一张图片，让应用识别其中的句子。应用使用系统的照片选择器，因此不会请求、也不需要访问你相册的权限——只有你主动选中的那一张图片会交给应用。识别使用设备本机的 Vision 框架完成，图片与识别出的文字都不会离开你的设备，我们也不会收到它们。</p>
+
+    <h2 data-i18n="share.h">分享扩展</h2>
+    <p data-i18n="share.p">你可以在其他应用中选中一段文字，通过系统分享菜单发送到 URead。这段文字只会传递给你设备上的 URead，用于拆解，不会发送到任何服务器。</p>
+
+    <h2 data-i18n="local.h">留在设备上的数据</h2>
+    <ul>
+      <li data-i18n="local.1">你收藏的句子及其拆解结果，只保存在你的设备上。</li>
+      <li data-i18n="local.2">应用设置（如朗读偏好）只保存在你的设备上。</li>
+      <li data-i18n="local.3">删除应用即清除这些数据。</li>
+    </ul>
+
+    <h2 data-i18n="buy.h">购买</h2>
+    <p data-i18n="buy.p">「完整句库」是一次性内购，由 Apple 通过 App Store 处理。我们不接收或存储任何支付信息——只会知道该项目是否已购买。你可以在任何一台使用同一 Apple ID 的设备上恢复购买。</p>
+
+    <h2 data-i18n="third.h">无第三方</h2>
+    <ul>
+      <li data-i18n="third.1">无第三方统计分析、广告或追踪 SDK。</li>
+      <li data-i18n="third.2">我们不会跨应用或网站追踪你。</li>
+      <li data-i18n="third.3">应用不与任何第三方分享任何信息。</li>
+    </ul>
+
+    <h2 data-i18n="child.h">儿童</h2>
+    <p data-i18n="child.p">URead 不收集任何人的信息，包括儿童。</p>
+
+    <h2 data-i18n="changes.h">本政策的变更</h2>
+    <p data-i18n="changes.p">若未来版本引入任何与数据相关的功能，我们会更新本政策，并在此以新的生效日期注明变更。</p>
+
+    <h2 data-i18n="contact.h">联系我们</h2>
+    <p data-i18n="contact.p">对本政策有疑问？请发邮件至 <a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a>。</p>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="logo"><span class="bolt">📖</span> URead</div>
+    <span>© 2026 Local4a</span>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+  zh: {
+    "nav.product": "产品概览", "nav.support": "支持",
+    "title": "隐私政策", "effective": "生效日期", "appname": "URead",
+    "summary": "一句话总结：URead 不联网。它没有服务器、没有账号，也不收集任何数据——你的句子从头到尾都留在你的设备上。",
+    "collect.h": "我们收集哪些数据",
+    "collect.p": "没有。URead 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。",
+    "net.h": "网络访问",
+    "net.p": "应用不发起任何网络请求。句库随应用内置，拆解、朗读与识别全部在你的设备上完成。你无需注册账号，也不需要任何 API Key。飞行模式下，应用的全部功能照常可用。",
+    "ai.h": "端上智能拆解",
+    "ai.p": "当你输入的句子不在内置句库中时，拆解由你设备本机的 Apple Intelligence（Foundation Models）完成。该处理全程在设备上进行，句子不会被上传给我们或任何第三方。此功能需要支持 Apple Intelligence 的机型；不支持时，内置句库依然可以正常使用。",
+    "img.h": "图片与文字识别",
+    "img.p": "你可以从系统相册选择器中挑选一张图片，让应用识别其中的句子。应用使用系统的照片选择器，因此不会请求、也不需要访问你相册的权限——只有你主动选中的那一张图片会交给应用。识别使用设备本机的 Vision 框架完成，图片与识别出的文字都不会离开你的设备，我们也不会收到它们。",
+    "share.h": "分享扩展",
+    "share.p": "你可以在其他应用中选中一段文字，通过系统分享菜单发送到 URead。这段文字只会传递给你设备上的 URead，用于拆解，不会发送到任何服务器。",
+    "local.h": "留在设备上的数据",
+    "local.1": "你收藏的句子及其拆解结果，只保存在你的设备上。",
+    "local.2": "应用设置（如朗读偏好）只保存在你的设备上。",
+    "local.3": "删除应用即清除这些数据。",
+    "buy.h": "购买",
+    "buy.p": "「完整句库」是一次性内购，由 Apple 通过 App Store 处理。我们不接收或存储任何支付信息——只会知道该项目是否已购买。你可以在任何一台使用同一 Apple ID 的设备上恢复购买。",
+    "third.h": "无第三方",
+    "third.1": "无第三方统计分析、广告或追踪 SDK。",
+    "third.2": "我们不会跨应用或网站追踪你。",
+    "third.3": "应用不与任何第三方分享任何信息。",
+    "child.h": "儿童",
+    "child.p": "URead 不收集任何人的信息，包括儿童。",
+    "changes.h": "本政策的变更",
+    "changes.p": "若未来版本引入任何与数据相关的功能，我们会更新本政策，并在此以新的生效日期注明变更。",
+    "contact.h": "联系我们",
+    "contact.p": "对本政策有疑问？请发邮件至 "
+  },
+  en: {
+    "nav.product": "Overview", "nav.support": "Support",
+    "title": "Privacy Policy", "effective": "Effective date", "appname": "URead",
+    "summary": "In one line: URead does not go online. It has no servers, no account, and collects nothing — your sentences stay on your device from start to finish.",
+    "collect.h": "Data we collect",
+    "collect.p": "None. URead has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, or store your sentences, your images, or any usage data. There is nothing for us to sell or share, because nothing ever reaches us.",
+    "net.h": "Network access",
+    "net.p": "The app makes no network requests at all. The sentence library ships inside the app, and every breakdown, read-aloud and recognition runs on your device. There is no account to create and no API key to supply. In airplane mode, everything still works.",
+    "ai.h": "On-device breakdowns",
+    "ai.p": "When a sentence you enter isn't in the built-in library, the breakdown is produced by Apple Intelligence (Foundation Models) running on your device. That processing happens entirely on the device; the sentence is not uploaded to us or to any third party. This feature requires a device that supports Apple Intelligence — where it isn't supported, the built-in library still works normally.",
+    "img.h": "Images and text recognition",
+    "img.p": "You can pick an image through the system photo picker so the app can read a sentence out of it. Because the app uses the system picker, it does not request — and does not need — access to your photo library; only the single image you choose is handed to the app. Recognition runs on-device using Apple's Vision framework, and neither the image nor the recognised text leaves your device or reaches us.",
+    "share.h": "Share extension",
+    "share.p": "You can select text in another app and send it to URead through the system share sheet. That text is passed only to URead on your device, to be broken down. It is not sent to any server.",
+    "local.h": "What stays on your device",
+    "local.1": "Sentences you save, along with their breakdowns, are stored only on your device.",
+    "local.2": "App settings (such as read-aloud preferences) are stored only on your device.",
+    "local.3": "Removing the app removes this data.",
+    "buy.h": "Purchases",
+    "buy.p": "The Full Library is a one-time in-app purchase processed by Apple through the App Store. We do not receive or store any payment information — we only learn whether the item has been purchased. You can restore it on any device using the same Apple ID.",
+    "third.h": "No third parties",
+    "third.1": "No third-party analytics, advertising, or tracking SDKs.",
+    "third.2": "We do not track you across apps or websites.",
+    "third.3": "The app shares no information with any third party.",
+    "child.h": "Children",
+    "child.p": "URead collects no information from anyone, including children.",
+    "changes.h": "Changes to this policy",
+    "changes.p": "If a future version introduces any data-related feature, we will update this policy and note the change here with a new effective date.",
+    "contact.h": "Contact",
+    "contact.p": "Questions about this policy? Email us at "
+  }
+};
+
+const HTML_LANG = { zh: "zh-Hans", en: "en" };
+
+function applyLang(lang) {
+  const dict = I18N[lang] || I18N.zh;
+  document.documentElement.lang = HTML_LANG[lang] || "zh-Hans";
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (dict[key] == null) return;
+    if (key === "contact.p") { el.childNodes[0].nodeValue = dict[key]; return; }
+    el.textContent = dict[key];
+  });
+  document.querySelectorAll(".langbar button").forEach(b => {
+    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
+  });
+  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
+}
+function detectLang() {
+  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
+  const n = (navigator.language || "zh").toLowerCase();
+  return n.startsWith("zh") ? "zh" : "en";
+}
+document.querySelectorAll(".langbar button").forEach(b => {
+  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
+});
+applyLang(detectLang());
+</script>
+</body>
+</html>
