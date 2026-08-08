@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>URead — 长难句，拆开就懂了</title>
+<title>URead — 把英文长难句拆成读得动的样子</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
-  content="URead 把英语长难句拆成主干和意群，标出每一块的语法角色。90 句精校句库覆盖 9 大语法专题，句库之外由端上 Apple Intelligence 实时拆解。全程离线，不联网。" />
+  content="单词全认识，句子却读不懂？URead 把英文长难句拆成意群，分行缩进显示层级，一键只看主干。90 句原创精编句库，简繁日韩四语讲解。完全离线，不联网。" />
 <style>
   :root {
     --bg: #ffffff;
@@ -25,7 +25,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+      "PingFang SC", "PingFang TC", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans CJK SC", sans-serif;
     color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -36,19 +36,19 @@
     position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
     background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
   }
-  .nav-inner { display: flex; align-items: center; gap: 20px; height: 56px; }
+  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; }
   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; }
   .logo .bolt { color: var(--accent); }
-  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; color: var(--ink-soft); }
   .nav-links a:hover { color: var(--ink); }
-  @media (max-width: 860px) { .nav-links { display: none; } }
+  @media (max-width: 1000px) { .nav-links { display: none; } }
   .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
-  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 9px; border-radius: 999px; color: var(--ink-soft); white-space: nowrap; }
   .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
   .badge {
     display: inline-flex; align-items: center; gap: 8px; background: var(--accent); color: #fff;
     font-weight: 600; padding: 11px 20px; border-radius: 999px; font-size: 15px;
-    transition: transform .12s ease, opacity .12s ease;
+    transition: transform .12s ease, opacity .12s ease; white-space: nowrap;
   }
   .badge:hover { opacity: .92; transform: translateY(-1px); }
 
@@ -57,8 +57,8 @@
     color: #fff; text-align: center; padding: 92px 0 100px;
   }
   .hero .kicker { color: #a5a0f5; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-  .hero h1 { font-size: clamp(33px, 5.6vw, 56px); font-weight: 700; max-width: 18ch; margin: 16px auto 0; }
-  .hero .sub { color: #c9c6d6; font-size: clamp(16px, 2.4vw, 21px); max-width: 56ch; margin: 22px auto 0; }
+  .hero h1 { font-size: clamp(31px, 5.2vw, 52px); font-weight: 700; max-width: 20ch; margin: 16px auto 0; }
+  .hero .sub { color: #c9c6d6; font-size: clamp(16px, 2.4vw, 21px); max-width: 58ch; margin: 22px auto 0; }
   .hero .cta-row { margin-top: 34px; display: flex; gap: 16px; justify-content: center; align-items: center; flex-wrap: wrap; }
   .hero .cta-row a.secondary { color: #c9c6d6; font-size: 14px; }
   .hero .cta-row a.secondary:hover { color: #fff; }
@@ -67,28 +67,38 @@
   section { padding: 82px 0; }
   section.alt { background: var(--bg-soft); }
   .eyebrow { color: var(--accent); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
-  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 24ch; }
-  .lede { color: var(--ink-soft); font-size: 18px; max-width: 62ch; margin-top: 18px; }
+  h2.section-title { font-size: clamp(24px, 3.6vw, 38px); font-weight: 700; margin-top: 8px; max-width: 26ch; }
+  .lede { color: var(--ink-soft); font-size: 18px; max-width: 64ch; margin-top: 18px; }
+  .lede + .lede { margin-top: 12px; }
 
-  /* Sentence demo */
+  /* Demo */
   .demo { margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg); }
   section.alt .demo { background: #fff; }
-  .demo .row { padding: 18px 22px; border-bottom: 1px solid var(--line); }
-  .demo .row:last-child { border-bottom: 0; }
-  .demo .lab { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
-  .demo .en { font-size: 17px; margin-top: 6px; line-height: 1.55; }
-  .demo .zhtr { color: var(--ink-soft); font-size: 15px; margin-top: 6px; }
-  .demo .skel { font-size: 16px; margin-top: 6px; color: var(--accent); font-weight: 600; }
-  .chunks { display: grid; gap: 8px; margin-top: 10px; }
-  .chunk { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; padding: 9px 12px; border-radius: 10px; background: var(--bg-soft); }
-  section.alt .chunk { background: var(--bg-soft); }
-  .chunk.core { background: rgba(67,56,202,.08); }
-  .chunk .t { font-size: 15px; }
-  .chunk .r { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
-  .chunk.core .r { color: var(--accent); }
-  .gps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-  .gps span { font-size: 12.5px; color: var(--ink-soft); background: var(--bg-soft); border: 1px solid var(--line); border-radius: 999px; padding: 4px 11px; }
-  section.alt .gps span { background: #fff; }
+  .demo-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  .demo-head .lab { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .toggle { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; font-size: 13.5px; color: var(--ink-soft); user-select: none; }
+  .toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .toggle .track { width: 38px; height: 22px; border-radius: 999px; background: #d9d6cf; position: relative; transition: background .18s ease; flex: none; }
+  .toggle .track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 999px; background: #fff; transition: transform .18s ease; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .toggle input:checked + .track { background: var(--accent); }
+  .toggle input:checked + .track::after { transform: translateX(16px); }
+
+  .lines { padding: 20px 20px 8px; }
+  .line {
+    display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;
+    padding: 9px 12px; border-radius: 10px; margin-bottom: 6px;
+    transition: opacity .22s ease, background .22s ease, max-height .22s ease;
+  }
+  .line[data-d="1"] { margin-left: 26px; }
+  .line[data-d="2"] { margin-left: 52px; }
+  .line.core { background: rgba(67,56,202,.08); }
+  .line .t { font-size: 16px; line-height: 1.5; }
+  .line .r { font-size: 12px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+  .line.mod .r { color: var(--ink-faint); }
+  .demo.skeleton .line.mod { opacity: .18; }
+  .demo-foot { padding: 14px 20px 18px; border-top: 1px solid var(--line); }
+  .demo-foot .lab { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-faint); }
+  .demo-foot .zhtr { color: var(--ink-soft); font-size: 15px; margin-top: 6px; }
 
   .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 42px; }
   @media (max-width: 900px) { .features { grid-template-columns: repeat(2, 1fr); } }
@@ -99,19 +109,31 @@
   .feature h3 { font-size: 16.5px; margin: 10px 0 6px; }
   .feature p { color: var(--ink-soft); font-size: 14.5px; }
 
-  /* Topics */
-  .topics { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .topics { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
   .topics span { background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: 14.5px; color: var(--ink-soft); }
   section.alt .topics span { background: #fff; }
+
+  /* Terminology table */
+  .termtable { margin-top: 34px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+  section.alt .termtable { background: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--ink-faint); font-weight: 600; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { color: var(--ink-faint); }
 
   .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
   @media (max-width: 640px) { .stats { grid-template-columns: 1fr; } }
   .stat { text-align: center; padding: 24px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
   section.alt .stat { background: #fff; }
-  .stat .big { font-size: clamp(26px, 4.4vw, 36px); font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
+  .stat .big { font-size: clamp(24px, 4vw, 34px); font-weight: 700; letter-spacing: -0.02em; color: var(--accent); }
   .stat .lab { color: var(--ink-soft); font-size: 14.5px; margin-top: 6px; }
 
-  /* Plans */
+  /* Redline quote */
+  .redline { margin-top: 40px; border-left: 3px solid var(--accent); padding: 4px 0 4px 22px; }
+  .redline p { font-size: 17px; color: var(--ink); line-height: 1.65; }
+  .redline p + p { margin-top: 10px; color: var(--ink-soft); font-size: 15.5px; }
+
   .plans { display: grid; grid-template-columns: 1fr 1.1fr; gap: 22px; margin-top: 42px; }
   @media (max-width: 780px) { .plans { grid-template-columns: 1fr; } }
   .plan { border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; background: var(--bg); }
@@ -132,7 +154,7 @@
   .privacy h2 { color: #fff; }
   .privacy .eyebrow { color: #a5a0f5; }
   .privacy .lede { color: #c9c6d6; }
-  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 66ch; }
+  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 14px; max-width: 68ch; }
   .privacy li { padding-left: 30px; position: relative; color: #ded9e6; font-size: 16px; }
   .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
   .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
@@ -156,10 +178,14 @@
       <a href="../index.html" data-i18n="nav.portfolio">← 全部产品</a>
       <a href="#how" data-i18n="nav.how">怎么拆</a>
       <a href="#library" data-i18n="nav.library">句库</a>
+      <a href="#langs" data-i18n="nav.langs">四语讲解</a>
       <a href="#plans" data-i18n="nav.plans">价格</a>
     </nav>
     <div class="langbar" role="group" aria-label="Language">
-      <button data-lang="zh">中</button>
+      <button data-lang="zh">简</button>
+      <button data-lang="zhHant">繁</button>
+      <button data-lang="ja">日</button>
+      <button data-lang="ko">한</button>
       <button data-lang="en">EN</button>
     </div>
     <!-- TODO: 上架后把 href 换成 App Store 链接 -->
@@ -170,51 +196,54 @@
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
-    <div class="kicker" data-i18n="hero.kicker">英语长难句拆解</div>
-    <h1 data-i18n="hero.title">长难句，拆开就懂了</h1>
-    <p class="sub" data-i18n="hero.sub">一句话读三遍还是绕不出来？URead 把它拆成主干和意群，标出每一块在句子里扮演什么角色——你看到的不只是译文，而是这句话的结构。</p>
+    <div class="kicker" data-i18n="hero.kicker">英文长难句拆解</div>
+    <h1 data-i18n="hero.title">把英文长难句，拆成读得动的样子</h1>
+    <p class="sub" data-i18n="hero.sub">单词全都认识，句子却读不懂——这不是词汇量的问题，是结构的问题。URead 把句子拆成意群、分行缩进显示层级，让你先看懂骨架，再往回填修饰。</p>
     <div class="cta-row">
       <a href="#plans" class="badge" data-i18n="cta.appstore">即将登陆 App Store</a>
       <a href="#how" class="secondary" data-i18n="hero.ctaSecondary">看看怎么拆 ↓</a>
     </div>
-    <p class="tagline" data-i18n="hero.tagline">全程离线 · 不联网 · 无账号 · iPhone</p>
+    <p class="tagline" data-i18n="hero.tagline">完全离线 · 不联网 · 无账号 · 简繁日韩四语讲解 · iPhone</p>
   </div>
 </section>
 
-<!-- HOW / DEMO -->
+<!-- HOW -->
 <section id="how">
   <div class="wrap">
     <span class="eyebrow" data-i18n="how.eyebrow">怎么拆</span>
-    <h2 class="section-title" data-i18n="how.title">先剥出主干，再看每一块修饰谁</h2>
-    <p class="lede" data-i18n="how.body">长难句难在修饰成分把主谓宾撑开了。URead 先给你一条去掉所有修饰的主干，再把原句切成意群，逐块标注它的语法角色、修饰对象和作用——这是一条真实的拆解结果：</p>
+    <h2 class="section-title" data-i18n="how.title">先看懂骨架，再往回填修饰</h2>
+    <p class="lede" data-i18n="how.body1">一个三十多词、套着两层从句的句子，读到一半时开头已经从工作记忆里掉出去了。注意力涣散不是不专心，是认知负荷超了。</p>
+    <p class="lede" data-i18n="how.body2">URead 把句子拆成意群，分行缩进显示层级——试试打开「只看主干」：</p>
 
-    <div class="demo">
-      <div class="row">
-        <div class="lab" data-i18n="demo.lab.sentence">原句</div>
-        <div class="en">The teacher who had encouraged her to apply never learned that she got in.</div>
-        <div class="zhtr" data-i18n="demo.translation">那位曾鼓励她去申请的老师，始终不知道她被录取了。</div>
+    <div class="demo" id="demo">
+      <div class="demo-head">
+        <span class="lab" data-i18n="demo.lab.view">拆解视图</span>
+        <label class="toggle">
+          <input type="checkbox" id="skelToggle" />
+          <span class="track"></span>
+          <span data-i18n="demo.toggle">只看主干</span>
+        </label>
       </div>
-      <div class="row">
-        <div class="lab" data-i18n="demo.lab.skeleton">主干</div>
-        <div class="skel">The teacher never learned that she got in.</div>
+      <div class="lines">
+        <div class="line core" data-d="0"><span class="t">The researchers</span><span class="r" data-i18n="demo.r1">主语</span></div>
+        <div class="line mod" data-d="1"><span class="t">who first questioned the theory</span><span class="r" data-i18n="demo.r2">定语从句 · 修饰 researchers</span></div>
+        <div class="line mod" data-d="2"><span class="t">that memory works like a recording device</span><span class="r" data-i18n="demo.r3">同位语从句 · 修饰 theory</span></div>
+        <div class="line core" data-d="0"><span class="t">were dismissed by colleagues</span><span class="r" data-i18n="demo.r4">谓语 · 被动</span></div>
+        <div class="line mod" data-d="1"><span class="t">whose careers depended on it.</span><span class="r" data-i18n="demo.r5">定语从句 · 修饰 colleagues</span></div>
       </div>
-      <div class="row">
-        <div class="lab" data-i18n="demo.lab.chunks">意群拆解</div>
-        <div class="chunks">
-          <div class="chunk core"><span class="t">The teacher</span><span class="r" data-i18n="demo.c1">主语</span></div>
-          <div class="chunk"><span class="t">who had encouraged her to apply</span><span class="r" data-i18n="demo.c2">定语从句 · 修饰 teacher</span></div>
-          <div class="chunk core"><span class="t">never learned</span><span class="r" data-i18n="demo.c3">谓语</span></div>
-          <div class="chunk core"><span class="t">that she got in</span><span class="r" data-i18n="demo.c4">宾语从句</span></div>
-        </div>
+      <div class="demo-foot">
+        <div class="lab" data-i18n="demo.lab.tr">整句翻译</div>
+        <div class="zhtr" data-i18n="demo.tr">最早质疑「记忆像录音机一样工作」这一理论的研究者们，被那些饭碗系于此说的同行们否定了。</div>
       </div>
-      <div class="row">
-        <div class="lab" data-i18n="demo.lab.grammar">语法点</div>
-        <div class="gps">
-          <span data-i18n="demo.g1">who 引导的限定性定语从句</span>
-          <span data-i18n="demo.g2">定语从句分隔主谓</span>
-          <span data-i18n="demo.g3">that 引导宾语从句</span>
-        </div>
-      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature"><div class="ico">🦴</div><h3 data-i18n="how.f1.t">只看主干</h3><p data-i18n="how.f1.b">一键剥掉所有修饰，只剩主谓宾。骨架站住了，再把从句一层层放回去。</p></div>
+      <div class="feature"><div class="ico">🎯</div><h3 data-i18n="how.f2.t">点击聚焦</h3><p data-i18n="how.f2.b">点任意一个意群，其余淡出——一次只对付一块。</p></div>
+      <div class="feature"><div class="ico">👁️</div><h3 data-i18n="how.f3.t">先自己试试</h3><p data-i18n="how.f3.b">释义可以收起来，先靠结构自己理解，卡住了再打开看。</p></div>
+      <div class="feature"><div class="ico">🔊</div><h3 data-i18n="how.f4.t">按意群朗读</h3><p data-i18n="how.f4.b">停顿落在意群边界上，耳朵也能听出结构在哪里断开。</p></div>
+      <div class="feature"><div class="ico">📥</div><h3 data-i18n="how.f5.t">四种入句方式</h3><p data-i18n="how.f5.b">直接粘贴；在 Safari、微信、Kindle 里选中文字分享进来；从相册选图用本机 OCR 提取；或直接读内置句库。</p></div>
+      <div class="feature"><div class="ico">🧠</div><h3 data-i18n="how.f6.t">任意句子也能拆</h3><p data-i18n="how.f6.b">句库之外的句子，交给 Apple 端上智能实时拆解，推理在设备上完成。这项功能不收费。</p></div>
     </div>
   </div>
 </section>
@@ -222,9 +251,9 @@
 <!-- LIBRARY -->
 <section id="library" class="alt">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="lib.eyebrow">句库</span>
-    <h2 class="section-title" data-i18n="lib.title">90 句精校拆解，覆盖九大语法专题</h2>
-    <p class="lede" data-i18n="lib.body">每个专题 10 句，从入门到外刊难度递进。句子取自科技报道、学术写作、外刊评论、政经外刊与文学叙事——都是真实语料里会绊住你的那种句子。</p>
+    <span class="eyebrow" data-i18n="lib.eyebrow">内置句库</span>
+    <h2 class="section-title" data-i18n="lib.title">90 句原创精编，全部为原创句子，非摘抄</h2>
+    <p class="lede" data-i18n="lib.body">九大语法专题各 10 句。可以按语法专题、考试场景或难度三种维度浏览——考试场景从四六级一路排到专八外刊，难度 1★ 到 5★ 连续过渡，不会突然跳档。</p>
     <div class="topics">
       <span data-i18n="lib.t1">定语从句</span>
       <span data-i18n="lib.t2">名词性从句</span>
@@ -237,58 +266,80 @@
       <span data-i18n="lib.t9">插入与同位</span>
     </div>
     <div class="stats">
-      <div class="stat"><div class="big" data-i18n="lib.s1.v">90</div><div class="lab" data-i18n="lib.s1.l">条人工精校的完整拆解</div></div>
-      <div class="stat"><div class="big" data-i18n="lib.s2.v">9 × 10</div><div class="lab" data-i18n="lib.s2.l">九大语法专题，每题 10 句</div></div>
-      <div class="stat"><div class="big" data-i18n="lib.s3.v">1–5</div><div class="lab" data-i18n="lib.s3.l">难度分级，由易到难</div></div>
+      <div class="stat"><div class="big" data-i18n="lib.s1.v">9 × 10</div><div class="lab" data-i18n="lib.s1.l">九大语法专题，每题 10 句</div></div>
+      <div class="stat"><div class="big" data-i18n="lib.s2.v">1★–5★</div><div class="lab" data-i18n="lib.s2.l">四六级 → 考研 → 雅思托福 → GRE/GMAT → 专八外刊</div></div>
+      <div class="stat"><div class="big" data-i18n="lib.s3.v">4</div><div class="lab" data-i18n="lib.s3.l">每句含翻译、主干、逐意群讲解、关键语法点</div></div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section id="features">
+<!-- LANGUAGES -->
+<section id="langs">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ft.eyebrow">不止句库</span>
-    <h2 class="section-title" data-i18n="ft.title">你自己遇到的句子，也能拆</h2>
-    <div class="features">
-      <div class="feature"><div class="ico">🧠</div><h3 data-i18n="ft.1.t">端上智能兜底</h3><p data-i18n="ft.1.b">句库没收录的句子，交给设备本机的 Apple Intelligence 实时拆解。需要支持该功能的机型；句库本身则在所有设备上都能用。</p></div>
-      <div class="feature"><div class="ico">📷</div><h3 data-i18n="ft.2.t">图片取句</h3><p data-i18n="ft.2.b">从相册选一张截图或书页照片，用本机 OCR 把句子识别出来，不用手打。</p></div>
-      <div class="feature"><div class="ico">📤</div><h3 data-i18n="ft.3.t">从任何 App 分享进来</h3><p data-i18n="ft.3.b">在浏览器、阅读器、邮件里选中一句，分享到 URead 直接开拆。</p></div>
-      <div class="feature"><div class="ico">🔊</div><h3 data-i18n="ft.4.t">按意群朗读</h3><p data-i18n="ft.4.b">不是一口气读完整句，而是按拆出来的意群一块一块读——耳朵也能听出结构。</p></div>
-      <div class="feature"><div class="ico">🔖</div><h3 data-i18n="ft.5.t">收藏句子</h3><p data-i18n="ft.5.b">把绊住过你的句子存下来，之后随时回看它的拆解。</p></div>
-      <div class="feature"><div class="ico">✈️</div><h3 data-i18n="ft.6.t">彻底离线</h3><p data-i18n="ft.6.b">应用不访问任何外部服务，没有账号、不需要 API Key，飞行模式下照样拆。</p></div>
+    <span class="eyebrow" data-i18n="lg.eyebrow">四语讲解</span>
+    <h2 class="section-title" data-i18n="lg.title">不是翻译，是按当地语法术语体系重写</h2>
+    <p class="lede" data-i18n="lg.body">简体中文、繁體中文、日本語、한국어。英文原句与意群切分在四种语言间完全一致，变化的只有讲解——用的是你在自己课堂上学过的那套术语。</p>
+    <div class="termtable">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="lg.th0">概念</th>
+            <th>简体中文</th><th>繁體中文</th><th>日本語</th><th>한국어</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-i18n="lg.c1">定语从句</td><td>定语从句</td><td>關係子句</td><td>関係詞節</td><td>관계사절</td></tr>
+          <tr><td data-i18n="lg.c2">非谓语动词</td><td>非谓语动词</td><td>非限定動詞</td><td>準動詞</td><td>준동사</td></tr>
+          <tr><td data-i18n="lg.c3">虚拟语气</td><td>虚拟语气</td><td>假設語氣</td><td>仮定法</td><td>가정법</td></tr>
+          <tr><td><code>no more A than B</code></td><td>否定比较</td><td>否定比較</td><td>クジラ構文</td><td>양자 부정</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lede" data-i18n="lg.note">考试场景名也随语言切换（四六级 / 英検2級・TOEIC / 수능·토익）。讲解语言默认跟随系统，也可以在设置里手动指定——在东京生活的中文母语者，仍然可以看中文讲解。</p>
+  </div>
+</section>
+
+<!-- REDLINE -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow" data-i18n="rl.eyebrow">一条红线</span>
+    <h2 class="section-title" data-i18n="rl.title">运行时不依赖任何外部 AI 服务</h2>
+    <div class="redline">
+      <p data-i18n="rl.q">如果一个工具需要联网调用大模型才能拆句子，那直接用 ChatGPT 或 Claude 就好了，它没有存在的理由。</p>
+      <p data-i18n="rl.a">URead 的价值恰恰在于：离线、瞬时、不花钱、不需要账号，在飞机上和地铁里都能用。所以引擎是两层——内置精编句库是主体，随 App 打包，任何设备、任何地区、任何网络状况都能用；Apple 端上智能是增强，在支持的机型上拆解你自己的句子。</p>
     </div>
   </div>
 </section>
 
 <!-- PLANS -->
-<section id="plans" class="alt">
+<section id="plans">
   <div class="wrap">
     <span class="eyebrow" data-i18n="pl.eyebrow">价格</span>
-    <h2 class="section-title" data-i18n="pl.title">先免费试，再一次买断</h2>
-    <p class="lede" data-i18n="pl.body">每个语法专题都开放最容易的前 2 句，一共 18 句免费——足够你判断这套拆解方式是不是对你有用。</p>
+    <h2 class="section-title" data-i18n="pl.title">一次性买断，不是订阅</h2>
+    <p class="lede" data-i18n="pl.body">付费买的是精编句库的内容。拆解任意句子的端上 AI 功能不收费——它不产生任何服务器成本，把它设成付费墙没有道理。</p>
     <div class="plans">
       <div class="plan">
         <div class="name" data-i18n="pl.free.n">免费</div>
         <h3 data-i18n="pl.free.h">先看看合不合用</h3>
         <div class="price"><b data-i18n="pl.free.p">¥0</b></div>
         <ul>
-          <li data-i18n="pl.free.1">18 句完整拆解（每个专题前 2 句）</li>
-          <li data-i18n="pl.free.2">九大语法专题都能试到</li>
-          <li data-i18n="pl.free.3">图片取句、分享进来、朗读、收藏</li>
-          <li data-i18n="pl.free.4">端上智能拆解自己的句子</li>
+          <li data-i18n="pl.free.1">18 句完整拆解（每个专题最容易的前 2 句）</li>
+          <li data-i18n="pl.free.2">拆解任意句子（端上 AI，不收费）</li>
+          <li data-i18n="pl.free.3">粘贴、分享进来、图片取句、朗读、收藏</li>
+          <li data-i18n="pl.free.4">四种讲解语言全部可用</li>
         </ul>
       </div>
       <div class="plan pro">
         <div class="name" data-i18n="pl.pro.n">完整句库</div>
         <h3 data-i18n="pl.pro.h">解锁全部 90 句</h3>
-        <div class="price"><b data-i18n="pl.pro.p1">¥18</b> <span data-i18n="pl.pro.p2">一次买断，不是订阅</span></div>
+        <div class="price"><b data-i18n="pl.pro.p1">¥18</b> <span data-i18n="pl.pro.p2">一次性买断，不会自动续费</span></div>
         <ul>
           <li data-i18n="pl.pro.1">解锁余下 72 句，共 90 句完整拆解</li>
-          <li data-i18n="pl.pro.2">九大专题各 10 句，难度由易到难</li>
-          <li data-i18n="pl.pro.3">买断永久有效，后续更新免费</li>
-          <li data-i18n="pl.pro.4">换设备用同一 Apple ID 可恢复购买</li>
+          <li data-i18n="pl.pro.2">按语法专题 / 考试场景 / 难度三种维度浏览</li>
+          <li data-i18n="pl.pro.3">今后扩充的句子同样包含在内</li>
+          <li data-i18n="pl.pro.4">换设备或重装，同一 Apple 账号点「恢复购买」</li>
         </ul>
-        <p class="note" data-i18n="pl.pro.note">一次性内购 · 无订阅、不续费 · 各地区价格不同，以 App Store 显示为准。</p>
+        <p class="note" data-i18n="pl.pro.note">一次性内购 · 非订阅、不自动续费 · 各地区价格不同，以 App Store 显示为准。</p>
       </div>
     </div>
   </div>
@@ -298,14 +349,14 @@
 <section class="privacy">
   <div class="wrap">
     <span class="eyebrow" data-i18n="pri.eyebrow">隐私</span>
-    <h2 class="section-title" data-i18n="pri.title">你读什么，我们无从知道</h2>
-    <p class="lede" data-i18n="pri.body">URead 没有服务器、没有账号，也不做任何统计。应用不访问任何外部服务——你的句子从头到尾都留在设备上。</p>
+    <h2 class="section-title" data-i18n="pri.title">不联网。这一条可以在源码里逐项验证。</h2>
+    <p class="lede" data-i18n="pri.body">URead 不联网、不需要账号、不收集任何个人数据。所有内容随 App 一起打包，拆解与朗读全部在你的设备上完成。</p>
     <ul>
-      <li data-i18n="pri.1">应用不发起任何网络请求，句库与拆解全部在本机完成。</li>
-      <li data-i18n="pri.2">端上智能拆解由设备本机的 Apple Intelligence 执行，句子不会上传。</li>
-      <li data-i18n="pri.3">图片识别使用本机 OCR；你选中的图片和识别结果都不离开设备。</li>
-      <li data-i18n="pri.4">收藏的句子只存在你的设备上，删除应用即清除。</li>
-      <li data-i18n="pri.5">无账号、无统计分析、无广告、无第三方追踪 SDK。</li>
+      <li data-i18n="pri.1">代码库里不存在任何网络调用——没有 URLSession、没有 URLRequest、没有 HTTP 客户端。整个 App 可以断网使用。</li>
+      <li data-i18n="pri.2">零第三方依赖：无统计 SDK、无崩溃上报、无广告框架，只 import Apple 系统框架。</li>
+      <li data-i18n="pri.3">选取的图片仅在本机识别文字，不上传也不保存；用系统选图器，连相册权限都不申请。</li>
+      <li data-i18n="pri.4">已拆解的句子只保存在设备本地，未开启 iCloud 同步，卸载即删除。</li>
+      <li data-i18n="pri.5">不做用户追踪，不请求 IDFA / ATT 授权。购买由 Apple 处理，我们不接触你的支付信息。</li>
     </ul>
     <div class="links">
       <a href="uread-privacy.html" data-i18n="pri.link">阅读完整隐私政策 →</a>
@@ -324,135 +375,350 @@
         <a href="../index.html" data-i18n="footer.more">Local4a 更多产品</a>
       </span>
     </div>
-    <p class="disclaimer" data-i18n="footer.disclaimer">URead 应用界面为简体中文，拆解对象为英语句子。© 2026 Local4a。</p>
+    <p class="disclaimer" data-i18n="footer.disclaimer">URead 面向中文、繁中、日语、韩语母语者，讲解语言可切换；被拆解的句子是英语。端上智能拆解需 iOS 26 及以上且设备支持 Apple Intelligence；该功能目前在中国大陆不可用，内置句库不受影响。© 2026 Local4a。</p>
   </div>
 </footer>
 
 <script>
 const I18N = {
   zh: {
-    "meta.desc": "URead 把英语长难句拆成主干和意群，标出每一块的语法角色。90 句精校句库覆盖 9 大语法专题，句库之外由端上 Apple Intelligence 实时拆解。全程离线，不联网。",
-    "nav.portfolio": "← 全部产品", "nav.how": "怎么拆", "nav.library": "句库", "nav.plans": "价格",
+    "meta.desc": "单词全认识，句子却读不懂？URead 把英文长难句拆成意群，分行缩进显示层级，一键只看主干。90 句原创精编句库，简繁日韩四语讲解。完全离线，不联网。",
+    "nav.portfolio": "← 全部产品", "nav.how": "怎么拆", "nav.library": "句库", "nav.langs": "四语讲解", "nav.plans": "价格",
     "cta.appstore": "即将登陆 App Store",
-    "hero.kicker": "英语长难句拆解",
-    "hero.title": "长难句，拆开就懂了",
-    "hero.sub": "一句话读三遍还是绕不出来？URead 把它拆成主干和意群，标出每一块在句子里扮演什么角色——你看到的不只是译文，而是这句话的结构。",
+    "hero.kicker": "英文长难句拆解",
+    "hero.title": "把英文长难句，拆成读得动的样子",
+    "hero.sub": "单词全都认识，句子却读不懂——这不是词汇量的问题，是结构的问题。URead 把句子拆成意群、分行缩进显示层级，让你先看懂骨架，再往回填修饰。",
     "hero.ctaSecondary": "看看怎么拆 ↓",
-    "hero.tagline": "全程离线 · 不联网 · 无账号 · iPhone",
+    "hero.tagline": "完全离线 · 不联网 · 无账号 · 简繁日韩四语讲解 · iPhone",
     "how.eyebrow": "怎么拆",
-    "how.title": "先剥出主干，再看每一块修饰谁",
-    "how.body": "长难句难在修饰成分把主谓宾撑开了。URead 先给你一条去掉所有修饰的主干，再把原句切成意群，逐块标注它的语法角色、修饰对象和作用——这是一条真实的拆解结果：",
-    "demo.lab.sentence": "原句", "demo.lab.skeleton": "主干", "demo.lab.chunks": "意群拆解", "demo.lab.grammar": "语法点",
-    "demo.translation": "那位曾鼓励她去申请的老师，始终不知道她被录取了。",
-    "demo.c1": "主语", "demo.c2": "定语从句 · 修饰 teacher", "demo.c3": "谓语", "demo.c4": "宾语从句",
-    "demo.g1": "who 引导的限定性定语从句", "demo.g2": "定语从句分隔主谓", "demo.g3": "that 引导宾语从句",
-    "lib.eyebrow": "句库",
-    "lib.title": "90 句精校拆解，覆盖九大语法专题",
-    "lib.body": "每个专题 10 句，从入门到外刊难度递进。句子取自科技报道、学术写作、外刊评论、政经外刊与文学叙事——都是真实语料里会绊住你的那种句子。",
+    "how.title": "先看懂骨架，再往回填修饰",
+    "how.body1": "一个三十多词、套着两层从句的句子，读到一半时开头已经从工作记忆里掉出去了。注意力涣散不是不专心，是认知负荷超了。",
+    "how.body2": "URead 把句子拆成意群，分行缩进显示层级——试试打开「只看主干」：",
+    "demo.lab.view": "拆解视图", "demo.toggle": "只看主干", "demo.lab.tr": "整句翻译",
+    "demo.r1": "主语", "demo.r2": "定语从句 · 修饰 researchers", "demo.r3": "同位语从句 · 修饰 theory",
+    "demo.r4": "谓语 · 被动", "demo.r5": "定语从句 · 修饰 colleagues",
+    "demo.tr": "最早质疑「记忆像录音机一样工作」这一理论的研究者们，被那些饭碗系于此说的同行们否定了。",
+    "how.f1.t": "只看主干", "how.f1.b": "一键剥掉所有修饰，只剩主谓宾。骨架站住了，再把从句一层层放回去。",
+    "how.f2.t": "点击聚焦", "how.f2.b": "点任意一个意群，其余淡出——一次只对付一块。",
+    "how.f3.t": "先自己试试", "how.f3.b": "释义可以收起来，先靠结构自己理解，卡住了再打开看。",
+    "how.f4.t": "按意群朗读", "how.f4.b": "停顿落在意群边界上，耳朵也能听出结构在哪里断开。",
+    "how.f5.t": "四种入句方式", "how.f5.b": "直接粘贴；在 Safari、微信、Kindle 里选中文字分享进来；从相册选图用本机 OCR 提取；或直接读内置句库。",
+    "how.f6.t": "任意句子也能拆", "how.f6.b": "句库之外的句子，交给 Apple 端上智能实时拆解，推理在设备上完成。这项功能不收费。",
+    "lib.eyebrow": "内置句库",
+    "lib.title": "90 句原创精编，全部为原创句子，非摘抄",
+    "lib.body": "九大语法专题各 10 句。可以按语法专题、考试场景或难度三种维度浏览——考试场景从四六级一路排到专八外刊，难度 1★ 到 5★ 连续过渡，不会突然跳档。",
     "lib.t1": "定语从句", "lib.t2": "名词性从句", "lib.t3": "状语从句", "lib.t4": "非谓语动词", "lib.t5": "倒装与强调",
     "lib.t6": "虚拟语气", "lib.t7": "比较结构", "lib.t8": "并列与省略", "lib.t9": "插入与同位",
-    "lib.s1.v": "90", "lib.s1.l": "条人工精校的完整拆解",
-    "lib.s2.v": "9 × 10", "lib.s2.l": "九大语法专题，每题 10 句",
-    "lib.s3.v": "1–5", "lib.s3.l": "难度分级，由易到难",
-    "ft.eyebrow": "不止句库",
-    "ft.title": "你自己遇到的句子，也能拆",
-    "ft.1.t": "端上智能兜底", "ft.1.b": "句库没收录的句子，交给设备本机的 Apple Intelligence 实时拆解。需要支持该功能的机型；句库本身则在所有设备上都能用。",
-    "ft.2.t": "图片取句", "ft.2.b": "从相册选一张截图或书页照片，用本机 OCR 把句子识别出来，不用手打。",
-    "ft.3.t": "从任何 App 分享进来", "ft.3.b": "在浏览器、阅读器、邮件里选中一句，分享到 URead 直接开拆。",
-    "ft.4.t": "按意群朗读", "ft.4.b": "不是一口气读完整句，而是按拆出来的意群一块一块读——耳朵也能听出结构。",
-    "ft.5.t": "收藏句子", "ft.5.b": "把绊住过你的句子存下来，之后随时回看它的拆解。",
-    "ft.6.t": "彻底离线", "ft.6.b": "应用不访问任何外部服务，没有账号、不需要 API Key，飞行模式下照样拆。",
+    "lib.s1.v": "9 × 10", "lib.s1.l": "九大语法专题，每题 10 句",
+    "lib.s2.v": "1★–5★", "lib.s2.l": "四六级 → 考研 → 雅思托福 → GRE/GMAT → 专八外刊",
+    "lib.s3.v": "4", "lib.s3.l": "每句含翻译、主干、逐意群讲解、关键语法点",
+    "lg.eyebrow": "四语讲解",
+    "lg.title": "不是翻译，是按当地语法术语体系重写",
+    "lg.body": "简体中文、繁體中文、日本語、한국어。英文原句与意群切分在四种语言间完全一致，变化的只有讲解——用的是你在自己课堂上学过的那套术语。",
+    "lg.th0": "概念", "lg.c1": "定语从句", "lg.c2": "非谓语动词", "lg.c3": "虚拟语气",
+    "lg.note": "考试场景名也随语言切换（四六级 / 英検2級・TOEIC / 수능·토익）。讲解语言默认跟随系统，也可以在设置里手动指定——在东京生活的中文母语者，仍然可以看中文讲解。",
+    "rl.eyebrow": "一条红线",
+    "rl.title": "运行时不依赖任何外部 AI 服务",
+    "rl.q": "如果一个工具需要联网调用大模型才能拆句子，那直接用 ChatGPT 或 Claude 就好了，它没有存在的理由。",
+    "rl.a": "URead 的价值恰恰在于：离线、瞬时、不花钱、不需要账号，在飞机上和地铁里都能用。所以引擎是两层——内置精编句库是主体，随 App 打包，任何设备、任何地区、任何网络状况都能用；Apple 端上智能是增强，在支持的机型上拆解你自己的句子。",
     "pl.eyebrow": "价格",
-    "pl.title": "先免费试，再一次买断",
-    "pl.body": "每个语法专题都开放最容易的前 2 句，一共 18 句免费——足够你判断这套拆解方式是不是对你有用。",
+    "pl.title": "一次性买断，不是订阅",
+    "pl.body": "付费买的是精编句库的内容。拆解任意句子的端上 AI 功能不收费——它不产生任何服务器成本，把它设成付费墙没有道理。",
     "pl.free.n": "免费", "pl.free.h": "先看看合不合用", "pl.free.p": "¥0",
-    "pl.free.1": "18 句完整拆解（每个专题前 2 句）",
-    "pl.free.2": "九大语法专题都能试到",
-    "pl.free.3": "图片取句、分享进来、朗读、收藏",
-    "pl.free.4": "端上智能拆解自己的句子",
+    "pl.free.1": "18 句完整拆解（每个专题最容易的前 2 句）",
+    "pl.free.2": "拆解任意句子（端上 AI，不收费）",
+    "pl.free.3": "粘贴、分享进来、图片取句、朗读、收藏",
+    "pl.free.4": "四种讲解语言全部可用",
     "pl.pro.n": "完整句库", "pl.pro.h": "解锁全部 90 句",
-    "pl.pro.p1": "¥18", "pl.pro.p2": "一次买断，不是订阅",
+    "pl.pro.p1": "¥18", "pl.pro.p2": "一次性买断，不会自动续费",
     "pl.pro.1": "解锁余下 72 句，共 90 句完整拆解",
-    "pl.pro.2": "九大专题各 10 句，难度由易到难",
-    "pl.pro.3": "买断永久有效，后续更新免费",
-    "pl.pro.4": "换设备用同一 Apple ID 可恢复购买",
-    "pl.pro.note": "一次性内购 · 无订阅、不续费 · 各地区价格不同，以 App Store 显示为准。",
+    "pl.pro.2": "按语法专题 / 考试场景 / 难度三种维度浏览",
+    "pl.pro.3": "今后扩充的句子同样包含在内",
+    "pl.pro.4": "换设备或重装，同一 Apple 账号点「恢复购买」",
+    "pl.pro.note": "一次性内购 · 非订阅、不自动续费 · 各地区价格不同，以 App Store 显示为准。",
     "pri.eyebrow": "隐私",
-    "pri.title": "你读什么，我们无从知道",
-    "pri.body": "URead 没有服务器、没有账号，也不做任何统计。应用不访问任何外部服务——你的句子从头到尾都留在设备上。",
-    "pri.1": "应用不发起任何网络请求，句库与拆解全部在本机完成。",
-    "pri.2": "端上智能拆解由设备本机的 Apple Intelligence 执行，句子不会上传。",
-    "pri.3": "图片识别使用本机 OCR；你选中的图片和识别结果都不离开设备。",
-    "pri.4": "收藏的句子只存在你的设备上，删除应用即清除。",
-    "pri.5": "无账号、无统计分析、无广告、无第三方追踪 SDK。",
-    "pri.link": "阅读完整隐私政策 →",
-    "support.link": "支持 →",
+    "pri.title": "不联网。这一条可以在源码里逐项验证。",
+    "pri.body": "URead 不联网、不需要账号、不收集任何个人数据。所有内容随 App 一起打包，拆解与朗读全部在你的设备上完成。",
+    "pri.1": "代码库里不存在任何网络调用——没有 URLSession、没有 URLRequest、没有 HTTP 客户端。整个 App 可以断网使用。",
+    "pri.2": "零第三方依赖：无统计 SDK、无崩溃上报、无广告框架，只 import Apple 系统框架。",
+    "pri.3": "选取的图片仅在本机识别文字，不上传也不保存；用系统选图器，连相册权限都不申请。",
+    "pri.4": "已拆解的句子只保存在设备本地，未开启 iCloud 同步，卸载即删除。",
+    "pri.5": "不做用户追踪，不请求 IDFA / ATT 授权。购买由 Apple 处理，我们不接触你的支付信息。",
+    "pri.link": "阅读完整隐私政策 →", "support.link": "支持 →",
     "footer.privacy": "隐私", "footer.support": "支持", "footer.more": "Local4a 更多产品",
-    "footer.disclaimer": "URead 应用界面为简体中文，拆解对象为英语句子。© 2026 Local4a。"
+    "footer.disclaimer": "URead 面向中文、繁中、日语、韩语母语者，讲解语言可切换；被拆解的句子是英语。端上智能拆解需 iOS 26 及以上且设备支持 Apple Intelligence；该功能目前在中国大陆不可用，内置句库不受影响。© 2026 Local4a。"
+  },
+  zhHant: {
+    "meta.desc": "單字全認得，句子卻讀不懂？URead 把英文長難句拆成意群，分行縮排顯示層級，一鍵只看主幹。90 句原創精編句庫，簡繁日韓四語講解。完全離線，不連網。",
+    "nav.portfolio": "← 全部產品", "nav.how": "怎麼拆", "nav.library": "句庫", "nav.langs": "四語講解", "nav.plans": "價格",
+    "cta.appstore": "即將登陸 App Store",
+    "hero.kicker": "英文長難句解析",
+    "hero.title": "把英文長難句，拆成讀得動的樣子",
+    "hero.sub": "單字全都認得，句子卻讀不懂——這不是字彙量的問題，是結構的問題。URead 把句子拆成意群、分行縮排顯示層級，讓你先看懂骨架，再往回填修飾。",
+    "hero.ctaSecondary": "看看怎麼拆 ↓",
+    "hero.tagline": "完全離線 · 不連網 · 免帳號 · 簡繁日韓四語講解 · iPhone",
+    "how.eyebrow": "怎麼拆",
+    "how.title": "先看懂骨架，再往回填修飾",
+    "how.body1": "一個三十多字、套著兩層子句的句子，讀到一半時開頭已經從工作記憶裡掉出去了。注意力渙散不是不專心，是認知負荷超載了。",
+    "how.body2": "URead 把句子拆成意群，分行縮排顯示層級——試試打開「只看主幹」：",
+    "demo.lab.view": "解析檢視", "demo.toggle": "只看主幹", "demo.lab.tr": "整句翻譯",
+    "demo.r1": "主語", "demo.r2": "關係子句 · 修飾 researchers", "demo.r3": "同位語子句 · 修飾 theory",
+    "demo.r4": "謂語 · 被動", "demo.r5": "關係子句 · 修飾 colleagues",
+    "demo.tr": "最早質疑「記憶像錄音機一樣運作」這項理論的研究者們，被那些飯碗繫於此說的同行否定了。",
+    "how.f1.t": "只看主幹", "how.f1.b": "一鍵剝掉所有修飾，只剩主謂賓。骨架站住了，再把子句一層層放回去。",
+    "how.f2.t": "點擊聚焦", "how.f2.b": "點任一個意群，其餘淡出——一次只對付一塊。",
+    "how.f3.t": "先自己試試", "how.f3.b": "釋義可以收起來，先靠結構自己理解，卡住了再打開看。",
+    "how.f4.t": "按意群朗讀", "how.f4.b": "停頓落在意群邊界上，耳朵也能聽出結構在哪裡斷開。",
+    "how.f5.t": "四種輸入方式", "how.f5.b": "直接貼上；在 Safari、LINE、Kindle 裡選取文字分享進來；從相簿選圖用本機 OCR 擷取；或直接讀內建句庫。",
+    "how.f6.t": "任意句子也能拆", "how.f6.b": "句庫之外的句子，交給 Apple 端上智慧即時解析，推論在裝置上完成。這項功能不收費。",
+    "lib.eyebrow": "內建句庫",
+    "lib.title": "90 句原創精編，全部為原創句子，非摘抄",
+    "lib.body": "九大文法主題各 10 句。可依文法主題、考試情境或難度三種維度瀏覽——考試情境從基礎一路排到外刊，難度 1★ 到 5★ 連續過渡，不會突然跳級。",
+    "lib.t1": "關係子句", "lib.t2": "名詞子句", "lib.t3": "副詞子句", "lib.t4": "非限定動詞", "lib.t5": "倒裝與強調",
+    "lib.t6": "假設語氣", "lib.t7": "比較結構", "lib.t8": "對等與省略", "lib.t9": "插入與同位",
+    "lib.s1.v": "9 × 10", "lib.s1.l": "九大文法主題，每題 10 句",
+    "lib.s2.v": "1★–5★", "lib.s2.l": "從基礎到 GRE/GMAT 與外刊，難度連續過渡",
+    "lib.s3.v": "4", "lib.s3.l": "每句含翻譯、主幹、逐意群講解、關鍵文法點",
+    "lg.eyebrow": "四語講解",
+    "lg.title": "不是翻譯，是按當地文法術語體系重寫",
+    "lg.body": "簡體中文、繁體中文、日本語、한국어。英文原句與意群切分在四種語言間完全一致，變化的只有講解——用的是你在自己課堂上學過的那套術語。",
+    "lg.th0": "概念", "lg.c1": "關係子句", "lg.c2": "非限定動詞", "lg.c3": "假設語氣",
+    "lg.note": "考試情境名稱也隨語言切換。講解語言預設跟隨系統，也可以在設定裡手動指定——在東京生活的中文母語者，仍然可以看中文講解。",
+    "rl.eyebrow": "一條紅線",
+    "rl.title": "執行時不依賴任何外部 AI 服務",
+    "rl.q": "如果一個工具需要連網呼叫大模型才能拆句子，那直接用 ChatGPT 或 Claude 就好了，它沒有存在的理由。",
+    "rl.a": "URead 的價值恰恰在於：離線、即時、不花錢、免帳號，在飛機上和捷運裡都能用。所以引擎是兩層——內建精編句庫是主體，隨 App 打包，任何裝置、任何地區、任何網路狀況都能用；Apple 端上智慧是增強，在支援的機型上解析你自己的句子。",
+    "pl.eyebrow": "價格",
+    "pl.title": "一次買斷，不是訂閱",
+    "pl.body": "付費買的是精編句庫的內容。解析任意句子的端上 AI 功能不收費——它不產生任何伺服器成本，把它設成付費牆沒有道理。",
+    "pl.free.n": "免費", "pl.free.h": "先看看合不合用", "pl.free.p": "NT$0",
+    "pl.free.1": "18 句完整解析（每個主題最容易的前 2 句）",
+    "pl.free.2": "解析任意句子（端上 AI，不收費）",
+    "pl.free.3": "貼上、分享進來、圖片擷取、朗讀、收藏",
+    "pl.free.4": "四種講解語言全部可用",
+    "pl.pro.n": "完整句庫", "pl.pro.h": "解鎖全部 90 句",
+    "pl.pro.p1": "一次買斷", "pl.pro.p2": "非訂閱，不會自動續訂",
+    "pl.pro.1": "解鎖其餘 72 句，共 90 句完整解析",
+    "pl.pro.2": "依文法主題 / 考試情境 / 難度三種維度瀏覽",
+    "pl.pro.3": "日後擴充的句子同樣包含在內",
+    "pl.pro.4": "換裝置或重裝，同一 Apple 帳號點「恢復購買」",
+    "pl.pro.note": "一次性 App 內購買 · 非訂閱、不自動續訂 · 各地區價格不同，以 App Store 顯示為準。",
+    "pri.eyebrow": "隱私",
+    "pri.title": "不連網。這一條可以在原始碼裡逐項驗證。",
+    "pri.body": "URead 不連網、不需要帳號、不收集任何個人資料。所有內容隨 App 一起打包，解析與朗讀全部在你的裝置上完成。",
+    "pri.1": "程式碼庫裡不存在任何網路呼叫——沒有 URLSession、沒有 URLRequest、沒有 HTTP 用戶端。整個 App 可以斷網使用。",
+    "pri.2": "零第三方相依：無統計 SDK、無當機回報、無廣告框架，只 import Apple 系統框架。",
+    "pri.3": "選取的圖片僅在本機辨識文字，不會上傳也不會保存；使用系統選圖器，連相簿權限都不申請。",
+    "pri.4": "已解析的句子只保存在裝置本機，未開啟 iCloud 同步，解除安裝即刪除。",
+    "pri.5": "不做使用者追蹤，不請求 IDFA / ATT 授權。購買由 Apple 處理，我們不接觸你的付款資訊。",
+    "pri.link": "閱讀完整隱私政策 →", "support.link": "支援 →",
+    "footer.privacy": "隱私", "footer.support": "支援", "footer.more": "Local4a 更多產品",
+    "footer.disclaimer": "URead 面向中文、繁中、日語、韓語母語者，講解語言可切換；被解析的句子是英語。端上智慧解析需 iOS 26 以上且裝置支援 Apple Intelligence；內建句庫不受影響。© 2026 Local4a。"
+  },
+  ja: {
+    "meta.desc": "単語は全部わかるのに、文が読めない？URead は英語の長文を意味のまとまりに分解し、字下げで階層を示し、ワンタップで主幹だけを表示します。オリジナル 90 例文、簡体・繁体・日本語・韓国語の 4 言語解説。完全オフライン。",
+    "nav.portfolio": "← すべての製品", "nav.how": "分解のしかた", "nav.library": "例文集", "nav.langs": "4 言語解説", "nav.plans": "料金",
+    "cta.appstore": "App Store に近日登場",
+    "hero.kicker": "英語長文の構造分解",
+    "hero.title": "英語の長い一文を、読める形に分解する",
+    "hero.sub": "単語は全部わかるのに、文が読めない——これは語彙の問題ではなく、構造の問題です。URead は文を意味のまとまりに分解し、字下げで階層を示します。まず骨組みをつかみ、そこに修飾を戻していきましょう。",
+    "hero.ctaSecondary": "分解のしかたを見る ↓",
+    "hero.tagline": "完全オフライン · 通信なし · アカウント不要 · 4 言語解説 · iPhone",
+    "how.eyebrow": "分解のしかた",
+    "how.title": "まず骨組み、それから修飾を戻す",
+    "how.body1": "30 語を超え、節が二重に入れ子になった文では、半ばまで読んだところで文頭がワーキングメモリから抜け落ちます。集中力が切れるのは不真面目だからではなく、認知負荷を超えているからです。",
+    "how.body2": "URead は文を意味のまとまりに分解し、字下げで階層を示します——「主幹のみ」を試してみてください：",
+    "demo.lab.view": "分解ビュー", "demo.toggle": "主幹のみ", "demo.lab.tr": "全文訳",
+    "demo.r1": "主語", "demo.r2": "関係詞節 · researchers を修飾", "demo.r3": "同格節 · theory を修飾",
+    "demo.r4": "述語 · 受動", "demo.r5": "関係詞節 · colleagues を修飾",
+    "demo.tr": "「記憶は録音機のように働く」という理論に最初に疑問を投げかけた研究者たちは、その説に自らのキャリアを懸けていた同僚たちによって退けられた。",
+    "how.f1.t": "主幹のみ表示", "how.f1.b": "ワンタップで修飾をすべて外し、主語・述語・目的語だけに。骨組みが立ったら、節を一層ずつ戻します。",
+    "how.f2.t": "タップでフォーカス", "how.f2.b": "任意のまとまりをタップすると他が薄くなります——一度に一つだけ相手にする。",
+    "how.f3.t": "まず自力で", "how.f3.b": "語義は隠しておけます。構造だけで理解してみて、詰まったら開く。",
+    "how.f4.t": "まとまりごとの読み上げ", "how.f4.b": "ポーズが意味のまとまりの境目に入るので、耳でも切れ目がわかります。",
+    "how.f5.t": "4 通りの入力", "how.f5.b": "直接貼り付け；Safari・メッセージ・Kindle で選んだ文字を共有；写真から端末内 OCR で抽出；または内蔵例文集をそのまま読む。",
+    "how.f6.t": "自分の文も分解", "how.f6.b": "例文集にない文は、Apple の端末内インテリジェンスがその場で分解します。推論は端末内で完結し、この機能は無料です。",
+    "lib.eyebrow": "内蔵例文集",
+    "lib.title": "オリジナル 90 例文——引用ではなく、すべて書き下ろし",
+    "lib.body": "9 つの文法テーマ × 各 10 文。文法テーマ・試験シーン・難易度の 3 通りで閲覧できます。難易度は 1★ から 5★ まで連続的に上がり、急に跳ねることがありません。",
+    "lib.t1": "関係詞節", "lib.t2": "名詞節", "lib.t3": "副詞節", "lib.t4": "準動詞", "lib.t5": "倒置と強調",
+    "lib.t6": "仮定法", "lib.t7": "比較構文", "lib.t8": "等位接続と省略", "lib.t9": "挿入と同格",
+    "lib.s1.v": "9 × 10", "lib.s1.l": "9 つの文法テーマ、各 10 文",
+    "lib.s2.v": "1★–5★", "lib.s2.l": "英検2級・TOEIC から GRE/GMAT・英字誌まで連続的に",
+    "lib.s3.v": "4", "lib.s3.l": "各文に全文訳・主幹・まとまりごとの解説・重要文法",
+    "lg.eyebrow": "4 言語解説",
+    "lg.title": "翻訳ではなく、各地の文法用語体系で書き直し",
+    "lg.body": "簡体中文・繁體中文・日本語・한국어。英文と意味のまとまりの切り分けは 4 言語で完全に同一で、変わるのは解説だけ——あなたが教室で習ったその用語で書かれています。",
+    "lg.th0": "概念", "lg.c1": "関係詞節", "lg.c2": "準動詞", "lg.c3": "仮定法",
+    "lg.note": "試験シーン名も言語に合わせて切り替わります（英検2級・TOEIC など）。解説言語は既定でシステムに追従し、設定から手動指定も可能です——東京在住の中国語話者が中国語解説のまま使うこともできます。",
+    "rl.eyebrow": "ひとつの原則",
+    "rl.title": "実行時に外部 AI サービスへ依存しない",
+    "rl.q": "文を分解するのに毎回ネット越しの大規模モデルが要るなら、ChatGPT や Claude を直接使えばいい。そのツールに存在理由はありません。",
+    "rl.a": "URead の価値はまさにそこ——オフラインで、瞬時で、費用がかからず、アカウントも要らない。飛行機の中でも地下鉄でも使えます。だからエンジンは 2 層です。内蔵の精選例文集が主体で App に同梱され、どの端末・どの地域・どんな回線状況でも動きます。Apple の端末内インテリジェンスは拡張で、対応機種であなた自身の文を分解します。",
+    "pl.eyebrow": "料金",
+    "pl.title": "買い切り。サブスクリプションではありません",
+    "pl.body": "お支払いいただくのは精選例文集の中身に対してです。任意の文を分解する端末内 AI 機能は無料——サーバー費用が一切かからない以上、そこに課金する理由がありません。",
+    "pl.free.n": "無料", "pl.free.h": "まず合うかどうか", "pl.free.p": "¥0",
+    "pl.free.1": "18 文の完全な分解（各テーマのやさしい 2 文）",
+    "pl.free.2": "任意の文の分解（端末内 AI・無料）",
+    "pl.free.3": "貼り付け・共有・画像から抽出・読み上げ・保存",
+    "pl.free.4": "4 つの解説言語すべて",
+    "pl.pro.n": "フル例文集", "pl.pro.h": "90 文すべてを解放",
+    "pl.pro.p1": "買い切り", "pl.pro.p2": "サブスクではなく、自動更新もありません",
+    "pl.pro.1": "残り 72 文を解放し、合計 90 文の完全な分解",
+    "pl.pro.2": "文法テーマ / 試験シーン / 難易度の 3 通りで閲覧",
+    "pl.pro.3": "今後追加される文も同じ購入に含まれます",
+    "pl.pro.4": "機種変更・再インストール時は同じ Apple アカウントで「購入を復元」",
+    "pl.pro.note": "一度きりのアプリ内課金 · サブスクではなく自動更新なし · 価格は地域により異なります——App Store の表示をご確認ください。",
+    "pri.eyebrow": "プライバシー",
+    "pri.title": "通信しません。この一点はソースコードで項目ごとに検証できます。",
+    "pri.body": "URead は通信せず、アカウントも不要で、個人データを一切収集しません。すべての内容は App に同梱されており、解析も読み上げもお手元の端末で完結します。",
+    "pri.1": "コードベースにネットワーク呼び出しは存在しません——URLSession も URLRequest も HTTP クライアントもなし。App 全体を機内モードで使えます。",
+    "pri.2": "第三者依存はゼロ：解析 SDK なし、クラッシュレポートなし、広告フレームワークなし。import するのは Apple の標準フレームワークだけです。",
+    "pri.3": "選んだ画像は端末内で文字を読み取るだけで、アップロードも保存もしません。システムの画像ピッカーを使うため、写真ライブラリの権限すら要求しません。",
+    "pri.4": "解析した文は端末内にのみ保存され、iCloud 同期は行いません。アプリを削除すれば消えます。",
+    "pri.5": "ユーザー追跡は行わず、IDFA / ATT の許可も求めません。購入は Apple が処理し、当方が支払い情報に触れることはありません。",
+    "pri.link": "プライバシーポリシー全文を読む →", "support.link": "サポート →",
+    "footer.privacy": "プライバシー", "footer.support": "サポート", "footer.more": "Local4a の他の製品",
+    "footer.disclaimer": "URead は中国語・繁体字中国語・日本語・韓国語を母語とする方向けで、解説言語は切り替えられます。分解対象は英文です。端末内インテリジェンスによる分解には iOS 26 以降と Apple Intelligence 対応端末が必要ですが、内蔵例文集は影響を受けません。© 2026 Local4a."
+  },
+  ko: {
+    "meta.desc": "단어는 다 아는데 문장이 안 읽히나요? URead는 영어 장문을 의미 단위로 나누고 들여쓰기로 층위를 보여주며, 한 번의 탭으로 뼈대만 남깁니다. 창작 예문 90개, 중국어·번체·일본어·한국어 4개 언어 해설. 완전 오프라인.",
+    "nav.portfolio": "← 전체 제품", "nav.how": "분석 방식", "nav.library": "예문집", "nav.langs": "4개 언어 해설", "nav.plans": "가격",
+    "cta.appstore": "App Store 출시 예정",
+    "hero.kicker": "영어 장문 구조 분석",
+    "hero.title": "영어 장문을, 읽을 수 있는 모양으로",
+    "hero.sub": "단어는 다 아는데 문장이 안 읽힌다 — 어휘의 문제가 아니라 구조의 문제입니다. URead는 문장을 의미 단위로 나누고 들여쓰기로 층위를 보여줍니다. 먼저 뼈대를 잡고, 거기에 수식을 되돌려 놓으세요.",
+    "hero.ctaSecondary": "분석 방식 보기 ↓",
+    "hero.tagline": "완전 오프라인 · 통신 없음 · 계정 불필요 · 4개 언어 해설 · iPhone",
+    "how.eyebrow": "분석 방식",
+    "how.title": "먼저 뼈대, 그다음 수식을 되돌린다",
+    "how.body1": "서른 단어가 넘고 절이 두 겹으로 겹친 문장은, 절반쯤 읽었을 때 이미 문두가 작업기억에서 빠져나갑니다. 집중이 흐트러지는 건 불성실해서가 아니라 인지 부하를 넘었기 때문입니다.",
+    "how.body2": "URead는 문장을 의미 단위로 나누고 들여쓰기로 층위를 보여줍니다 — '뼈대만 보기'를 켜 보세요:",
+    "demo.lab.view": "분석 화면", "demo.toggle": "뼈대만 보기", "demo.lab.tr": "전체 번역",
+    "demo.r1": "주어", "demo.r2": "관계사절 · researchers 수식", "demo.r3": "동격절 · theory 수식",
+    "demo.r4": "서술어 · 수동", "demo.r5": "관계사절 · colleagues 수식",
+    "demo.tr": "'기억은 녹음기처럼 작동한다'는 이론에 처음 의문을 제기한 연구자들은, 그 학설에 자기 경력이 걸려 있던 동료들에게 배척당했다.",
+    "how.f1.t": "뼈대만 보기", "how.f1.b": "한 번의 탭으로 수식을 모두 걷어내고 주어·서술어·목적어만 남깁니다. 뼈대가 서면 절을 한 겹씩 되돌리세요.",
+    "how.f2.t": "탭하면 집중", "how.f2.b": "아무 의미 단위나 탭하면 나머지가 흐려집니다 — 한 번에 한 덩어리씩.",
+    "how.f3.t": "먼저 스스로", "how.f3.b": "뜻풀이는 접어 둘 수 있습니다. 구조만으로 이해해 보고, 막히면 펼치세요.",
+    "how.f4.t": "의미 단위로 읽어 주기", "how.f4.b": "쉼이 의미 단위 경계에 놓여, 귀로도 어디서 끊기는지 알 수 있습니다.",
+    "how.f5.t": "네 가지 입력 방법", "how.f5.b": "직접 붙여넣기; Safari·메신저·Kindle에서 선택한 문장을 공유; 사진에서 기기 내 OCR로 추출; 또는 내장 예문집을 바로 읽기.",
+    "how.f6.t": "내 문장도 분석", "how.f6.b": "예문집에 없는 문장은 Apple의 기기 내 인텔리전스가 즉시 분석합니다. 추론은 기기 안에서 끝나며, 이 기능은 무료입니다.",
+    "lib.eyebrow": "내장 예문집",
+    "lib.title": "창작 예문 90개 — 인용이 아니라 전부 직접 쓴 문장",
+    "lib.body": "9개 문법 주제 × 각 10문장. 문법 주제, 시험 상황, 난이도 세 가지 방식으로 볼 수 있습니다. 난이도는 1★부터 5★까지 이어지며 갑자기 튀지 않습니다.",
+    "lib.t1": "관계사절", "lib.t2": "명사절", "lib.t3": "부사절", "lib.t4": "준동사", "lib.t5": "도치와 강조",
+    "lib.t6": "가정법", "lib.t7": "비교 구문", "lib.t8": "등위와 생략", "lib.t9": "삽입과 동격",
+    "lib.s1.v": "9 × 10", "lib.s1.l": "9개 문법 주제, 각 10문장",
+    "lib.s2.v": "1★–5★", "lib.s2.l": "수능·토익부터 GRE/GMAT·영자지까지 연속적으로",
+    "lib.s3.v": "4", "lib.s3.l": "문장마다 번역·뼈대·단위별 해설·핵심 문법",
+    "lg.eyebrow": "4개 언어 해설",
+    "lg.title": "번역이 아니라, 각국 문법 용어 체계로 다시 쓴 것",
+    "lg.body": "간체 중국어·번체 중국어·일본어·한국어. 영어 원문과 의미 단위 구분은 네 언어에서 완전히 동일하고, 바뀌는 것은 해설뿐입니다 — 당신이 교실에서 배운 그 용어로 쓰였습니다.",
+    "lg.th0": "개념", "lg.c1": "관계사절", "lg.c2": "준동사", "lg.c3": "가정법",
+    "lg.note": "시험 상황 이름도 언어에 맞춰 바뀝니다(수능·토익 등). 해설 언어는 기본적으로 시스템을 따르고, 설정에서 직접 지정할 수도 있습니다 — 도쿄에 사는 중국어 화자가 중국어 해설로 계속 쓸 수 있습니다.",
+    "rl.eyebrow": "하나의 원칙",
+    "rl.title": "실행 중 외부 AI 서비스에 의존하지 않는다",
+    "rl.q": "문장을 나누는 데 매번 네트워크 너머의 거대 모델이 필요하다면, 그냥 ChatGPT나 Claude를 쓰면 됩니다. 그런 도구는 존재할 이유가 없습니다.",
+    "rl.a": "URead의 가치는 바로 거기에 있습니다 — 오프라인, 즉시, 비용 없음, 계정 불필요. 비행기에서도 지하철에서도 쓸 수 있습니다. 그래서 엔진은 두 층입니다. 내장 예문집이 본체로 App에 함께 담겨 어떤 기기·지역·네트워크 상황에서도 작동하고, Apple의 기기 내 인텔리전스는 확장으로서 지원 기기에서 당신의 문장을 분석합니다.",
+    "pl.eyebrow": "가격",
+    "pl.title": "한 번 구매, 구독 아님",
+    "pl.body": "돈을 내는 대상은 정성껏 만든 예문집의 내용입니다. 임의의 문장을 분석하는 기기 내 AI 기능은 무료입니다 — 서버 비용이 전혀 들지 않는데 유료화할 이유가 없습니다.",
+    "pl.free.n": "무료", "pl.free.h": "먼저 맞는지 확인", "pl.free.p": "₩0",
+    "pl.free.1": "18문장 완전 분석(주제마다 가장 쉬운 2문장)",
+    "pl.free.2": "임의의 문장 분석(기기 내 AI, 무료)",
+    "pl.free.3": "붙여넣기·공유·이미지 추출·읽어 주기·저장",
+    "pl.free.4": "네 가지 해설 언어 모두",
+    "pl.pro.n": "전체 예문집", "pl.pro.h": "90문장 전부 잠금 해제",
+    "pl.pro.p1": "한 번 구매", "pl.pro.p2": "구독이 아니며 자동 갱신되지 않습니다",
+    "pl.pro.1": "나머지 72문장 해제, 총 90문장 완전 분석",
+    "pl.pro.2": "문법 주제 / 시험 상황 / 난이도 세 방식으로 열람",
+    "pl.pro.3": "앞으로 추가되는 문장도 같은 구매에 포함",
+    "pl.pro.4": "기기 변경·재설치 시 같은 Apple 계정으로 '구매 복원'",
+    "pl.pro.note": "일회성 앱 내 구매 · 구독 아님, 자동 갱신 없음 · 가격은 지역마다 다릅니다 — App Store 표시 가격을 확인하세요.",
+    "pri.eyebrow": "개인정보",
+    "pri.title": "통신하지 않습니다. 이 점은 소스 코드에서 항목별로 확인할 수 있습니다.",
+    "pri.body": "URead는 통신하지 않고, 계정도 필요 없으며, 어떤 개인 정보도 수집하지 않습니다. 모든 내용은 앱에 함께 담겨 있고, 분석과 읽어 주기는 모두 기기 안에서 끝납니다.",
+    "pri.1": "코드베이스에 네트워크 호출이 존재하지 않습니다 — URLSession도, URLRequest도, HTTP 클라이언트도 없습니다. 앱 전체를 비행기 모드에서 쓸 수 있습니다.",
+    "pri.2": "서드파티 의존성 제로: 분석 SDK 없음, 크래시 리포트 없음, 광고 프레임워크 없음. Apple 시스템 프레임워크만 import 합니다.",
+    "pri.3": "고른 이미지는 기기 안에서 글자만 읽어 낼 뿐 업로드하거나 저장하지 않습니다. 시스템 이미지 선택기를 쓰기 때문에 사진 접근 권한조차 요청하지 않습니다.",
+    "pri.4": "분석한 문장은 기기에만 저장되며 iCloud 동기화를 하지 않습니다. 앱을 삭제하면 함께 지워집니다.",
+    "pri.5": "사용자 추적을 하지 않고 IDFA / ATT 권한도 요청하지 않습니다. 결제는 Apple이 처리하며, 저희는 결제 정보를 접하지 않습니다.",
+    "pri.link": "개인정보 처리방침 전문 보기 →", "support.link": "지원 →",
+    "footer.privacy": "개인정보", "footer.support": "지원", "footer.more": "Local4a의 다른 제품",
+    "footer.disclaimer": "URead는 중국어·번체 중국어·일본어·한국어 모어 화자를 위한 앱이며 해설 언어를 바꿀 수 있습니다. 분석 대상은 영어 문장입니다. 기기 내 인텔리전스 분석에는 iOS 26 이상과 Apple Intelligence 지원 기기가 필요하지만, 내장 예문집은 영향을 받지 않습니다. © 2026 Local4a."
   },
   en: {
-    "meta.desc": "URead breaks a long English sentence into its skeleton and thought groups, labelling the grammatical role of every piece. A 90-sentence curated library across 9 grammar topics, with on-device Apple Intelligence for anything else. Fully offline.",
-    "nav.portfolio": "← All products", "nav.how": "How it works", "nav.library": "Library", "nav.plans": "Pricing",
+    "meta.desc": "You know every word, yet the sentence won't parse. URead splits long English sentences into thought groups, indents them to show nesting, and hides every modifier with one tap. 90 original sentences, explained in Simplified Chinese, Traditional Chinese, Japanese and Korean. Fully offline.",
+    "nav.portfolio": "← All products", "nav.how": "How it works", "nav.library": "Library", "nav.langs": "Four languages", "nav.plans": "Pricing",
     "cta.appstore": "Coming to the App Store",
-    "hero.kicker": "English sentence breakdown",
-    "hero.title": "Long sentences, taken apart",
-    "hero.sub": "Read it three times and still lost? URead splits the sentence into its skeleton and thought groups, and labels what each piece is doing — you don't just get a translation, you get the structure.",
+    "hero.kicker": "English sentence structure",
+    "hero.title": "Long English sentences, taken apart",
+    "hero.sub": "You know every word, and still the sentence won't come together — that's not a vocabulary problem, it's a structure problem. URead splits the sentence into thought groups and indents them to show the nesting: get the skeleton first, then put the modifiers back.",
     "hero.ctaSecondary": "See a breakdown ↓",
-    "hero.tagline": "Fully offline · No network · No account · iPhone",
+    "hero.tagline": "Fully offline · No network · No account · Four explanation languages · iPhone",
     "how.eyebrow": "How it works",
-    "how.title": "Strip it to the skeleton, then see what modifies what",
-    "how.body": "Long sentences are hard because modifiers push the subject, verb and object apart. URead first shows you the skeleton with every modifier removed, then cuts the original into thought groups and labels each one's grammatical role and what it attaches to. Here's a real breakdown:",
-    "demo.lab.sentence": "Sentence", "demo.lab.skeleton": "Skeleton", "demo.lab.chunks": "Thought groups", "demo.lab.grammar": "Grammar points",
-    "demo.translation": "The teacher who once encouraged her to apply never found out that she was admitted.",
-    "demo.c1": "Subject", "demo.c2": "Relative clause · modifies teacher", "demo.c3": "Predicate", "demo.c4": "Object clause",
-    "demo.g1": "Restrictive relative clause with who", "demo.g2": "Relative clause splitting subject and verb", "demo.g3": "Object clause introduced by that",
-    "lib.eyebrow": "Library",
-    "lib.title": "90 curated breakdowns across nine grammar topics",
-    "lib.body": "Ten sentences per topic, rising from beginner to serious journalism. They're drawn from tech reporting, academic writing, magazine commentary, political and economic press, and literary narrative — the kind of sentence that actually trips you up in the wild.",
+    "how.title": "Get the skeleton first, then put the modifiers back",
+    "how.body1": "In a thirty-word sentence with two levels of nested clauses, the opening has dropped out of working memory by the time you reach the middle. Losing focus there isn't carelessness — it's cognitive load.",
+    "how.body2": "URead splits the sentence into thought groups and indents them by depth. Try the skeleton switch:",
+    "demo.lab.view": "Breakdown", "demo.toggle": "Skeleton only", "demo.lab.tr": "Translation",
+    "demo.r1": "Subject", "demo.r2": "Relative clause · modifies researchers", "demo.r3": "Appositive clause · modifies theory",
+    "demo.r4": "Predicate · passive", "demo.r5": "Relative clause · modifies colleagues",
+    "demo.tr": "In the app this line carries a full translation in your chosen explanation language — Simplified or Traditional Chinese, Japanese, or Korean.",
+    "how.f1.t": "Skeleton only", "how.f1.b": "Strip every modifier with one tap and keep just subject, verb and object. Once the frame holds, add the clauses back a layer at a time.",
+    "how.f2.t": "Tap to focus", "how.f2.b": "Tap any thought group and the rest fade out — deal with one piece at a time.",
+    "how.f3.t": "Try it yourself first", "how.f3.b": "Glosses can stay hidden so you work from structure alone, and open only when you're stuck.",
+    "how.f4.t": "Read by thought group", "how.f4.b": "Pauses land on the group boundaries, so you can hear where the structure breaks.",
+    "how.f5.t": "Four ways in", "how.f5.b": "Paste it; select text in Safari, a messenger or Kindle and share it in; pick an image and let on-device OCR lift it out; or just read the built-in library.",
+    "how.f6.t": "Bring your own sentence", "how.f6.b": "Anything outside the library is broken down on the spot by Apple's on-device intelligence, with inference running locally. That feature is free.",
+    "lib.eyebrow": "Built-in library",
+    "lib.title": "90 original sentences — written for the app, not quoted",
+    "lib.body": "Nine grammar topics, ten sentences each. Browse by grammar topic, by exam context, or by difficulty. Difficulty climbs continuously from 1★ to 5★ rather than jumping.",
     "lib.t1": "Relative clauses", "lib.t2": "Noun clauses", "lib.t3": "Adverbial clauses", "lib.t4": "Non-finite verbs", "lib.t5": "Inversion & emphasis",
     "lib.t6": "Subjunctive", "lib.t7": "Comparatives", "lib.t8": "Coordination & ellipsis", "lib.t9": "Parenthesis & apposition",
-    "lib.s1.v": "90", "lib.s1.l": "hand-checked full breakdowns",
-    "lib.s2.v": "9 × 10", "lib.s2.l": "nine grammar topics, ten sentences each",
-    "lib.s3.v": "1–5", "lib.s3.l": "graded difficulty, easiest first",
-    "ft.eyebrow": "Beyond the library",
-    "ft.title": "Bring your own sentence",
-    "ft.1.t": "On-device intelligence", "ft.1.b": "For a sentence the library doesn't cover, Apple Intelligence breaks it down right on your device. That needs a supported model; the library itself works on every device.",
-    "ft.2.t": "Capture from an image", "ft.2.b": "Pick a screenshot or a photo of a page and on-device OCR lifts the sentence out — no retyping.",
-    "ft.3.t": "Share from any app", "ft.3.b": "Select a sentence in your browser, reader or mail app, share it to URead, and it opens ready to break down.",
-    "ft.4.t": "Read by thought group", "ft.4.b": "Not one breathless run through the sentence — it reads chunk by chunk, so you can hear the structure too.",
-    "ft.5.t": "Save sentences", "ft.5.b": "Keep the ones that caught you out and come back to their breakdowns whenever you like.",
-    "ft.6.t": "Properly offline", "ft.6.b": "The app talks to no external service. No account, no API key — it works in airplane mode.",
+    "lib.s1.v": "9 × 10", "lib.s1.l": "nine grammar topics, ten sentences each",
+    "lib.s2.v": "1★–5★", "lib.s2.l": "from standard exams up to GRE/GMAT and the serious press",
+    "lib.s3.v": "4", "lib.s3.l": "each sentence: translation, skeleton, per-group notes, key grammar",
+    "lg.eyebrow": "Four languages",
+    "lg.title": "Not translated — rewritten in each region's own grammar vocabulary",
+    "lg.body": "Simplified Chinese, Traditional Chinese, Japanese and Korean. The English sentence and the way it's cut into thought groups are identical across all four; only the explanation changes — written in the terms you were actually taught.",
+    "lg.th0": "Concept", "lg.c1": "Relative clause", "lg.c2": "Non-finite verb", "lg.c3": "Subjunctive",
+    "lg.note": "Exam-context names switch with the language too. The explanation language follows your system setting by default and can be set by hand — so a Chinese speaker living in Tokyo can keep Chinese explanations.",
+    "rl.eyebrow": "A hard line",
+    "rl.title": "No external AI service at runtime",
+    "rl.q": "If a tool needs to call a large model over the network just to break a sentence apart, you may as well use ChatGPT or Claude directly — it has no reason to exist.",
+    "rl.a": "URead's value is exactly the opposite: offline, instant, free to run, no account, usable on a plane or underground. So the engine has two layers. The curated library is the core, shipped inside the app and working on any device, in any region, on any connection. Apple's on-device intelligence is the extension, breaking down your own sentences on supported hardware.",
     "pl.eyebrow": "Pricing",
-    "pl.title": "Try it free, then buy it once",
-    "pl.body": "The two easiest sentences in every grammar topic are free — 18 in all, enough to tell whether this way of breaking sentences down works for you.",
+    "pl.title": "Buy it once — not a subscription",
+    "pl.body": "What you pay for is the curated library. Breaking down arbitrary sentences with on-device AI is free — it costs us nothing to run, so putting it behind a paywall would make no sense.",
     "pl.free.n": "Free", "pl.free.h": "See if it suits you", "pl.free.p": "$0",
-    "pl.free.1": "18 full breakdowns (the first 2 of every topic)",
-    "pl.free.2": "A taste of all nine grammar topics",
-    "pl.free.3": "Image capture, share-in, read-aloud and saving",
-    "pl.free.4": "On-device breakdown of your own sentences",
+    "pl.free.1": "18 full breakdowns (the two easiest in each topic)",
+    "pl.free.2": "Break down any sentence (on-device AI, free)",
+    "pl.free.3": "Paste, share-in, image capture, read-aloud and saving",
+    "pl.free.4": "All four explanation languages",
     "pl.pro.n": "Full library", "pl.pro.h": "Unlock all 90 sentences",
-    "pl.pro.p1": "$2.99", "pl.pro.p2": "one-time purchase, not a subscription",
+    "pl.pro.p1": "One-time purchase", "pl.pro.p2": "not a subscription, never auto-renews",
     "pl.pro.1": "Unlocks the remaining 72 — 90 full breakdowns in all",
-    "pl.pro.2": "Ten sentences in each of the nine topics, easiest first",
-    "pl.pro.3": "Yours for good, with free updates",
-    "pl.pro.4": "Restore on a new device with the same Apple ID",
+    "pl.pro.2": "Browse by grammar topic, exam context or difficulty",
+    "pl.pro.3": "Sentences added later are included in the same purchase",
+    "pl.pro.4": "Restore on a new device with the same Apple Account",
     "pl.pro.note": "One-time in-app purchase · No subscription, no renewal · Prices vary by region — the App Store shows yours.",
     "pri.eyebrow": "Privacy",
-    "pri.title": "We have no idea what you read",
-    "pri.body": "URead has no servers, no account and no analytics. The app talks to no external service — your sentences stay on your device from start to finish.",
-    "pri.1": "The app makes no network requests; the library and every breakdown run on your device.",
-    "pri.2": "On-device breakdowns are performed by Apple Intelligence on your device — sentences are not uploaded.",
-    "pri.3": "Image capture uses on-device OCR; neither the image you pick nor the recognised text leaves your device.",
-    "pri.4": "Saved sentences live only on your device and are removed with the app.",
-    "pri.5": "No account, no analytics, no advertising, no third-party tracking SDKs.",
-    "pri.link": "Read the full Privacy Policy →",
-    "support.link": "Support →",
+    "pri.title": "It doesn't go online — and you can check that claim line by line in the source",
+    "pri.body": "URead does not connect to the network, needs no account, and collects no personal data. Everything ships inside the app, and breakdowns and read-aloud run entirely on your device.",
+    "pri.1": "There is no network call anywhere in the codebase — no URLSession, no URLRequest, no HTTP client. The whole app works with the network off.",
+    "pri.2": "Zero third-party dependencies: no analytics SDK, no crash reporting, no ad framework. Only Apple's own frameworks are imported.",
+    "pri.3": "An image you pick is read on-device and never uploaded or kept; because it uses the system picker, the app doesn't even request photo-library access.",
+    "pri.4": "Sentences you've broken down are stored only on your device, with iCloud sync off, and are removed when you delete the app.",
+    "pri.5": "No user tracking, and no IDFA / ATT prompt. Purchases are handled by Apple; we never touch your payment details.",
+    "pri.link": "Read the full Privacy Policy →", "support.link": "Support →",
     "footer.privacy": "Privacy", "footer.support": "Support", "footer.more": "More by Local4a",
-    "footer.disclaimer": "URead's interface is in Simplified Chinese; the sentences it breaks down are English. © 2026 Local4a."
+    "footer.disclaimer": "URead is built for native speakers of Chinese, Traditional Chinese, Japanese and Korean, with a switchable explanation language; the sentences it breaks down are English. On-device breakdowns require iOS 26 or later on an Apple Intelligence-capable device; the built-in library is unaffected. © 2026 Local4a."
   }
 };
 
-const HTML_LANG = { zh: "zh-Hans", en: "en" };
+const HTML_LANG = { zh: "zh-Hans", zhHant: "zh-Hant", ja: "ja", ko: "ko", en: "en" };
 
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.zh;
@@ -472,12 +738,26 @@ function applyLang(lang) {
 function detectLang() {
   try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
   const n = (navigator.language || "zh").toLowerCase();
-  return n.startsWith("zh") ? "zh" : "en";
+  if (n.startsWith("zh")) {
+    return /hant|tw|hk|mo/.test(n) ? "zhHant" : "zh";
+  }
+  if (n.startsWith("ja")) return "ja";
+  if (n.startsWith("ko")) return "ko";
+  return "en";
 }
 document.querySelectorAll(".langbar button").forEach(b => {
   b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
 });
 applyLang(detectLang());
+
+// 「只看主干」开关：淡出所有修饰成分，只留主谓宾
+const skelToggle = document.getElementById("skelToggle");
+const demo = document.getElementById("demo");
+if (skelToggle && demo) {
+  skelToggle.addEventListener("change", () => {
+    demo.classList.toggle("skeleton", skelToggle.checked);
+  });
+}
 </script>
 </body>
 </html>

@@ -15,7 +15,7 @@
   html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
+      "PingFang SC", "PingFang TC", "Hiragino Sans", "Apple SD Gothic Neo", "Noto Sans CJK SC", sans-serif;
     color: var(--ink); background: var(--bg); line-height: 1.7; -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
@@ -25,14 +25,15 @@
     position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(180%) blur(20px);
     background: rgba(255,255,255,0.84); border-bottom: 1px solid var(--line);
   }
-  .nav-inner { display: flex; align-items: center; gap: 18px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .nav-inner { display: flex; align-items: center; gap: 16px; height: 56px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
   .logo { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 18px; color: var(--ink); }
   .logo .bolt { color: var(--accent); }
-  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
   .nav-links a { color: var(--ink-soft); }
   .nav-links a:hover { color: var(--ink); text-decoration: none; }
+  @media (max-width: 720px) { .nav-links { display: none; } }
   .langbar { display: flex; gap: 2px; background: var(--bg-soft); border-radius: 999px; padding: 3px; }
-  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--ink-soft); }
+  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 9px; border-radius: 999px; color: var(--ink-soft); white-space: nowrap; }
   .langbar button.active { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
 
   main { padding: 56px 0 96px; }
@@ -43,6 +44,14 @@
   .legal p { color: var(--ink-soft); margin-top: 8px; }
   .legal ul { color: var(--ink-soft); margin: 8px 0 0 20px; }
   .legal li { margin-top: 6px; }
+  .verify { margin-top: 16px; border-left: 3px solid var(--accent); padding: 2px 0 2px 18px; color: var(--ink-soft); font-size: 15px; }
+  .tablewrap { margin-top: 16px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 520px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--ink-faint); font-weight: 600; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { white-space: nowrap; color: var(--ink); font-weight: 600; }
+  td:last-child { color: var(--ink-soft); }
   footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--ink-faint); font-size: 13px; }
   .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
 </style>
@@ -57,7 +66,10 @@
       <a href="uread-support.html" data-i18n="nav.support">支持</a>
     </nav>
     <div class="langbar" role="group" aria-label="Language">
-      <button data-lang="zh">中</button>
+      <button data-lang="zh">简</button>
+      <button data-lang="zhHant">繁</button>
+      <button data-lang="ja">日</button>
+      <button data-lang="ko">한</button>
       <button data-lang="en">EN</button>
     </div>
   </div>
@@ -66,40 +78,38 @@
 <main>
   <div class="wrap legal">
     <h1 data-i18n="title">隐私政策</h1>
-    <p class="updated"><span data-i18n="effective">生效日期</span>: 2026-08-08 · <span data-i18n="appname">URead</span></p>
-    <p class="summary" data-i18n="summary">一句话总结：URead 不联网。它没有服务器、没有账号，也不收集任何数据——你的句子从头到尾都留在你的设备上。</p>
+    <p class="updated"><span data-i18n="effective">生效日期</span>: 2026-08-09 · <span data-i18n="appname">URead</span></p>
+    <p class="summary" data-i18n="summary">URead 不联网、不需要账号、不收集任何个人数据。所有内容随 App 一起打包，拆解与朗读全部在你的设备上完成。选取的图片仅在本机识别文字，不会上传也不会保存。已拆解的句子只保存在你设备本地，未开启云端同步。购买由 Apple 处理，我们不会接触你的支付信息。</p>
 
-    <h2 data-i18n="collect.h">我们收集哪些数据</h2>
-    <p data-i18n="collect.p">没有。URead 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。</p>
+    <p class="verify" data-i18n="verify">以下每一条都可以在源码中直接验证，不是宣传话术。</p>
 
-    <h2 data-i18n="net.h">网络访问</h2>
-    <p data-i18n="net.p">应用不发起任何网络请求。句库随应用内置，拆解、朗读与识别全部在你的设备上完成。你无需注册账号，也不需要任何 API Key。飞行模式下，应用的全部功能照常可用。</p>
+    <h2 data-i18n="net.h">不联网</h2>
+    <p data-i18n="net.p">代码库里不存在任何网络 API 调用——没有 URLSession，没有 URLRequest，没有任何 HTTP 客户端。整个 App 可以在断网状态下使用。我们没有服务器，也没有任何后端可以接收你的数据。</p>
 
-    <h2 data-i18n="ai.h">端上智能拆解</h2>
-    <p data-i18n="ai.p">当你输入的句子不在内置句库中时，拆解由你设备本机的 Apple Intelligence（Foundation Models）完成。该处理全程在设备上进行，句子不会被上传给我们或任何第三方。此功能需要支持 Apple Intelligence 的机型；不支持时，内置句库依然可以正常使用。</p>
+    <h2 data-i18n="dep.h">没有任何第三方依赖</h2>
+    <p data-i18n="dep.p">无 SPM 包，无统计 SDK，无崩溃上报，无广告框架。全部代码只 import Apple 系统框架。</p>
 
-    <h2 data-i18n="img.h">图片与文字识别</h2>
-    <p data-i18n="img.p">你可以从系统相册选择器中挑选一张图片，让应用识别其中的句子。应用使用系统的照片选择器，因此不会请求、也不需要访问你相册的权限——只有你主动选中的那一张图片会交给应用。识别使用设备本机的 Vision 框架完成，图片与识别出的文字都不会离开你的设备，我们也不会收到它们。</p>
+    <h2 data-i18n="collect.h">不收集任何数据</h2>
+    <p data-i18n="collect.p">没有账号系统，没有 API Key，不做用户追踪，也不会请求 IDFA / ATT 授权。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。</p>
 
-    <h2 data-i18n="share.h">分享扩展</h2>
-    <p data-i18n="share.p">你可以在其他应用中选中一段文字，通过系统分享菜单发送到 URead。这段文字只会传递给你设备上的 URead，用于拆解，不会发送到任何服务器。</p>
+    <h2 data-i18n="feat.h">具体到每项功能</h2>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th data-i18n="feat.th1">功能</th><th data-i18n="feat.th2">数据如何处理</th></tr></thead>
+        <tbody>
+          <tr><td data-i18n="feat.r1a">粘贴的句子</td><td data-i18n="feat.r1b">只在本机内存与本地数据库中，不外发</td></tr>
+          <tr><td data-i18n="feat.r2a">图片取句</td><td data-i18n="feat.r2b">使用系统选图器（进程外选图，不申请相册权限，Info.plist 中无任何 UsageDescription）；OCR 由 Vision 框架在本机完成，图片不上传、不留存</td></tr>
+          <tr><td data-i18n="feat.r3a">分享扩展</td><td data-i18n="feat.r3b">文字经 App Group 传给主 App，不出设备</td></tr>
+          <tr><td data-i18n="feat.r4a">已拆解的句子</td><td data-i18n="feat.r4b">存在本地数据库（App 沙盒容器内），未开启 iCloud 同步，卸载即删除</td></tr>
+          <tr><td data-i18n="feat.r5a">拆解任意句子</td><td data-i18n="feat.r5b">使用 Apple 端上智能，推理在设备上完成，不联网</td></tr>
+          <tr><td data-i18n="feat.r6a">内购</td><td data-i18n="feat.r6b">由 Apple StoreKit 处理，开发者不接触也不接收任何个人信息或支付信息</td></tr>
+          <tr><td data-i18n="feat.r7a">朗读</td><td data-i18n="feat.r7b">系统语音合成，本机完成</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    <h2 data-i18n="local.h">留在设备上的数据</h2>
-    <ul>
-      <li data-i18n="local.1">你收藏的句子及其拆解结果，只保存在你的设备上。</li>
-      <li data-i18n="local.2">应用设置（如朗读偏好）只保存在你的设备上。</li>
-      <li data-i18n="local.3">删除应用即清除这些数据。</li>
-    </ul>
-
-    <h2 data-i18n="buy.h">购买</h2>
-    <p data-i18n="buy.p">「完整句库」是一次性内购，由 Apple 通过 App Store 处理。我们不接收或存储任何支付信息——只会知道该项目是否已购买。你可以在任何一台使用同一 Apple ID 的设备上恢复购买。</p>
-
-    <h2 data-i18n="third.h">无第三方</h2>
-    <ul>
-      <li data-i18n="third.1">无第三方统计分析、广告或追踪 SDK。</li>
-      <li data-i18n="third.2">我们不会跨应用或网站追踪你。</li>
-      <li data-i18n="third.3">应用不与任何第三方分享任何信息。</li>
-    </ul>
+    <h2 data-i18n="label.h">App Store 隐私标签</h2>
+    <p data-i18n="label.p">全部选项均为「未收集数据」（Data Not Collected）。</p>
 
     <h2 data-i18n="child.h">儿童</h2>
     <p data-i18n="child.p">URead 不收集任何人的信息，包括儿童。</p>
@@ -124,68 +134,131 @@ const I18N = {
   zh: {
     "nav.product": "产品概览", "nav.support": "支持",
     "title": "隐私政策", "effective": "生效日期", "appname": "URead",
-    "summary": "一句话总结：URead 不联网。它没有服务器、没有账号，也不收集任何数据——你的句子从头到尾都留在你的设备上。",
-    "collect.h": "我们收集哪些数据",
-    "collect.p": "没有。URead 没有账号系统、无需登录，也没有自己的服务器。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。我们没有什么可出售或分享的——因为任何数据都从未到达我们这里。",
-    "net.h": "网络访问",
-    "net.p": "应用不发起任何网络请求。句库随应用内置，拆解、朗读与识别全部在你的设备上完成。你无需注册账号，也不需要任何 API Key。飞行模式下，应用的全部功能照常可用。",
-    "ai.h": "端上智能拆解",
-    "ai.p": "当你输入的句子不在内置句库中时，拆解由你设备本机的 Apple Intelligence（Foundation Models）完成。该处理全程在设备上进行，句子不会被上传给我们或任何第三方。此功能需要支持 Apple Intelligence 的机型；不支持时，内置句库依然可以正常使用。",
-    "img.h": "图片与文字识别",
-    "img.p": "你可以从系统相册选择器中挑选一张图片，让应用识别其中的句子。应用使用系统的照片选择器，因此不会请求、也不需要访问你相册的权限——只有你主动选中的那一张图片会交给应用。识别使用设备本机的 Vision 框架完成，图片与识别出的文字都不会离开你的设备，我们也不会收到它们。",
-    "share.h": "分享扩展",
-    "share.p": "你可以在其他应用中选中一段文字，通过系统分享菜单发送到 URead。这段文字只会传递给你设备上的 URead，用于拆解，不会发送到任何服务器。",
-    "local.h": "留在设备上的数据",
-    "local.1": "你收藏的句子及其拆解结果，只保存在你的设备上。",
-    "local.2": "应用设置（如朗读偏好）只保存在你的设备上。",
-    "local.3": "删除应用即清除这些数据。",
-    "buy.h": "购买",
-    "buy.p": "「完整句库」是一次性内购，由 Apple 通过 App Store 处理。我们不接收或存储任何支付信息——只会知道该项目是否已购买。你可以在任何一台使用同一 Apple ID 的设备上恢复购买。",
-    "third.h": "无第三方",
-    "third.1": "无第三方统计分析、广告或追踪 SDK。",
-    "third.2": "我们不会跨应用或网站追踪你。",
-    "third.3": "应用不与任何第三方分享任何信息。",
-    "child.h": "儿童",
-    "child.p": "URead 不收集任何人的信息，包括儿童。",
+    "summary": "URead 不联网、不需要账号、不收集任何个人数据。所有内容随 App 一起打包，拆解与朗读全部在你的设备上完成。选取的图片仅在本机识别文字，不会上传也不会保存。已拆解的句子只保存在你设备本地，未开启云端同步。购买由 Apple 处理，我们不会接触你的支付信息。",
+    "verify": "以下每一条都可以在源码中直接验证，不是宣传话术。",
+    "net.h": "不联网",
+    "net.p": "代码库里不存在任何网络 API 调用——没有 URLSession，没有 URLRequest，没有任何 HTTP 客户端。整个 App 可以在断网状态下使用。我们没有服务器，也没有任何后端可以接收你的数据。",
+    "dep.h": "没有任何第三方依赖",
+    "dep.p": "无 SPM 包，无统计 SDK，无崩溃上报，无广告框架。全部代码只 import Apple 系统框架。",
+    "collect.h": "不收集任何数据",
+    "collect.p": "没有账号系统，没有 API Key，不做用户追踪，也不会请求 IDFA / ATT 授权。我们不收集、不接收、不传输、不存储你的句子、图片或任何使用数据。",
+    "feat.h": "具体到每项功能", "feat.th1": "功能", "feat.th2": "数据如何处理",
+    "feat.r1a": "粘贴的句子", "feat.r1b": "只在本机内存与本地数据库中，不外发",
+    "feat.r2a": "图片取句", "feat.r2b": "使用系统选图器（进程外选图，不申请相册权限，Info.plist 中无任何 UsageDescription）；OCR 由 Vision 框架在本机完成，图片不上传、不留存",
+    "feat.r3a": "分享扩展", "feat.r3b": "文字经 App Group 传给主 App，不出设备",
+    "feat.r4a": "已拆解的句子", "feat.r4b": "存在本地数据库（App 沙盒容器内），未开启 iCloud 同步，卸载即删除",
+    "feat.r5a": "拆解任意句子", "feat.r5b": "使用 Apple 端上智能，推理在设备上完成，不联网",
+    "feat.r6a": "内购", "feat.r6b": "由 Apple StoreKit 处理，开发者不接触也不接收任何个人信息或支付信息",
+    "feat.r7a": "朗读", "feat.r7b": "系统语音合成，本机完成",
+    "label.h": "App Store 隐私标签", "label.p": "全部选项均为「未收集数据」（Data Not Collected）。",
+    "child.h": "儿童", "child.p": "URead 不收集任何人的信息，包括儿童。",
     "changes.h": "本政策的变更",
     "changes.p": "若未来版本引入任何与数据相关的功能，我们会更新本政策，并在此以新的生效日期注明变更。",
-    "contact.h": "联系我们",
-    "contact.p": "对本政策有疑问？请发邮件至 "
+    "contact.h": "联系我们", "contact.p": "对本政策有疑问？请发邮件至 "
+  },
+  zhHant: {
+    "nav.product": "產品概覽", "nav.support": "支援",
+    "title": "隱私政策", "effective": "生效日期", "appname": "URead",
+    "summary": "URead 不連網、不需要帳號、不收集任何個人資料。所有內容隨 App 一起打包，解析與朗讀全部在你的裝置上完成。選取的圖片僅在本機辨識文字，不會上傳也不會保存。已解析的句子只保存在你的裝置本機，未開啟雲端同步。購買由 Apple 處理，我們不會接觸你的付款資訊。",
+    "verify": "以下每一條都可以在原始碼中直接驗證，不是宣傳話術。",
+    "net.h": "不連網",
+    "net.p": "程式碼庫裡不存在任何網路 API 呼叫——沒有 URLSession，沒有 URLRequest，沒有任何 HTTP 用戶端。整個 App 可以在斷網狀態下使用。我們沒有伺服器，也沒有任何後端可以接收你的資料。",
+    "dep.h": "沒有任何第三方相依",
+    "dep.p": "無 SPM 套件，無統計 SDK，無當機回報，無廣告框架。全部程式碼只 import Apple 系統框架。",
+    "collect.h": "不收集任何資料",
+    "collect.p": "沒有帳號系統，沒有 API Key，不做使用者追蹤，也不會請求 IDFA / ATT 授權。我們不收集、不接收、不傳輸、不儲存你的句子、圖片或任何使用資料。",
+    "feat.h": "具體到每項功能", "feat.th1": "功能", "feat.th2": "資料如何處理",
+    "feat.r1a": "貼上的句子", "feat.r1b": "只在本機記憶體與本機資料庫中，不外傳",
+    "feat.r2a": "圖片擷取", "feat.r2b": "使用系統選圖器（跨處理程序選圖，不申請相簿權限，Info.plist 中無任何 UsageDescription）；OCR 由 Vision 框架在本機完成，圖片不上傳、不留存",
+    "feat.r3a": "分享擴充功能", "feat.r3b": "文字經 App Group 傳給主 App，不出裝置",
+    "feat.r4a": "已解析的句子", "feat.r4b": "存在本機資料庫（App 沙箱容器內），未開啟 iCloud 同步，解除安裝即刪除",
+    "feat.r5a": "解析任意句子", "feat.r5b": "使用 Apple 端上智慧，推論在裝置上完成，不連網",
+    "feat.r6a": "App 內購買", "feat.r6b": "由 Apple StoreKit 處理，開發者不接觸也不接收任何個人資訊或付款資訊",
+    "feat.r7a": "朗讀", "feat.r7b": "系統語音合成，本機完成",
+    "label.h": "App Store 隱私標籤", "label.p": "全部選項均為「未收集資料」（Data Not Collected）。",
+    "child.h": "兒童", "child.p": "URead 不收集任何人的資訊，包括兒童。",
+    "changes.h": "本政策的變更",
+    "changes.p": "若未來版本引入任何與資料相關的功能，我們會更新本政策，並在此以新的生效日期註明變更。",
+    "contact.h": "聯絡我們", "contact.p": "對本政策有疑問？請寄信至 "
+  },
+  ja: {
+    "nav.product": "概要", "nav.support": "サポート",
+    "title": "プライバシーポリシー", "effective": "発効日", "appname": "URead",
+    "summary": "URead は通信せず、アカウントも不要で、個人データを一切収集しません。すべての内容は App に同梱されており、解析も読み上げもお手元の端末で完結します。選んだ画像は端末内で文字を読み取るだけで、アップロードも保存もしません。解析した文は端末内にのみ保存され、クラウド同期は行いません。購入は Apple が処理し、当方が支払い情報に触れることはありません。",
+    "verify": "以下の各項目は、ソースコードで直接検証できます。宣伝文句ではありません。",
+    "net.h": "通信しません",
+    "net.p": "コードベースにネットワーク API の呼び出しは存在しません——URLSession も、URLRequest も、HTTP クライアントもありません。App 全体をオフラインで使用できます。当方はサーバーを持たず、あなたのデータを受け取れるバックエンドも存在しません。",
+    "dep.h": "第三者依存はゼロ",
+    "dep.p": "SPM パッケージなし、解析 SDK なし、クラッシュレポートなし、広告フレームワークなし。すべてのコードは Apple の標準フレームワークのみを import しています。",
+    "collect.h": "データを一切収集しません",
+    "collect.p": "アカウント機能も API キーもなく、ユーザー追跡も行わず、IDFA / ATT の許可も求めません。あなたの文、画像、利用データを収集・受信・送信・保存することはありません。",
+    "feat.h": "機能ごとの扱い", "feat.th1": "機能", "feat.th2": "データの扱い",
+    "feat.r1a": "貼り付けた文", "feat.r1b": "端末内のメモリとローカルデータベースのみ。外部には出ません",
+    "feat.r2a": "画像からの抽出", "feat.r2b": "システムの画像ピッカーを使用（プロセス外で選択するため写真ライブラリの権限は不要。Info.plist に UsageDescription は一切ありません）。OCR は Vision フレームワークが端末内で実行し、画像はアップロードも保存もされません",
+    "feat.r3a": "共有機能拡張", "feat.r3b": "テキストは App Group 経由で本体アプリへ渡され、端末外へ出ません",
+    "feat.r4a": "解析済みの文", "feat.r4b": "ローカルデータベース（App のサンドボックス内）に保存。iCloud 同期は無効で、アプリを削除すれば消えます",
+    "feat.r5a": "任意の文の解析", "feat.r5b": "Apple の端末内インテリジェンスを使用。推論は端末内で完結し、通信しません",
+    "feat.r6a": "アプリ内課金", "feat.r6b": "Apple の StoreKit が処理し、開発者は個人情報にも支払い情報にも触れず、受け取りもしません",
+    "feat.r7a": "読み上げ", "feat.r7b": "システムの音声合成により端末内で処理",
+    "label.h": "App Store のプライバシーラベル", "label.p": "すべての項目が「データを収集していません」（Data Not Collected）です。",
+    "child.h": "子どもについて", "child.p": "URead は、子どもを含め誰からも情報を収集しません。",
+    "changes.h": "本ポリシーの変更",
+    "changes.p": "将来のバージョンでデータに関わる機能が導入される場合は、本ポリシーを更新し、新しい発効日とともにここに明記します。",
+    "contact.h": "お問い合わせ", "contact.p": "本ポリシーに関するご質問は "
+  },
+  ko: {
+    "nav.product": "개요", "nav.support": "지원",
+    "title": "개인정보 처리방침", "effective": "시행일", "appname": "URead",
+    "summary": "URead는 통신하지 않고, 계정도 필요 없으며, 어떤 개인 정보도 수집하지 않습니다. 모든 내용은 앱에 함께 담겨 있고, 분석과 읽어 주기는 모두 기기 안에서 끝납니다. 고른 이미지는 기기 안에서 글자만 읽어 낼 뿐 업로드하거나 저장하지 않습니다. 분석한 문장은 기기에만 저장되며 클라우드 동기화를 하지 않습니다. 결제는 Apple이 처리하며, 저희는 결제 정보를 접하지 않습니다.",
+    "verify": "아래의 모든 항목은 소스 코드에서 직접 확인할 수 있습니다. 홍보 문구가 아닙니다.",
+    "net.h": "통신하지 않습니다",
+    "net.p": "코드베이스에 네트워크 API 호출이 존재하지 않습니다 — URLSession도, URLRequest도, HTTP 클라이언트도 없습니다. 앱 전체를 오프라인 상태에서 쓸 수 있습니다. 저희에게는 서버가 없고, 여러분의 데이터를 받을 수 있는 백엔드도 없습니다.",
+    "dep.h": "서드파티 의존성 없음",
+    "dep.p": "SPM 패키지 없음, 분석 SDK 없음, 크래시 리포트 없음, 광고 프레임워크 없음. 모든 코드는 Apple 시스템 프레임워크만 import 합니다.",
+    "collect.h": "어떤 데이터도 수집하지 않습니다",
+    "collect.p": "계정 시스템도 API 키도 없고, 사용자 추적도 하지 않으며, IDFA / ATT 권한도 요청하지 않습니다. 여러분의 문장, 이미지, 사용 데이터를 수집·수신·전송·저장하지 않습니다.",
+    "feat.h": "기능별 처리 방식", "feat.th1": "기능", "feat.th2": "데이터 처리",
+    "feat.r1a": "붙여넣은 문장", "feat.r1b": "기기 내 메모리와 로컬 데이터베이스에만 있으며 외부로 나가지 않습니다",
+    "feat.r2a": "이미지에서 추출", "feat.r2b": "시스템 이미지 선택기 사용(프로세스 외부에서 선택하므로 사진 권한이 필요 없고, Info.plist에 UsageDescription이 전혀 없습니다). OCR은 Vision 프레임워크가 기기 안에서 수행하며, 이미지는 업로드도 저장도 되지 않습니다",
+    "feat.r3a": "공유 확장", "feat.r3b": "텍스트가 App Group을 통해 본 앱으로 전달되며 기기를 벗어나지 않습니다",
+    "feat.r4a": "분석한 문장", "feat.r4b": "로컬 데이터베이스(앱 샌드박스 내)에 저장되고 iCloud 동기화는 꺼져 있으며, 앱을 삭제하면 지워집니다",
+    "feat.r5a": "임의의 문장 분석", "feat.r5b": "Apple 기기 내 인텔리전스를 사용하며, 추론은 기기 안에서 끝나고 통신하지 않습니다",
+    "feat.r6a": "인앱 구매", "feat.r6b": "Apple StoreKit이 처리하며, 개발자는 개인 정보나 결제 정보를 접하지도 받지도 않습니다",
+    "feat.r7a": "읽어 주기", "feat.r7b": "시스템 음성 합성으로 기기 안에서 처리",
+    "label.h": "App Store 개인정보 라벨", "label.p": "모든 항목이 '데이터를 수집하지 않음'(Data Not Collected)입니다.",
+    "child.h": "어린이", "child.p": "URead는 어린이를 포함해 누구의 정보도 수집하지 않습니다.",
+    "changes.h": "본 방침의 변경",
+    "changes.p": "향후 버전에서 데이터와 관련된 기능이 도입되면 본 방침을 갱신하고, 새 시행일과 함께 이곳에 명시합니다.",
+    "contact.h": "문의", "contact.p": "본 방침에 대한 문의는 "
   },
   en: {
     "nav.product": "Overview", "nav.support": "Support",
     "title": "Privacy Policy", "effective": "Effective date", "appname": "URead",
-    "summary": "In one line: URead does not go online. It has no servers, no account, and collects nothing — your sentences stay on your device from start to finish.",
-    "collect.h": "Data we collect",
-    "collect.p": "None. URead has no account system, no sign-in, and no servers of its own. We do not collect, receive, transmit, or store your sentences, your images, or any usage data. There is nothing for us to sell or share, because nothing ever reaches us.",
-    "net.h": "Network access",
-    "net.p": "The app makes no network requests at all. The sentence library ships inside the app, and every breakdown, read-aloud and recognition runs on your device. There is no account to create and no API key to supply. In airplane mode, everything still works.",
-    "ai.h": "On-device breakdowns",
-    "ai.p": "When a sentence you enter isn't in the built-in library, the breakdown is produced by Apple Intelligence (Foundation Models) running on your device. That processing happens entirely on the device; the sentence is not uploaded to us or to any third party. This feature requires a device that supports Apple Intelligence — where it isn't supported, the built-in library still works normally.",
-    "img.h": "Images and text recognition",
-    "img.p": "You can pick an image through the system photo picker so the app can read a sentence out of it. Because the app uses the system picker, it does not request — and does not need — access to your photo library; only the single image you choose is handed to the app. Recognition runs on-device using Apple's Vision framework, and neither the image nor the recognised text leaves your device or reaches us.",
-    "share.h": "Share extension",
-    "share.p": "You can select text in another app and send it to URead through the system share sheet. That text is passed only to URead on your device, to be broken down. It is not sent to any server.",
-    "local.h": "What stays on your device",
-    "local.1": "Sentences you save, along with their breakdowns, are stored only on your device.",
-    "local.2": "App settings (such as read-aloud preferences) are stored only on your device.",
-    "local.3": "Removing the app removes this data.",
-    "buy.h": "Purchases",
-    "buy.p": "The Full Library is a one-time in-app purchase processed by Apple through the App Store. We do not receive or store any payment information — we only learn whether the item has been purchased. You can restore it on any device using the same Apple ID.",
-    "third.h": "No third parties",
-    "third.1": "No third-party analytics, advertising, or tracking SDKs.",
-    "third.2": "We do not track you across apps or websites.",
-    "third.3": "The app shares no information with any third party.",
-    "child.h": "Children",
-    "child.p": "URead collects no information from anyone, including children.",
+    "summary": "URead does not connect to the network, needs no account, and collects no personal data. Everything ships inside the app, and breakdowns and read-aloud run entirely on your device. An image you pick is read on-device only — never uploaded, never kept. Sentences you've broken down stay on your device with no cloud sync. Purchases are handled by Apple; we never touch your payment details.",
+    "verify": "Every claim below can be verified directly in the source code. It isn't marketing copy.",
+    "net.h": "It does not go online",
+    "net.p": "There is no network API call anywhere in the codebase — no URLSession, no URLRequest, no HTTP client of any kind. The whole app works with the network off. We run no servers, and there is no backend that could receive your data.",
+    "dep.h": "No third-party dependencies",
+    "dep.p": "No SPM packages, no analytics SDK, no crash reporting, no ad framework. Every line of code imports only Apple's own system frameworks.",
+    "collect.h": "It collects nothing",
+    "collect.p": "There is no account system, no API key, no user tracking, and no IDFA / ATT prompt. We do not collect, receive, transmit or store your sentences, your images, or any usage data.",
+    "feat.h": "Feature by feature", "feat.th1": "Feature", "feat.th2": "How the data is handled",
+    "feat.r1a": "Sentences you paste", "feat.r1b": "Held only in memory and the local database on your device; never sent anywhere",
+    "feat.r2a": "Capture from an image", "feat.r2b": "Uses the system image picker (out-of-process selection, so no photo-library permission is requested — there is no UsageDescription in Info.plist at all). OCR runs on-device via the Vision framework; the image is never uploaded or retained",
+    "feat.r3a": "Share extension", "feat.r3b": "Text is passed to the main app through an App Group and never leaves the device",
+    "feat.r4a": "Breakdowns you've saved", "feat.r4b": "Stored in a local database inside the app's sandbox, with iCloud sync off; removed when you delete the app",
+    "feat.r5a": "Breaking down any sentence", "feat.r5b": "Uses Apple's on-device intelligence; inference runs on the device with no network access",
+    "feat.r6a": "In-app purchase", "feat.r6b": "Handled by Apple StoreKit; the developer neither touches nor receives any personal or payment information",
+    "feat.r7a": "Read-aloud", "feat.r7b": "System speech synthesis, performed on the device",
+    "label.h": "App Store privacy label", "label.p": "Every category is marked Data Not Collected.",
+    "child.h": "Children", "child.p": "URead collects no information from anyone, including children.",
     "changes.h": "Changes to this policy",
     "changes.p": "If a future version introduces any data-related feature, we will update this policy and note the change here with a new effective date.",
-    "contact.h": "Contact",
-    "contact.p": "Questions about this policy? Email us at "
+    "contact.h": "Contact", "contact.p": "Questions about this policy? Email us at "
   }
 };
 
-const HTML_LANG = { zh: "zh-Hans", en: "en" };
+const HTML_LANG = { zh: "zh-Hans", zhHant: "zh-Hant", ja: "ja", ko: "ko", en: "en" };
 
 function applyLang(lang) {
   const dict = I18N[lang] || I18N.zh;
@@ -204,7 +277,10 @@ function applyLang(lang) {
 function detectLang() {
   try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
   const n = (navigator.language || "zh").toLowerCase();
-  return n.startsWith("zh") ? "zh" : "en";
+  if (n.startsWith("zh")) return /hant|tw|hk|mo/.test(n) ? "zhHant" : "zh";
+  if (n.startsWith("ja")) return "ja";
+  if (n.startsWith("ko")) return "ko";
+  return "en";
 }
 document.querySelectorAll(".langbar button").forEach(b => {
   b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
