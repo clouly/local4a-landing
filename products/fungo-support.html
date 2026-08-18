@@ -1,225 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hans">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>支持 — 四象棋灵 GO SPIRITS</title>
-<meta name="robots" content="index,follow" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>支持与帮助 · 四象棋灵 GO SPIRITS</title>
+<meta name="description" content="四象棋灵 / GO SPIRITS 支持页面:玩法说明、常见问题、购买与恢复、联系方式。Support and FAQ for GO SPIRITS.">
 <style>
-  :root {
-    --ink: #0a0a0f; --panel: rgba(255,255,255,0.035); --line: rgba(229,199,107,0.16);
-    --fg: #f3efe6; --fg-soft: #b9b3a6; --fg-faint: #837d72; --gold: #e5c76b;
-    --radius: 14px; --maxw: 760px; font-synthesis: none;
+  :root{
+    --ink:#12141a; --ink-soft:#1b1e27; --parchment:#F2EDE3;
+    --gold:#E5C76B; --teal:#1EA7A0; --vermilion:#E5533C;
+    --muted:rgba(242,237,227,.62); --line:rgba(229,199,107,.22);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
-    color: var(--fg); background: var(--ink); line-height: 1.75; -webkit-font-smoothing: antialiased;
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ink); color:var(--parchment);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
   }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  a { color: var(--gold); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  header.nav {
-    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(160%) blur(18px);
-    background: rgba(10,10,15,0.72); border-bottom: 1px solid var(--line);
+  .wrap{max-width:760px; margin:0 auto; padding:56px 22px 88px}
+  header{border-bottom:1px solid var(--line); padding-bottom:26px; margin-bottom:32px}
+  .brand{font-size:13px; letter-spacing:.32em; color:var(--gold); text-transform:uppercase; margin:0 0 10px}
+  h1{font-size:30px; line-height:1.3; margin:0 0 10px; font-weight:800}
+  .meta{font-size:13px; color:var(--muted); margin:0}
+  h2{font-size:19px; margin:40px 0 14px; color:var(--gold); font-weight:700}
+  p,li{font-size:15px}
+  ul{padding-left:20px} li{margin:7px 0}
+  strong{color:#fff}
+  a{color:var(--teal)}
+  .contact{
+    background:var(--ink-soft); border:1px solid var(--line); border-radius:14px;
+    padding:20px 22px; margin:26px 0;
   }
-  .nav-inner { display: flex; align-items: center; gap: 16px; height: 58px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
-  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--fg); }
-  .logo img { width: 26px; height: 26px; border-radius: 7px; }
-  .nav-links { display: flex; gap: 18px; margin-left: auto; font-size: 14px; }
-  .nav-links a { color: var(--fg-soft); }
-  .nav-links a:hover { color: var(--gold); text-decoration: none; }
-  @media (max-width: 640px) { .nav-links { display: none; } }
-  .langbar { display: flex; gap: 2px; background: rgba(255,255,255,0.06); border-radius: 999px; padding: 3px; }
-  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--fg-soft); }
-  .langbar button.active { background: rgba(229,199,107,0.16); color: var(--gold); }
-
-  main { padding: 56px 0 96px; }
-  h1 { font-size: clamp(27px, 5vw, 38px); letter-spacing: -0.01em; }
-  .lead { font-size: 17px; color: var(--fg-soft); margin-top: 18px; }
-  .contact-card { margin-top: 30px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
-  .contact-card h2 { font-size: 18px; }
-  .contact-card p { color: var(--fg-soft); margin-top: 8px; }
-  .contact-card .email { display: inline-block; margin-top: 12px; font-size: 18px; font-weight: 600; }
-  h2.sec { font-size: 21px; margin: 46px 0 14px; }
-  .reqs { margin: 0 0 0 20px; color: var(--fg-soft); }
-  .reqs li { margin-top: 6px; }
-  .faq details { border-bottom: 1px solid var(--line); padding: 16px 0; }
-  .faq summary { font-weight: 600; font-size: 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; color: var(--fg); }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: "+"; color: var(--fg-faint); font-weight: 400; }
-  .faq details[open] summary::after { content: "–"; }
-  .faq p { color: var(--fg-soft); margin-top: 10px; font-size: 15px; }
-  footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--fg-faint); font-size: 13px; }
-  .foot-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .contact p{margin:0 0 6px}
+  details{
+    border:1px solid var(--line); border-radius:12px; padding:14px 18px;
+    margin:10px 0; background:var(--ink-soft);
+  }
+  details[open]{background:rgba(27,30,39,.75)}
+  summary{cursor:pointer; font-weight:700; font-size:15px; color:var(--parchment); list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ "; color:var(--gold)}
+  details[open] summary::before{content:"▾ "}
+  details p, details ul{margin:12px 0 4px; color:var(--muted)}
+  details strong{color:var(--parchment)}
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; display:block; overflow-x:auto}
+  th,td{border:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top}
+  th{background:var(--ink-soft); color:var(--gold); font-weight:700; white-space:nowrap}
+  hr{border:0; border-top:1px solid var(--line); margin:56px 0 40px}
+  footer{margin-top:48px; padding-top:22px; border-top:1px solid var(--line); font-size:13px; color:var(--muted)}
+  .en{color:var(--muted)}
+  .en h2{color:var(--gold)}
+  .en strong{color:var(--parchment)}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header class="nav">
-  <div class="nav-inner">
-    <a href="fungo.html" class="logo"><img src="assets/fungo/icon.png" alt="" /> <span data-i18n="brand">四象棋灵</span></a>
-    <nav class="nav-links">
-      <a href="fungo.html" data-i18n="nav.product">产品概览</a>
-      <a href="fungo-privacy.html" data-i18n="nav.privacy">隐私</a>
-    </nav>
-    <div class="langbar" role="group" aria-label="Language">
-      <button data-lang="zh">中</button>
-      <button data-lang="en">EN</button>
-      <button data-lang="ja">日</button>
-    </div>
-  </div>
+<header>
+  <p class="brand">四象棋灵 · GO SPIRITS</p>
+  <h1>支持与帮助</h1>
+  <p class="meta">遇到问题或有建议,欢迎随时联系我们。通常在 2 个工作日内回复。</p>
 </header>
 
-<main>
-  <div class="wrap">
-    <h1 data-i18n="title">支持</h1>
-    <p class="lead" data-i18n="lead">游玩四象棋灵遇到问题？这里是联系方式和常见问题的解答。</p>
+<div class="contact">
+  <p><strong>联系邮箱</strong></p>
+  <p><a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a></p>
+  <p style="margin-top:12px; font-size:13px; color:var(--muted)">
+    反馈问题时,请附上:设备型号(如 iPhone 15)、iOS 版本、App 版本,以及问题的简要描述或截图 —— 这能帮我们更快定位。
+  </p>
+</div>
 
-    <div class="contact-card">
-      <h2 data-i18n="contact.h">联系我们</h2>
-      <p data-i18n="contact.p">给我们发邮件，我们通常会在 2 个工作日内回复。</p>
-      <a class="email" href="mailto:hello.local4a@gmail.com?subject=GO%20SPIRITS%20Support">hello.local4a@gmail.com</a>
-    </div>
+<h2>玩法快速上手</h2>
+<ol>
+  <li><strong>选棋灵</strong> —— 青龙 / 朱雀 / 白虎 / 玄武,四象各有战斗风格。</li>
+  <li><strong>选棋盘</strong> —— 9 路快节奏、13 路、19 路正统。</li>
+  <li><strong>开始对弈</strong> —— 自动匹配真人;若短时间内匹配不到,会安排 AI 对手,不用等。</li>
+  <li><strong>释放技能</strong> —— 每位棋灵有 2 个冷却主动技 + 1 个蓄满灵力才能放的<strong>奥义</strong>。技能是"免费一手":放完技能你仍可落子。</li>
+  <li><strong>分出胜负</strong> —— 提子达成速胜、终局点目,或对手认输。胜负会影响你的段位积分。</li>
+</ol>
 
-    <h2 class="sec" data-i18n="req.h">使用要求</h2>
-    <ul class="reqs">
-      <li data-i18n="req.1">运行 iOS / iPadOS 17 或更高版本的 iPhone 或 iPad</li>
-      <li data-i18n="req.2">与 AI 对局无需联网</li>
-      <li data-i18n="req.3">联机对战与排行榜需要登录 Game Center 并联网</li>
-    </ul>
+<h2>常见问题</h2>
 
-    <h2 class="sec" data-i18n="faq.h">常见问题</h2>
-    <div class="faq">
-      <details><summary data-i18n="q1">不会下围棋，能玩吗？</summary><p data-i18n="a1">可以。建议从 9 路棋盘开始——一局很快，规则也更容易看明白。围棋核心就一句：把对方的棋子围住就能提掉，终局时占地多的一方获胜。技能系统会让局势变化更直观，反而比纯围棋更容易上手。</p></details>
-      <details><summary data-i18n="q2">技能是怎么用的？会不会破坏围棋规则？</summary><p data-i18n="a2">每位棋灵有 2 个冷却主动技，外加 1 个靠灵力槽蓄满释放的奥义。技能算「免费一手」——放完技能你还能正常落子。技能之间有全局冷却，所以不能连放。底层的提子、打劫、点目仍然是标准围棋规则。</p></details>
-      <details><summary data-i18n="q3">匹配不到对手怎么办？</summary><p data-i18n="a3">不用等。Game Center 若在 10 秒内没有匹配到真人，会自动换成 AI 对局，体验不中断。你也可以直接选择与 AI 对弈。</p></details>
-      <details><summary data-i18n="q4">联机连不上怎么办？</summary><p data-i18n="a4">请确认已在「设置 → Game Center」登录，网络连接正常，且 Game Center 未被「屏幕使用时间」限制。仍有问题的话，退出应用重进通常能解决；也欢迎发邮件告诉我们你的机型与系统版本。</p></details>
-      <details><summary data-i18n="q5">付费棋灵会更强吗？</summary><p data-i18n="a5">四位棋灵是不同的战斗风格——扩张、爆发、歼灭、守护——而不是强弱分级，免费的青龙同样能赢。需要说明的是：付费棋盘皮肤带有段位积分增益（赢了多加分 / 输了少扣分），这只影响段位积分，不影响棋局本身的胜负判定。</p></details>
-      <details><summary data-i18n="q6">换了新设备，购买还在吗？</summary><p data-i18n="a6">在。棋灵与棋盘皮肤都是一次性非消耗型内购，不会自动续费。用同一个 Apple 账号在应用内点击「恢复购买」即可，无需再次付费。</p></details>
-      <details><summary data-i18n="q7">支持哪些语言？</summary><p data-i18n="a7">简体中文、繁體中文、English、日本語、한국어，跟随系统语言。</p></details>
-      <details><summary data-i18n="q8">我的数据私密吗？</summary><p data-i18n="a8">应用没有账号、没有我们自己的服务器，也不做统计分析、不投广告、不接第三方 SDK。对局数据保存在你的设备上；联机与排行榜由 Apple 的 Game Center 处理。详见隐私政策。</p></details>
-    </div>
+<details>
+<summary>为什么我放完一个技能后,别的技能也用不了了?</summary>
+<p>这是刻意的设计。除了每个技能各自的冷却外,还有一个<strong>全局技能冷却</strong>:放出任意技能后,接下来几个回合内所有技能都会锁定。</p>
+<p>这样做是为了让技能成为"关键时刻的决断",而不是每回合都在按的循环技。这条规则对你和对手(以及 AI)<strong>完全一致</strong>。</p>
+</details>
+
+<details>
+<summary>匹配不到真人怎么办?</summary>
+<p>不用担心 —— 若短时间内没有匹配到真人对手,游戏会自动安排一位 AI 对手,让你立刻开局。你无需做任何操作。</p>
+<p>想提高匹配到真人的概率,可以选择更常见的棋盘尺寸,并确认已登录 Game Center。</p>
+</details>
+
+<details>
+<summary>我买过的角色/棋盘不见了,怎么恢复?</summary>
+<p>进入商店页面,点击 <strong>「恢复购买」</strong>,已购内容会重新解锁。</p>
+<p>请确认你使用的是<strong>购买时的同一个 Apple 账户</strong>。所有购买都是一次性买断,更换设备后可免费恢复。若仍未恢复,请把 Apple 的购买收据邮件转发给我们。</p>
+</details>
+
+<details>
+<summary>Game Center 登录不上 / 排行榜没有数据</summary>
+<ul>
+  <li>打开 iOS「设置」→「游戏中心」,确认已登录;</li>
+  <li>确认网络连接正常;</li>
+  <li>完全退出 App 后重新打开;</li>
+  <li>段位积分会在<strong>每局结束后</strong>提交,首次上榜可能需要下完一局。</li>
+</ul>
+<p>注意:不登录 Game Center 也可以正常游玩,只是无法联机和上榜。</p>
+</details>
+
+<details>
+<summary>付费棋盘的"增益"是什么意思?</summary>
+<p>付费棋盘除了外观,还会影响<strong>段位积分</strong>的结算:有的赢了多加分,有的输了少扣分,有的攻守各加减一半。</p>
+<p>这些只作用于休闲段位积分,<strong>不会改变围棋规则本身</strong>,也不影响对局公平性。</p>
+</details>
+
+<details>
+<summary>这是真正的围棋吗?</summary>
+<p>是的。提子、气、打劫(含超级劫)、终局按中国规则点目 —— 围棋内核是完整实现的。</p>
+<p>棋灵技能是叠加在上面的一层趣味玩法,让休闲玩家也能玩得爽。</p>
+</details>
+
+<details>
+<summary>怎么关掉背景音乐?</summary>
+<p>点击首页顶部中间的<strong>喇叭图标</strong>即可静音/取消静音,对局界面右上角也有同样的按钮。设置会被记住。</p>
+</details>
+
+<details>
+<summary>支持哪些语言和设备?</summary>
+<p>支持<strong>简体中文、繁體中文、English、日本語、한국어</strong>,跟随系统语言自动切换。</p>
+<p>需要 <strong>iOS 17 或更高版本</strong>,支持 iPhone 与 iPad。</p>
+</details>
+
+<details>
+<summary>如何申请退款?</summary>
+<p>App Store 的购买退款由 Apple 处理,我们无法代为操作。请访问 <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>,用你的 Apple 账户登录并提交申请。</p>
+</details>
+
+<h2>隐私</h2>
+<p>本 App <strong>不收集任何个人数据</strong>,不含广告与追踪工具。详见 <a href="./fungo-privacy.html">隐私政策</a>。</p>
+
+<hr>
+
+<div class="en" lang="en">
+  <h1 style="font-size:26px; color:var(--parchment)">Support</h1>
+  <p class="meta">Questions, bugs, or suggestions — get in touch. We usually reply within 2 business days.</p>
+
+  <div class="contact">
+    <p><strong>Email</strong></p>
+    <p><a href="mailto:hello.local4a@gmail.com">hello.local4a@gmail.com</a></p>
+    <p style="margin-top:12px; font-size:13px">
+      When reporting a problem, please include your device model, iOS version, app version, and a short description or screenshot.
+    </p>
   </div>
-</main>
+
+  <h2>Getting started</h2>
+  <ol>
+    <li><strong>Pick a spirit</strong> — Azure Dragon, Vermilion Bird, White Tiger, or Black Tortoise.</li>
+    <li><strong>Pick a board</strong> — 9×9, 13×13, or 19×19.</li>
+    <li><strong>Start a match</strong> — you're matched with a real player; if none is found quickly, an AI opponent steps in.</li>
+    <li><strong>Use skills</strong> — each spirit has 2 cooldown skills plus a charged ultimate. Casting is a free action: you still place a stone afterwards.</li>
+    <li><strong>Win</strong> — by capture rush, final scoring, or resignation. Results move your rank points.</li>
+  </ol>
+
+  <h2>FAQ</h2>
+
+  <details>
+    <summary>Why can't I use another skill right after casting one?</summary>
+    <p>By design. On top of each skill's own cooldown there is a <strong>shared inter-skill cooldown</strong> — after any cast, all skills are locked for several turns. This keeps skills as decisive moments rather than an every-turn rotation, and it applies equally to you, your opponent, and the AI.</p>
+  </details>
+
+  <details>
+    <summary>No opponent found?</summary>
+    <p>If no human opponent is found quickly, an AI opponent is assigned automatically so you can start playing right away. To improve your chances of a human match, use a common board size and make sure you're signed in to Game Center.</p>
+  </details>
+
+  <details>
+    <summary>How do I restore my purchases?</summary>
+    <p>Open the store screen and tap <strong>Restore Purchases</strong>. Make sure you're signed in with the <strong>same Apple Account</strong> used for the original purchase. All purchases are one-time unlocks and restore free of charge on a new device.</p>
+  </details>
+
+  <details>
+    <summary>Game Center won't sign in / leaderboard is empty</summary>
+    <p>Check Settings → Game Center to confirm you're signed in, verify your network connection, and fully relaunch the app. Rank points are submitted <strong>after a match ends</strong>, so you may need to finish one game before appearing on the leaderboard. You can still play without Game Center (against AI).</p>
+  </details>
+
+  <details>
+    <summary>What do paid board "perks" do?</summary>
+    <p>Beyond their look, paid boards adjust <strong>rank point</strong> settlement — some add points on a win, some reduce the loss penalty, some do a bit of both. They never change the rules of Go or affect match fairness.</p>
+  </details>
+
+  <details>
+    <summary>Is this real Go?</summary>
+    <p>Yes — captures, liberties, ko and positional superko, and Chinese area scoring are all fully implemented. The spirit skills are a fun layer on top of a genuine Go engine.</p>
+  </details>
+
+  <details>
+    <summary>Languages and requirements</summary>
+    <p>Simplified Chinese, Traditional Chinese, English, Japanese, and Korean, following your system language. Requires <strong>iOS 17 or later</strong>; runs on iPhone and iPad.</p>
+  </details>
+
+  <details>
+    <summary>Refunds</summary>
+    <p>App Store refunds are handled by Apple. Please visit <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a> and sign in with your Apple Account.</p>
+  </details>
+
+  <h2>Privacy</h2>
+  <p>This app <strong>collects no personal data</strong> and contains no ads or tracking. See the <a href="./fungo-privacy.html">Privacy Policy</a>.</p>
+</div>
 
 <footer>
-  <div class="foot-inner">
-    <div class="logo"><img src="assets/fungo/icon.png" alt="" /> <span data-i18n="brand">四象棋灵</span></div>
-    <span>© 2026 Local4a</span>
-  </div>
+  四象棋灵 / GO SPIRITS · 支持与帮助 · Support
 </footer>
 
-<script>
-const I18N = {
-  zh: {
-    "brand": "四象棋灵", "nav.product": "产品概览", "nav.privacy": "隐私",
-    "title": "支持", "lead": "游玩四象棋灵遇到问题？这里是联系方式和常见问题的解答。",
-    "contact.h": "联系我们", "contact.p": "给我们发邮件，我们通常会在 2 个工作日内回复。",
-    "req.h": "使用要求",
-    "req.1": "运行 iOS / iPadOS 17 或更高版本的 iPhone 或 iPad",
-    "req.2": "与 AI 对局无需联网",
-    "req.3": "联机对战与排行榜需要登录 Game Center 并联网",
-    "faq.h": "常见问题",
-    "q1": "不会下围棋，能玩吗？",
-    "a1": "可以。建议从 9 路棋盘开始——一局很快，规则也更容易看明白。围棋核心就一句：把对方的棋子围住就能提掉，终局时占地多的一方获胜。技能系统会让局势变化更直观，反而比纯围棋更容易上手。",
-    "q2": "技能是怎么用的？会不会破坏围棋规则？",
-    "a2": "每位棋灵有 2 个冷却主动技，外加 1 个靠灵力槽蓄满释放的奥义。技能算「免费一手」——放完技能你还能正常落子。技能之间有全局冷却，所以不能连放。底层的提子、打劫、点目仍然是标准围棋规则。",
-    "q3": "匹配不到对手怎么办？",
-    "a3": "不用等。Game Center 若在 10 秒内没有匹配到真人，会自动换成 AI 对局，体验不中断。你也可以直接选择与 AI 对弈。",
-    "q4": "联机连不上怎么办？",
-    "a4": "请确认已在「设置 → Game Center」登录，网络连接正常，且 Game Center 未被「屏幕使用时间」限制。仍有问题的话，退出应用重进通常能解决；也欢迎发邮件告诉我们你的机型与系统版本。",
-    "q5": "付费棋灵会更强吗？",
-    "a5": "四位棋灵是不同的战斗风格——扩张、爆发、歼灭、守护——而不是强弱分级，免费的青龙同样能赢。需要说明的是：付费棋盘皮肤带有段位积分增益（赢了多加分 / 输了少扣分），这只影响段位积分，不影响棋局本身的胜负判定。",
-    "q6": "换了新设备，购买还在吗？",
-    "a6": "在。棋灵与棋盘皮肤都是一次性非消耗型内购，不会自动续费。用同一个 Apple 账号在应用内点击「恢复购买」即可，无需再次付费。",
-    "q7": "支持哪些语言？",
-    "a7": "简体中文、繁體中文、English、日本語、한국어，跟随系统语言。",
-    "q8": "我的数据私密吗？",
-    "a8": "应用没有账号、没有我们自己的服务器，也不做统计分析、不投广告、不接第三方 SDK。对局数据保存在你的设备上；联机与排行榜由 Apple 的 Game Center 处理。详见隐私政策。"
-  },
-  en: {
-    "brand": "GO SPIRITS", "nav.product": "Overview", "nav.privacy": "Privacy",
-    "title": "Support", "lead": "Need a hand with GO SPIRITS? Here's how to reach us and answers to common questions.",
-    "contact.h": "Get in touch", "contact.p": "Email us and we'll typically reply within 2 business days.",
-    "req.h": "Requirements",
-    "req.1": "iPhone or iPad running iOS / iPadOS 17 or later",
-    "req.2": "Games against the AI need no internet connection",
-    "req.3": "Online matches and leaderboards require a Game Center sign-in and a connection",
-    "faq.h": "Common questions",
-    "q1": "I don't know how to play Go. Can I still play?",
-    "a1": "Yes. Start on the 9×9 board — a game is quick and the rules are much easier to see in action. The heart of Go is one sentence: surround your opponent's stones to capture them, and whoever holds more territory at the end wins. The skills actually make the swings easier to read, so this is a gentler way in than plain Go.",
-    "q2": "How do skills work? Do they break the rules of Go?",
-    "a2": "Each spirit has two cooldown skills plus an ultimate charged by a spirit gauge. A skill counts as a free move — after casting, you still place a stone as normal. A global cooldown sits between skills, so you can't chain them. Underneath, captures, ko and area scoring remain standard Go.",
-    "q3": "What if no opponent is found?",
-    "a3": "You don't have to wait. If Game Center doesn't find a human within ten seconds, an AI steps in automatically and the game starts. You can also choose to play the AI directly.",
-    "q4": "Online play won't connect.",
-    "a4": "Check that you're signed in under Settings → Game Center, that you have a working connection, and that Game Center isn't restricted by Screen Time. If it still fails, quitting and reopening the app usually clears it — and do email us your device model and iOS version.",
-    "q5": "Are the paid spirits stronger?",
-    "a5": "The four spirits are different fighting styles — expansion, burst, annihilation, protection — not power tiers, and the free Azure Dragon wins just as well. One thing to be clear about: paid board skins carry a rank-point bonus (more points for a win, fewer lost for a defeat). That affects rank points only, never who actually wins the game on the board.",
-    "q6": "I got a new device — are my purchases still there?",
-    "a6": "Yes. Spirits and board skins are one-time non-consumable purchases that never auto-renew. Tap \"Restore Purchases\" in the app with the same Apple Account and they come back at no extra cost.",
-    "q7": "Which languages are supported?",
-    "a7": "Simplified Chinese, Traditional Chinese, English, Japanese and Korean, following your system language.",
-    "q8": "Is my data private?",
-    "a8": "The app has no account and no servers of ours, runs no analytics, shows no ads and bundles no third-party SDKs. Game data stays on your device; online play and leaderboards are handled by Apple's Game Center. See the Privacy Policy for details."
-  },
-  ja: {
-    "brand": "四象棋霊", "nav.product": "概要", "nav.privacy": "プライバシー",
-    "title": "サポート", "lead": "四象棋霊でお困りですか？お問い合わせ方法と、よくある質問への回答です。",
-    "contact.h": "お問い合わせ", "contact.p": "メールでご連絡ください。通常 2 営業日以内に返信します。",
-    "req.h": "動作環境",
-    "req.1": "iOS / iPadOS 17 以降を搭載した iPhone または iPad",
-    "req.2": "AI との対局にインターネット接続は不要",
-    "req.3": "オンライン対戦とランキングには Game Center へのサインインと接続が必要",
-    "faq.h": "よくある質問",
-    "q1": "囲碁を知らなくても遊べますか？",
-    "a1": "遊べます。まずは 9 路盤から始めてみてください——一局が短く、ルールも動きの中で理解しやすくなります。囲碁の核心は一言です：相手の石を囲めば取れる、終局時に地の広いほうが勝ち。技のおかげで形勢の動きが見えやすく、素の囲碁より入りやすいはずです。",
-    "q2": "技はどう使いますか？囲碁のルールは壊れませんか？",
-    "a2": "各棋霊はクールダウン制のアクティブ技を 2 つ、霊力ゲージで放つ奥義を 1 つ持ちます。技は「ただの一手」——放ったあとも通常どおり石を打てます。技の間には全体クールダウンがあるため連発はできません。土台のアゲハマ・コウ・地の計算は標準的な囲碁のままです。",
-    "q3": "対戦相手が見つからないときは？",
-    "a3": "待つ必要はありません。Game Center が 10 秒以内に対人を見つけられない場合、自動的に AI に切り替わって対局が始まります。最初から AI を選ぶこともできます。",
-    "q4": "オンラインに接続できません。",
-    "a4": "「設定 → Game Center」でサインインしているか、通信が正常か、スクリーンタイムで Game Center が制限されていないかをご確認ください。それでも解決しない場合はアプリの再起動をお試しのうえ、端末の機種と iOS バージョンをメールでお知らせください。",
-    "q5": "有料の棋霊のほうが強いのですか？",
-    "a5": "4 柱の棋霊は強さの段階ではなく、拡張・爆発・殲滅・守護という戦い方の違いです。無料の青龍でも十分に勝てます。ひとつ明記しておくと、有料の盤スキンには段位ポイントのボーナス（勝ち時に加算増、負け時に減少軽減）があります。これは段位ポイントにのみ影響し、盤上の勝敗判定そのものには関係しません。",
-    "q6": "機種変更しても購入は残りますか？",
-    "a6": "残ります。棋霊も盤スキンも買い切りの非消耗型アプリ内購入で、自動更新はありません。同じ Apple アカウントでアプリ内の「購入を復元」をタップすれば、追加料金なしで戻ります。",
-    "q7": "対応言語は？",
-    "a7": "簡体中文・繁體中文・English・日本語・한국어。システム言語に追従します。",
-    "q8": "データはプライベートですか？",
-    "a8": "アプリにはアカウントも当方のサーバーもなく、解析も広告も第三者 SDK もありません。対局データは端末内に保存され、オンライン対戦とランキングは Apple の Game Center が処理します。詳しくはプライバシーポリシーをご覧ください。"
-  }
-};
-
-const HTML_LANG = { zh: "zh-Hans", en: "en", ja: "ja" };
-
-function applyLang(lang) {
-  const dict = I18N[lang] || I18N.zh;
-  document.documentElement.lang = HTML_LANG[lang] || "zh-Hans";
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    if (dict[key] == null) return;
-    el.textContent = dict[key];
-  });
-  document.querySelectorAll(".langbar button").forEach(b => {
-    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
-  });
-  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
-}
-function detectLang() {
-  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
-  const n = (navigator.language || "zh").toLowerCase();
-  if (n.startsWith("zh")) return "zh";
-  if (n.startsWith("ja")) return "ja";
-  return "en";
-}
-document.querySelectorAll(".langbar button").forEach(b => {
-  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
-});
-applyLang(detectLang());
-</script>
+</div>
 </body>
 </html>

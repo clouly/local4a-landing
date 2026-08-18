@@ -1,262 +1,219 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hans">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>四象棋灵 GO SPIRITS — 烂柯一局，仙人对弈</title>
-<meta name="description" data-i18n-attr="content" data-i18n="meta.desc"
-  content="四象棋灵——把围棋变成角色对战。执掌青龙朱雀白虎玄武，释放无双特技，9/13/19 路联机对弈，水墨仙侠画风，古筝配乐。iOS 免费下载。" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>四象棋灵 GO SPIRITS · 趣味围棋角色对战</title>
+<meta name="description" content="四象棋灵——把围棋变成角色对战。执掌青龙朱雀白虎玄武，释放棋灵特技，9/13/19 路联机对弈，水墨仙侠画风，古筝配乐。iOS 免费下载。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="四象棋灵 · GO SPIRITS">
+<meta property="og:description" content="烂柯一局，仙人对弈。把围棋变成一场棋灵对战。">
+<meta property="og:image" content="https://local4a.com/products/assets/fungo/bg.jpg">
+<meta property="og:url" content="https://local4a.com/products/fungo.html">
+<meta name="twitter:card" content="summary_large_image">
 <style>
-  :root {
-    --ink: #0a0a0f;
-    --ink-2: #12121b;
-    --panel: rgba(255,255,255,0.035);
-    --line: rgba(229,199,107,0.16);
-    --fg: #f3efe6;
-    --fg-soft: #b9b3a6;
-    --fg-faint: #837d72;
-    --gold: #e5c76b;
-    --teal: #1ea7a0;
-    --vermilion: #e5533c;
-    --steel: #d7dce2;
-    --indigo: #6376c4;
-    --radius: 14px;
-    --maxw: 1080px;
-    font-synthesis: none;
+  :root{
+    --ink:#12141a; --ink-soft:#1b1e27; --parchment:#F2EDE3;
+    --gold:#E5C76B; --teal:#1EA7A0; --vermilion:#E5533C;
+    --steel:#D7DCE2; --indigo:#5A6DB0;
+    --muted:rgba(242,237,227,.62);
+    --line:rgba(229,199,107,.22);
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI",
-      "PingFang SC", "Hiragino Sans", "Noto Sans CJK SC", sans-serif;
-    color: var(--fg); background: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased;
+  *{box-sizing:border-box; margin:0; padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--ink); color:var(--parchment);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.75; -webkit-font-smoothing:antialiased;
   }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
-  a { color: inherit; text-decoration: none; }
-  h1, h2, h3 { line-height: 1.2; letter-spacing: -0.01em; }
-  .serif { font-family: "Songti SC", "STSong", "Hiragino Mincho ProN", Georgia, serif; }
-
-  header.nav {
-    position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(160%) blur(18px);
-    background: rgba(10,10,15,0.72); border-bottom: 1px solid var(--line);
-  }
-  .nav-inner { display: flex; align-items: center; gap: 18px; height: 58px; }
-  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; }
-  .logo img { width: 26px; height: 26px; border-radius: 7px; }
-  .nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 14px; color: var(--fg-soft); }
-  .nav-links a:hover { color: var(--gold); }
-  @media (max-width: 900px) { .nav-links { display: none; } }
-  .langbar { display: flex; gap: 2px; background: rgba(255,255,255,0.06); border-radius: 999px; padding: 3px; }
-  .langbar button { border: 0; background: transparent; cursor: pointer; font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; color: var(--fg-soft); }
-  .langbar button.active { background: rgba(229,199,107,0.16); color: var(--gold); }
-  .badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(180deg, #f0d786, var(--gold)); color: #241d05;
-    font-weight: 700; padding: 11px 21px; border-radius: 999px; font-size: 15px;
-    transition: transform .12s ease, filter .12s ease; white-space: nowrap;
-  }
-  .badge:hover { filter: brightness(1.06); transform: translateY(-1px); }
-  .badge.ghost { background: transparent; color: var(--gold); border: 1px solid var(--line); }
+  a{color:var(--teal); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 22px}
+  .en{color:var(--muted); font-size:.92em}
 
   /* Hero */
-  .hero { position: relative; overflow: hidden; text-align: center; padding: 108px 0 112px; }
-  .hero .bgimg {
-    position: absolute; inset: 0; background: url("assets/fungo/bg.jpg") center/cover no-repeat;
-    opacity: .34; filter: saturate(.9);
-  }
-  .hero::after {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(900px 520px at 50% 30%, rgba(10,10,15,.25), rgba(10,10,15,.92) 70%), linear-gradient(180deg, rgba(10,10,15,.6), var(--ink));
-  }
-  .hero .inner { position: relative; z-index: 2; }
-  .hero h1 { font-size: clamp(42px, 8.4vw, 78px); font-weight: 700; letter-spacing: .12em; }
-  .hero .rom { color: var(--gold); font-size: clamp(12px, 2.2vw, 15px); letter-spacing: .52em; margin-top: 14px; font-weight: 600; }
-  .hero .tag { font-size: clamp(17px, 2.7vw, 22px); color: var(--fg); margin-top: 26px; letter-spacing: .04em; }
-  .hero .sub { color: var(--fg-soft); font-size: clamp(15px, 2.1vw, 17px); max-width: 46ch; margin: 14px auto 0; }
-  .hero .cta-row { margin-top: 34px; display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
-  .hero .meta { color: var(--fg-faint); font-size: 13.5px; margin-top: 26px; }
+  .hero{position:relative; overflow:hidden; text-align:center; padding:96px 0 92px}
+  .hero .bg{position:absolute; inset:0; background:url("assets/fungo/bg.jpg") center/cover no-repeat; opacity:.32}
+  .hero::after{content:""; position:absolute; inset:0;
+    background:radial-gradient(820px 480px at 50% 32%, rgba(18,20,26,.2), rgba(18,20,26,.93) 72%), linear-gradient(180deg, rgba(18,20,26,.55), var(--ink))}
+  .hero .in{position:relative; z-index:2}
+  .hero h1{font-family:"Songti SC","STSong","Hiragino Mincho ProN",Georgia,serif;
+    font-size:clamp(40px,8vw,72px); font-weight:800; letter-spacing:.14em; line-height:1.2}
+  .hero .rom{color:var(--gold); font-size:clamp(11px,2vw,14px); letter-spacing:.5em; margin-top:14px; font-weight:700}
+  .hero .tag{font-family:"Songti SC","STSong",Georgia,serif; font-size:clamp(17px,2.8vw,23px); margin-top:24px; letter-spacing:.05em}
+  .hero .tag-en{display:block; font-family:inherit; letter-spacing:.02em; margin-top:8px; font-size:14px}
+  .hero .sub{color:var(--muted); font-size:16px; max-width:44ch; margin:18px auto 0}
+  .cta{display:inline-flex; align-items:center; gap:8px; margin-top:30px;
+    background:linear-gradient(180deg,#f0d786,var(--gold)); color:#241d05;
+    font-weight:800; padding:13px 26px; border-radius:999px; font-size:15px}
+  .cta:hover{filter:brightness(1.06); text-decoration:none}
+  .hero .meta{color:var(--muted); font-size:13px; margin-top:22px}
 
-  section { padding: 84px 0; }
-  section.alt { background: var(--ink-2); }
-  .eyebrow { color: var(--gold); font-weight: 600; font-size: 12.5px; letter-spacing: .16em; text-transform: uppercase; }
-  h2.st { font-size: clamp(25px, 3.8vw, 36px); font-weight: 700; margin-top: 10px; max-width: 24ch; }
-  .lede { color: var(--fg-soft); font-size: 17px; max-width: 62ch; margin-top: 18px; }
-  .lede + .lede { margin-top: 12px; }
-
-  /* Characters */
-  .chars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 44px; }
-  @media (max-width: 900px) { .chars { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 520px) { .chars { grid-template-columns: 1fr; } }
-  .char {
-    border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
-    background: var(--panel); display: flex; flex-direction: column;
-    transition: transform .18s ease, border-color .18s ease;
-  }
-  .char:hover { transform: translateY(-3px); border-color: rgba(229,199,107,.4); }
-  .char .pic { position: relative; aspect-ratio: 1/1; overflow: hidden; }
-  .char .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .char .pic::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(10,10,15,.9)); }
-  .char .tagpill {
-    position: absolute; top: 10px; right: 10px; z-index: 2; font-size: 11px; font-weight: 700;
-    padding: 4px 10px; border-radius: 999px; letter-spacing: .04em;
-    background: rgba(10,10,15,.72); border: 1px solid var(--line); color: var(--gold);
-  }
-  .char .tagpill.free { color: #7ee0d8; border-color: rgba(30,167,160,.5); }
-  .char .body { padding: 16px 18px 20px; }
-  .char h3 { font-size: 19px; }
-  .char .el { font-size: 12.5px; color: var(--fg-faint); margin-top: 5px; letter-spacing: .05em; }
-  .char .skills { font-size: 13px; margin-top: 12px; color: var(--fg-soft); line-height: 1.75; }
-  .char .skills b { color: var(--accentc, var(--gold)); font-weight: 600; }
-  .char p.d { color: var(--fg-faint); font-size: 13px; margin-top: 10px; line-height: 1.65; }
-  .char.c1 { --accentc: var(--teal); }
-  .char.c2 { --accentc: var(--vermilion); }
-  .char.c3 { --accentc: var(--steel); }
-  .char.c4 { --accentc: var(--indigo); }
-  .char .bar { height: 3px; background: var(--accentc, var(--gold)); opacity: .85; }
-
-  /* Steps */
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 42px; }
-  @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
-  .step { border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; background: var(--panel); }
-  .step .n { width: 28px; height: 28px; border-radius: 999px; border: 1px solid var(--line); color: var(--gold); font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  .step h3 { font-size: 17px; margin: 14px 0 7px; }
-  .step p { color: var(--fg-soft); font-size: 14.5px; }
+  section{padding:78px 0; border-top:1px solid var(--line)}
+  .lab{font-size:12px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; font-weight:700}
+  h2{font-size:clamp(23px,3.4vw,32px); font-weight:800; margin-top:12px; line-height:1.35}
+  h2 .h-en{display:block; font-size:14px; font-weight:600; color:var(--muted); letter-spacing:.02em; margin-top:8px}
+  .lede{color:var(--muted); font-size:16px; max-width:64ch; margin-top:16px}
+  .lede + .lede{margin-top:12px}
 
   /* Features */
-  .feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 42px; }
-  @media (max-width: 900px) { .feats { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .feats { grid-template-columns: 1fr; } }
-  .feat { border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; background: var(--panel); }
-  .feat .ico { font-size: 21px; }
-  .feat h3 { font-size: 16px; margin: 11px 0 6px; }
-  .feat p { color: var(--fg-soft); font-size: 14px; }
+  .feats{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px}
+  @media(max-width:860px){.feats{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.feats{grid-template-columns:1fr}}
+  .feat{background:var(--ink-soft); border:1px solid var(--line); border-radius:14px; padding:22px}
+  .feat .ic{font-size:20px}
+  .feat h3{font-size:16px; margin:10px 0 5px; font-weight:700}
+  .feat p{font-size:14px; color:var(--muted)}
+  .feat .fen{display:block; font-size:12.5px; color:var(--muted); margin-top:6px}
 
-  /* Pricing */
-  .plans { display: grid; grid-template-columns: 1fr 1.05fr; gap: 20px; margin-top: 42px; }
-  @media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
-  .plan { border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; background: var(--panel); }
-  .plan.gold { border-color: rgba(229,199,107,.44); }
-  .plan .name { font-size: 12.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-faint); }
-  .plan.gold .name { color: var(--gold); }
-  .plan h3 { font-size: 21px; margin: 7px 0 12px; }
-  .plan ul { list-style: none; display: grid; gap: 10px; }
-  .plan li { padding-left: 24px; position: relative; color: var(--fg-soft); font-size: 14.5px; }
-  .plan li::before { content: "◆"; position: absolute; left: 0; top: 0; color: var(--fg-faint); font-size: 10px; }
-  .plan.gold li::before { color: var(--gold); }
-  .plan .note { color: var(--fg-faint); font-size: 12.5px; margin-top: 16px; line-height: 1.6; }
+  /* Characters */
+  .chars{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:36px}
+  @media(max-width:880px){.chars{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.chars{grid-template-columns:1fr}}
+  .ch{background:var(--ink-soft); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+      display:flex; flex-direction:column; transition:transform .18s ease, border-color .18s ease}
+  .ch:hover{transform:translateY(-3px); border-color:rgba(229,199,107,.45)}
+  .ch .pic{position:relative; aspect-ratio:1/1; overflow:hidden}
+  .ch .pic img{width:100%; height:100%; object-fit:cover; display:block}
+  .ch .pic::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,transparent 54%,rgba(18,20,26,.92))}
+  .ch .pill{position:absolute; top:10px; right:10px; z-index:2; font-size:11px; font-weight:700;
+    padding:4px 10px; border-radius:999px; background:rgba(18,20,26,.75); border:1px solid var(--line); color:var(--gold)}
+  .ch .pill.free{color:#7ee0d8; border-color:rgba(30,167,160,.55)}
+  .ch .bar{height:3px; background:var(--c,var(--gold))}
+  .ch .bd{padding:15px 17px 19px}
+  .ch h3{font-size:18px; font-weight:800}
+  .ch .h-en{font-size:12px; color:var(--muted); font-weight:600; letter-spacing:.04em; margin-top:3px}
+  .ch .el{font-size:12px; color:var(--muted); margin-top:8px; letter-spacing:.04em}
+  .ch .sk{font-size:12.5px; margin-top:10px; color:var(--c,var(--gold)); font-weight:600; line-height:1.7}
+  .ch p{font-size:12.5px; color:var(--muted); margin-top:8px; line-height:1.65}
+  .c1{--c:var(--teal)} .c2{--c:var(--vermilion)} .c3{--c:var(--steel)} .c4{--c:var(--indigo)}
 
-  /* Privacy */
-  .privacy ul { list-style: none; margin-top: 26px; display: grid; gap: 13px; max-width: 66ch; }
-  .privacy li { padding-left: 28px; position: relative; color: var(--fg-soft); font-size: 15.5px; }
-  .privacy li::before { content: "🔒"; position: absolute; left: 0; top: 0; }
-  .privacy .links { margin-top: 26px; display: flex; gap: 22px; flex-wrap: wrap; font-size: 15px; }
-  .privacy .links a { color: var(--gold); }
-  .privacy .links a:hover { text-decoration: underline; }
+  /* Steps */
+  .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:36px}
+  @media(max-width:880px){.steps{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr}}
+  .st{background:var(--ink-soft); border:1px solid var(--line); border-radius:14px; padding:22px}
+  .st .n{width:27px; height:27px; border-radius:999px; border:1px solid var(--line); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800}
+  .st h3{font-size:15.5px; margin:12px 0 6px; font-weight:700}
+  .st p{font-size:13.5px; color:var(--muted)}
 
-  footer { border-top: 1px solid var(--line); padding: 30px 0; color: var(--fg-faint); font-size: 13px; }
-  .foot-inner { display: flex; flex-direction: column; gap: 13px; }
-  .foot-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
-  .foot-links a { color: var(--fg-soft); }
-  .foot-links a:hover { color: var(--gold); }
-  .disc { color: var(--fg-faint); font-size: 12.5px; max-width: 80ch; line-height: 1.6; }
+  .callout{background:var(--ink-soft); border:1px solid var(--line); border-radius:14px; padding:20px 22px; margin-top:34px}
+  .callout p{font-size:14.5px; color:var(--muted)}
+  .callout p.big{font-size:16px; color:var(--gold); font-weight:700; margin-bottom:8px}
+
+  footer{border-top:1px solid var(--line); padding:34px 0 44px; color:var(--muted); font-size:13px}
+  .foot-in{display:flex; flex-direction:column; gap:12px}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px}
+  .foot-row .brand{font-size:12px; letter-spacing:.3em; color:var(--gold); text-transform:uppercase; font-weight:700}
+  .foot-links a{color:var(--parchment)}
+  .disc{font-size:12.5px; line-height:1.7; max-width:82ch}
 </style>
 </head>
 <body>
 
-<header class="nav">
-  <div class="wrap nav-inner">
-    <a href="../index.html" class="logo"><img src="assets/fungo/icon.png" alt="" /> <span data-i18n="brand">四象棋灵</span></a>
-    <nav class="nav-links">
-      <a href="../index.html" data-i18n="nav.portfolio">← 全部产品</a>
-      <a href="#spirits" data-i18n="nav.spirits">四象</a>
-      <a href="#how" data-i18n="nav.how">玩法</a>
-      <a href="#features" data-i18n="nav.features">特色</a>
-      <a href="#price" data-i18n="nav.price">价格</a>
-    </nav>
-    <div class="langbar" role="group" aria-label="Language">
-      <button data-lang="zh">中</button>
-      <button data-lang="en">EN</button>
-      <button data-lang="ja">日</button>
-    </div>
-    <!-- TODO: 上架后把 href 换成真实 App Store 链接 -->
-    <a href="#price" class="badge" data-i18n="cta.soon">即将上线</a>
-  </div>
-</header>
-
 <!-- HERO -->
-<section class="hero">
-  <div class="bgimg"></div>
-  <div class="wrap inner">
-    <h1 class="serif" data-i18n="hero.title">四象棋灵</h1>
-    <div class="rom">GO SPIRITS</div>
-    <p class="tag serif" data-i18n="hero.tag">烂柯一局，仙人对弈</p>
-    <p class="sub" data-i18n="hero.sub">执四象之灵，落子如无双。真围棋内核，加一层「该在哪一手放技能」的博弈。</p>
-    <div class="cta-row">
-      <a href="#price" class="badge" data-i18n="cta.soon">即将上线 App Store</a>
-      <a href="#spirits" class="badge ghost" data-i18n="hero.cta2">认识四象 ↓</a>
-    </div>
-    <p class="meta" data-i18n="hero.meta">iPhone · iPad · iOS 17+ · 免费下载 · 无订阅</p>
+<section class="hero" style="border-top:0">
+  <div class="bg"></div>
+  <div class="wrap in">
+    <h1>四象棋灵</h1>
+    <div class="rom">G O &nbsp; S P I R I T S</div>
+    <p class="tag">烂柯一局，仙人对弈
+      <span class="tag-en en">Where a game of Go becomes a duel of spirits</span>
+    </p>
+    <p class="sub">执四象之灵，落子如神。真围棋内核，加一层「该在哪一手放技能」的博弈。</p>
+    <a class="cta" href="#price">即将上线 App Store · Coming Soon</a>
+    <p class="meta">iPhone · iPad · iOS 17+ · 免费下载，无订阅 &nbsp;|&nbsp; Free download, no subscription</p>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section>
   <div class="wrap">
-    <span class="eyebrow" data-i18n="ab.eyebrow">关于</span>
-    <h2 class="st" data-i18n="ab.title">把千年围棋，变成一场棋灵对战</h2>
-    <p class="lede" data-i18n="ab.p1">你不再只是黑白落子——你执掌青龙、朱雀、白虎、玄武四象之一。每一位棋灵都有自己的战斗风格与专属技能：腾云连珠、业火燎原、裂帛噬魂、玄甲结界……在关键回合放出一记「奥义」，像无双割草一样扭转棋局。</p>
-    <p class="lede" data-i18n="ab.p2">提子、打劫、点目一样不少，规则是真的；但胜负之外，多了一层「该在哪一手放技能」的爽感博弈。支持 Game Center 实时联机，匹配不到真人会无缝换上 AI，随时都能来一局。</p>
+    <div class="lab">关于 · About</div>
+    <h2>把千年围棋，变成一场棋灵对战
+      <span class="h-en">A character-battle twist on the ancient game of Go</span>
+    </h2>
+    <p class="lede">你不再只是黑白落子——你执掌青龙、朱雀、白虎、玄武四象之一。每一位棋灵都有自己的战斗风格与专属技能：腾云连珠、业火燎原、裂帛噬魂、玄甲结界……在关键回合放出一记「奥义」，一手扭转棋局。</p>
+    <p class="lede">提子、打劫、点目一样不少，规则是真的；但胜负之外，多了一层「该在哪一手放技能」的爽感博弈。支持 Game Center 实时联机，匹配不到真人会无缝换上 AI，随时都能来一局。水墨仙侠美术、真实古筝配乐，9/13/19 路自由切换。</p>
+    <p class="lede en">Command one of the Four Symbols and unleash spirit skills right on the board. Captures, ko and area scoring are the real thing — what's added is deciding which move deserves the skill.</p>
   </div>
 </section>
 
-<!-- SPIRITS -->
-<section id="spirits" class="alt">
+<!-- FEATURES -->
+<section>
   <div class="wrap">
-    <span class="eyebrow" data-i18n="sp.eyebrow">四象棋灵</span>
-    <h2 class="st" data-i18n="sp.title">四位神兽，四种战斗风格</h2>
+    <div class="lab">核心卖点 · Features</div>
+    <h2>规则是真的，爽感也是真的</h2>
+    <div class="feats">
+      <div class="feat"><div class="ic">⚫</div><h3>真·围棋内核</h3>
+        <p>提子、打劫与超级劫、中国规则点目——一样不少。<span class="fen en">A real Go engine: captures, ko/superko, Chinese area scoring.</span></p></div>
+      <div class="feat"><div class="ic">🐉</div><h3>四象棋灵对战</h3>
+        <p>4 位神兽，每位 2 个主动技 + 1 个奥义。<span class="fen en">Four guardian spirits, each with 2 skills + 1 ultimate.</span></p></div>
+      <div class="feat"><div class="ic">▦</div><h3>三种棋盘</h3>
+        <p>9 / 13 / 19 路自由切换，快慢自选。<span class="fen en">9×9, 13×13, 19×19 — your pace.</span></p></div>
+      <div class="feat"><div class="ic">🌐</div><h3>实时联机</h3>
+        <p>Game Center 匹配真人，匹配不到自动换 AI。<span class="fen en">Real-time Game Center match, seamless AI fallback.</span></p></div>
+      <div class="feat"><div class="ic">🏅</div><h3>段位积分 + 排行榜</h3>
+        <p>休闲段位，赢了上分，越战越强。<span class="fen en">Casual rank ladder + leaderboards.</span></p></div>
+      <div class="feat"><div class="ic">🖌️</div><h3>水墨仙侠美术 + 古筝配乐</h3>
+        <p>东方水墨与描金，留白沉稳，配真实古筝。<span class="fen en">Ink-wash art + guzheng score.</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<section>
+  <div class="wrap">
+    <div class="lab">四象棋灵 · The Four Spirits</div>
+    <h2>四位神兽，四种战斗风格</h2>
     <div class="chars">
 
-      <div class="char c1">
-        <div class="pic"><span class="tagpill free" data-i18n="sp.free">免费</span><img src="assets/fungo/qinglong.jpg" alt="苍渊·青龙" loading="lazy" /></div>
+      <div class="ch c1">
+        <div class="pic"><span class="pill free">免费 Free</span><img src="assets/fungo/qinglong.jpg" alt="苍渊·青龙 Azure Dragon" loading="lazy"></div>
         <div class="bar"></div>
-        <div class="body">
-          <h3 data-i18n="sp.1.n">苍渊 · 青龙</h3>
-          <div class="el" data-i18n="sp.1.e">东方 · 木 · 扩张</div>
-          <div class="skills"><b data-i18n="sp.1.s">腾云 · 龙吟 · 缠丝引（奥义）</b></div>
-          <p class="d" data-i18n="sp.1.d">东方震位，司木掌生发。落子如腾云，一手化双。</p>
+        <div class="bd">
+          <h3>苍渊 · 青龙</h3>
+          <div class="h-en">AZURE DRAGON</div>
+          <div class="el">东方 · 木 · 扩张 <span class="en">Expansion</span></div>
+          <div class="sk">腾云 · 龙吟 · 缠丝引（奥义）</div>
+          <p>东方震位，司木掌生发。落子如腾云，一手化双。</p>
         </div>
       </div>
 
-      <div class="char c2">
-        <div class="pic"><span class="tagpill" data-i18n="sp.paid">内购解锁</span><img src="assets/fungo/zhuque.jpg" alt="焰翎·朱雀" loading="lazy" /></div>
+      <div class="ch c2">
+        <div class="pic"><span class="pill">内购 IAP</span><img src="assets/fungo/zhuque.jpg" alt="焰翎·朱雀 Vermilion Bird" loading="lazy"></div>
         <div class="bar"></div>
-        <div class="body">
-          <h3 data-i18n="sp.2.n">焰翎 · 朱雀</h3>
-          <div class="el" data-i18n="sp.2.e">南方 · 火 · 爆发</div>
-          <div class="skills"><b data-i18n="sp.2.s">灼 · 业火燎原 · 焚天（奥义）</b></div>
-          <p class="d" data-i18n="sp.2.d">南方离位，司火主炎威。业火过处，玉石俱焚。</p>
+        <div class="bd">
+          <h3>焰翎 · 朱雀</h3>
+          <div class="h-en">VERMILION BIRD</div>
+          <div class="el">南方 · 火 · 爆发 <span class="en">Burst</span></div>
+          <div class="sk">灼 · 业火燎原 · 焚天（奥义）</div>
+          <p>南方离位，司火主炎威。业火过处，玉石俱焚。</p>
         </div>
       </div>
 
-      <div class="char c3">
-        <div class="pic"><span class="tagpill" data-i18n="sp.paid">内购解锁</span><img src="assets/fungo/baihu.jpg" alt="啸金·白虎" loading="lazy" /></div>
+      <div class="ch c3">
+        <div class="pic"><span class="pill">内购 IAP</span><img src="assets/fungo/baihu.jpg" alt="啸金·白虎 White Tiger" loading="lazy"></div>
         <div class="bar"></div>
-        <div class="body">
-          <h3 data-i18n="sp.3.n">啸金 · 白虎</h3>
-          <div class="el" data-i18n="sp.3.e">西方 · 金 · 歼灭</div>
-          <div class="skills"><b data-i18n="sp.3.s">裂帛 · 同化 · 噬魂（奥义）</b></div>
-          <p class="d" data-i18n="sp.3.d">西方兑位，司金擅杀伐。裂帛之声，魂飞魄散。</p>
+        <div class="bd">
+          <h3>啸金 · 白虎</h3>
+          <div class="h-en">WHITE TIGER</div>
+          <div class="el">西方 · 金 · 歼灭 <span class="en">Annihilation</span></div>
+          <div class="sk">裂帛 · 同化 · 噬魂（奥义）</div>
+          <p>西方兑位，司金擅杀伐。裂帛之声，魂飞魄散。</p>
         </div>
       </div>
 
-      <div class="char c4">
-        <div class="pic"><span class="tagpill" data-i18n="sp.paid">内购解锁</span><img src="assets/fungo/xuanwu.jpg" alt="玄冥·玄武" loading="lazy" /></div>
+      <div class="ch c4">
+        <div class="pic"><span class="pill">内购 IAP</span><img src="assets/fungo/xuanwu.jpg" alt="玄冥·玄武 Black Tortoise" loading="lazy"></div>
         <div class="bar"></div>
-        <div class="body">
-          <h3 data-i18n="sp.4.n">玄冥 · 玄武</h3>
-          <div class="el" data-i18n="sp.4.e">北方 · 水 · 守护</div>
-          <div class="skills"><b data-i18n="sp.4.s">玄甲 · 结界 · 不动明王（奥义）</b></div>
-          <p class="d" data-i18n="sp.4.d">北方坎位，司水主玄藏。玄甲不破，结界森严。</p>
+        <div class="bd">
+          <h3>玄冥 · 玄武</h3>
+          <div class="h-en">BLACK TORTOISE</div>
+          <div class="el">北方 · 水 · 守护 <span class="en">Protection</span></div>
+          <div class="sk">玄甲 · 结界 · 不动明王（奥义）</div>
+          <p>北方坎位，司水主玄藏。玄甲不破，结界森严。</p>
         </div>
       </div>
 
@@ -265,321 +222,43 @@
 </section>
 
 <!-- HOW -->
-<section id="how">
+<section>
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hw.eyebrow">玩法</span>
-    <h2 class="st" data-i18n="hw.title">放招，再落子——无双式的一手</h2>
-    <p class="lede" data-i18n="hw.body">每位棋灵有 2 个冷却主动技，外加 1 个靠灵力槽蓄满释放的奥义。技能是「免费一手」：放完技能还能落子。技能之间有全局冷却，所以它是决断，不是乱按。</p>
+    <div class="lab">玩法 · How it works</div>
+    <h2>放招，再落子
+      <span class="h-en">Cast a skill, then still place your stone</span>
+    </h2>
+    <p class="lede">每位棋灵有 2 个冷却主动技，外加 1 个靠灵力槽蓄满释放的奥义。技能是「免费一手」——放完技能还能落子。技能之间有全局冷却，所以它是决断，不是乱按。</p>
     <div class="steps">
-      <div class="step"><div class="n">1</div><h3 data-i18n="hw.1.t">选棋灵</h3><p data-i18n="hw.1.b">四象各有战斗风格：扩张、爆发、歼灭、守护，先挑一位。</p></div>
-      <div class="step"><div class="n">2</div><h3 data-i18n="hw.2.t">选棋盘</h3><p data-i18n="hw.2.b">9 路快节奏、13 路适中、19 路正统，快慢自选。</p></div>
-      <div class="step"><div class="n">3</div><h3 data-i18n="hw.3.t">开始对弈</h3><p data-i18n="hw.3.b">Game Center 实时匹配真人；10 秒匹配不到自动换 AI，体验不断。</p></div>
-      <div class="step"><div class="n">4</div><h3 data-i18n="hw.4.t">放技能</h3><p data-i18n="hw.4.b">主动技靠冷却，奥义靠灵力槽。在关键一手放出去，水墨特效炸场。</p></div>
-      <div class="step"><div class="n">5</div><h3 data-i18n="hw.5.t">定胜负</h3><p data-i18n="hw.5.b">提子达成速胜、终局点目，或认输。中国规则，货真价实。</p></div>
-      <div class="step"><div class="n">6</div><h3 data-i18n="hw.6.t">涨段位</h3><p data-i18n="hw.6.b">赢了涨段位积分并提交排行榜，越战越强。</p></div>
+      <div class="st"><div class="n">1</div><h3>选棋灵</h3><p>扩张、爆发、歼灭、守护，先挑一位。<span class="en">Pick your style.</span></p></div>
+      <div class="st"><div class="n">2</div><h3>选棋盘</h3><p>9 路快节奏 / 13 路 / 19 路正统。<span class="en">9, 13 or 19 lines.</span></p></div>
+      <div class="st"><div class="n">3</div><h3>开始对弈</h3><p>Game Center 匹配真人；10 秒匹配不到自动换 AI。<span class="en">AI steps in if no human is found.</span></p></div>
+      <div class="st"><div class="n">4</div><h3>定胜负，涨段位</h3><p>提子速胜 / 终局点目 / 认输。赢了涨积分上榜。<span class="en">Win by captures, scoring or resignation.</span></p></div>
     </div>
-  </div>
-</section>
 
-<!-- FEATURES -->
-<section id="features" class="alt">
-  <div class="wrap">
-    <span class="eyebrow" data-i18n="ft.eyebrow">核心卖点</span>
-    <h2 class="st" data-i18n="ft.title">规则是真的，爽感也是真的</h2>
-    <div class="feats">
-      <div class="feat"><div class="ico">⚫</div><h3 data-i18n="ft.1.t">真·围棋内核</h3><p data-i18n="ft.1.b">提子、打劫与超级劫、中国规则点目——一样不少。</p></div>
-      <div class="feat"><div class="ico">🐉</div><h3 data-i18n="ft.2.t">四象棋灵对战</h3><p data-i18n="ft.2.b">4 位神兽，每位 2 个主动技 + 1 个奥义。</p></div>
-      <div class="feat"><div class="ico">💥</div><h3 data-i18n="ft.3.t">无双式特技</h3><p data-i18n="ft.3.b">关键一手放技能，水墨特效炸场，一记奥义扭转棋局。</p></div>
-      <div class="feat"><div class="ico">▦</div><h3 data-i18n="ft.4.t">三种棋盘</h3><p data-i18n="ft.4.b">9 / 13 / 19 路自由切换，快慢自选。</p></div>
-      <div class="feat"><div class="ico">🌐</div><h3 data-i18n="ft.5.t">实时联机</h3><p data-i18n="ft.5.b">Game Center 匹配真人，匹配不到自动换 AI，随时能来一局。</p></div>
-      <div class="feat"><div class="ico">🏅</div><h3 data-i18n="ft.6.t">段位与排行榜</h3><p data-i18n="ft.6.b">休闲段位积分，赢了上分，登上排行榜。</p></div>
-      <div class="feat"><div class="ico">🖌️</div><h3 data-i18n="ft.7.t">水墨仙侠美术</h3><p data-i18n="ft.7.b">东方水墨与描金，留白、沉稳，配真实古筝配乐。</p></div>
-      <div class="feat"><div class="ico">🌏</div><h3 data-i18n="ft.8.t">五种语言</h3><p data-i18n="ft.8.b">简体中文、繁體中文、English、日本語、한국어。</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICE -->
-<section id="price">
-  <div class="wrap">
-    <span class="eyebrow" data-i18n="pr.eyebrow">价格</span>
-    <h2 class="st" data-i18n="pr.title">免费下载，想解锁再解锁</h2>
-    <p class="lede" data-i18n="pr.body">没有内购货币，也没有订阅。全部是一次性买断的解锁项，买过就永远是你的。</p>
-    <div class="plans">
-      <div class="plan">
-        <div class="name" data-i18n="pr.free.n">免费</div>
-        <h3 data-i18n="pr.free.h">下载即玩</h3>
-        <ul>
-          <li data-i18n="pr.free.1">苍渊·青龙，免费棋灵</li>
-          <li data-i18n="pr.free.2">9 / 13 / 19 路全部棋盘尺寸</li>
-          <li data-i18n="pr.free.3">Game Center 实时联机与 AI 对局</li>
-          <li data-i18n="pr.free.4">段位积分与排行榜</li>
-        </ul>
-      </div>
-      <div class="plan gold">
-        <div class="name" data-i18n="pr.iap.n">内购解锁</div>
-        <h3 data-i18n="pr.iap.h">更多棋灵与棋盘</h3>
-        <ul>
-          <li data-i18n="pr.iap.1">朱雀 / 白虎 / 玄武，可单独解锁</li>
-          <li data-i18n="pr.iap.2">四象全解锁包，比单买更划算</li>
-          <li data-i18n="pr.iap.3">烈焰 / 玄水 / 水墨三款棋盘皮肤</li>
-          <li data-i18n="pr.iap.4">换设备用同一 Apple 账号恢复购买</li>
-        </ul>
-        <p class="note" data-i18n="pr.iap.note">全部为一次性内购，无订阅、不自动续费 · 各地区价格不同，以 App Store 显示为准 · 付费棋盘皮肤自带段位积分增益。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRIVACY -->
-<section class="alt privacy">
-  <div class="wrap">
-    <span class="eyebrow" data-i18n="pv.eyebrow">隐私</span>
-    <h2 class="st" data-i18n="pv.title">没有账号，也没有我们的服务器</h2>
-    <p class="lede" data-i18n="pv.body">四象棋灵不做任何统计、不投广告、不接第三方 SDK。应用本身没有自己的后端，联机与排行榜全部交给 Apple 的 Game Center。</p>
-    <ul>
-      <li data-i18n="pv.1">无账号、无注册——用 Game Center 就能联机。</li>
-      <li data-i18n="pv.2">对局进度、段位与设置只保存在你的设备上。</li>
-      <li data-i18n="pv.3">联机对战与排行榜由 Apple Game Center 处理，受 Apple 隐私政策约束。</li>
-      <li data-i18n="pv.4">无统计分析、无广告、无第三方追踪 SDK。</li>
-      <li data-i18n="pv.5">内购由 Apple 处理，我们不接触你的支付信息。</li>
-    </ul>
-    <div class="links">
-      <a href="fungo-privacy.html" data-i18n="pv.link">阅读完整隐私政策 →</a>
-      <a href="fungo-support.html" data-i18n="sup.link">支持 →</a>
+    <div class="callout" id="price">
+      <p class="big">免费下载，想解锁再解锁 · Free to download</p>
+      <p>苍渊·青龙免费可用，9/13/19 路棋盘、联机与排行榜全部开放。朱雀、白虎、玄武以及三款棋盘皮肤为一次性内购——没有内购货币，也没有订阅，买过就永远是你的。付费棋盘皮肤自带段位积分增益（赢了多加分／输了少扣分），仅影响段位积分，不改变棋局本身的胜负判定。</p>
+      <p class="en" style="margin-top:10px">The Azure Dragon is free, along with all three board sizes, online play and leaderboards. The other three spirits and the board skins are one-time in-app purchases — no in-game currency, no subscription.</p>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap foot-inner">
-    <div class="foot-top">
-      <div class="logo"><img src="assets/fungo/icon.png" alt="" /> <span data-i18n="brand">四象棋灵</span></div>
+  <div class="wrap foot-in">
+    <div class="foot-row">
+      <span class="brand">四象棋灵 · GO SPIRITS</span>
       <span class="foot-links">
-        <a href="fungo-privacy.html" data-i18n="foot.privacy">隐私</a> ·
-        <a href="fungo-support.html" data-i18n="foot.support">支持</a> ·
-        <a href="../index.html" data-i18n="foot.more">Local4a 更多产品</a>
+        <a href="fungo-privacy.html">隐私政策 Privacy</a> ·
+        <a href="fungo-support.html">支持与帮助 Support</a> ·
+        <a href="../index.html">Local4a</a>
       </span>
     </div>
-    <p class="disc" data-i18n="foot.disc">围棋规则属公有玩法；四象棋灵的角色与世界观为原创。古筝配乐来自 Pixabay（Pixabay Content License）。© 2026 Local4a。</p>
+    <p class="disc">围棋规则属公有玩法；四象棋灵的角色与世界观为原创。古筝背景乐来自 Pixabay（Pixabay Content License）。<br>
+      The rules of Go are public domain; the Four Spirits characters and setting are original. Guzheng music from Pixabay.</p>
+    <p class="disc">© 2026 YI LIU</p>
   </div>
 </footer>
 
-<script>
-const I18N = {
-  zh: {
-    "meta.desc": "四象棋灵——把围棋变成角色对战。执掌青龙朱雀白虎玄武，释放无双特技，9/13/19 路联机对弈，水墨仙侠画风，古筝配乐。iOS 免费下载。",
-    "brand": "四象棋灵",
-    "nav.portfolio": "← 全部产品", "nav.spirits": "四象", "nav.how": "玩法", "nav.features": "特色", "nav.price": "价格",
-    "cta.soon": "即将上线 App Store",
-    "hero.title": "四象棋灵",
-    "hero.tag": "烂柯一局，仙人对弈",
-    "hero.sub": "执四象之灵，落子如无双。真围棋内核，加一层「该在哪一手放技能」的博弈。",
-    "hero.cta2": "认识四象 ↓",
-    "hero.meta": "iPhone · iPad · iOS 17+ · 免费下载 · 无订阅",
-    "ab.eyebrow": "关于",
-    "ab.title": "把千年围棋，变成一场棋灵对战",
-    "ab.p1": "你不再只是黑白落子——你执掌青龙、朱雀、白虎、玄武四象之一。每一位棋灵都有自己的战斗风格与专属技能：腾云连珠、业火燎原、裂帛噬魂、玄甲结界……在关键回合放出一记「奥义」，像无双割草一样扭转棋局。",
-    "ab.p2": "提子、打劫、点目一样不少，规则是真的；但胜负之外，多了一层「该在哪一手放技能」的爽感博弈。支持 Game Center 实时联机，匹配不到真人会无缝换上 AI，随时都能来一局。",
-    "sp.eyebrow": "四象棋灵", "sp.title": "四位神兽，四种战斗风格",
-    "sp.free": "免费", "sp.paid": "内购解锁",
-    "sp.1.n": "苍渊 · 青龙", "sp.1.e": "东方 · 木 · 扩张", "sp.1.s": "腾云 · 龙吟 · 缠丝引（奥义）", "sp.1.d": "东方震位，司木掌生发。落子如腾云，一手化双。",
-    "sp.2.n": "焰翎 · 朱雀", "sp.2.e": "南方 · 火 · 爆发", "sp.2.s": "灼 · 业火燎原 · 焚天（奥义）", "sp.2.d": "南方离位，司火主炎威。业火过处，玉石俱焚。",
-    "sp.3.n": "啸金 · 白虎", "sp.3.e": "西方 · 金 · 歼灭", "sp.3.s": "裂帛 · 同化 · 噬魂（奥义）", "sp.3.d": "西方兑位，司金擅杀伐。裂帛之声，魂飞魄散。",
-    "sp.4.n": "玄冥 · 玄武", "sp.4.e": "北方 · 水 · 守护", "sp.4.s": "玄甲 · 结界 · 不动明王（奥义）", "sp.4.d": "北方坎位，司水主玄藏。玄甲不破，结界森严。",
-    "hw.eyebrow": "玩法", "hw.title": "放招，再落子——无双式的一手",
-    "hw.body": "每位棋灵有 2 个冷却主动技，外加 1 个靠灵力槽蓄满释放的奥义。技能是「免费一手」：放完技能还能落子。技能之间有全局冷却，所以它是决断，不是乱按。",
-    "hw.1.t": "选棋灵", "hw.1.b": "四象各有战斗风格：扩张、爆发、歼灭、守护，先挑一位。",
-    "hw.2.t": "选棋盘", "hw.2.b": "9 路快节奏、13 路适中、19 路正统，快慢自选。",
-    "hw.3.t": "开始对弈", "hw.3.b": "Game Center 实时匹配真人；10 秒匹配不到自动换 AI，体验不断。",
-    "hw.4.t": "放技能", "hw.4.b": "主动技靠冷却，奥义靠灵力槽。在关键一手放出去，水墨特效炸场。",
-    "hw.5.t": "定胜负", "hw.5.b": "提子达成速胜、终局点目，或认输。中国规则，货真价实。",
-    "hw.6.t": "涨段位", "hw.6.b": "赢了涨段位积分并提交排行榜，越战越强。",
-    "ft.eyebrow": "核心卖点", "ft.title": "规则是真的，爽感也是真的",
-    "ft.1.t": "真·围棋内核", "ft.1.b": "提子、打劫与超级劫、中国规则点目——一样不少。",
-    "ft.2.t": "四象棋灵对战", "ft.2.b": "4 位神兽，每位 2 个主动技 + 1 个奥义。",
-    "ft.3.t": "无双式特技", "ft.3.b": "关键一手放技能，水墨特效炸场，一记奥义扭转棋局。",
-    "ft.4.t": "三种棋盘", "ft.4.b": "9 / 13 / 19 路自由切换，快慢自选。",
-    "ft.5.t": "实时联机", "ft.5.b": "Game Center 匹配真人，匹配不到自动换 AI，随时能来一局。",
-    "ft.6.t": "段位与排行榜", "ft.6.b": "休闲段位积分，赢了上分，登上排行榜。",
-    "ft.7.t": "水墨仙侠美术", "ft.7.b": "东方水墨与描金，留白、沉稳，配真实古筝配乐。",
-    "ft.8.t": "五种语言", "ft.8.b": "简体中文、繁體中文、English、日本語、한국어。",
-    "pr.eyebrow": "价格", "pr.title": "免费下载，想解锁再解锁",
-    "pr.body": "没有内购货币，也没有订阅。全部是一次性买断的解锁项，买过就永远是你的。",
-    "pr.free.n": "免费", "pr.free.h": "下载即玩",
-    "pr.free.1": "苍渊·青龙，免费棋灵",
-    "pr.free.2": "9 / 13 / 19 路全部棋盘尺寸",
-    "pr.free.3": "Game Center 实时联机与 AI 对局",
-    "pr.free.4": "段位积分与排行榜",
-    "pr.iap.n": "内购解锁", "pr.iap.h": "更多棋灵与棋盘",
-    "pr.iap.1": "朱雀 / 白虎 / 玄武，可单独解锁",
-    "pr.iap.2": "四象全解锁包，比单买更划算",
-    "pr.iap.3": "烈焰 / 玄水 / 水墨三款棋盘皮肤",
-    "pr.iap.4": "换设备用同一 Apple 账号恢复购买",
-    "pr.iap.note": "全部为一次性内购，无订阅、不自动续费 · 各地区价格不同，以 App Store 显示为准 · 付费棋盘皮肤自带段位积分增益。",
-    "pv.eyebrow": "隐私", "pv.title": "没有账号，也没有我们的服务器",
-    "pv.body": "四象棋灵不做任何统计、不投广告、不接第三方 SDK。应用本身没有自己的后端，联机与排行榜全部交给 Apple 的 Game Center。",
-    "pv.1": "无账号、无注册——用 Game Center 就能联机。",
-    "pv.2": "对局进度、段位与设置只保存在你的设备上。",
-    "pv.3": "联机对战与排行榜由 Apple Game Center 处理，受 Apple 隐私政策约束。",
-    "pv.4": "无统计分析、无广告、无第三方追踪 SDK。",
-    "pv.5": "内购由 Apple 处理，我们不接触你的支付信息。",
-    "pv.link": "阅读完整隐私政策 →", "sup.link": "支持 →",
-    "foot.privacy": "隐私", "foot.support": "支持", "foot.more": "Local4a 更多产品",
-    "foot.disc": "围棋规则属公有玩法；四象棋灵的角色与世界观为原创。古筝配乐来自 Pixabay（Pixabay Content License）。© 2026 Local4a。"
-  },
-  en: {
-    "meta.desc": "GO SPIRITS turns Go into a character battle — command the Four Symbols, unleash spirit skills, play 9/13/19 online. Ink-wash art, guzheng score. Free on iOS.",
-    "brand": "GO SPIRITS",
-    "nav.portfolio": "← All products", "nav.spirits": "Spirits", "nav.how": "How to play", "nav.features": "Features", "nav.price": "Pricing",
-    "cta.soon": "Coming to the App Store",
-    "hero.title": "GO SPIRITS",
-    "hero.tag": "Where a game of Go becomes a duel of spirits",
-    "hero.sub": "Command the Four Symbols. Play like a legend. A real Go engine, plus one more question every turn: when do you spend the skill?",
-    "hero.cta2": "Meet the Four ↓",
-    "hero.meta": "iPhone · iPad · iOS 17+ · Free download · No subscription",
-    "ab.eyebrow": "About",
-    "ab.title": "An ancient game, turned into a duel of spirits",
-    "ab.p1": "You're not just placing black and white stones any more — you command one of the Four Symbols: Azure Dragon, Vermilion Bird, White Tiger, Black Tortoise. Each spirit has its own fighting style and signature skills, and a screen-shaking ultimate you can drop on exactly the right turn to bend the board.",
-    "ab.p2": "Captures, ko, area scoring — the rules are the real thing. What's added is a second layer of play: deciding which move deserves the skill. Real-time Game Center matches, with an AI stepping in seamlessly when no human is found, so a game is always available.",
-    "sp.eyebrow": "The Four Spirits", "sp.title": "Four guardians, four ways to fight",
-    "sp.free": "Free", "sp.paid": "In-app unlock",
-    "sp.1.n": "Azure Dragon", "sp.1.e": "East · Wood · Expansion", "sp.1.s": "Cloud Stride · Dragon Roar · Silk Bind (ultimate)", "sp.1.d": "Guardian of the east, of wood and growth. Its stones ride the clouds — one move becomes two.",
-    "sp.2.n": "Vermilion Bird", "sp.2.e": "South · Fire · Burst", "sp.2.s": "Scorch · Wildfire · Sky Burn (ultimate)", "sp.2.d": "Guardian of the south, of fire and fury. Where the flames pass, nothing is spared.",
-    "sp.3.n": "White Tiger", "sp.3.e": "West · Metal · Annihilation", "sp.3.s": "Rend · Assimilate · Soul Devour (ultimate)", "sp.3.d": "Guardian of the west, of metal and slaughter. At the sound of tearing silk, spirits scatter.",
-    "sp.4.n": "Black Tortoise", "sp.4.e": "North · Water · Protection", "sp.4.s": "Dark Armour · Barrier · Immovable (ultimate)", "sp.4.d": "Guardian of the north, of water and hidden depths. The dark armour does not break.",
-    "hw.eyebrow": "How to play", "hw.title": "Cast, then place — the Musou beat",
-    "hw.body": "Each spirit has two cooldown skills plus an ultimate charged by a spirit gauge. A skill is a free move: cast it and you still get to place a stone. A global cooldown sits between skills, so it's a decision, not button-mashing.",
-    "hw.1.t": "Pick a spirit", "hw.1.b": "Expansion, burst, annihilation or protection — choose your style first.",
-    "hw.2.t": "Pick a board", "hw.2.b": "9×9 for a quick game, 13×13 in between, 19×19 for the full thing.",
-    "hw.3.t": "Start the match", "hw.3.b": "Game Center finds a live opponent; if none turns up in ten seconds, an AI steps in.",
-    "hw.4.t": "Spend your skills", "hw.4.b": "Actives run on cooldown, the ultimate on the gauge. Land one on the decisive turn.",
-    "hw.5.t": "Settle it", "hw.5.b": "Win by captures, by area scoring at the end, or by resignation. Chinese rules, properly.",
-    "hw.6.t": "Climb the ladder", "hw.6.b": "Wins earn rank points and go to the leaderboards.",
-    "ft.eyebrow": "Features", "ft.title": "The rules are real. So is the spectacle.",
-    "ft.1.t": "A real Go engine", "ft.1.b": "Captures, ko and superko, Chinese area scoring — all of it.",
-    "ft.2.t": "Spirit battles", "ft.2.b": "Four guardians, each with two skills and one ultimate.",
-    "ft.3.t": "Musou-style skills", "ft.3.b": "Cast on the decisive move; ink-wash effects tear across the board.",
-    "ft.4.t": "Three board sizes", "ft.4.b": "9×9, 13×13, 19×19 — switch freely to suit your pace.",
-    "ft.5.t": "Real-time online", "ft.5.b": "Game Center matchmaking with a seamless AI fallback, so there's always a game.",
-    "ft.6.t": "Ranks & leaderboards", "ft.6.b": "A casual rank ladder — win, climb, and land on the boards.",
-    "ft.7.t": "Ink-wash art & guzheng", "ft.7.b": "Eastern ink and gold leaf, quiet and unhurried, with a real guzheng score.",
-    "ft.8.t": "Five languages", "ft.8.b": "Simplified Chinese, Traditional Chinese, English, Japanese and Korean.",
-    "pr.eyebrow": "Pricing", "pr.title": "Free to download, unlock only if you want to",
-    "pr.body": "No in-game currency and no subscription. Every unlock is a one-time purchase that stays yours.",
-    "pr.free.n": "Free", "pr.free.h": "Play from the first download",
-    "pr.free.1": "Azure Dragon, free to play",
-    "pr.free.2": "All three board sizes: 9×9, 13×13, 19×19",
-    "pr.free.3": "Real-time Game Center matches and AI games",
-    "pr.free.4": "Rank points and leaderboards",
-    "pr.iap.n": "In-app unlocks", "pr.iap.h": "More spirits and boards",
-    "pr.iap.1": "Vermilion Bird / White Tiger / Black Tortoise, unlock individually",
-    "pr.iap.2": "All Spirits Bundle — better value than buying separately",
-    "pr.iap.3": "Ember, Abyss and Ink-Wash board skins",
-    "pr.iap.4": "Restore on a new device with the same Apple Account",
-    "pr.iap.note": "All purchases are one-time — no subscription, no renewal · Prices vary by region; the App Store shows yours · Paid board skins carry a rank-point bonus.",
-    "pv.eyebrow": "Privacy", "pv.title": "No account, and no servers of ours",
-    "pv.body": "GO SPIRITS runs no analytics, shows no ads and bundles no third-party SDKs. The app has no backend of its own — matches and leaderboards are handled by Apple's Game Center.",
-    "pv.1": "No account and no sign-up — Game Center is all you need to play online.",
-    "pv.2": "Game progress, rank and settings are stored only on your device.",
-    "pv.3": "Online matches and leaderboards are handled by Apple Game Center, under Apple's privacy policy.",
-    "pv.4": "No analytics, no advertising, no third-party tracking SDKs.",
-    "pv.5": "Purchases are handled by Apple; we never touch your payment details.",
-    "pv.link": "Read the full Privacy Policy →", "sup.link": "Support →",
-    "foot.privacy": "Privacy", "foot.support": "Support", "foot.more": "More by Local4a",
-    "foot.disc": "The rules of Go are public domain; the Four Spirits characters and setting are original. Guzheng music from Pixabay (Pixabay Content License). © 2026 Local4a."
-  },
-  ja: {
-    "meta.desc": "四象棋霊 GO SPIRITS——囲碁をキャラクターバトルに。青龍・朱雀・白虎・玄武を操り、無双の霊技を放つ。9/13/19 路のオンライン対局、水墨仙侠のアート、箏の音楽。iOS で無料。",
-    "brand": "四象棋霊",
-    "nav.portfolio": "← すべての製品", "nav.spirits": "四象", "nav.how": "遊び方", "nav.features": "特徴", "nav.price": "料金",
-    "cta.soon": "App Store に近日登場",
-    "hero.title": "四象棋霊",
-    "hero.tag": "爛柯の一局、仙人の対弈",
-    "hero.sub": "四象の霊を執り、無双の一手を。本格的な囲碁エンジンに、「どの一手で技を放つか」という駆け引きが加わります。",
-    "hero.cta2": "四象を見る ↓",
-    "hero.meta": "iPhone · iPad · iOS 17+ · 無料ダウンロード · サブスクなし",
-    "ab.eyebrow": "概要",
-    "ab.title": "千年の囲碁を、棋霊たちの対決に",
-    "ab.p1": "白黒の石を置くだけではありません——青龍・朱雀・白虎・玄武、四象のいずれかを操ります。各棋霊には固有の戦闘スタイルと専用技があり、ここぞという局面で放つ「奥義」が盤面をひっくり返します。",
-    "ab.p2": "アゲハマ、コウ、地の計算——ルールは本物です。その上に「どの一手で技を放つか」という新しい駆け引きが乗ります。Game Center のリアルタイム対戦に対応し、相手が見つからなければ AI がシームレスに入るので、いつでも一局打てます。",
-    "sp.eyebrow": "四象棋霊", "sp.title": "四柱の神獣、四つの戦い方",
-    "sp.free": "無料", "sp.paid": "アプリ内購入",
-    "sp.1.n": "蒼淵 · 青龍", "sp.1.e": "東方 · 木 · 拡張", "sp.1.s": "騰雲 · 龍吟 · 纏糸引（奥義）", "sp.1.d": "東方震位、木を司り生長を掌る。石は雲を駆け、一手が二手となる。",
-    "sp.2.n": "焔翎 · 朱雀", "sp.2.e": "南方 · 火 · 爆発", "sp.2.s": "灼 · 業火燎原 · 焚天（奥義）", "sp.2.d": "南方離位、火を司り炎威を主る。業火の過ぎたる処、玉石ともに焚かる。",
-    "sp.3.n": "嘯金 · 白虎", "sp.3.e": "西方 · 金 · 殲滅", "sp.3.s": "裂帛 · 同化 · 噬魂（奥義）", "sp.3.d": "西方兌位、金を司り殺伐を能くす。裂帛の声、魂魄散ず。",
-    "sp.4.n": "玄冥 · 玄武", "sp.4.e": "北方 · 水 · 守護", "sp.4.s": "玄甲 · 結界 · 不動明王（奥義）", "sp.4.d": "北方坎位、水を司り玄蔵を主る。玄甲破れず、結界森厳。",
-    "hw.eyebrow": "遊び方", "hw.title": "技を放ち、そして打つ——無双の一手",
-    "hw.body": "各棋霊はクールダウン制のアクティブ技を 2 つ、そして霊力ゲージを溜めて放つ奥義を 1 つ持ちます。技は「ただの一手」——放ったあとにさらに石を打てます。技の間には全体クールダウンがあるので、これは決断であって連打ではありません。",
-    "hw.1.t": "棋霊を選ぶ", "hw.1.b": "拡張・爆発・殲滅・守護。まずは戦い方を選びます。",
-    "hw.2.t": "盤を選ぶ", "hw.2.b": "9 路は短期決戦、13 路は中庸、19 路は本格。ペースはお好みで。",
-    "hw.3.t": "対局開始", "hw.3.b": "Game Center が対人をマッチング。10 秒で見つからなければ AI が入り、途切れません。",
-    "hw.4.t": "技を放つ", "hw.4.b": "アクティブはクールダウン、奥義はゲージ。決定的な一手で放ちましょう。",
-    "hw.5.t": "決着", "hw.5.b": "アゲハマによる速勝、終局の地計算、あるいは投了。中国ルールで正真正銘。",
-    "hw.6.t": "段位を上げる", "hw.6.b": "勝てば段位ポイントが上がり、ランキングに反映されます。",
-    "ft.eyebrow": "特徴", "ft.title": "ルールは本物、爽快さも本物",
-    "ft.1.t": "本格的な囲碁エンジン", "ft.1.b": "アゲハマ、コウとスーパーコウ、中国ルールの地計算——すべて実装。",
-    "ft.2.t": "四象棋霊バトル", "ft.2.b": "4 柱の神獣、それぞれアクティブ 2 つと奥義 1 つ。",
-    "ft.3.t": "無双式の霊技", "ft.3.b": "決定的な一手で放つ技。水墨のエフェクトが盤上を走ります。",
-    "ft.4.t": "3 つの盤サイズ", "ft.4.b": "9 路 / 13 路 / 19 路を自由に切り替え。",
-    "ft.5.t": "リアルタイム対戦", "ft.5.b": "Game Center のマッチング。相手がいなければ AI が入るので、いつでも打てます。",
-    "ft.6.t": "段位とランキング", "ft.6.b": "カジュアルな段位ポイント。勝って上がり、ランキングへ。",
-    "ft.7.t": "水墨仙侠のアート", "ft.7.b": "東洋の水墨と金彩、余白と静けさ。本物の箏の音楽とともに。",
-    "ft.8.t": "5 言語対応", "ft.8.b": "簡体中文・繁體中文・English・日本語・한국어。",
-    "pr.eyebrow": "料金", "pr.title": "無料ダウンロード。解放したくなったら、そのときに",
-    "pr.body": "ゲーム内通貨もサブスクリプションもありません。すべて買い切りの解放で、一度買えばずっとあなたのものです。",
-    "pr.free.n": "無料", "pr.free.h": "ダウンロードしてすぐ遊べる",
-    "pr.free.1": "蒼淵・青龍が無料で使えます",
-    "pr.free.2": "9 / 13 / 19 路すべての盤サイズ",
-    "pr.free.3": "Game Center のリアルタイム対戦と AI 対局",
-    "pr.free.4": "段位ポイントとランキング",
-    "pr.iap.n": "アプリ内購入", "pr.iap.h": "さらなる棋霊と盤",
-    "pr.iap.1": "朱雀 / 白虎 / 玄武を個別に解放",
-    "pr.iap.2": "四象フル解放パック——個別購入よりお得",
-    "pr.iap.3": "烈焔 / 玄水 / 水墨の 3 種の盤スキン",
-    "pr.iap.4": "機種変更時は同じ Apple アカウントで購入を復元",
-    "pr.iap.note": "すべて買い切りのアプリ内購入 · サブスクも自動更新もありません · 価格は地域により異なり、App Store の表示に準じます · 有料の盤スキンには段位ポイントのボーナスがあります。",
-    "pv.eyebrow": "プライバシー", "pv.title": "アカウントもなく、当方のサーバーもありません",
-    "pv.body": "四象棋霊は解析を行わず、広告も出さず、第三者 SDK も組み込んでいません。アプリ自身にバックエンドはなく、対戦とランキングはすべて Apple の Game Center に委ねています。",
-    "pv.1": "アカウント登録は不要——Game Center だけでオンライン対戦できます。",
-    "pv.2": "対局の進行・段位・設定は端末内にのみ保存されます。",
-    "pv.3": "オンライン対戦とランキングは Apple Game Center が処理し、Apple のプライバシーポリシーが適用されます。",
-    "pv.4": "解析なし、広告なし、第三者トラッキング SDK なし。",
-    "pv.5": "アプリ内購入は Apple が処理し、当方が支払い情報に触れることはありません。",
-    "pv.link": "プライバシーポリシー全文を読む →", "sup.link": "サポート →",
-    "foot.privacy": "プライバシー", "foot.support": "サポート", "foot.more": "Local4a の他の製品",
-    "foot.disc": "囲碁のルールはパブリックドメインです。四象棋霊のキャラクターと世界観はオリジナルです。箏の音楽は Pixabay（Pixabay Content License）より。© 2026 Local4a."
-  }
-};
-
-const HTML_LANG = { zh: "zh-Hans", en: "en", ja: "ja" };
-
-function applyLang(lang) {
-  const dict = I18N[lang] || I18N.zh;
-  document.documentElement.lang = HTML_LANG[lang] || "zh-Hans";
-  document.querySelectorAll("[data-i18n]").forEach(el => {
-    const key = el.getAttribute("data-i18n");
-    const attr = el.getAttribute("data-i18n-attr");
-    if (dict[key] == null) return;
-    if (attr) el.setAttribute(attr, dict[key]);
-    else el.textContent = dict[key];
-  });
-  document.querySelectorAll(".langbar button").forEach(b => {
-    b.classList.toggle("active", b.getAttribute("data-lang") === lang);
-  });
-  try { localStorage.setItem("local4a_lang", lang); } catch (e) {}
-}
-function detectLang() {
-  try { const s = localStorage.getItem("local4a_lang"); if (s && I18N[s]) return s; } catch (e) {}
-  const n = (navigator.language || "zh").toLowerCase();
-  if (n.startsWith("zh")) return "zh";
-  if (n.startsWith("ja")) return "ja";
-  return "en";
-}
-document.querySelectorAll(".langbar button").forEach(b => {
-  b.addEventListener("click", () => applyLang(b.getAttribute("data-lang")));
-});
-applyLang(detectLang());
-</script>
 </body>
 </html>
