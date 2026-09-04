@@ -15,6 +15,21 @@
       "source": "/products/nexora-support.html",
       "destination": "/products/estora-support.html",
       "permanent": true
+    },
+    {
+      "source": "/products/usay.html",
+      "destination": "/products/chunkly.html",
+      "permanent": true
+    },
+    {
+      "source": "/products/usay-privacy.html",
+      "destination": "/products/chunkly-privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/products/usay-support.html",
+      "destination": "/products/chunkly-support.html",
+      "permanent": true
     }
   ]
 }
