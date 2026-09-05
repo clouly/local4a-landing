@@ -30,6 +30,21 @@
       "source": "/products/usay-support.html",
       "destination": "/products/chunkly-support.html",
       "permanent": true
+    },
+    {
+      "source": "/products/uread.html",
+      "destination": "/products/chunkly.html",
+      "permanent": true
+    },
+    {
+      "source": "/products/uread-privacy.html",
+      "destination": "/products/chunkly-privacy.html",
+      "permanent": true
+    },
+    {
+      "source": "/products/uread-support.html",
+      "destination": "/products/chunkly-support.html",
+      "permanent": true
     }
   ]
 }
