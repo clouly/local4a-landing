@@ -1,0 +1,1549 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>南疆蛊师 · 卡牌肉鸽网页游戏</title>
+<meta name="description" content="南疆苗寨题材的卡牌肉鸽网页游戏：扮演青崖寨最后一个养蛊人阿岩，以蛊为牌、以心血为引，从瘴林一路杀进万蛊窟。三幕、三位首领，本命金蚕在心口，死一次也不要紧。免费，打开即玩，支持手机。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="南疆蛊师 · 卡牌肉鸽网页游戏">
+<meta property="og:description" content="南疆苗寨题材的卡牌肉鸽网页游戏：扮演青崖寨最后一个养蛊人阿岩，以蛊为牌、以心血为引，从瘴林一路杀进万蛊窟。三幕、三位首领，本命金蚕在心口，死一次也不要紧。免费，打开即玩，支持手机。">
+<meta property="og:image" content="https://local4a.com/games/nanjiang/assets/bg/act0.jpg">
+<meta property="og:url" content="https://local4a.com/games/nanjiang/">
+<link rel="canonical" href="https://local4a.com/games/nanjiang/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&family=Yuji+Syuku&family=Noto+Serif+JP:wght@400;600&family=Cormorant+Garamond:wght@500;600;700&display=swap">
+<style>
+/* Layout: 上为「战场」(阿岩居左、敌人居右，敌人头顶悬着意图)，下为「手牌托盘」(心血珠、抽牌堆、手牌、弃牌堆、结束回合)。
+   地图是一卷自下而上的山路路线图。单一夜色主题：墨绿底、青铜心血、赤铁与白银随幕次变化，和文字版同一套视觉。 */
+:root{
+  --ink:#0e1513; --ink2:#141e1b; --ink3:#1b2824; --line:#2a3a34; --line2:#3a4d45;
+  --paper:#e4dcc6; --paper2:#cfc6ae; --dim:#93a096; --faint:#66746c;
+  --bronze:#b8935a; --verdigris:#5fa38c; --rust:#c45a40; --silver:#cfd7d8; --gold:#d6b456; --violet:#9a7aa8;
+  --c-atk:#c45a40; --c-skl:#5fa38c; --c-pow:#d6b456; --c-sts:#7d7f86;
+  --cardbg:#1d2622; --cardbg2:#26302b;
+  --scrim:rgba(6,10,9,.88);
+  --font-display:"Ma Shan Zheng","STKaiti","KaiTi","Kaiti SC",serif;
+  --font-body:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --font-num:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --cw:132px; --ch:214px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+:root[lang="ja"]{--font-display:"Yuji Syuku","Noto Serif JP","Noto Serif SC",serif;--font-body:"Noto Serif JP","Noto Serif SC","Hiragino Mincho ProN",serif}
+:root[lang="en"]{--font-display:"Cormorant Garamond","Noto Serif SC",Georgia,serif}
+:root[lang="en"] .card .cn{font-size:15.5px;line-height:1.1}
+:root[lang="en"] .card .cd,:root[lang="ja"] .card .cd{font-size:10.5px;line-height:1.35}
+:root[lang="en"] .brand b{font-size:22px}
+.vert.h{writing-mode:horizontal-tb;font-size:clamp(40px,6.5vw,68px);line-height:1.05}
+.vert.h small{display:block;margin-top:.3em;letter-spacing:.2em}
+.langs{display:inline-flex;gap:2px}
+.tbtn.lang{padding:3px 7px;font-size:12px}
+.tbtn.lang.on{color:var(--gold);border-color:var(--bronze)}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--font-body);font-size:15px;line-height:1.6;padding-inline:16px;
+  background-image:radial-gradient(ellipse 80% 50% at 70% -10%,rgba(95,163,140,.10),transparent 60%),radial-gradient(ellipse 60% 40% at 0% 110%,rgba(184,147,90,.07),transparent 60%);overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+.num{font-family:var(--font-num);font-variant-numeric:tabular-nums}
+em{font-style:normal;color:var(--gold)}
+#app{max-width:1280px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding-block:10px;gap:10px}
+#screen{flex:1;display:flex;flex-direction:column;min-height:0}
+
+/* ===== top bar ===== */
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px}
+.seal{font-family:var(--font-display);background:var(--rust);color:var(--ink);width:30px;height:30px;display:grid;place-items:center;font-size:21px;border-radius:3px;transform:rotate(-4deg)}
+.brand b{font-family:var(--font-display);font-weight:400;font-size:26px;letter-spacing:.06em}
+.pill{display:flex;align-items:baseline;gap:6px;font-size:14px;color:var(--dim)}
+.pill b{color:var(--paper);font-size:17px}
+.pill.hp b{color:#e7a08f}
+.pill.gold b{color:var(--gold)}
+.pots{display:flex;gap:4px}
+.pot{width:30px;height:30px;border:1px dashed var(--line2);border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-size:16px;background:transparent;color:var(--verdigris)}
+.pot.has{border-style:solid;border-color:var(--verdigris);background:rgba(95,163,140,.08)}
+.pot.has:hover{background:rgba(95,163,140,.22)}
+.relics{display:flex;gap:4px;flex-wrap:wrap}
+.relic{min-width:30px;height:30px;padding:0 6px;border:1px solid var(--bronze);border-radius:3px;display:grid;place-items:center;font-family:var(--font-display);font-size:16px;color:var(--bronze);background:rgba(184,147,90,.06);position:relative}
+.relic.r-boss{border-color:var(--gold);color:var(--gold)}
+.relic.spent{opacity:.35}
+.relic .cnt{position:absolute;right:-4px;bottom:-6px;font-size:10px;font-family:var(--font-num);color:var(--paper)}
+.barr{margin-left:auto;display:flex;gap:8px;align-items:center}
+.tbtn{background:transparent;border:1px solid var(--line2);padding:3px 11px;border-radius:3px;color:var(--dim);font-size:13px}
+.tbtn:hover{color:var(--paper);border-color:var(--bronze)}
+.where{font-size:13px;color:var(--dim)}
+.where b{font-family:var(--font-display);font-weight:400;font-size:19px;color:var(--bronze)}
+
+/* tooltip */
+#tip{position:fixed;z-index:50;max-width:260px;background:#0b110f;border:1px solid var(--line2);border-radius:3px;padding:7px 10px;font-size:12.5px;line-height:1.5;pointer-events:none;color:var(--paper)}
+#tip b{color:var(--gold);font-weight:600}
+
+/* ===== cards ===== */
+.card{width:var(--cw);height:var(--ch);flex:0 0 auto;position:relative;border-radius:7px;background:linear-gradient(170deg,var(--cardbg2),var(--cardbg) 60%);border:1.5px solid var(--line2);padding:8px 8px 8px;text-align:left;display:flex;flex-direction:column;gap:3px;overflow:hidden;transition:transform .14s ease,box-shadow .14s ease,opacity .14s;box-shadow:0 4px 10px rgba(0,0,0,.35)}
+.card::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--tc)}
+.card.atk{--tc:var(--c-atk)} .card.skl{--tc:var(--c-skl)} .card.pow{--tc:var(--c-pow)} .card.sts,.card.cur{--tc:var(--c-sts)}
+.card.r-unc{border-color:#4f8a77} .card.r-rare{border-color:var(--gold)}
+.card.cur{background:linear-gradient(170deg,#262229,#1c191e)}
+.card .cost{position:absolute;top:7px;left:7px;width:24px;height:24px;border-radius:50%;background:var(--ink);border:1.5px solid var(--e,var(--verdigris));display:grid;place-items:center;font-family:var(--font-num);font-size:13px;font-weight:700;color:var(--paper)}
+.card .cost.free{color:var(--verdigris)}
+.card .wm{display:none;position:absolute;right:-6px;bottom:-14px;font-family:var(--font-display);font-size:92px;line-height:1;color:var(--tc);opacity:.09;pointer-events:none}
+.card .cn{font-family:var(--font-display);font-size:19px;line-height:1.15;padding-left:28px;min-height:24px;color:var(--paper)}
+.card.up .cn{color:var(--verdigris)}
+.card .ct{font-size:10.5px;color:var(--faint);letter-spacing:.06em;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .cd{font-size:11.5px;line-height:1.42;color:var(--paper2);margin-top:3px;position:relative}
+.card .art{display:block;margin:5px -2px 0;border-radius:3px;overflow:hidden;aspect-ratio:3/2;flex:0 0 auto;background:#e9e1cc;box-shadow:0 0 0 1px rgba(0,0,0,.35),inset 0 0 12px rgba(60,40,10,.25)}
+.card .art img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.card.cur .art img,.card.sts .art img{filter:grayscale(.35) contrast(.95)}
+.pimg{display:block;width:100%;max-width:180px;aspect-ratio:1/1;object-fit:contain;margin:0 auto -6px;filter:drop-shadow(0 8px 12px rgba(0,0,0,.65));pointer-events:none}
+.foe .pimg{max-width:160px}
+.foe.boss{width:240px}.foe.boss .pimg{max-width:230px}
+.panel.withart{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+.plate{margin:0;border-radius:4px;overflow:hidden;border:1px solid var(--line2)}
+.plate img{display:block;width:100%;height:auto}
+.plate.paper{background:#e9e1cc;box-shadow:inset 0 0 18px rgba(60,40,10,.3)}
+.plate.dark{background:radial-gradient(circle at 50% 40%,#1f2d28,var(--ink))}
+.ts{position:relative;z-index:1}
+.tcicada{position:absolute;right:3%;top:4%;width:min(24vw,210px);opacity:.5;pointer-events:none;filter:drop-shadow(0 0 24px rgba(214,180,86,.35))}
+.card .cd b{color:var(--paper);font-family:var(--font-num);font-weight:700}
+.card .cd b.hi{color:#7fd1b2} .card .cd b.lo{color:#e08a75}
+.card .tags{margin-top:auto;font-size:10px;color:var(--faint);letter-spacing:.1em;position:relative}
+button.card:hover{transform:translateY(-6px)}
+.card.sel{transform:translateY(-22px)!important;box-shadow:0 0 0 2px var(--gold),0 10px 22px rgba(0,0,0,.5)}
+.card.no{opacity:.55}
+.card.mini{--cw:112px;--ch:160px}
+
+/* ===== map ===== */
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:14px;align-items:start}
+.mapscroll{border:1px solid var(--line);border-radius:4px;background-color:var(--ink2);background-size:cover;background-position:center;max-height:calc(100vh - 120px);overflow:auto}
+.mapscroll svg{display:block;width:100%;height:auto;max-width:720px;margin:0 auto}
+.node{cursor:default}
+.node circle.b{fill:var(--ink2);stroke:var(--line2);stroke-width:1.5}
+.node text{font-family:var(--font-display);font-size:19px;fill:var(--dim);text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.node.t-elite text{fill:var(--rust)} .node.t-boss text{fill:var(--gold);font-size:30px}
+.node.t-rest text{fill:var(--verdigris)} .node.t-shop text{fill:var(--gold)} .node.t-treasure text{fill:var(--bronze)} .node.t-event text{fill:var(--violet)}
+.node.done circle.b{fill:#26332d;stroke:var(--bronze)}
+.node.done text{fill:var(--paper)}
+.node.cur circle.b{stroke:var(--gold);stroke-width:3}
+.node.avail{cursor:pointer}
+.node.avail circle.b{stroke:var(--paper);stroke-width:2}
+.node.avail circle.ring{fill:none;stroke:var(--gold);stroke-width:1.5;opacity:.8;transform-box:fill-box;transform-origin:center;animation:ring 1.6s ease-out infinite}
+.node.avail:hover circle.b{fill:#2c3b35}
+@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.6);opacity:0}}
+.edge{stroke:var(--line2);stroke-width:1.6;stroke-dasharray:3 5}
+.edge.walked{stroke:var(--bronze);stroke-dasharray:none;stroke-width:2.2}
+.legend{border:1px solid var(--line);border-radius:4px;padding:12px;background:var(--ink2);font-size:13.5px}
+.legend h3{font-family:var(--font-display);font-weight:400;font-size:22px;color:var(--bronze);margin:0 0 4px}
+.legend p{margin:0 0 10px;color:var(--dim);font-size:13px}
+.legend ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.legend li{display:flex;gap:10px;align-items:center}
+.legend .g{font-family:var(--font-display);width:26px;height:26px;border:1px solid var(--line2);border-radius:50%;display:grid;place-items:center;font-size:16px}
+
+/* ===== battle ===== */
+.battle{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+.bf{background-size:cover!important;background-position:center 35%!important;display:grid;grid-template-columns:minmax(160px,230px) minmax(0,1fr);gap:16px;align-items:end;min-height:clamp(240px,42vh,430px);padding:12px 6px 6px;border:1px solid var(--line);border-radius:4px;background:radial-gradient(ellipse 70% 60% at 50% 100%,rgba(95,163,140,.08),transparent 70%),var(--ink2);position:relative}
+.ent{display:flex;flex-direction:column;gap:6px;align-items:stretch;position:relative}
+.ent .portrait{font-family:var(--font-display);font-size:58px;line-height:1.1;text-align:center}
+.me .portrait{color:var(--paper)}
+.ent .nm{font-family:var(--font-display);font-size:22px;text-align:center;line-height:1.1}
+.ent .sub{font-size:11.5px;color:var(--faint);text-align:center}
+.hpbar{height:16px;background:var(--ink);border:1px solid var(--line2);border-radius:2px;position:relative;overflow:hidden}
+.hpbar i{position:absolute;left:0;top:0;bottom:0;background:var(--rust);transition:width .25s}
+.me .hpbar i{background:#b5524a}
+.hpbar span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-num);font-size:11px;line-height:1;color:var(--paper);text-shadow:0 1px 2px #000}
+.blk{position:absolute;left:-10px;top:50%;transform:translateY(-50%);min-width:26px;height:26px;border-radius:5px 5px 13px 13px;background:#2f5f73;border:1.5px solid #8cc3d6;display:grid;place-items:center;font-family:var(--font-num);font-size:11.5px;font-weight:700;z-index:1}
+.hpwrap{position:relative}
+.sts{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;min-height:20px}
+.chip{font-size:11.5px;border:1px solid var(--line2);border-radius:3px;padding:0 5px;line-height:18px;color:var(--verdigris);background:var(--ink)}
+.chip.bad{color:#e08a75;border-color:#5b3a31}
+.foes{display:flex;gap:14px;justify-content:flex-end;flex-wrap:wrap;align-items:flex-end}
+.foe{width:170px;cursor:default;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px;text-align:inherit}
+.foe.tgt{cursor:pointer;border-color:var(--gold);background:rgba(214,180,86,.06)}
+.foe.tgt:hover{background:rgba(214,180,86,.14)}
+.foe .portrait{color:var(--rust);font-size:54px}
+.foe.boss .portrait{color:var(--gold);font-size:72px}
+.intent{display:flex;align-items:center;justify-content:center;gap:6px;min-height:30px;font-size:13px;color:var(--dim)}
+.intent .ic{font-family:var(--font-display);font-size:17px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1.5px solid currentColor}
+.intent.atk{color:#e08a75} .intent.def{color:#8cc3d6} .intent.buf{color:var(--gold)} .intent.deb{color:var(--violet)} .intent.chg{color:#f1c27d}
+.intent b{font-family:var(--font-num);font-size:16px;color:var(--paper)}
+.intent .mvn{font-size:12px;color:var(--faint)}
+.hit{animation:shake .32s}
+@keyframes shake{20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+.fxn{position:fixed;z-index:40;font-family:var(--font-num);font-weight:700;font-size:22px;pointer-events:none;animation:rise .9s ease-out forwards;text-shadow:0 2px 4px #000}
+.fxn.dmg{color:#ff9c84} .fxn.blk{color:#9fd3e6} .fxn.heal{color:#7fd1b2} .fxn.txt{color:var(--gold);font-family:var(--font-display);font-weight:400;font-size:24px}
+@keyframes rise{from{transform:translate(-50%,0);opacity:1}to{transform:translate(-50%,-46px);opacity:0}}
+.tray{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:end}
+.tl,.tr{display:flex;flex-direction:column;gap:8px;align-items:center}
+.orb{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;text-align:center;background:radial-gradient(circle at 40% 35%,rgba(255,255,255,.18),transparent 45%),radial-gradient(circle,var(--e1c,#3f7f6c),#16302a 75%);border:2px solid var(--e1,#5fa38c);box-shadow:0 0 18px rgba(95,163,140,.35)}
+.orb b{font-family:var(--font-num);font-size:24px;line-height:1}
+.orb small{display:block;font-size:10.5px;color:var(--paper2);letter-spacing:.1em}
+.pile{background:var(--ink2);border:1px solid var(--line2);border-radius:4px;padding:3px 10px;font-size:12.5px;color:var(--dim)}
+.pile:hover{border-color:var(--bronze);color:var(--paper)}
+.pile b{color:var(--paper);font-family:var(--font-num)}
+.hand{display:flex;justify-content:center;align-items:flex-end;min-height:calc(var(--ch) + 26px);padding-top:24px;overflow-x:auto;overflow-y:visible}
+.hand{gap:6px}
+.hand.crowd{gap:0}.hand.crowd .card{margin:0 -16px}
+.hand.crowd .card:first-child{margin-left:0}.hand.crowd .card:last-child{margin-right:0}
+.tbtn.snd{min-width:30px;padding:3px 8px;font-family:var(--font-display);font-size:15px;color:var(--verdigris);border-color:#3f6b5d}
+.tbtn.snd.off{color:var(--faint);border-color:var(--line2);text-decoration:line-through}
+.autob{background:transparent;border:1px solid var(--line2);border-radius:4px;padding:6px 10px;color:var(--dim);font-size:13px;white-space:nowrap}
+.autob:hover{border-color:var(--bronze);color:var(--paper)}
+.autob.on{border-color:var(--verdigris);color:var(--verdigris);background:rgba(95,163,140,.12)}
+.endt{background:var(--bronze);color:var(--ink);border:none;border-radius:4px;padding:12px 16px;font-family:var(--font-display);font-size:20px;line-height:1.1}
+.endt:hover{background:var(--gold)}
+.endt:disabled{opacity:.4;cursor:wait}
+.hint{text-align:center;font-size:12.5px;color:var(--faint);min-height:18px}
+
+/* ===== generic panels ===== */
+.panel{border:1px solid var(--line);border-radius:4px;background:var(--ink2);padding:18px;max-width:900px;margin:0 auto;width:100%}
+.panel h2{font-family:var(--font-display);font-weight:400;font-size:30px;color:var(--bronze);margin:0 0 4px;line-height:1.2}
+.panel .lead{color:var(--dim);margin:0 0 14px;max-width:48em}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{background:var(--ink3);border:1px solid var(--line2);border-radius:4px;padding:10px 14px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.opt:hover:not(:disabled){border-color:var(--bronze);background:#22312b}
+.opt b{font-weight:600}
+.opt span{font-size:12.5px;color:var(--dim)}
+.opt:disabled{opacity:.45;cursor:not-allowed}
+.opt.key{border-color:var(--bronze)}
+.cardrow{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;padding:18px 0 8px}
+.cardrow .card{--cw:160px;--ch:248px}
+.cardrow .card .cn{font-size:22px}
+.cardrow .card .cd{font-size:13px}
+.rw{display:flex;flex-direction:column;gap:8px;max-width:440px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{background:var(--ink3);border:1px solid var(--line2);border-radius:4px;padding:8px 18px}
+.btn:hover{border-color:var(--bronze)}
+.btn.key{background:var(--bronze);color:var(--ink);border-color:var(--bronze);font-weight:600}
+.btn.key:hover{background:var(--gold)}
+.shopgrid{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.ware{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ware .price{font-family:var(--font-num);color:var(--gold);font-size:14px}
+.ware .price.no{color:var(--rust)}
+.ware.sold{opacity:.3;pointer-events:none}
+.wbox{width:150px;border:1px solid var(--line2);border-radius:4px;padding:10px;text-align:left;background:var(--ink3);min-height:100px}
+.wbox b{font-family:var(--font-display);font-weight:400;font-size:20px;color:var(--bronze);display:block}
+.wbox span{font-size:12px;color:var(--dim)}
+.sec{font-size:12px;letter-spacing:.24em;color:var(--faint);margin:18px 0 8px;border-bottom:1px dashed var(--line);padding-bottom:4px}
+
+/* modal */
+.ov{position:fixed;inset:0;background:var(--scrim);z-index:30;overflow:auto;padding:max(16px,env(safe-area-inset-top,0px)) 16px 30px}
+.ov .panel{margin-top:3vh;max-width:1040px}
+.closex{float:right;background:transparent;border:1px solid var(--line2);border-radius:3px;padding:2px 12px;color:var(--dim)}
+.deckgrid{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-start}
+.deckgrid .card{--cw:140px;--ch:224px}
+.deckgrid button.card:hover{transform:translateY(-4px);box-shadow:0 0 0 2px var(--bronze)}
+
+/* title / end */
+.title-screen{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:34px;align-items:center;max-width:1000px;margin:3vh auto 0;padding:clamp(20px,4vw,48px);border:1px solid var(--line);border-radius:6px;background-size:cover;background-position:center;overflow:hidden}
+.vert{writing-mode:vertical-rl;font-family:var(--font-display);font-size:clamp(64px,12vw,118px);line-height:1;letter-spacing:.08em;text-shadow:0 0 30px rgba(95,163,140,.25)}
+.vert small{font-size:.3em;color:var(--bronze);letter-spacing:.4em;margin-top:.6em}
+.ts .big{font-family:var(--font-display);font-size:26px;line-height:1.4;margin:0 0 10px}
+.ts p{color:var(--dim);max-width:34em}
+.ts .fan{font-size:12px;color:var(--faint);margin-top:20px;line-height:1.7}
+.ts .fan a{color:var(--bronze)}
+.unl{display:grid;gap:6px;margin-top:14px}
+.unl div{display:flex;gap:10px;align-items:baseline;font-size:13px;color:var(--faint)}
+.unl div.on{color:var(--paper2)}
+.unl div b{font-family:var(--font-num);min-width:4em;color:var(--faint)}
+.unl div.on b{color:var(--gold)}
+.meter{height:8px;background:var(--ink);border:1px solid var(--line2);border-radius:2px;overflow:hidden;margin:6px 0}
+.meter i{display:block;height:100%;background:var(--gold)}
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin:14px 0}
+.stat{border:1px solid var(--line);border-radius:3px;padding:6px 10px}
+.stat small{display:block;font-size:11px;color:var(--faint);letter-spacing:.1em}
+.stat b{font-size:18px}
+.banner{position:fixed;left:50%;top:38%;transform:translate(-50%,-50%);z-index:45;font-family:var(--font-display);font-size:clamp(34px,7vw,64px);color:var(--gold);text-shadow:0 0 24px rgba(0,0,0,.9);pointer-events:none;animation:ban 1.3s ease forwards;white-space:nowrap}
+@keyframes ban{0%{opacity:0;transform:translate(-50%,-40%)}20%{opacity:1;transform:translate(-50%,-50%)}75%{opacity:1}100%{opacity:0}}
+
+@media (max-width:860px){
+  :root{--cw:108px;--ch:184px}
+  .card .cn{font-size:16px} .card .cd{font-size:11px} .card .wm{font-size:70px}
+  .bf{grid-template-columns:1fr;align-items:start}
+  .me{flex-direction:row;align-items:center;gap:10px}
+  .me .portrait{font-size:30px}
+  .me .pimg{width:84px;margin:0}
+  .foe .pimg{max-width:120px}.foe.boss{width:180px}.foe.boss .pimg{max-width:170px}
+  .panel.withart{grid-template-columns:1fr}.panel.withart .plate{order:-1;max-width:320px}
+  .tcicada{width:110px;top:auto;bottom:10px;opacity:.5}
+  .me>.col{flex:1}
+  .foes{justify-content:center}
+  .foe{width:150px}
+  .tray{grid-template-columns:1fr 1fr;grid-template-areas:"l r" "h h"}
+  .tl{grid-area:l;flex-direction:row}.tr{grid-area:r;flex-direction:row;justify-content:flex-end}.hand{grid-area:h;flex-wrap:wrap;gap:8px;justify-content:center;overflow:visible;padding-top:16px}
+  .hand .card{margin:0!important}
+  .bf{min-height:0}
+  .orb{width:56px;height:56px}
+  .mapwrap{grid-template-columns:1fr}
+  .title-screen{grid-template-columns:1fr;gap:10px;margin-top:2vh}
+  .vert{writing-mode:horizontal-tb;font-size:60px}
+  .vert small{display:block;margin-top:.2em}
+  .cardrow .card{--cw:132px;--ch:214px}
+}
+@media (max-width:520px){.foe{width:128px}.foe .portrait{font-size:30px}.ent .nm{font-size:18px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app">
+  <header class="bar" id="bar"></header>
+  <main id="screen"></main>
+</div>
+<div class="ov" id="ov" hidden></div>
+<div id="tip" hidden></div>
+<div id="fx"></div>
+
+<script src="i18n-nj.js"></script>
+<script>
+"use strict";
+/* ================= 工具 ================= */
+const $=s=>document.querySelector(s);
+const RI=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const V=(a,u)=>Array.isArray(a)?a[u?1:0]:a;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let SPEED=1;
+const wait=ms=>SPEED?new Promise(r=>setTimeout(r,ms*SPEED)):Promise.resolve();
+const kw=s=>s.replace(/\[([^\]]+)\]/g,'<em>$1</em>');
+const ACTS=['瘴林','黑水土司城','万蛊窟'];
+/* 美术素材（即梦 Seedream 生成，tools/slice.py 切图） */
+const ART_ALIAS={guanjiu:'jiuchong',yuti:'nj_yupi',yuedao:'nj_yuedao',shuangren:'nj_shuangren',yuexuan:'nj_yuexuan',baiguang:'nj_baiguang',yuemang:'nj_yuemang',fengbao:'nj_fengbao',duxing:'nj_duxing',xiaoguang:'nj_xiaoguang',xueyue:'nj_xueyue',zhuquan:'nj_zhuquan',chongzhuang:'nj_chongzhuang',baishi:'nj_baishi',gangzong:'nj_gangzong',xiongli:'nj_xiongli',tongpi:'nj_tongpi',jinli:'nj_jinli',xuehai:'nj_xuehai',yupi:'nj_yupi',chunqiu:'nj_chunqiu',xina:'nj_xina'};
+// 南疆版重画的角色图（新图以 nj_ 前缀另起文件名）
+const EN_ALIAS={bai:'nj_bai'};
+const enemyArt=k=>`assets/enemy/${EN_ALIAS[k]||k}.webp`;
+const ENEMY_ART=new Set(['boar','wolf','snake','monkey','patrol','mobei','chicheng','bear','boarKing','monkeyKing','rogue','duwolf','guard','stoneman','maomin','fox','ironcatch','tamer','thunder','bai','tiexueleng','langwang','shangyanfei','mowutian','xuehun','zhengdao','zombie','modao','jianke','wuzhuan','jiangwang']);
+const cardArt=k=>`assets/card/${ART_ALIAS[k]||k}.webp`;
+const bgArt=a=>`assets/bg/act${a}.jpg`;
+const EV_ART={cache:'c:sheli',stone:'c:xina',bamboo:'c:jiuchong',school:'c:yuedao',uncle:'c:eming',herb:'c:duwu',dizang:'c:dizang',auction:'e:shangyanfei',fox:'c:huxian',maomin:'e:maomin',xuehai:'c:xuehai',battlefield:'c:shang',alliance:'c:moxin',cicada:'c:chunqiu',monk:'c:sheli'};
+function plate(spec){const [t,k]=spec.split(':');return t==='c'?`<figure class="plate paper"><img src="${cardArt(k)}" alt=""></figure>`:`<figure class="plate dark"><img src="${enemyArt(k)}" alt=""></figure>`}
+
+/* ================= 状态 ================= */
+const ST={
+  str:{n:'力',d:'每段攻击伤害 +X。',good:1},
+  moon:{n:'蝶粉',d:'蝶系攻击每段伤害 +X。',good:1},
+  bleed:{n:'流血',d:'回合开始时失去 X 生命，然后流血减 1。'},
+  weak:{n:'缠缚',d:'造成的攻击伤害降低 25%。持续 X 回合。'},
+  vuln:{n:'破绽',d:'受到的攻击伤害提高 50%。持续 X 回合。'},
+  frail:{n:'冻',d:'获得的格挡降低 25%。持续 X 回合。'},
+  buffer:{n:'隐',d:'下 X 次失去生命时，改为不失去。',good:1},
+  nextE:{n:'酒气',d:'下回合开始时获得 X 点心血。',good:1},
+  nextB:{n:'石胎',d:'下回合开始时获得 X 点格挡。',good:1},
+  gangzong:{n:'铜鼓',d:'每回合开始时获得 X 力。',good:1},
+  baiyu:{n:'银身',d:'格挡不会在回合开始时消失。',good:1},
+  xuelu:{n:'疳毒',d:'每回合开始时，所有敌人流血 +X。',good:1},
+  siwei:{n:'五毒',d:'每回合开始多抽 X 张牌。',good:1},
+  moxin:{n:'蛊心',d:'每当你因卡牌失去生命，获得 X 力。',good:1},
+  duxing:{n:'蝶影',d:'每打出一张蝶系牌，获得 X 格挡。',good:1},
+  bristle:{n:'怒鬃',d:'你每打出一张守牌，它获得 X 力。'},
+};
+
+/* ================= 卡牌 =================
+   t: atk 攻 / skl 守 / pow 能 / sts 状态 / cur 诅咒 ; r: base 基础 / com 普通 / unc 稀有 / rare 传说 */
+const TN={atk:'攻',skl:'守',pow:'能',sts:'状态',cur:'诅咒'};
+const RN={base:'基础',com:'普通',unc:'稀有',rare:'传说',sts:'',cur:''};
+const CARDS={
+  // 起始
+  yuedao:{n:'蝶刃',gu:'蝴蝶蛊',t:'atk',r:'base',c:1,g:'蝶',tags:['蝶'],tgt:1,dmg:[6,9],
+    desc:(u,X)=>`造成 ${X.D(V(this_.yuedao.dmg,u))} 伤害。`,play(u,t){pAtk(t,V(this.dmg,u),1,this)}},
+  yupi:{n:'银甲',gu:'银壳虫',t:'skl',r:'base',c:1,g:'甲',blk:[5,8],
+    desc:(u,X)=>`获得 ${X.B(V(this_.yupi.blk,u))} [格挡]。`,play(u){gainBlock(V(this.blk,u))}},
+  jiuchong:{n:'拦门酒',gu:'酒曲虫',t:'skl',r:'base',c:[1,0],g:'酒',
+    desc:()=>`抽 2 张牌。下回合获得 1 点[心血]。`,play(){draw(2);addP('nextE',1)}},
+  // 普通
+  shuangren:{n:'双翼斩',gu:'蝴蝶蛊',t:'atk',r:'com',c:1,g:'蝶',tags:['蝶'],tgt:1,dmg:[4,5],
+    desc:(u,X)=>`造成 ${X.D(V(this_.shuangren.dmg,u))} 伤害两次。`,play(u,t){pAtk(t,V(this.dmg,u),2,this)}},
+  yuexuan:{n:'蝶舞',gu:'蝴蝶蛊',t:'atk',r:'com',c:1,g:'蝶',tags:['蝶'],dmg:[5,8],
+    desc:(u,X)=>`对所有敌人造成 ${X.D(V(this_.yuexuan.dmg,u))} 伤害。`,play(u){pAtkAll(V(this.dmg,u),1,this)}},
+  baiguang:{n:'闪蝶',gu:'闪蝶蛊',t:'atk',r:'com',c:0,g:'闪',tags:['蝶'],tgt:1,dmg:[3,4],
+    desc:(u,X)=>`造成 ${X.D(V(this_.baiguang.dmg,u))} 伤害。抽 1 张牌。`,play(u,t){pAtk(t,V(this.dmg,u),1,this);draw(1)}},
+  zhuquan:{n:'牯牛顶',gu:'水牯蛊',t:'atk',r:'com',c:2,g:'牛',tags:['力'],tgt:1,dmg:12,smul:[3,5],
+    desc:(u,X)=>`造成 ${X.D(12,V(this_.zhuquan.smul,u))} 伤害。[力]对此牌生效 ${V(this_.zhuquan.smul,u)} 倍。`,play(u,t){pAtk(t,12,1,this,V(this.smul,u))}},
+  chongzhuang:{n:'斗牛',gu:'斗牛蛊',t:'atk',r:'com',c:2,g:'牛',tags:['力'],tgt:1,dmg:[12,15],m:[2,3],
+    desc:(u,X)=>`造成 ${X.D(V(this_.chongzhuang.dmg,u))} 伤害。给予 ${V(this_.chongzhuang.m,u)} 层[破绽]。`,play(u,t){pAtk(t,V(this.dmg,u),1,this);addE(t,'vuln',V(this.m,u))}},
+  shedu:{n:'阴蛇',gu:'阴蛇蛊',t:'atk',r:'com',c:1,g:'蛇',tags:['血'],tgt:1,dmg:[3,4],m:[4,6],
+    desc:(u,X)=>`造成 ${X.D(V(this_.shedu.dmg,u))} 伤害。给予 ${V(this_.shedu.m,u)} 层[流血]。`,play(u,t){pAtk(t,V(this.dmg,u),1,this);addE(t,'bleed',V(this.m,u))}},
+  leiguang:{n:'雷蝇',gu:'雷蝇蛊',t:'atk',r:'com',c:1,g:'雷',tgt:1,dmg:[7,10],
+    desc:(u,X)=>`造成 ${X.D(V(this_.leiguang.dmg,u))} 伤害。若目标有[破绽]，获得 1 点[心血]。`,play(u,t){const v=t&&t.st.vuln>0;pAtk(t,V(this.dmg,u),1,this);if(v)gainE(1)}},
+  qingsi:{n:'缠丝',gu:'蜘蛛蛊',t:'skl',r:'com',c:1,g:'丝',tgt:1,blk:[4,6],m:[2,3],
+    desc:(u,X)=>`获得 ${X.B(V(this_.qingsi.blk,u))} [格挡]。给予 ${V(this_.qingsi.m,u)} 层[缠缚]。`,play(u,t){gainBlock(V(this.blk,u));addE(t,'weak',V(this.m,u))}},
+  yulin:{n:'滑鳞',gu:'泥鳅蛊',t:'skl',r:'com',c:0,g:'鳞',blk:[4,6],
+    desc:(u,X)=>`获得 ${X.B(V(this_.yulin.blk,u))} [格挡]。`,play(u){gainBlock(V(this.blk,u))}},
+  tongpi:{n:'鳖甲',gu:'鳖蛊',t:'skl',r:'com',c:2,g:'鳖',blk:[13,17],
+    desc:(u,X)=>`获得 ${X.B(V(this_.tongpi.blk,u))} [格挡]。`,play(u){gainBlock(V(this.blk,u))}},
+  fangxue:{n:'喂蛊',gu:'蚂蟥蛊',t:'skl',r:'com',c:0,g:'血',tags:['血'],m:[2,3],
+    desc:u=>`失去 3 生命。获得 ${V(this_.fangxue.m,u)} 点[心血]。`,play(u){loseHP(3,true);gainE(V(this.m,u))}},
+  guanjiu:{n:'灌酒',gu:'酒曲虫',t:'skl',r:'com',c:1,g:'酒',m:[2,3],
+    desc:u=>`抽 ${V(this_.guanjiu.m,u)} 张牌。`,play(u){draw(V(this.m,u))}},
+  xina:{n:'熔银',gu:'苗银',t:'skl',r:'com',c:0,g:'石',m:[2,3],ex:1,
+    desc:u=>`花费 8 苗银，获得 ${V(this_.xina.m,u)} 点[心血]。[耗尽]。`,can:()=>R.gold>=8,why:'苗银不足 8',play(u){R.gold-=8;gainE(V(this.m,u))}},
+  yinshi:{n:'石胎',gu:'石头蛊',t:'skl',r:'com',c:1,g:'石',blk:[6,8],
+    desc:(u,X)=>`获得 ${X.B(V(this_.yinshi.blk,u))} [格挡]。下回合开始获得 ${V(this_.yinshi.blk,u)} [格挡]。`,play(u){gainBlock(V(this.blk,u));addP('nextB',V(this.blk,u))}},
+  // 稀有
+  xiaoguang:{n:'蝶粉',gu:'粉蝶蛊',t:'pow',r:'unc',c:1,g:'粉',tags:['蝶'],m:[2,3],
+    desc:u=>`获得 ${V(this_.xiaoguang.m,u)} 层[蝶粉]。`,play(u){addP('moon',V(this.m,u))}},
+  baishi:{n:'牛力',gu:'水牯蛊',t:'pow',r:'unc',c:1,g:'牛',tags:['力'],m:[2,3],
+    desc:u=>`获得 ${V(this_.baishi.m,u)} 层[力]。`,play(u){addP('str',V(this.m,u))}},
+  xiongli:{n:'发癫',gu:'癫蛊',t:'skl',r:'unc',c:1,g:'癫',tags:['力'],ex:[1,0],
+    desc:u=>`[力]翻倍。${u?'':'[耗尽]。'}`,play(){if(B.p.st.str>0)addP('str',B.p.st.str)}},
+  xueyue:{n:'赤蝶',gu:'赤蝶蛊',t:'atk',r:'unc',c:1,g:'赤',tags:['蝶','血'],tgt:1,dmg:[7,9],m:[3,4],
+    desc:(u,X)=>`造成 ${X.D(V(this_.xueyue.dmg,u))} 伤害。给予 ${V(this_.xueyue.m,u)} 层[流血]。`,play(u,t){pAtk(t,V(this.dmg,u),1,this);addE(t,'bleed',V(this.m,u))}},
+  yuemang:{n:'枫蝶斩',gu:'枫蝶蛊',t:'atk',r:'unc',c:2,g:'枫',tags:['蝶'],tgt:1,dmg:[18,24],
+    desc:(u,X)=>`造成 ${X.D(V(this_.yuemang.dmg,u))} 伤害。`,play(u,t){pAtk(t,V(this.dmg,u),1,this)}},
+  jinwu:{n:'百足锯',gu:'蜈蚣蛊',t:'atk',r:'unc',c:2,g:'蜈',tags:['力'],tgt:1,dmg:[4,5],
+    desc:(u,X)=>`造成 ${X.D(V(this_.jinwu.dmg,u))} 伤害四次。`,play(u,t){pAtk(t,V(this.dmg,u),4,this)}},
+  duwu:{n:'瘴雾',gu:'瘴母蛊',t:'skl',r:'unc',c:1,g:'雾',tags:['血'],m:[5,7],
+    desc:u=>`给予所有敌人 ${V(this_.duwu.m,u)} 层[流血]。`,play(u){alive().forEach(e=>addE(e,'bleed',V(this.m,u)))}},
+  jinguang:{n:'迷魂粉',gu:'飞蛾蛊',t:'skl',r:'unc',c:2,g:'蛾',blk:[12,15],m:[1,2],
+    desc:(u,X)=>`获得 ${X.B(V(this_.jinguang.blk,u))} [格挡]。给予所有敌人 ${V(this_.jinguang.m,u)} 层[缠缚]。`,play(u){gainBlock(V(this.blk,u));alive().forEach(e=>addE(e,'weak',V(this.m,u)))}},
+  yinlin:{n:'蜕壳',gu:'蛇蜕蛊',t:'skl',r:'unc',c:[2,1],g:'蜕',
+    desc:()=>`获得 1 层[隐]。`,play(){addP('buffer',1)}},
+  yuti:{n:'撞甲',gu:'银壳虫',t:'atk',r:'unc',c:[1,0],g:'甲',tgt:1,
+    desc:(u,X)=>`造成等同于你当前[格挡]的伤害（${X.D(B?B.p.block:0,1,1)}）。`,play(u,t){pAtk(t,B.p.block,1,this,1,true)}},
+  zhiliao:{n:'苗药',gu:'百草蛊',t:'skl',r:'unc',c:1,g:'药',m:[5,8],ex:1,
+    desc:u=>`回复 ${V(this_.zhiliao.m,u)} 生命。[耗尽]。`,play(u){heal(V(this.m,u))}},
+  moxin:{n:'蛊心',gu:'本命心血',t:'pow',r:'unc',c:[1,0],g:'心',tags:['血'],
+    desc:()=>`每当你因卡牌失去生命，获得 1 层[力]。`,play(){addP('moxin',1)}},
+  xueji:{n:'血搏',gu:'蚂蟥蛊',t:'atk',r:'unc',c:1,g:'血',tags:['血'],tgt:1,dmg:[15,20],
+    desc:(u,X)=>`失去 4 生命。造成 ${X.D(V(this_.xueji.dmg,u))} 伤害。`,play(u,t){loseHP(4,true);if(!B.over)pAtk(t,V(this.dmg,u),1,this)}},
+  lengyan:{n:'识破',gu:'心计',t:'skl',r:'unc',c:1,g:'眼',tgt:1,m:[2,3],
+    desc:u=>`给予 ${V(this_.lengyan.m,u)} 层[破绽]。抽 1 张牌。`,play(u,t){addE(t,'vuln',V(this.m,u));draw(1)}},
+  siwei:{n:'五毒酒',gu:'五毒',t:'pow',r:'unc',c:[2,1],g:'酒',
+    desc:()=>`每回合开始多抽 1 张牌。`,play(){addP('siwei',1)}},
+  duxing:{n:'蝶影随身',gu:'蝴蝶蛊',t:'pow',r:'unc',c:1,g:'影',tags:['蝶'],m:[3,4],
+    desc:u=>`每打出一张蝶系牌，获得 ${V(this_.duxing.m,u)} [格挡]。`,play(u){addP('duxing',V(this.m,u))}},
+  // 传说
+  baiyu:{n:'银身',gu:'银壳虫',t:'pow',r:'rare',c:[3,2],g:'银',
+    desc:()=>`[格挡]不会在回合开始时消失。`,play(){addP('baiyu',1)}},
+  gangzong:{n:'铜鼓',gu:'鼓藏蛊',t:'pow',r:'rare',c:3,g:'鼓',tags:['力'],m:[2,3],
+    desc:u=>`每回合开始获得 ${V(this_.gangzong.m,u)} 层[力]。`,play(u){addP('gangzong',V(this.m,u))}},
+  xuelu:{n:'疳蛊',gu:'疳蛊',t:'pow',r:'rare',c:2,g:'颅',tags:['血'],m:[3,4],lock:'card_xuelu',
+    desc:u=>`每回合开始，所有敌人获得 ${V(this_.xuelu.m,u)} 层[流血]。`,play(u){addP('xuelu',V(this.m,u))}},
+  tunjiang:{n:'蛤蟆吞',gu:'蛤蟆蛊',t:'atk',r:'rare',c:2,g:'蟆',tgt:1,dmg:[14,18],m:[3,4],ex:1,lock:'card_tunjiang',
+    desc:(u,X)=>`造成 ${X.D(V(this_.tunjiang.dmg,u))} 伤害。若击杀，最大生命 +${V(this_.tunjiang.m,u)}。[耗尽]。`,play(u,t){pAtk(t,V(this.dmg,u),1,this);if(t&&t.hp<=0&&!t.minion){R.maxHp+=V(this.m,u);R.hp+=V(this.m,u);fxAt($('#me'),'最大生命 +'+V(this.m,u),'heal')}}},
+  sheli:{n:'蜕变',gu:'蛊卵',t:'skl',r:'rare',c:[1,0],g:'舍',ex:1,
+    desc:()=>`本场战斗中，升级手牌中所有牌。[耗尽]。`,play(){B.hand.forEach(c=>c.up=1)}},
+  fengbao:{n:'万蝶出枫',gu:'蝴蝶妈妈',t:'atk',r:'rare',c:2,g:'蝶',tags:['蝶'],dmg:[5,6],
+    desc:(u,X)=>`对所有敌人造成 ${X.D(V(this_.fengbao.dmg,u))} 伤害三次。`,play(u){pAtkAll(V(this.dmg,u),3,this)}},
+  chunqiu:{n:'金蚕吐丝',gu:'金蚕蛊',t:'skl',r:'rare',c:[3,2],g:'蚕',ex:1,lock:'card_chunqiu',
+    desc:()=>`本回合手牌中所有牌费用变为 0。[耗尽]。`,play(){B.free=1}},
+  xuehai:{n:'蛊发',gu:'草鬼婆秘方',t:'skl',r:'rare',c:1,g:'蛊',tags:['血'],tgt:1,ex:1,
+    desc:u=>`目标的[流血]${u?'变为三倍':'翻倍'}。[耗尽]。`,play(u,t){if(t)t.st.bleed=(t.st.bleed||0)*(u?3:2)}},
+  jinli:{n:'撼山',gu:'穿山甲蛊',t:'atk',r:'rare',c:3,g:'山',tags:['力'],tgt:1,dmg:[32,42],
+    desc:(u,X)=>`造成 ${X.D(V(this_.jinli.dmg,u))} 伤害。`,play(u,t){pAtk(t,V(this.dmg,u),1,this)}},
+  // 状态与诅咒
+  hanqi:{n:'寒气',gu:'冰蚕蛊',t:'sts',r:'sts',c:-1,g:'寒',desc:()=>`无法打出。回合结束时若在手中，失去 2 生命。`},
+  shang:{n:'伤',gu:'蛊毒',t:'sts',r:'sts',c:-1,g:'伤',desc:()=>`无法打出。`},
+  eming:{n:'恶名',gu:'',t:'cur',r:'cur',c:-1,g:'恶',desc:()=>`无法打出。`},
+  xinmo:{n:'反噬',gu:'',t:'cur',r:'cur',c:-1,g:'魔',desc:()=>`无法打出。回合结束时若在手中，失去 1 生命。`},
+  huxian:{n:'狐债',gu:'',t:'cur',r:'cur',c:-1,g:'狐',desc:()=>`无法打出。`},
+};
+const this_=CARDS; // 描述函数里取数值用
+const cost=(k,u)=>V(CARDS[k].c,u);
+
+/* ================= 宝物 ================= */
+const RELICS={
+  chunqiu:{n:'本命金蚕',g:'蚕',r:'start',d:'本命蛊。每局一次：身死时金蚕替你挡下死劫，生命回满，重打这一场。'},
+  qingzhu:{n:'竹筒酒',g:'竹',r:'com',d:'战斗胜利后回复 6 生命。',win(){heal(6,true)}},
+  xueya:{n:'雪獠牙',g:'牙',r:'com',d:'每场战斗开始获得 1 层力。',start(){addP('str',1)}},
+  yushi:{n:'长命银锁',g:'长',r:'com',d:'每场战斗开始获得 10 格挡。',start(){gainBlock(10)}},
+  yuelan:{n:'枫香叶',g:'枫',r:'com',d:'每场战斗开始获得 1 层蝶粉。',start(){addP('moon',1)}},
+  shengji:{n:'还魂草',g:'还',r:'com',d:'拾取时最大生命 +7。',pickup(){R.maxHp+=7;R.hp+=7}},
+  houer:{n:'猴儿酒',g:'猴',r:'com',d:'歇脚调息时额外回复 15 生命。'},
+  guyue:{n:'寨老令牌',g:'令',r:'com',d:'每场战斗开始给予所有敌人 1 层破绽。',start(){alive().forEach(e=>addE(e,'vuln',1))}},
+  dizang:{n:'瘴母花',g:'花',r:'unc',d:'每场战斗第一回合多抽 2 张牌。'},
+  jiunang:{n:'酒葫芦',g:'囊',r:'unc',d:'每打出 10 张攻击牌，获得 1 点心血。',ctr:1},
+  hama:{n:'金蟾',g:'蟾',r:'unc',d:'每场战斗开始给予所有敌人 3 层流血。',start(){alive().forEach(e=>addE(e,'bleed',3))}},
+  tongpi:{n:'铜护心',g:'铜',r:'unc',d:'回合结束时若没有格挡，获得 6 格挡。'},
+  yinshi:{n:'石胎',g:'石',r:'unc',d:'每场战斗开始获得 1 层隐。',start(){addP('buffer',1)}},
+  shangqi:{n:'马帮商契',g:'契',r:'unc',d:'马帮集市中所有价格降低 20%。'},
+  lianhua:{n:'雪莲',g:'莲',r:'rare',d:'每场战斗第一回合额外获得 1 点心血。'},
+  xiwang:{n:'替身草人',g:'望',r:'rare',d:'每场战斗中生命首次低于一半时，回复 15 生命。'},
+  sheli:{n:'蛊母卵',g:'舍',r:'rare',d:'拾取时随机升级 3 张牌。',pickup(){const c=shuffle(R.deck.filter(c=>!c.up&&canUp(c))).slice(0,3);c.forEach(x=>x.up=1)}},
+  // 首领宝物：每回合 +1 心血，各有代价
+  bingpo:{n:'冰蚕',g:'冰',r:'boss',d:'每回合心血 +1。每场战斗开始，2 张寒气洗入抽牌堆。',boss:1},
+  xuehai:{n:'血蛊秘卷',g:'血',r:'boss',d:'每回合心血 +1。歇脚时无法调息回复生命。',boss:1},
+  leiguan:{n:'雷狼冠',g:'雷',r:'boss',d:'每回合心血 +1。每回合少抽 1 张牌。',boss:1},
+  langxin:{n:'狼王之心',g:'狼',r:'boss',d:'每回合心血 +1。每场战斗开始，所有敌人获得 1 层力。',boss:1},
+  jinling:{n:'土司金印',g:'金',r:'boss',d:'每回合心血 +1。此后无法再获得苗银。',boss:1},
+};
+
+/* ================= 囊中物（药） ================= */
+const POTS={
+  leaf:{n:'还魂叶',g:'叶',d:'回复 20 生命。可在战斗外使用。',any:1,use(){heal(20)}},
+  wine:{n:'辣酒',g:'酒',d:'获得 2 点心血。',use(){gainE(2)}},
+  bear:{n:'熊胆',g:'胆',d:'获得 2 层力。',use(){addP('str',2)}},
+  jade:{n:'银粉',g:'粉',d:'获得 12 格挡。',use(){gainBlock(12)}},
+  fog:{n:'瘴雾囊',g:'雾',d:'给予所有敌人 6 层流血。',use(){alive().forEach(e=>addE(e,'bleed',6))}},
+  dew:{n:'枫露',g:'露',d:'抽 3 张牌。',use(){draw(3)}},
+  thunder:{n:'雷珠',g:'珠',d:'对所有敌人造成 10 伤害。',use(){alive().forEach(e=>damageEnemy(e,10))}},
+  silk:{n:'蛛丝团',g:'丝',d:'给予所有敌人 2 层缠缚。',use(){alive().forEach(e=>addE(e,'weak',2))}},
+};
+
+/* ================= 敌人 =================
+   招式字段：dmg 伤害 hits 段数 blk 自身格挡 blkAlly 给同伴格挡 buf 自身增益 bufAll 全体增益 deb 对你的减益
+            add 塞入你弃牌堆的状态牌 heal 自愈 healAlly 治疗同伴 sum 召唤 chg 蓄力 */
+function rnd(e,w,max={}){
+  const last=e.hist[e.hist.length-1];let streak=0;for(let i=e.hist.length-1;i>=0&&e.hist[i]===last;i--)streak++;
+  const ok=Object.entries(w).filter(([k])=>!(k===last&&streak>=(max[k]||9)));
+  const s=ok.reduce((a,x)=>a+x[1],0);let r=Math.random()*s;for(const [k,v] of ok){r-=v;if(r<0)return k}return ok[0][0];
+}
+const cyc=(e,arr)=>arr[(e.turnN||0)%arr.length];
+const EN={
+  // ---- 第一幕 瘴林 ----
+  boar:{n:'野猪',g:'猪',hp:[40,44],d:'瘴林里最常见的野兽，皮糙肉厚。',moves:{bite:{n:'撕咬',dmg:11},paw:{n:'刨地',buf:{str:3},blk:6},ram:{n:'冲撞',dmg:7,blk:5}},
+    ai:e=>e.hist.length?rnd(e,{bite:45,paw:30,ram:25},{bite:2,paw:1,ram:2}):'bite'},
+  wolf:{n:'雷纹狼',g:'狼',hp:[20,24],d:'背生雷纹，成群出没。',moves:{bite:{n:'撕咬',dmg:6},spark:{n:'电光',dmg:4,deb:{vuln:1}}},ai:e=>rnd(e,{bite:60,spark:40},{bite:2,spark:1})},
+  snake:{n:'青竹蛇',g:'蛇',hp:[30,34],d:'藏在竹叶里的毒蛇。',moves:{fang:{n:'毒牙',dmg:5,deb:{bleed:3}},coil:{n:'盘踞',blk:8,buf:{str:2}}},ai:e=>rnd(e,{fang:65,coil:35},{fang:2,coil:1})},
+  monkey:{n:'山魈',g:'魈',hp:[12,15],d:'山中精怪，眼如绿玉，成群而动。',moves:{rock:{n:'投石',dmg:5},claw:{n:'抓挠',dmg:3,hits:2},shriek:{n:'尖叫',deb:{weak:1}}},ai:e=>rnd(e,{rock:40,claw:40,shriek:20},{shriek:1})},
+
+  patrol:{n:'邻寨蛊师',g:'蛊',hp:[46,50],d:'邻寨的蛊师，独自在山里巡猎。',moves:{blade:{n:'蝶刃',dmg:9},skin:{n:'银甲',blk:11},twin:{n:'双翼斩',dmg:5,hits:2}},ai:e=>rnd(e,{blade:40,skin:25,twin:35},{skin:1})},
+  mobei:{n:'寨中恶少·岩猛',g:'岩',hp:[30,32],d:'仗着一身蛮力在寨中横行。',moves:{punch:{n:'重拳',dmg:8},rage:{n:'怒气',buf:{str:2}}},ai:e=>rnd(e,{punch:70,rage:30},{rage:1})},
+  chicheng:{n:'土司之子·龙少卿',g:'龙',hp:[26,28],d:'土司的独子，心思阴沉。',moves:{heal:{n:'治疗',healAlly:8},sneak:{n:'阴招',dmg:4,deb:{weak:1}}},ai:e=>alive().some(a=>a!==e&&a.hp<a.max-6)&&e.hist[e.hist.length-1]!=='heal'?'heal':'sneak'},
+  bear:{n:'黑熊',g:'熊',hp:[82,86],elite:1,d:'山中一霸。一掌拍碎青石。',moves:{roar:{n:'咆哮',buf:{str:2},deb:{weak:1}},swipe:{n:'熊掌',dmg:13},double:{n:'连掌',dmg:6,hits:2},charge:{n:'蓄势',blk:10,chg:1},smash:{n:'千钧一掌',dmg:26}},
+    ai:e=>{if(!e.hist.length)return 'roar';if(e.hist[e.hist.length-1]==='charge')return 'smash';return rnd(e,{swipe:40,double:30,charge:30},{swipe:2,double:2,charge:1})}},
+  boarKing:{n:'野猪王',g:'王',hp:[88,92],elite:1,d:'獠牙如雪，一身怒鬃。你越防，它越狂。',init:e=>{e.st.bristle=2},moves:{rush:{n:'狂奔',buf:{str:2}},charge:{n:'冲撞',dmg:14},tusk:{n:'獠牙挑刺',dmg:8,deb:{vuln:2}}},
+    ai:e=>e.hist.length?rnd(e,{charge:60,tusk:40},{charge:2,tusk:1}):'rush'},
+  monkeyKing:{n:'山魈王',g:'魈',hp:[70,74],elite:1,d:'山魈的王，守着一洞猴儿酒。',moves:{boulder:{n:'投掷巨石',dmg:16},beat:{n:'捶胸',bufAll:{str:2}},call:{n:'呼群',sum:['monkey']}},
+    ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='call'?'call':rnd(e,{boulder:60,beat:40},{beat:1})},
+  thunder:{n:'雷狼王',g:'狼',hp:[220,220],boss:1,d:'瘴林狼群之首。头顶雷冠，电光缠身。',moves:{howl:{n:'狼嚎',sum:['wolf','wolf']},rally:{n:'狼嚎',bufAll:{str:2}},bite:{n:'电噬',dmg:8,hits:2},charge:{n:'蓄雷',blk:12,chg:1},crown:{n:'雷冠',dmg:30,deb:{vuln:2}}},
+    ai:e=>{const k=cyc(e,['howl','bite','charge','crown','bite']);return k==='howl'&&alive().length>=3?'rally':k}},
+  bai:{n:'冰蚕蛊师·雪婆',g:'冰',hp:[210,210],boss:1,d:'雪山上下来的蛊师，以冰蚕为本命，冷得像一块万年玄冰。',moves:{icicle:{n:'冰锥',dmg:6,hits:3},soul:{n:'冰蚕吐息',blk:15,add:{hanqi:2}},frost:{n:'霜降',dmg:16,deb:{frail:2}},burst:{n:'冰蚕暴走',buf:{str:4},blk:20}},
+    ai:e=>cyc(e,['icicle','soul','frost']),hurt(e){if(!e.phase&&e.hp<=e.max/2){e.phase=1;e.mk='burst';e.move=e.def.moves.burst;banner('冰魄爆发')}}},
+  // ---- 第二幕 黑水土司城 ----
+  rogue:{n:'山匪',g:'匪',hp:[60,66],d:'在黑水河边劫道的亡命徒。',moves:{blade:{n:'刀光',dmg:13},poison:{n:'毒雾',deb:{bleed:5}},slash:{n:'狠辣',dmg:7,hits:2}},ai:e=>rnd(e,{blade:40,poison:25,slash:35},{poison:1})},
+  duwolf:{n:'瘴狼',g:'狼',hp:[34,38],d:'被驯兽巫驱使的狼，须上带着瘴毒。',moves:{whisker:{n:'毒须',dmg:7,deb:{bleed:2}},pounce:{n:'扑咬',dmg:11}},ai:e=>rnd(e,{whisker:50,pounce:50},{whisker:2,pounce:2})},
+  guard:{n:'土司兵',g:'兵',hp:[44,48],d:'土司城的守卫，结阵而战。',moves:{shield:{n:'结阵',blkAlly:14},spear:{n:'长枪',dmg:13}},ai:e=>rnd(e,{shield:40,spear:60},{shield:1,spear:2})},
+  stoneman:{n:'石傀',g:'石',hp:[78,84],d:'巫师以山石炼成的傀儡。',moves:{fist:{n:'石拳',dmg:16},eat:{n:'吞石',blk:12,buf:{str:2}},quake:{n:'地裂',dmg:10,deb:{frail:1}}},ai:e=>rnd(e,{fist:45,eat:25,quake:30},{eat:1})},
+  maomin:{n:'毛人',g:'毛',hp:[54,58],d:'浑身长毛的异人，传说是《山海经》里毛民的后裔，天生会炼蛊。',moves:{refine:{n:'炼蛊',add:{shang:2}},swarm:{n:'蛊群',dmg:6,hits:2},bless:{n:'加持',bufAll:{str:2}}},ai:e=>rnd(e,{refine:30,swarm:45,bless:25},{refine:1,bless:1})},
+  fox:{n:'山狐',g:'狐',hp:[22,26],d:'在山里修行的狐狸，善迷人心。',moves:{charm:{n:'迷魂',dmg:4,deb:{weak:1}},bite:{n:'撕咬',dmg:8}},ai:e=>rnd(e,{charm:40,bite:60},{charm:1})},
+  ironcatch:{n:'官府捕快',g:'捕',hp:[118,124],elite:1,d:'巡检大人手下的捕快，专拿养蛊之人。',moves:{seize:{n:'锁拿',deb:{weak:2,vuln:2}},fist:{n:'铁拳',dmg:22},armor:{n:'铁布衫',blk:20,buf:{str:2}}},ai:e=>e.hist.length?rnd(e,{fist:55,armor:30,seize:15},{fist:2,armor:1,seize:1}):'seize'},
+  tamer:{n:'驯兽巫',g:'巫',hp:[70,74],elite:1,d:'以巫术驱使狼群的巫师。',moves:{command:{n:'号令',bufAll:{str:3}},call:{n:'唤狼',sum:['duwolf']},lash:{n:'鞭笞',dmg:12}},
+    ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='call'?'call':rnd(e,{command:40,lash:60},{command:1})},
+  xuehun:{n:'血蛊怨魂',g:'魂',hp:[140,146],elite:1,d:'被血蛊吸干的人，死后怨气不散。',moves:{curse:{n:'血咒',deb:{bleed:7}},claw:{n:'血爪',dmg:15},drain:{n:'噬血',dmg:10,heal:10}},ai:e=>rnd(e,{curse:25,claw:45,drain:30},{curse:1,drain:1})},
+  tiexueleng:{n:'巡检大人',g:'巡',hp:[330,330],boss:1,d:'朝廷派来南疆的巡检，誓要剿尽养蛊之人。',moves:{verdict:{n:'断案',deb:{vuln:2,weak:2}},fists:{n:'铁拳连击',dmg:10,hits:3},law:{n:'王法',blk:25,buf:{str:3}},charge:{n:'蓄势',blk:10,chg:1},strike:{n:'雷霆一击',dmg:42}},
+    ai:e=>cyc(e,['verdict','fists','law','charge','strike','fists'])},
+  langwang:{n:'狼王',g:'狼',hp:[290,290],boss:1,d:'驯兽巫供奉的狼神。一声号令，万狼奔腾。',moves:{summon:{n:'万狼奔腾',sum:['duwolf','duwolf']},bite:{n:'狼王噬',dmg:18},order:{n:'号令',bufAll:{str:3}},pack:{n:'群狼扑杀',dmg:5,hits:4}},
+    ai:e=>{const k=cyc(e,['summon','bite','order','pack']);return k==='summon'&&alive().length>=3?'bite':k}},
+  // ---- 第三幕 万蛊窟 ----
+  zhengdao:{n:'青城道士',g:'道',hp:[88,94],d:'受土司之邀入山除蛊的道士。',moves:{sword:{n:'剑气',dmg:15},combo:{n:'合击',dmg:9,hits:2},guard:{n:'护法',blk:18,blkAlly:10}},ai:e=>rnd(e,{sword:40,combo:35,guard:25},{guard:1})},
+  zombie:{n:'走尸',g:'尸',hp:[60,66],d:'赶尸匠赶着的尸身，额上贴着黄符。',moves:{claw:{n:'尸爪',dmg:13},venom:{n:'尸毒',deb:{bleed:6}}},ai:e=>rnd(e,{claw:65,venom:35},{venom:1})},
+  modao:{n:'黑巫',g:'巫',hp:[52,58],d:'在万蛊窟里修黑巫术的人。',moves:{fire:{n:'巫火',dmg:11,deb:{vuln:1}},frenzy:{n:'狂性',buf:{str:3}}},ai:e=>rnd(e,{fire:70,frenzy:30},{frenzy:1})},
+  jianke:{n:'御剑道人',g:'剑',hp:[96,104],d:'一身剑光，出手便是四剑。',moves:{blades:{n:'剑光',dmg:6,hits:4},focus:{n:'凝神',buf:{str:2},blk:10}},ai:e=>rnd(e,{blades:65,focus:35},{focus:1})},
+  wuzhuan:{n:'天师',g:'师',hp:[200,210],elite:1,d:'坐镇除蛊大阵的天师，法力深厚。',moves:{judge:{n:'天罚',deb:{vuln:2,weak:2,frail:2}},light:{n:'正光',dmg:8,hits:3},barrier:{n:'结界',blk:30}},ai:e=>e.hist.length?rnd(e,{light:55,barrier:25,judge:20},{judge:1,barrier:1}):'judge'},
+  jiangwang:{n:'赶尸匠',g:'尸',hp:[110,116],elite:1,d:'摇着铜铃的赶尸人，身后跟着一串走尸。',moves:{raise:{n:'起尸',sum:['zombie']},command:{n:'驱尸',bufAll:{str:3}},corpse:{n:'尸山',dmg:18}},
+    ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='raise'?'raise':rnd(e,{command:35,corpse:65},{command:1})},
+  shangyanfei:{n:'土司·龙承恩',g:'龙',hp:[420,420],boss:1,d:'黑水土司，富甲南疆。青崖寨的血案，与他脱不了干系。',moves:{wealth:{n:'重金悬赏',sum:['guard']},gold:{n:'千金一掷',dmg:26},rain:{n:'苗银如雨',dmg:6,hits:5},shield:{n:'金身',blk:30,buf:{str:3}}},
+    ai:e=>{const k=cyc(e,['wealth','gold','rain','shield']);return k==='wealth'&&alive().length>=3?'gold':k}},
+  mowutian:{n:'黑巫王',g:'巫',hp:[400,400],boss:1,d:'万蛊窟的主人，想夺尽南疆之蛊，炼成蛊母。',moves:{heavenmo:{n:'黑巫降神',buf:{str:4}},demonfire:{n:'巫火焚天',dmg:22},devour:{n:'吞噬',dmg:14,heal:14},inferno:{n:'蛊火燎原',dmg:10,hits:3,add:{shang:1}}},
+    ai:e=>cyc(e,['heavenmo','demonfire','devour','inferno','demonfire'])},
+};
+const GROUPS=[
+  {easy:[['boar'],['wolf','wolf'],['snake'],['monkey','monkey']],hard:[['patrol'],['mobei','chicheng'],['wolf','wolf','wolf'],['monkey','monkey','monkey'],['boar','wolf']],elite:[['bear'],['boarKing'],['monkeyKing','monkey']],boss:[['thunder'],['bai']]},
+  {easy:[['rogue'],['duwolf','duwolf'],['fox','fox','fox']],hard:[['stoneman'],['maomin','fox'],['guard','guard'],['rogue','duwolf'],['maomin','guard']],elite:[['ironcatch'],['tamer','duwolf'],['xuehun']],boss:[['tiexueleng'],['langwang']]},
+  {easy:[['zhengdao'],['zombie','zombie'],['modao','modao']],hard:[['jianke'],['zhengdao','modao'],['zombie','zombie','modao'],['jianke','zombie']],elite:[['wuzhuan'],['jiangwang','zombie'],['zhengdao','zhengdao','zhengdao']],boss:[['shangyanfei'],['mowutian']]},
+];
+const BOSS_RELIC_OF={bai:'bingpo',thunder:'leiguan',tiexueleng:'jinling',langwang:'langxin',shangyanfei:'jinling',mowutian:'xuehai'};
+
+/* ================= 局外：蛊名与解锁 ================= */
+const UNLOCKS=[
+  {at:80,k:'boon_qingzhu',n:'竹林酒香',d:'开局赐福新增：获得宝物「竹筒酒」'},
+  {at:200,k:'card_xuelu',n:'疳蛊秘方',d:'卡池新增传说牌：疳蛊'},
+  {at:350,k:'boon_upgrade',n:'三代传艺',d:'开局赐福新增：升级两张起始牌'},
+  {at:550,k:'card_tunjiang',n:'蛤蟆蛊',d:'卡池新增传说牌：蛤蟆吞'},
+  {at:800,k:'boon_lotus',n:'雪莲',d:'开局赐福新增：获得宝物「雪莲」'},
+  {at:1100,k:'card_chunqiu',n:'金蚕之道',d:'卡池新增传说牌：金蚕吐丝'},
+  {at:1500,k:'boon_cache',n:'古蛊师遗瓮',d:'开局赐福新增：失去 10 最大生命，获得一件传说宝物'},
+];
+let META={guang:0,runs:0,wins:0,best:0};
+const MK='njgs.cards.meta.v1',RK='njgs.cards.run.v1';
+function loadMeta(){try{const m=JSON.parse(localStorage.getItem(MK)||'null');if(m)META={...META,...m}}catch(e){}}
+function saveMeta(){try{localStorage.setItem(MK,JSON.stringify(META))}catch(e){}}
+function saveRun(){try{if(R)localStorage.setItem(RK,JSON.stringify(R))}catch(e){}}
+function loadRun(){try{return JSON.parse(localStorage.getItem(RK)||'null')}catch(e){return null}}
+function clearRun(){try{localStorage.removeItem(RK)}catch(e){}}
+const unlocked=k=>UNLOCKS.some(u=>u.k===k&&META.guang>=u.at);
+
+/* ================= 局内状态 ================= */
+let R=null,B=null,SCREEN='title',SEL=null,UID=0;
+const mkCard=(key,up=0)=>({key,up,uid:++UID});
+function canUp(c){return CARDS[c.key].t!=='sts'&&CARDS[c.key].t!=='cur'}
+function cardPool(r){return Object.entries(CARDS).filter(([k,c])=>c.r===r&&(!c.lock||unlocked(c.lock))).map(([k])=>k)}
+function rollRarity(kind){const x=Math.random()*100;if(kind==='boss')return 'rare';if(kind==='elite')return x<10?'rare':x<50?'unc':'com';if(kind==='shop')return x<9?'rare':x<46?'unc':'com';return x<3?'rare':x<37?'unc':'com'}
+function cardChoices(kind,n=3){const out=[];let tries=0;while(out.length<n&&tries++<50){const k=pick(cardPool(rollRarity(kind)));if(!out.includes(k))out.push(k)}const upChance=[0,.12,.25][R.act];return out.map(k=>mkCard(k,Math.random()<upChance?1:0))}
+function relicPool(r){return Object.keys(RELICS).filter(k=>RELICS[k].r===r&&!R.relics.includes(k))}
+function rollRelic(){const x=Math.random();const r=x<.5?'com':x<.83?'unc':'rare';let p=relicPool(r);if(!p.length)p=relicPool('com').concat(relicPool('unc'),relicPool('rare'));return p.length?pick(p):null}
+function gainRelic(k){if(!k||R.relics.includes(k))return;R.relics.push(k);const d=RELICS[k];if(d.pickup)d.pickup()}
+const has=k=>R&&R.relics.includes(k);
+function gainGold(n){if(has('jinling'))return 0;R.gold+=n;if(n>0)SND.fx('gold');return n}
+function addPotion(k){const i=R.pots.indexOf(null);if(i<0)return false;R.pots[i]=k;return true}
+
+function newRun(){
+  UID=0;
+  R={hp:70,maxHp:70,gold:99,act:0,floor:0,deck:[],relics:['chunqiu'],pots:[null,null,null],map:null,pos:null,pending:null,cicada:1,removals:0,stats:{kills:0,elites:0,bosses:0,floors:0},seen:[],bossKey:null,jiunang:0};
+  for(let i=0;i<5;i++)R.deck.push(mkCard('yuedao'));
+  for(let i=0;i<4;i++)R.deck.push(mkCard('yupi'));
+  R.deck.push(mkCard('jiuchong'));
+  genMap();
+  boonScreen();
+}
+
+/* ================= 地图 ================= */
+const NODE_G={fight:'战',elite:'凶',event:'奇',rest:'歇',shop:'商',treasure:'宝',boss:'王'};
+const NODE_N={fight:'遭遇战',elite:'强敌',event:'奇遇',rest:'歇脚',shop:'马帮',treasure:'遗藏',boss:'首领'};
+const ROWS=13,COLS=7;
+function genMap(){
+  const nodes={},edges=[];
+  const key=(r,c)=>r+','+c;
+  const starts=[];
+  for(let p=0;p<6;p++){
+    let c=p<2?(p===0?RI(0,2):RI(4,6)):RI(0,COLS-1);
+    starts.push(c);
+    for(let r=0;r<ROWS;r++){
+      nodes[key(r,c)]=nodes[key(r,c)]||{r,c};
+      if(r===ROWS-1)break;
+      let cand=[c-1,c,c+1].filter(x=>x>=0&&x<COLS);
+      cand=cand.filter(nc=>!edges.some(([r1,a,r2,b])=>r1===r&&((a-c)*(b-nc)<0)));
+      const nc=cand.length?pick(cand):c;
+      if(!edges.some(e=>e[0]===r&&e[1]===c&&e[3]===nc))edges.push([r,c,r+1,nc]);
+      c=nc;
+    }
+  }
+  const parents=(n)=>edges.filter(e=>e[2]===n.r&&e[3]===n.c).map(e=>nodes[key(e[0],e[1])]);
+  const rows=[...Array(ROWS)].map((_,r)=>Object.values(nodes).filter(n=>n.r===r));
+  for(let r=0;r<ROWS;r++)for(const n of rows[r]){
+    if(r===0){n.type='fight';continue}
+    if(r===6){n.type='treasure';continue}
+    if(r===ROWS-1){n.type='rest';continue}
+    let t;for(let k=0;k<8;k++){
+      const x=Math.random()*100;
+      t=x<45?'fight':x<67?'event':x<83?'elite':x<95?'rest':'shop';
+      if(r<4&&(t==='elite'||t==='rest'))continue;
+      if(r===ROWS-2&&t==='rest')continue;
+      if((t==='elite'||t==='rest'||t==='shop')&&parents(n).some(p=>p.type===t))continue;
+      break;
+    }
+    n.type=t;
+  }
+  Object.values(nodes).forEach(n=>{n.jx=RI(-12,12);n.jy=RI(-10,10)});
+  R.map={nodes,edges,done:[]};
+  R.pos=null;
+}
+function availNodes(){
+  const m=R.map;
+  if(!R.pos)return Object.values(m.nodes).filter(n=>n.r===0);
+  if(R.pos.r===ROWS-1)return [{r:ROWS,c:3,type:'boss'}];
+  return m.edges.filter(e=>e[0]===R.pos.r&&e[1]===R.pos.c).map(e=>m.nodes[e[2]+','+e[3]]);
+}
+function nodeXY(n){const W=700;if(n.r===ROWS)return {x:W/2,y:58};const H=(ROWS+1)*74+80;return {x:70+n.c*93+(n.jx||0),y:H-50-n.r*74+(n.jy||0)}}
+function mapScreen(){
+  SCREEN='map';SEL=null;saveRun();renderBar();
+  const m=R.map,H=(ROWS+1)*74+80,av=availNodes();
+  const isAv=n=>av.some(a=>a.r===n.r&&a.c===n.c);
+  const done=k=>m.done.includes(k);
+  let svg=`<svg viewBox="0 0 700 ${H}" role="img" aria-label="${L('{a}路线图',{a:ACTS[R.act]})}">`;
+  for(const [r1,a,r2,b] of m.edges){const p=nodeXY(m.nodes[r1+','+a]),q=nodeXY(m.nodes[r2+','+b]);const w=done(r1+','+a)&&done(r2+','+b);svg+=`<line class="edge ${w?'walked':''}" x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}"/>`}
+  const boss={r:ROWS,c:3,type:'boss'};const bp=nodeXY(boss);
+  Object.values(m.nodes).filter(n=>n.r===ROWS-1).forEach(n=>{const p=nodeXY(n);svg+=`<line class="edge ${done(n.r+','+n.c)&&R.pos&&R.pos.r===ROWS-1&&R.pos.c===n.c?'walked':''}" x1="${p.x}" y1="${p.y}" x2="${bp.x}" y2="${bp.y+30}"/>`});
+  for(const n of [...Object.values(m.nodes),boss]){
+    const p=nodeXY(n),k=n.r+','+n.c,a=isAv(n),cur=R.pos&&R.pos.r===n.r&&R.pos.c===n.c,rad=n.type==='boss'?32:18;
+    svg+=`<g class="node t-${n.type} ${done(k)?'done':''} ${cur?'cur':''} ${a?'avail':''}" ${a?`data-n="${k}" tabindex="0" role="button" aria-label="${NODE_N[n.type]}"`:''}>${a?`<circle class="ring" cx="${p.x}" cy="${p.y}" r="${rad}"/>`:''}<circle class="b" cx="${p.x}" cy="${p.y}" r="${rad}"/><text x="${p.x}" y="${p.y}">${NODE_G[n.type]}</text></g>`;
+  }
+  svg+='</svg>';
+  $('#screen').innerHTML=`<div class="mapwrap"><div class="mapscroll" id="ms" style="background-image:linear-gradient(rgba(14,21,19,.74),rgba(14,21,19,.86)),url(${bgArt(R.act)})">${svg}</div>
+    <aside class="legend"><h3>${L(['第一幕','第二幕','第三幕'][R.act])} · ${ACTS[R.act]}</h3><p>${L(['寨子烧成了灰。瘴林里处处是野兽和仇家，走出去，才有路。','血案的线索指向黑水河畔的土司城。官府的巡检已经盯上了你。','万蛊窟深不见底。灭寨的真凶，就在最底下等你。'][R.act])}</p>
+    <ul>${Object.entries(NODE_G).map(([k,g])=>`<li><span class="g" style="color:var(--${{fight:'dim',elite:'rust',event:'violet',rest:'verdigris',shop:'gold',treasure:'bronze',boss:'gold'}[k]})">${g}</span>${NODE_N[k]}</li>`).join('')}</ul>
+    <p style="margin-top:12px">${L('点亮的节点可以前往。路只能往上走。')}</p></aside></div>`;
+  $('#screen').querySelectorAll('[data-n]').forEach(el=>{const go=()=>enterNode(el.dataset.n);el.onclick=go;el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}}});
+  const ms=$('#ms');const y=R.pos?nodeXY(R.pos.r===ROWS?{r:ROWS,c:3}:R.map.nodes[R.pos.r+','+R.pos.c]).y:H;
+  requestAnimationFrame(()=>{ms.scrollTop=Math.max(0,(y/H)*ms.scrollHeight-ms.clientHeight*.65)});
+}
+function enterNode(k){
+  SND.fx('click');
+  const [r,c]=k.split(',').map(Number);
+  const n=r===ROWS?{r,c:3,type:'boss'}:R.map.nodes[k];
+  R.pos={r,c:n.c};R.map.done.push(r+','+n.c);R.floor++;R.stats.floors++;
+  R.pending=n.type;
+  saveRun();
+  runNode(n.type);
+}
+function runNode(t){
+  if(t==='fight'){const g=GROUPS[R.act];const pool=(R.fightsAct||0)<3?g.easy:g.hard;R.fightsAct=(R.fightsAct||0)+1;startBattle(pick(pool),'fight')}
+  else if(t==='elite')startBattle(pick(GROUPS[R.act].elite),'elite');
+  else if(t==='boss'){R.bossKey=R.bossKey||pick(GROUPS[R.act].boss)[0];startBattle([R.bossKey],'boss')}
+  else if(t==='rest')restScreen();
+  else if(t==='shop')shopScreen();
+  else if(t==='treasure')treasureScreen();
+  else if(t==='event')eventScreen();
+}
+function finishNode(){R.pending=null;if(R.pos&&R.pos.r===ROWS){nextAct();return}mapScreen()}
+function nextAct(){
+  if(R.act===2){endRun(true);return}
+  R.act++;R.fightsAct=0;R.bossKey=null;
+  const h=R.maxHp-R.hp;R.hp=R.maxHp;
+  genMap();
+  SCREEN='interlude';renderBar();
+  $('#screen').innerHTML=`<div class="panel"><h2>${L(['','第二幕 · 黑水土司城','第三幕 · 万蛊窟'][R.act])}</h2>
+    <p class="lead">${L(R.act===1?'瘴林已在身后。顺着黑水河往下走，土司城的城楼出现在雾里。':'你在土司府里找到了一张地图：万蛊窟。所有的线索，都通向那里。')}</p>
+    <p>${L('你在路上养好了伤，生命回复 {h}。',{h})}</p><div class="btnrow"><button class="btn key" id="go" type="button">${L('上路')}</button></div></div>`;
+  $('#go').onclick=mapScreen;
+  saveRun();
+}
+
+/* ================= 战斗 ================= */
+function mkEnemy(key){
+  const d=EN[key];const hp=RI(d.hp[0],d.hp[1]);
+  const e={key,def:d,n:d.n,hp,max:hp,block:0,st:{},hist:[],turnN:0,id:++UID};
+  if(d.init)d.init(e);
+  return e;
+}
+function chooseIntent(e){e.mk=e.def.ai(e);e.move=e.def.moves[e.mk]}
+const alive=()=>B?B.en.filter(e=>e.hp>0):[];
+function startBattle(group,kind){
+  SCREEN='battle';
+  const deck=R.deck.map(c=>({...c}));
+  B={kind,group,en:group.map(mkEnemy),draw:shuffle(deck),hand:[],disc:[],exh:[],e:0,turn:0,p:{block:0,st:{}},over:false,busy:false,free:0,hopeUsed:false,log:[]};
+  if(kind==='boss')B.en.forEach(e=>e.boss=1);
+  B.auto=kind!=='boss'&&AUTO;
+  B.en.forEach(chooseIntent);
+  // 宝物：战斗开始
+  R.relics.forEach(k=>RELICS[k].start&&RELICS[k].start());
+  if(has('bingpo')){B.draw.push(mkCard('hanqi'),mkCard('hanqi'));shuffle(B.draw)}
+  if(has('langxin'))B.en.forEach(e=>e.st.str=(e.st.str||0)+1);
+  renderBar();
+  buildBattle();
+  startTurn();
+}
+function maxE(){return 3+R.relics.filter(k=>RELICS[k].boss).length}
+function addP(k,n){B.p.st[k]=(B.p.st[k]||0)+n}
+function addE(e,k,n){if(!e||e.hp<=0)return;e.st[k]=(e.st[k]||0)+n}
+function gainE(n){B.e+=n}
+function gainBlock(n){let b=n;if(B.p.st.frail>0)b=Math.floor(b*.75);B.p.block+=b;if(b>0)fxAt($('#me'),'+'+b,'blk')}
+function heal(n,quiet){const v=Math.min(n,R.maxHp-R.hp);R.hp+=v;if(B&&!quiet){fxAt($('#me'),'+'+v,'heal');if(v>0)SND.fx('heal')}}
+function calcP(base,card,t,smul=1,raw){
+  let d=base;
+  if(!raw){d+=(B.p.st.str||0)*smul;if(card&&(card.tags||[]).includes('蝶'))d+=B.p.st.moon||0}
+  if(B.p.st.weak>0)d*=.75;
+  if(t&&t.st.vuln>0)d*=1.5;
+  return Math.max(0,Math.floor(d));
+}
+function pAtk(t,base,hits,card,smul=1,raw){
+  for(let h=0;h<hits;h++){
+    if(!t||t.hp<=0){break}
+    damageEnemy(t,calcP(base,card,t,smul,raw));
+  }
+}
+function pAtkAll(base,hits,card){for(let h=0;h<hits;h++)alive().forEach(e=>damageEnemy(e,calcP(base,card,e)))}
+function damageEnemy(e,d,pierce){
+  if(e.hp<=0)return;
+  let left=d;
+  if(!pierce&&e.block>0){const a=Math.min(e.block,left);e.block-=a;left-=a}
+  e.hp-=left;
+  SND.fx(left<=0?'block':left>=15?'heavy':'hit');
+  const el=document.querySelector(`[data-e="${e.id}"]`);
+  fxAt(el,left>0?'-'+left:L('格挡'),'dmg');if(el){el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit')}
+  if(e.def.hurt&&e.hp>0)e.def.hurt(e);
+  if(e.hp<=0){e.hp=0;R.stats.kills++;SND.fx('kill');if(e.def.boss)B.en.filter(x=>x!==e).forEach(x=>x.hp=0)}
+}
+function loseHP(n,fromCard){
+  if(n<=0||B.over)return;
+  if(B.p.st.buffer>0){B.p.st.buffer--;fxAt($('#me'),L('隐'),'txt');SND.fx('block');return}
+  R.hp-=n;SND.fx('hurt');fxAt($('#me'),'-'+n,'dmg');
+  const me=$('#me');if(me){me.classList.remove('hit');void me.offsetWidth;me.classList.add('hit')}
+  if(fromCard&&B.p.st.moxin)addP('str',B.p.st.moxin);
+  if(R.hp>0&&R.hp<R.maxHp/2&&has('xiwang')&&!B.hopeUsed){B.hopeUsed=true;heal(15)}
+  if(R.hp<=0)die();
+}
+function playerHit(e,base){
+  let d=base+(e.st.str||0);
+  if(e.st.weak>0)d*=.75;
+  if(B.p.st.vuln>0)d*=1.5;
+  d=Math.max(0,Math.floor(d));
+  if(B.p.block>0){const a=Math.min(B.p.block,d);B.p.block-=a;d-=a;if(a){fxAt($('#me'),L('挡 {n}',{n:a}),'blk');SND.fx('block')}}
+  if(d>0)loseHP(d,false);
+}
+function calcE(e,base){let d=base+(e.st.str||0);if(e.st.weak>0)d*=.75;if(B.p.st.vuln>0)d*=1.5;return Math.max(0,Math.floor(d))}
+function draw(n){
+  for(let i=0;i<n;i++){
+    if(!B.draw.length){if(!B.disc.length)return;B.draw=shuffle(B.disc);B.disc=[]}
+    const c=B.draw.pop();
+    if(B.hand.length>=10)B.disc.push(c);else B.hand.push(c);
+  }
+}
+function startTurn(){
+  if(B.over)return;
+  B.turn++;
+  if(!B.p.st.baiyu)B.p.block=0;
+  if(B.p.st.bleed>0){const b=B.p.st.bleed;B.p.st.bleed--;loseHP(b,false);if(B.over)return}
+  B.e=maxE()+(B.p.st.nextE||0);B.p.st.nextE=0;
+  if(B.turn===1&&has('lianhua'))B.e+=1;
+  if(B.p.st.nextB){gainBlock(B.p.st.nextB);B.p.st.nextB=0}
+  if(B.p.st.gangzong)addP('str',B.p.st.gangzong);
+  if(B.p.st.xuelu)alive().forEach(e=>addE(e,'bleed',B.p.st.xuelu));
+  let n=5+(B.p.st.siwei||0)-(has('leiguan')?1:0)+(B.turn===1&&has('dizang')?2:0);
+  B.free=0;
+  draw(n);
+  B.busy=false;
+  renderBattle();
+  if(autoOn())autoRun();
+}
+function cardCost(c){if(B&&B.free)return 0;return cost(c.key,c.up)}
+function playable(c){
+  const d=CARDS[c.key];
+  if(d.c===-1)return L('无法打出');
+  if(cardCost(c)>B.e)return L('心血不足');
+  if(d.can&&!d.can())return L(d.why);
+  return '';
+}
+function needsTarget(c){return !!CARDS[c.key].tgt}
+function clickCard(i){
+  if(!B||B.busy||B.over)return;
+  const c=B.hand[i];if(!c)return;
+  const why=playable(c);if(why){hint(why);return}
+  if(needsTarget(c)&&alive().length>1){SEL=SEL===c.uid?null:c.uid;renderBattle();return}
+  playCard(c,alive()[0]);
+}
+function clickEnemy(id){
+  if(!B||B.busy||!SEL)return;
+  const c=B.hand.find(x=>x.uid===SEL);const e=B.en.find(x=>x.id===id&&x.hp>0);
+  if(c&&e)playCard(c,e);
+}
+function playCard(c,t){
+  const d=CARDS[c.key];
+  SEL=null;
+  B.e-=cardCost(c);
+  B.hand.splice(B.hand.indexOf(c),1);
+  SND.fx(d.t==='pow'?'power':(d.tags||[]).includes('蝶')?'moon':'card');
+  d.play.call(d,c.up,t,c);
+  if(B.over)return;
+  // 钩子
+  if(d.t==='skl')alive().forEach(e=>{if(e.st.bristle)addE(e,'str',e.st.bristle)});
+  if((d.tags||[]).includes('蝶')&&B.p.st.duxing)gainBlock(B.p.st.duxing);
+  if(d.t==='atk'&&has('jiunang')){R.jiunang=(R.jiunang||0)+1;if(R.jiunang>=10){R.jiunang=0;gainE(1);fxAt($('#orb'),'+1','heal')}}
+  if(d.t==='pow'){}else if(V(d.ex,c.up))B.exh.push(c);else B.disc.push(c);
+  checkWin();
+  if(!B.over)renderBattle();
+}
+function usePotion(i){
+  const k=R.pots[i];if(!k)return;const p=POTS[k];
+  if(!B||SCREEN!=='battle'){if(p.any){p.use();R.pots[i]=null;saveRun();renderBar();if(SCREEN==='map')mapScreen()}return}
+  if(B.busy||B.over)return;
+  R.pots[i]=null;p.use();checkWin();renderBar();if(!B.over)renderBattle();
+}
+function checkWin(){
+  if(B.over)return;
+  if(alive().length===0){B.over=true;B.busy=true;winBattle()}
+}
+async function endTurn(){
+  if(!B||B.busy||B.over)return;
+  B.busy=true;SEL=null;
+  // 手牌中的状态
+  for(const c of B.hand){if(c.key==='hanqi')loseHP(2,false);if(c.key==='xinmo')loseHP(1,false);if(B.over)return}
+  if(has('tongpi')&&B.p.block===0)gainBlock(6);
+  B.disc.push(...B.hand);B.hand=[];
+  ['weak','vuln','frail'].forEach(k=>{if(B.p.st[k]>0)B.p.st[k]--});
+  renderBattle();
+  await wait(250);
+  for(const e of [...B.en]){
+    if(e.hp<=0)continue;
+    e.block=0;
+    if(e.st.bleed>0){const b=e.st.bleed;e.st.bleed--;damageEnemy(e,b,true);renderBattle();await wait(200);checkWin();if(B.over)return;if(e.hp<=0)continue}
+    await enemyAct(e);
+    if(B.over)return;
+    ['weak','vuln'].forEach(k=>{if(e.st[k]>0)e.st[k]--});
+    e.turnN++;
+    renderBattle();
+    await wait(300);
+  }
+  checkWin();if(B.over)return;
+  alive().forEach(e=>{if(!e.fresh)chooseIntent(e);e.fresh=0});
+  startTurn();
+}
+async function enemyAct(e){
+  const m=e.move;e.hist.push(e.mk);
+  const el=document.querySelector(`[data-e="${e.id}"]`);if(el)el.style.transform='translateX(-14px)';
+  await wait(160);if(el)el.style.transform='';
+  if(m.blk){e.block+=m.blk}
+  if(m.blkAlly){const al=pick(alive().filter(a=>a!==e).concat(m.blk?[]:[e]));if(al)al.block+=m.blkAlly}
+  if(m.buf)for(const k in m.buf)addE(e,k,m.buf[k]);
+  if(m.bufAll)alive().forEach(a=>{for(const k in m.bufAll)addE(a,k,m.bufAll[k])});
+  if(m.heal)e.hp=Math.min(e.max,e.hp+m.heal);
+  if(m.healAlly){const al=alive().filter(a=>a!==e).sort((a,b)=>a.hp/a.max-b.hp/b.max)[0]||e;al.hp=Math.min(al.max,al.hp+m.healAlly)}
+  if(m.sum){for(const k of m.sum){if(alive().length>=5)break;const s=mkEnemy(k);s.minion=1;chooseIntent(s);s.fresh=1;B.en.push(s)}renderBattle()}
+  if(m.dmg){for(let h=0;h<(m.hits||1);h++){playerHit(e,m.dmg);if(B.over)return;renderBattle();await wait(130)}}
+  if(m.deb)for(const k in m.deb)addP(k,m.deb[k]);
+  if(m.add)for(const k in m.add)for(let i=0;i<m.add[k];i++)B.disc.push(mkCard(k));
+}
+function die(){
+  if(B.over)return;
+  B.over=true;B.busy=true;
+  if(has('chunqiu')&&R.cicada){
+    R.cicada=0;SND.fx('cicada');
+    setTimeout(()=>{banner(L('金蚕 · 起死回生'));R.hp=R.maxHp;setTimeout(()=>startBattle(B.group,B.kind),900)},500);
+  }else{SND.fx('lose');setTimeout(()=>endRun(false),700)}
+}
+function winBattle(){
+  SND.fx('win');
+  setTimeout(()=>{
+    R.relics.forEach(k=>RELICS[k].win&&RELICS[k].win());
+    if(B.kind==='elite')R.stats.elites++;
+    if(B.kind==='boss')R.stats.bosses++;
+    const rw=[];
+    const g=B.kind==='boss'?RI(95,105):B.kind==='elite'?RI(25,35):RI(12,20);
+    rw.push({t:'gold',n:g});
+    if(B.kind!=='boss'&&Math.random()<(B.kind==='elite'?.5:.4))rw.push({t:'pot',k:pick(Object.keys(POTS))});
+    if(B.kind==='elite'){const r=rollRelic();if(r)rw.push({t:'relic',k:r})}
+    rw.push({t:'card',cards:cardChoices(B.kind)});
+    if(B.kind==='boss'){
+      const own=BOSS_RELIC_OF[R.bossKey];
+      const opts=[own,...shuffle(Object.keys(RELICS).filter(k=>RELICS[k].boss&&k!==own&&!R.relics.includes(k)))].filter(k=>k&&!R.relics.includes(k)).slice(0,3);
+      if(opts.length)rw.push({t:'boss',opts});
+    }
+    B=null;
+    rewardScreen(rw);
+  },500);
+}
+
+/* ================= 自动战斗 ================= */
+let AUTO=false; try{AUTO=localStorage.getItem('njgs.cards.auto')==='1'}catch(e){}
+let autoRunning=false;
+const AUTO_HITS={shuangren:2,jinwu:4,fengbao:3};
+const AUTO_ALL=new Set(['yuexuan','fengbao']);
+const incE=e=>e&&e.move&&e.move.dmg?calcE(e,e.move.dmg)*(e.move.hits||1):0;
+const autoOn=()=>!!(B&&B.auto);
+/* 普通战斗沿用全局开关；首领战默认手动，在首领战里打开只对这一场生效 */
+function setAuto(v){
+  if(!B||B.kind!=='boss'){AUTO=v;try{localStorage.setItem('njgs.cards.auto',v?'1':'0')}catch(e){}}
+  if(B){B.auto=v}
+  if(B&&SCREEN==='battle'){renderBattle();if(v)autoRun()}
+}
+/* 给手牌逐张打分，返回最值得打的一张；没有值得打的就返回 null（结束回合） */
+function autoPick(){
+  const foes=alive();if(!foes.length)return null;
+  const need=B.p.st.buffer>0?0:Math.max(0,foes.reduce((a,e)=>a+incE(e),0)-B.p.block);
+  const bristle=foes.some(e=>e.st.bristle);
+  const hpPct=R.hp/R.maxHp;
+  const atkInHand=B.hand.some(c=>CARDS[c.key].t==='atk'&&!playable(c));
+  let best=null;
+  for(const c of B.hand){
+    if(playable(c))continue;
+    const d=CARDS[c.key],u=c.up,k=c.key,div=Math.max(cardCost(c),.6);
+    let v=0,t=null;
+    if(d.t==='pow'){
+      v=B.turn<=2?60:(need>12?8:30);
+      if(k==='moxin'&&!B.hand.some(x=>x.key==='fangxue'||x.key==='xueji'))v=12;
+    }else if(d.t==='atk'){
+      const hits=AUTO_HITS[k]||1;
+      if(AUTO_ALL.has(k)){
+        v=foes.reduce((a,e)=>a+Math.min(e.hp+e.block,calcP(V(d.dmg,u),d,e)*hits),0)/div;
+        if(foes.length===1)v*=.9;
+      }else{
+        const raw=k==='yuti',base=raw?B.p.block:k==='zhuquan'?12:V(d.dmg,u),smul=k==='zhuquan'?V(d.smul,u):1;
+        let bv=-1;
+        for(const e of foes){
+          const dm=calcP(base,d,e,smul,raw)*hits,kill=dm>=e.hp+e.block;
+          const sc=Math.min(dm,e.hp+e.block)+(kill?25+incE(e):0);
+          if(sc>bv){bv=sc;t=e}
+        }
+        v=bv/div;
+        if(k==='xueji'&&hpPct<.35)v=0;
+        if(k==='shedu'||k==='xueyue')v+=V(d.m,u)*.8/div;
+        if(k==='chongzhuang')v+=6;
+      }
+    }else{
+      const blk=d.blk?V(d.blk,u):0;
+      if(blk){
+        v=Math.min(blk,need)*1.6/div;
+        if(k==='qingsi'){t=foes.slice().sort((a,b)=>incE(b)-incE(a))[0];v+=incE(t)>0?6:2}
+        if(k==='jinguang')v+=foes.length*3;
+        if(k==='yinshi')v+=2;
+      }else switch(k){
+        case 'yinlin':v=need>=10?need*1.4/div:0;break;
+        case 'jiuchong':v=18;break;
+        case 'guanjiu':v=10+V(d.m,u)*3;break;
+        case 'fangxue':v=hpPct>.5&&B.hand.some(x=>x!==c&&CARDS[x.key].c!==-1&&cardCost(x)>B.e)?14:0;break;
+        case 'lengyan':t=foes.slice().sort((a,b)=>b.hp-a.hp)[0];v=atkInHand?14:6;break;
+        case 'duwu':v=V(d.m,u)*foes.length*1.1/div;break;
+        case 'xiongli':v=B.p.st.str>=2?B.p.st.str*6:0;break;
+        case 'zhiliao':v=hpPct<.7?V(d.m,u)*1.5:0;break;
+        case 'sheli':v=B.hand.length>=4?16:0;break;
+        case 'chunqiu':v=B.hand.filter(x=>x!==c&&!playable(x)).reduce((a,x)=>a+cost(x.key,x.up),0)>=3?40:0;break;
+        case 'xuehai':t=foes.slice().sort((a,b)=>(b.st.bleed||0)-(a.st.bleed||0))[0];v=(t.st.bleed||0)>=5?t.st.bleed*2:0;break;
+        default:v=0; // 熔银要花苗银，自动战斗不替你花
+      }
+      if(bristle&&v>0&&need<15)v*=.4; // 怒鬃：少出守牌
+    }
+    if(v>0&&(!best||v>best.v))best={c,v,t};
+  }
+  return best;
+}
+const sleep=ms=>SPEED?new Promise(r=>setTimeout(r,ms)):Promise.resolve();
+async function autoRun(){
+  if(autoRunning)return;
+  autoRunning=true;
+  try{
+    while(autoOn()&&SCREEN==='battle'&&!B.over){
+      if(B.busy){await sleep(150);continue}
+      await sleep(450);
+      if(!autoOn()||SCREEN!=='battle'||B.over||B.busy)continue;
+      const p=autoPick();
+      if(p){
+        const t=CARDS[p.c.key].tgt?(p.t||alive().slice().sort((a,b)=>a.hp-b.hp)[0]):alive()[0];
+        SEL=null;playCard(p.c,t);
+      }else await endTurn();
+    }
+  }finally{autoRunning=false}
+}
+
+/* ================= 战斗渲染 ================= */
+function buildBattle(){
+  $('#screen').innerHTML=`<div class="battle"><div class="bf" id="bf"><div class="ent me" id="me"></div><div class="foes" id="foes"></div></div>
+    <div class="hint" id="hint"></div>
+    <div class="tray"><div class="tl"><div class="orb" id="orb"></div><button class="pile" id="pDraw" type="button"></button></div>
+    <div class="hand" id="hand"></div>
+    <div class="tr"><button class="autob" id="autob" type="button" data-tip="${L('自动战斗：AI 替你出牌、结束回合，直到这场战斗结束。快捷键 A')}">${L('自动')}</button><button class="endt" id="endt" type="button">${L('结束<br>回合')}</button><button class="pile" id="pDisc" type="button"></button><button class="pile" id="pExh" type="button"></button></div></div></div>`;
+  $('#bf').style.backgroundImage=`linear-gradient(to top,rgba(14,21,19,.94) 0%,rgba(14,21,19,.42) 48%,rgba(14,21,19,.2) 100%),url(${bgArt(R.act)})`;
+  $('#endt').onclick=endTurn;
+  $('#autob').onclick=()=>setAuto(!autoOn());
+  $('#pDraw').onclick=()=>pileView(L('抽牌堆（顺序已打乱）'),shuffle([...B.draw]));
+  $('#pDisc').onclick=()=>pileView(L('弃牌堆'),B.disc);
+  $('#pExh').onclick=()=>pileView(L('耗尽'),B.exh);
+}
+function stChips(st,isP){
+  return Object.entries(st).filter(([k,v])=>v>0&&ST[k]).map(([k,v])=>{const d=ST[k];const bad=!d.good&&k!=='bristle'?'bad':k==='bristle'?'bad':'';return `<span class="chip ${bad}" data-tip="<b>${d.n}</b> ${esc(d.d.replace('X',v))}">${d.n}${k==='baiyu'?'':' '+v}</span>`}).join('');
+}
+function intentHTML(e){
+  if(e.hp<=0)return '';
+  const m=e.move;let cls='buf',ic='增',txt='';
+  if(m.dmg){cls='atk';ic='攻';const d=calcE(e,m.dmg);txt=`<b>${d}${m.hits>1?'×'+m.hits:''}</b>`}
+  else if(m.chg){cls='chg';ic='蓄'}
+  else if(m.deb||m.add){cls='deb';ic='削'}
+  else if(m.blk||m.blkAlly){cls='def';ic='守'}
+  else if(m.sum){cls='buf';ic='召'}
+  const extra=[m.dmg&&(m.deb||m.add)?L('＋削'):'',m.dmg&&m.blk?L('＋守'):'',m.dmg&&m.heal?L('＋愈'):''].join('');
+  const tip=intentTip(e,m);
+  return `<div class="intent ${cls}" data-tip="${esc(tip)}"><span class="ic">${ic}</span>${txt}<span class="mvn">${m.n}${extra}</span></div>`;
+}
+function intentTip(e,m){
+  const p=[];
+  if(m.dmg)p.push(L('造成 {d} 伤害',{d:calcE(e,m.dmg)+(m.hits>1?' × '+m.hits:'')}));
+  if(m.blk)p.push(L('获得 {n} 格挡',{n:m.blk}));
+  if(m.blkAlly)p.push(L('为同伴加 {n} 格挡',{n:m.blkAlly}));
+  if(m.buf)p.push(L('自身 {x}',{x:Object.entries(m.buf).map(([k,v])=>ST[k].n+' +'+v).join(L('、'))}));
+  if(m.bufAll)p.push(L('全体 {x}',{x:Object.entries(m.bufAll).map(([k,v])=>ST[k].n+' +'+v).join(L('、'))}));
+  if(m.deb)p.push(L('给你 {x}',{x:Object.entries(m.deb).map(([k,v])=>L('{n} 层{s}',{n:v,s:ST[k].n})).join(L('、'))}));
+  if(m.add)p.push(L('塞入 {x}',{x:Object.entries(m.add).map(([k,v])=>L('{n} 张「{c}」',{n:v,c:CARDS[k].n})).join(L('、'))}));
+  if(m.heal)p.push(L('回复 {n} 生命',{n:m.heal}));
+  if(m.healAlly)p.push(L('治疗同伴 {n}',{n:m.healAlly}));
+  if(m.sum)p.push(L('召唤 {x}',{x:m.sum.map(k=>EN[k].n).join(L('、'))}));
+  if(m.chg)p.push(L('蓄力，下一招是重击'));
+  return `<b>${m.n}</b>${LANG==='en'?': ':'：'}${p.join(LANG==='en'?'; ':'；')}${LANG==='en'?'.':'。'}`;
+}
+function renderBattle(){
+  if(!B||SCREEN!=='battle')return;
+  renderBar();
+  const me=$('#me');
+  me.innerHTML=`<img class="pimg" src="assets/enemy/hero.webp" alt=""><div class="col"><div class="nm">${HERO()}</div><div class="sub">${L('{z} · 青崖寨养蛊人',{z:L(['初入蛊门','三寨闻名','南疆蛊王'][R.act])})}</div>
+    <div class="hpwrap">${B.p.block?`<span class="blk">${B.p.block}</span>`:''}<div class="hpbar"><i style="width:${Math.max(0,R.hp)/R.maxHp*100}%"></i><span>${Math.max(0,R.hp)} / ${R.maxHp}</span></div></div>
+    <div class="sts">${stChips(B.p.st,1)}</div></div>`;
+  const tgtMode=!!SEL;
+  $('#foes').innerHTML=B.en.filter(e=>e.hp>0).map(e=>`<button type="button" class="ent foe ${e.def.boss?'boss':''} ${tgtMode?'tgt':''}" data-e="${e.id}" aria-label="${e.n}">
+    ${intentHTML(e)}${ENEMY_ART.has(e.key)?`<img class="pimg" src="${enemyArt(e.key)}" alt="">`:`<div class="portrait" aria-hidden="true">${e.def.g}</div>`}<div class="nm" data-tip="${esc(e.def.d)}">${e.n}</div>
+    <div class="hpwrap">${e.block?`<span class="blk">${e.block}</span>`:''}<div class="hpbar"><i style="width:${e.hp/e.max*100}%"></i><span>${e.hp} / ${e.max}</span></div></div>
+    <div class="sts">${stChips(e.st)}</div></button>`).join('');
+  $('#foes').querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>clickEnemy(+b.dataset.e));
+  const em=maxE();
+  $('#orb').innerHTML=`<div><b>${B.e}/${em}</b><small>${L('心血')}</small></div>`;
+  $('#pDraw').innerHTML=L('抽牌 {n}',{n:`<b>${B.draw.length}</b>`});
+  $('#pDisc').innerHTML=L('弃牌 {n}',{n:`<b>${B.disc.length}</b>`});
+  $('#pExh').innerHTML=L('耗尽 {n}',{n:`<b>${B.exh.length}</b>`});
+  $('#pExh').hidden=!B.exh.length;
+  $('#endt').disabled=B.busy;
+  const hand=$('#hand');
+  hand.classList.toggle('crowd',B.hand.length>7);
+  hand.innerHTML=B.hand.map((c,i)=>cardHTML(c,{btn:1,i,sel:SEL===c.uid,no:!!playable(c)})).join('');
+  hand.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>clickCard(+b.dataset.i));
+  $('#autob').classList.toggle('on',autoOn());$('#autob').textContent=L(autoOn()?'自动 · 开':'自动 · 关');
+  $('#hint').textContent=L(B.busy?'敌人行动中……':autoOn()?'自动战斗中，点「自动」或按 A 键接管':SEL?'选择一个目标（Esc 取消）':(B.kind==='boss'&&AUTO&&B.turn===1)?'首领战默认手动，按 A 可开启自动':'');
+}
+function hint(s){const h=$('#hint');if(h){h.textContent=s;clearTimeout(hint.t);hint.t=setTimeout(()=>{if($('#hint'))$('#hint').textContent=''},1400)}}
+
+/* ================= 卡牌外观 ================= */
+function cardHTML(c,o={}){
+  const d=CARDS[c.key];const u=c.up;
+  const X={
+    D:(base,smul=1,raw)=>{if(!B||SCREEN!=='battle')return `<b>${base}</b>`;const v=calcP(base,d,alive().length===1?alive()[0]:null,smul,raw);return `<b class="${v>base?'hi':v<base?'lo':''}">${v}</b>`},
+    B:(base)=>{if(!B||SCREEN!=='battle')return `<b>${base}</b>`;const v=B.p.st.frail>0?Math.floor(base*.75):base;return `<b class="${v<base?'lo':''}">${v}</b>`},
+  };
+  const cst=d.c===-1?'':(o.btn&&B?cardCost(c):cost(c.key,u));
+  const base=d.c===-1?'':cost(c.key,u);
+  const tag=[TN[d.t],d.gu].filter(Boolean).join(' · ');
+  const inner=`${d.c!==-1?`<span class="cost ${o.btn&&B&&cst<base?'free':''}">${cst}</span>`:''}<span class="cn">${d.n}${u?'+':''}</span><span class="art"><img src="${cardArt(c.key)}" alt="" draggable="false"></span><span class="ct">${tag}</span><span class="cd">${kw(d.desc(u,X))}</span><span class="tags">${RN[d.r]}${(d.tags||[]).length?' · '+d.tags.map(TAGN).join(' '):''}</span>`;
+  const cls=`card ${d.t} r-${d.r} ${u?'up':''} ${o.sel?'sel':''} ${o.no?'no':''} ${o.mini?'mini':''}`;
+  if(o.btn)return `<button type="button" class="${cls}" ${o.i!=null?`data-i="${o.i}"`:''} ${o.pick!=null?`data-pick="${o.pick}"`:''} aria-label="${d.n}${u?'+':''}">${inner}</button>`;
+  return `<div class="${cls}">${inner}</div>`;
+}
+
+/* ================= 音乐与音效（Web Audio 现场合成，不用音频文件） ================= */
+const SND=(()=>{
+  let ctx=null,master,musicBus,sfxBus,mode='none';
+  let musicOn=true,sfxOn=true;
+  try{musicOn=localStorage.getItem('njgs.cards.music')!=='0';sfxOn=localStorage.getItem('njgs.cards.sfx')!=='0'}catch(e){}
+  const SCALE=[0,3,5,7,10];                       // 五声音阶（羽调式）
+  const ks=new Map(),last={};
+  function init(){
+    if(ctx)return;
+    const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    ctx=new AC();
+    master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);
+    musicBus=ctx.createGain();musicBus.gain.value=musicOn?.3:0;
+    sfxBus=ctx.createGain();sfxBus.gain.value=sfxOn?.26:0;
+    // 混响：一段指数衰减的噪声
+    const verb=ctx.createConvolver(),len=Math.floor(ctx.sampleRate*2.6),ir=ctx.createBuffer(2,len,ctx.sampleRate);
+    for(let c=0;c<2;c++){const d=ir.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.6)}
+    verb.buffer=ir;
+    const wetM=ctx.createGain();wetM.gain.value=.4;const wetS=ctx.createGain();wetS.gain.value=.18;
+    musicBus.connect(master);musicBus.connect(wetM);wetM.connect(verb);
+    sfxBus.connect(master);sfxBus.connect(wetS);wetS.connect(verb);
+    verb.connect(master);
+  }
+  const unlock=()=>{init();if(ctx&&ctx.state==='suspended')ctx.resume();if(!unlocked){unlocked=true;switchTrack(null,mode)}};
+  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,unlock,{passive:true}));
+  /* 拨弦（Karplus-Strong），按音高缓存 */
+  function pluckBuf(f,dur=2.6){
+    const key=Math.round(f*10);if(ks.has(key))return ks.get(key);
+    const sr=ctx.sampleRate,n=Math.floor(sr*dur),N=Math.max(2,Math.round(sr/f));
+    const b=ctx.createBuffer(1,n,sr),d=b.getChannelData(0);
+    for(let i=0;i<N;i++)d[i]=Math.random()*2-1;
+    for(let i=1;i<N;i++)d[i]=(d[i]+d[i-1])*.5;            // 先磨圆一点，音色更温
+    for(let i=N;i<n;i++)d[i]=.4985*(d[i-N]+d[i-N+(i-N+1<i?1:0)]);
+    ks.set(key,b);return b;
+  }
+  function pluck(f,t,vol=.5,bus=musicBus,cut=2600){
+    const src=ctx.createBufferSource();src.buffer=pluckBuf(f);
+    const g=ctx.createGain();g.gain.value=vol;
+    const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=cut;
+    src.connect(lp);lp.connect(g);g.connect(bus);src.start(t);src.stop(t+2.6);
+  }
+  function tone(type,f0,f1,t,dur,vol,bus=sfxBus){
+    const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;
+    o.frequency.setValueAtTime(f0,t);if(f1!==f0)o.frequency.exponentialRampToValueAtTime(Math.max(20,f1),t+dur);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0008,t+dur);
+    o.connect(g);g.connect(bus);o.start(t);o.stop(t+dur+.05);
+  }
+  function noise(t,dur,vol,type,f0,f1,bus=sfxBus,q=1){
+    const n=Math.floor(ctx.sampleRate*dur),b=ctx.createBuffer(1,n,ctx.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<n;i++)d[i]=Math.random()*2-1;
+    const src=ctx.createBufferSource();src.buffer=b;
+    const fl=ctx.createBiquadFilter();fl.type=type;fl.Q.value=q;fl.frequency.setValueAtTime(f0,t);fl.frequency.exponentialRampToValueAtTime(f1,t+dur);
+    const g=ctx.createGain();g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0008,t+dur);
+    src.connect(fl);fl.connect(g);g.connect(bus);src.start(t);
+  }
+  const drum=(t,vol=.8,low=1,bus=musicBus)=>{tone('sine',115*low,42*low,t,.45,vol,bus);noise(t,.06,vol*.35,'lowpass',900,300,bus)};
+  function gong(t,base=98,vol=.35,bus=sfxBus){[1,2.76,5.4,8.93].forEach((m,i)=>tone('sine',base*m,base*m*.995,t,3.2-i*.5,vol/(i+1),bus))}
+  const noteF=(root,idx)=>root*Math.pow(2,(SCALE[((idx%5)+5)%5]+12*Math.floor(idx/5))/12);
+  /* 背景音乐：播放 assets/music 里的曲子，场景切换时淡入淡出 */
+  const TRACKS={calm:'assets/music/calm.mp3',battle:'assets/music/battle.mp3',boss:'assets/music/boss.mp3'};
+  const VOL={calm:.5,battle:.45,boss:.5};
+  /* 只用一个播放器：换曲时先淡出停下，再换下一首，任何时候只有一首在放 */
+  let unlocked=false,au=null,cur=null;
+  function ensure(){if(!au){au=new Audio();au.loop=true;au.preload='auto';au.volume=0}return au}
+  function fadeTo(a,target,ms,then){
+    clearInterval(a._fade);const v0=a.volume,t0=performance.now();
+    a._fade=setInterval(()=>{const k=Math.min(1,(performance.now()-t0)/ms);a.volume=Math.max(0,Math.min(1,v0+(target-v0)*k));if(k>=1){clearInterval(a._fade);then&&then()}},50);
+  }
+  function switchTrack(prev,m){
+    const a=ensure();
+    if(m==='none'||!musicOn||!unlocked){fadeTo(a,0,500,()=>a.pause());return}
+    if(cur===m&&!a.paused){fadeTo(a,VOL[m],600);return}
+    const go=()=>{a.pause();a.src=TRACKS[m];cur=m;a.play().catch(()=>{});fadeTo(a,VOL[m],1200)};
+    if(!a.paused&&a.volume>.01)fadeTo(a,0,600,go);else go();
+  }
+  addEventListener('pagehide',()=>{if(au)au.pause()});
+  function music(m){if(m===mode)return;const prev=mode;mode=m;switchTrack(prev,m)}
+  /* 钟磬：柔和起音、带一个泛音、慢慢衰减；木鱼：短促的木质敲击 */
+  function bell(f,t,vol,dur){[[1,1],[2.76,.25]].forEach(([m,a])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f*m;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*a,t+.012);g.gain.exponentialRampToValueAtTime(.0005,t+dur*(m>1?.4:1));o.connect(g);g.connect(sfxBus);o.start(t);o.stop(t+dur+.05)})}
+  function wood(t,vol,f=480){tone('sine',f,f*.85,t,.07,vol);noise(t,.02,vol*.5,'bandpass',f*4,f*3.5,sfxBus,4)}
+  /* 音效 */
+  function fx(name,arg){
+    if(!ctx||!sfxOn||!SPEED)return;
+    const t=ctx.currentTime;if(last[name]&&t-last[name]<.035)return;last[name]=t;
+    switch(name){
+      case 'card':noise(t,.1,.14,'bandpass',2000,800,sfxBus,1.2);break;
+      case 'moon':noise(t,.1,.18,'bandpass',2600,1200,sfxBus,1.5);tone('sine',1320,1300,t,.4,.12);tone('sine',1980,1960,t+.01,.3,.06);break;
+      case 'power':bell(880,t,.14,1.2);bell(1320,t+.12,.08,1);break;
+      case 'hit':noise(t,.08,.35,'lowpass',1600,400);tone('sine',170,60,t,.16,.35);break;
+      case 'heavy':noise(t,.14,.45,'lowpass',1200,200);tone('sine',120,40,t,.3,.55);break;
+      case 'block':tone('sine',430,380,t,.09,.3);noise(t,.03,.25,'bandpass',2400,2000,sfxBus,3);break;
+      case 'hurt':tone('sine',95,38,t,.35,.6);noise(t,.18,.3,'lowpass',500,120);break;
+      case 'kill':wood(t,.3,380);tone('sine',330,170,t+.04,.5,.18);break;
+      case 'heal':bell(660,t,.14,1.4);break;
+      case 'gold':bell(1320,t,.08,.6);bell(1760,t+.07,.06,.6);break;
+      case 'click':wood(t,.18,520);break;
+      case 'turn':drum(t,.35,1.2,sfxBus);break;
+      case 'win':gong(t,98,.3);bell(587,t+.25,.1,2);break;
+      case 'lose':gong(t,65,.38);break;
+      case 'cicada':tone('sine',300,1800,t,1.4,.1);bell(1175,t+.5,.1,2);bell(1760,t+.7,.06,1.8);break;
+    }
+  }
+  function toggle(kind){
+    if(kind==='music'){musicOn=!musicOn;switchTrack(null,musicOn?mode:'none')}
+    else{sfxOn=!sfxOn;if(sfxBus)sfxBus.gain.setTargetAtTime(sfxOn?.26:0,ctx.currentTime,.05)}
+    try{localStorage.setItem('njgs.cards.'+kind,(kind==='music'?musicOn:sfxOn)?'1':'0')}catch(e){}
+    unlock();
+  }
+  return {music,fx,toggle,on:k=>k==='music'?musicOn:sfxOn};
+})();
+function sndButtons(){return `<button class="tbtn snd ${SND.on('music')?'':'off'}" id="bMus" type="button" data-tip="${L('背景音乐：开/关')}">${L('乐')}</button><button class="tbtn snd ${SND.on('sfx')?'':'off'}" id="bSfx" type="button" data-tip="${L('音效：开/关')}">${L('音')}</button>`}
+function bindSnd(){const m=$('#bMus'),x=$('#bSfx');if(m)m.onclick=()=>{SND.toggle('music');renderBar()};if(x)x.onclick=()=>{SND.toggle('sfx');renderBar()}}
+
+/* ================= 顶栏 ================= */
+function renderBar(){
+  const bar=$('#bar');
+  SND.music(SCREEN==='battle'&&B?(B.kind==='boss'?'boss':'battle'):'calm');
+  if(!R||SCREEN==='title'||SCREEN==='end'){bar.innerHTML=`<div class="brand"><span class="seal" aria-hidden="true">蛊</span><b>${BRAND()}</b></div><div class="barr">${langButtons()}${sndButtons()}<button class="tbtn" id="bHelp" type="button">${L('玩法')}</button></div>`;$('#bHelp').onclick=helpView;bindSnd();bindLang();return}
+  bar.innerHTML=`<div class="brand"><span class="seal" aria-hidden="true">蛊</span><b>${BRAND()}</b></div>
+    <div class="pill hp" data-tip="${L('生命')}">${L('生命')} <b class="num">${Math.max(0,R.hp)}/${R.maxHp}</b></div>
+    <div class="pill gold" data-tip="${L('苗银：马帮集市里的货币')}">${L('苗银')} <b class="num">${R.gold}</b></div>
+    <div class="pots">${R.pots.map((k,i)=>k?`<button class="pot has" type="button" data-pot="${i}" data-tip="<b>${POTS[k].n}</b> ${POTS[k].d}${(SCREEN==='battle'||POTS[k].any)?'<br>'+L('点击使用'):''}">${POTS[k].g}</button>`:`<span class="pot" data-tip="${L('空的囊袋')}"></span>`).join('')}</div>
+    <div class="relics">${R.relics.map(k=>{const r=RELICS[k];const spent=k==='chunqiu'&&!R.cicada;return `<span class="relic ${r.boss?'r-boss':''} ${spent?'spent':''}" data-tip="<b>${r.n}</b> ${r.d}${spent?'<br>'+L('（已沉睡）'):''}">${r.g}${k==='jiunang'?`<span class="cnt">${R.jiunang||0}</span>`:''}</span>`}).join('')}</div>
+    <div class="barr"><span class="where"><b>${ACTS[R.act]}</b> ${L('第 {n} 层',{n:R.floor})}</span><button class="tbtn" id="bDeck" type="button">${L('牌组 {n}',{n:R.deck.length})}</button>${langButtons()}${sndButtons()}<button class="tbtn" id="bHelp" type="button">${L('玩法')}</button></div>`;
+  bar.querySelectorAll('[data-pot]').forEach(b=>b.onclick=()=>usePotion(+b.dataset.pot));
+  $('#bDeck').onclick=()=>pileView(L('牌组'),R.deck,1);
+  $('#bHelp').onclick=helpView;
+  bindSnd();bindLang();
+}
+
+/* ================= 弹层 ================= */
+function openOv(html){const ov=$('#ov');ov.innerHTML=`<div class="panel">${html}</div>`;ov.hidden=false;const x=ov.querySelector('.closex');if(x){x.onclick=closeOv;x.focus()}}
+function closeOv(){const ov=$('#ov');ov.hidden=true;ov.innerHTML=''}
+function pileView(title,cards,isDeck){
+  const sorted=isDeck?[...cards].sort((a,b)=>Object.keys(CARDS).indexOf(a.key)-Object.keys(CARDS).indexOf(b.key)):cards;
+  openOv(`<button class="closex" type="button">${L('返回')}</button><h2>${title}</h2><p class="lead">${L('{n} 张',{n:cards.length})}</p><div class="deckgrid">${sorted.map(c=>cardHTML(c)).join('')||`<p class="lead">${L('空')}</p>`}</div>`);
+}
+function pickCard(title,lead,filter,cb,opt={}){
+  const list=R.deck.filter(filter);
+  openOv(`<button class="closex" type="button">${L('取消')}</button><h2>${title}</h2><p class="lead">${lead}</p><div class="deckgrid">${list.map((c,i)=>cardHTML(opt.preview?{...c,up:1}:c,{btn:1,pick:i})).join('')||`<p class="lead">${L('没有可选的牌。')}</p>`}</div>`);
+  const ov=$('#ov');
+  ov.querySelector('.closex').onclick=()=>{closeOv();opt.cancel&&opt.cancel()};
+  ov.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{const c=list[+b.dataset.pick];closeOv();cb(c)});
+}
+const ZH_HELP=`  <p>你是青崖寨最后一个养蛊人阿岩。三幕路线：瘴林、黑水土司城、万蛊窟，每幕顶上有一位首领。打穿三幕即胜。</p>
+  <p><b>战斗</b>：每回合 3 点<em>心血</em>，抽 5 张牌。攻牌造成伤害，守牌给<em>格挡</em>，能牌在本场战斗持续生效。敌人头顶会显示下一招：<em>攻</em>是攻击，<em>守</em>是格挡，<em>削</em>是给你减益，<em>蓄</em>是在为重击蓄力。格挡在你的回合开始时清空。</p>
+  <p><b>出牌</b>：点击卡牌打出；需要目标且敌人不止一个时，再点一下敌人。快捷键：数字键选牌，E 结束回合，A 开关自动战斗，Esc 取消。</p>
+  <p><b>状态</b>：力（每段伤害 +X）、蝶粉（蝶系攻击 +X）、流血（回合开始掉血，逐层递减）、缠缚（伤害 -25%）、破绽（受伤 +50%）、冻（格挡 -25%）、隐（免一次掉血）。</p>
+  <p><b>地图</b>：战=遭遇战，凶=强敌（掉宝物），奇=奇遇，歇=歇脚（调息回血或炼蛊升级一张牌），商=马帮集市，宝=遗藏。</p>
+  <p><b>声音</b>：顶栏的「乐」「音」分别开关背景音乐和音效。首次点击页面后才会出声。</p>
+  <p><b>音乐</b>：地图与标题——China Epic Background Music，Tunetank；普通战斗——《中国风武侠》，we-o_rd35ogy3mky6nohgw；首领战——Chinese Dynasty，Roman_Sol。均来自 <a href="https://pixabay.com/music/" target="_blank" rel="noopener">Pixabay</a>，按 Pixabay 许可证使用（已裁去首尾静音并转码）。音效为现场合成。</p>
+  <p><b>本命金蚕</b>：起始宝物。每局一次，身死时金蚕替你挡下死劫，满血重打这一场。</p>
+  <p><b>蛊名</b>：每局结束按层数、强敌、首领折算蛊名，累积后解锁新卡与开局赐福。</p>`;
+function helpView(){
+  openOv(`<button class="closex" type="button">${L('返回')}</button><h2>${L('玩法')}</h2>
+  <div class="lead" style="max-width:52em">${LANG==='zh'?ZH_HELP:L('HELP')}</div>`);
+}
+
+/* ================= 奖励 ================= */
+function rewardScreen(rw){
+  SCREEN='reward';
+  // 苗银、宝物、药囊没什么可选的，进来就自动收下；只有蛊牌和首领宝物需要你挑
+  const got=[];
+  for(const x of rw){
+    if(x.t==='gold'){const n=gainGold(x.n);x.taken=1;got.push(has('jinling')?L('苗银（土司金印：无法获得）'):L('苗银 +{n}',{n}))}
+    else if(x.t==='relic'){gainRelic(x.k);x.taken=1;got.push(L('宝物 · {r}',{r:RELICS[x.k].n}))}
+    else if(x.t==='pot'&&addPotion(x.k)){x.taken=1;got.push(L('药囊 · {p}',{p:POTS[x.k].n}))}
+  }
+  renderBar();saveRun();
+  const draw=()=>{
+    const left=rw.filter(x=>!x.taken&&(x.t==='card'||x.t==='boss'));
+    $('#screen').innerHTML=`<div class="panel"><h2>${L('战利品')}</h2>
+      ${got.length?`<p class="lead">${L('已收下：{x}。',{x:got.join(L('，'))})}</p>`:''}
+      <div class="rw">${rw.map((x,i)=>{
+        if(x.taken)return '';
+        if(x.t==='pot')return `<div class="opt" aria-disabled="true"><b>${POTS[x.k].n}</b><span>${L('囊袋已满，没有拾取')}</span></div>`;
+        if(x.t==='card')return `<button class="opt key" type="button" data-r="${i}"><b>${L('选一张蛊牌加入牌组')}</b><span>${L('三选一，也可跳过')}</span></button>`;
+        if(x.t==='boss')return `<button class="opt key" type="button" data-r="${i}"><b>${L('首领宝物')}</b><span>${L('三选一')}</span></button>`;
+        return '';
+      }).join('')}</div><div class="btnrow"><button class="btn ${left.length?'':'key'}" id="cont" type="button">${L('继续前行')}</button></div></div>`;
+    $('#screen').querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>take(rw[+b.dataset.r]));
+    $('#cont').onclick=finishNode;
+  };
+  const take=x=>{
+    if(x.t==='card'){chooseCard(x.cards,c=>{if(c)R.deck.push(c);x.taken=1;renderBar();saveRun();draw()});return}
+    if(x.t==='boss'){chooseBossRelic(x.opts,k=>{gainRelic(k);x.taken=1;renderBar();saveRun();draw()});return}
+  };
+  draw();
+}
+function chooseCard(cards,cb,lead=L('选一张加入牌组。')){
+  openOv(`<h2>${L('选择蛊牌')}</h2><p class="lead">${lead}</p><div class="cardrow">${cards.map((c,i)=>cardHTML(c,{btn:1,pick:i})).join('')}</div><div class="btnrow"><button class="btn" id="skip" type="button">${L('跳过')}</button></div>`);
+  const ov=$('#ov');
+  ov.querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{closeOv();cb(cards[+b.dataset.pick])});
+  $('#skip').onclick=()=>{closeOv();cb(null)};
+}
+function chooseBossRelic(opts,cb){
+  openOv(`<h2>${L('首领宝物')}</h2><p class="lead">${L('每件都让你每回合多 1 点心血，但都有代价。')}</p><div class="opts">${opts.map((k,i)=>`<button class="opt key" type="button" data-pick="${i}"><b>${RELICS[k].n}</b><span>${RELICS[k].d}</span></button>`).join('')}</div>`);
+  $('#ov').querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{closeOv();cb(opts[+b.dataset.pick])});
+}
+
+/* ================= 歇脚 / 遗藏 / 商队 ================= */
+function restScreen(){
+  SCREEN='rest';renderBar();
+  const h=Math.floor(R.maxHp*.3)+(has('houer')?15:0);
+  $('#screen').innerHTML=`<div class="panel withart"><div><h2>${L('歇脚')}</h2><p class="lead">${L('山洞里生起一堆火。你可以静坐调息，也可以趁这片刻安宁炼蛊。')}</p><div class="opts">
+    <button class="opt key" type="button" id="r1" ${has('xuehai')?'disabled':''}><b>${L('调息')}</b><span>${has('xuehai')?L('血蛊秘卷：无法调息回复'):L('回复 {n} 生命（最大生命的三成{x}）',{n:Math.min(h,R.maxHp-R.hp),x:has('houer')?L('，猴儿酒 +15'):''})}</span></button>
+    <button class="opt key" type="button" id="r2"><b>${L('炼蛊')}</b><span>${L('升级一张牌')}</span></button></div></div>${plate('c:duxing')}</div>`;
+  $('#r1').onclick=()=>{R.hp=Math.min(R.maxHp,R.hp+h);finishNode()};
+  $('#r2').onclick=()=>pickCard(L('炼蛊'),L('选一张牌升级。下面显示的是升级后的样子。'),c=>!c.up&&canUp(c),c=>{c.up=1;finishNode()},{preview:1});
+}
+function treasureScreen(){
+  SCREEN='treasure';renderBar();
+  const k=rollRelic();const g=RI(20,35);
+  if(k)gainRelic(k);const got=gainGold(g);
+  R.pending=null;saveRun();
+  $('#screen').innerHTML=`<div class="panel withart"><div><h2>${L('遗藏')}</h2><p class="lead">${L(pick(['山缝后面是一间小小的石室，石台上蒙着一层灰。','一具蛊师的遗骨盘膝而坐，身前留着他最后的东西。','藤蔓后藏着一只封泥的蛊瓮，瓮上刻着一个「蛊」字。']))}</p>
+    ${k?`<div class="opt"><b>${L('宝物 · {r}',{r:RELICS[k].n})}</b><span>${RELICS[k].d}</span></div>`:''}<p>${L('苗银 +{n}',{n:got})}</p><div class="btnrow"><button class="btn key" id="go" type="button">${L('收下')}</button></div></div>${plate('c:sheli')}</div>`;
+  renderBar();$('#go').onclick=finishNode;
+}
+function price(n){return Math.round(n*(has('shangqi')?.8:1))}
+function shopScreen(){
+  SCREEN='shop';renderBar();
+  if(!R.shop||R.shop.floor!==R.floor){
+    const cards=[...cardChoices('shop',3),...cardChoices('shop',2)].slice(0,5).map(c=>({c,p:{com:RI(45,55),unc:RI(68,82),rare:RI(135,160)}[CARDS[c.key].r]+(c.up?20:0)}));
+    const relics=[rollRelic(),rollRelic()].filter((k,i,a)=>k&&a.indexOf(k)===i).map(k=>({k,p:{com:RI(140,160),unc:RI(230,260),rare:RI(280,320)}[RELICS[k].r]}));
+    const pots=shuffle(Object.keys(POTS)).slice(0,3).map(k=>({k,p:RI(48,70)}));
+    R.shop={floor:R.floor,cards,relics,pots,removed:false};
+  }
+  const S=R.shop;const rm=price(75+25*R.removals);
+  $('#screen').innerHTML=`<div class="panel" style="max-width:1000px"><h2>${L('马帮集市')}</h2><p class="lead">${L('马帮的骡子驮来了蛊虫、宝物和药囊。赶马的汉子看了眼你的银袋。')}${has('shangqi')?L('（马帮商契：八折）'):''}</p>
+    <div class="sec">${L('蛊牌')}</div><div class="shopgrid">${S.cards.map((x,i)=>`<div class="ware ${x.sold?'sold':''}">${cardHTML(x.c,{btn:1,pick:i})}<span class="price ${R.gold<price(x.p)?'no':''}">${L('{n} 苗银',{n:price(x.p)})}</span></div>`).join('')}</div>
+    <div class="sec">${L('宝物与药囊')}</div><div class="shopgrid">${S.relics.map((x,i)=>`<div class="ware ${x.sold?'sold':''}"><button class="wbox" type="button" data-rl="${i}"><b>${RELICS[x.k].n}</b><span>${RELICS[x.k].d}</span></button><span class="price ${R.gold<price(x.p)?'no':''}">${L('{n} 苗银',{n:price(x.p)})}</span></div>`).join('')}
+    ${S.pots.map((x,i)=>`<div class="ware ${x.sold?'sold':''}"><button class="wbox" type="button" data-pt="${i}"><b>${POTS[x.k].n}</b><span>${POTS[x.k].d}</span></button><span class="price ${R.gold<price(x.p)?'no':''}">${L('{n} 苗银',{n:price(x.p)})}</span></div>`).join('')}
+    <div class="ware ${S.removed?'sold':''}"><button class="wbox" type="button" id="rm"><b>${L('化蛊')}</b><span>${L('从牌组中移除一张牌')}</span></button><span class="price ${R.gold<rm?'no':''}">${L('{n} 苗银',{n:rm})}</span></div></div>
+    <div class="btnrow"><button class="btn key" id="leave" type="button">${L('离开集市')}</button></div></div>`;
+  const buy=(p,f)=>{if(R.gold<price(p)){toast(L('苗银不够'));return}R.gold-=price(p);f();saveRun();shopScreen()};
+  $('#screen').querySelectorAll('[data-pick]').forEach(b=>b.onclick=()=>{const x=S.cards[+b.dataset.pick];if(x.sold)return;buy(x.p,()=>{R.deck.push(x.c);x.sold=1})});
+  $('#screen').querySelectorAll('[data-rl]').forEach(b=>b.onclick=()=>{const x=S.relics[+b.dataset.rl];if(x.sold)return;buy(x.p,()=>{gainRelic(x.k);x.sold=1})});
+  $('#screen').querySelectorAll('[data-pt]').forEach(b=>b.onclick=()=>{const x=S.pots[+b.dataset.pt];if(x.sold)return;if(!R.pots.includes(null)){toast(L('囊袋已满'));return}buy(x.p,()=>{addPotion(x.k);x.sold=1})});
+  $('#rm').onclick=()=>{if(S.removed)return;if(R.gold<rm){toast(L('苗银不够'));return}pickCard(L('化蛊'),L('选一张牌移除。'),()=>true,c=>{R.gold-=rm;R.removals++;R.deck.splice(R.deck.indexOf(c),1);S.removed=true;saveRun();shopScreen()})};
+  $('#leave').onclick=()=>{R.shop=null;finishNode()};
+}
+function toast(s){const t=document.createElement('div');t.className='fxn txt';t.textContent=s;t.style.left='50%';t.style.top='45%';$('#fx').appendChild(t);setTimeout(()=>t.remove(),900)}
+
+/* ================= 奇遇 ================= */
+const EVENTS=[
+  {k:'cache',act:[0],t:'古蛊师遗瓮',x:'山洞深处埋着一只封了泥的蛊瓮，瓮口刻着一个看不懂的寨徽。瓮里有动静，洞的更深处也有。',ch:()=>[
+    {t:L('撬开瓮底的暗格'),s:L('失去 10 生命，获得一件宝物'),dis:R.hp<=10,f:()=>{R.hp-=10;const k=rollRelic();gainRelic(k);return L('瓮里的老蛊咬了你一口，换来了{x}。',{x:k?Q(RELICS[k].n):L('一堆碎骨')})}},
+    {t:L('只取瓮边的苗银'),s:L('苗银 +40'),f:()=>L('你收起了埋在瓮边的苗银。苗银 +{n}。',{n:gainGold(40)})},
+    {t:L('离开'),f:()=>L('你把瓮重新埋好，记下了这个地方。')}]},
+  {k:'stone',act:[0,1],t:'马帮赌石',x:'马帮的赌石摊上摆着六块毛料，赶马人说其中一块里封着一只蛊。每块 40 苗银，当场切开。',ch:()=>[
+    {t:L('买一块切开'),s:L('花费 40 苗银'),dis:R.gold<40,f:()=>{R.gold-=40;const x=Math.random();if(x<.45){const c=cardChoices('elite',1)[0];R.deck.push(c);return L('石皮剥落，里面伏着一只蛊：「{c}」加入牌组。',{c:CARDS[c.key].n})}if(x<.7){const k=rollRelic();gainRelic(k);return L('石心里嵌着一件东西：{x}。',{x:k?RELICS[k].n:L('碎玉')})}return L('石头里什么也没有。')}},
+    {t:L('不赌'),f:()=>L('你看了一眼，走开了。')}]},
+  {k:'bamboo',act:[0],t:'竹林酒香',x:'竹林深处飘来一缕米酒的香气。是酒曲虫在附近。',ch:()=>[
+    {t:L('以米酒诱蛊'),s:L('获得一张「灌酒+」'),f:()=>{R.deck.push(mkCard('guanjiu',1));return L('你把米酒倒在竹根下，退开十步。半个时辰后，一只白胖的酒曲虫钻了出来。')}},
+    {t:L('只灌一筒竹筒酒'),s:L('获得「辣酒」'),f:()=>addPotion('wine')?L('你灌了一筒竹筒酒。'):L('囊袋已满，你什么也没拿。')}]},
+  {k:'school',act:[0],t:'寨老传艺',x:'邻寨的寨老认得你阿爸。他打开自家的蛊房：可以挑一只蛊带走，也可以请他替你废掉一只不合用的。',ch:()=>[
+    {t:L('挑一只蛊'),s:L('三张普通牌中选一张'),f:()=>{const cs=shuffle(cardPool('com')).slice(0,3).map(k=>mkCard(k));return {choose:cs}}},
+    {t:L('废掉一只蛊'),s:L('从牌组中移除一张牌'),f:()=>({remove:1})}]},
+  {k:'uncle',act:[0],t:'欠债的猎户',x:'山道上撞见一个猎户。他欠了你阿爸三年的银子，见了你，脸色一下子白了。',ch:()=>[
+    {t:L('当场讨债'),s:L('苗银 +80，牌组加入诅咒「恶名」'),f:()=>{const g=gainGold(80);R.deck.push(mkCard('eming'));return L('你只说了几句话，他就把银子全掏了出来。苗银 +{n}。山里从此多了些关于你的闲话。',{n:g})}},
+    {t:L('一笔勾销'),s:L('最大生命 +4'),f:()=>{R.maxHp+=4;R.hp+=4;return L('你摆摆手让他走了。阿爸若在，也会这么做。')}}]},
+  {k:'herb',act:[0,1],t:'断肠草',x:'山道边长着一丛断肠草，剧毒，但也能炼成瘴雾。',ch:()=>[
+    {t:L('冒险采摘'),s:L('失去 6 生命，获得「瘴雾囊」'),dis:R.hp<=6,f:()=>{R.hp-=6;addPotion('fog');return L('你屏住呼吸采下几株，手指还是麻了半天。')}},
+    {t:L('绕开'),f:()=>L('你绕了一条远路。')}]},
+  {k:'dizang',act:[0],t:'腐木蛊卵',x:'一截倒伏的枯木里，嵌着一枚微微起伏的蛊卵，旁边还开着一朵瘴母花。',ch:()=>[
+    {t:L('剖开蛊卵'),s:L('获得「牛力」'),f:()=>{R.deck.push(mkCard('baishi'));return L('卵里蜷着一只角还没长硬的水牯蛊。')}},
+    {t:L('连花带根挖走'),s:L('获得宝物「瘴母花」'),dis:R.relics.includes('dizang'),f:()=>{gainRelic('dizang');return L('你把整株瘴母花收进了蛊瓮。')}}]},
+  {k:'auction',act:[1],t:'土司城集市',x:'土司城的集市上，有人当众拍卖一件宝物，起价 120 苗银。',ch:()=>[
+    {t:L('出价'),s:L('花费 120 苗银，获得一件传说宝物'),dis:R.gold<120,f:()=>{R.gold-=120;let p=relicPool('rare');const k=p.length?pick(p):rollRelic();gainRelic(k);return L('一锤定音。「{r}」归你了。',{r:k?RELICS[k].n:'?'})}},
+    {t:L('旁观'),f:()=>L('你看着别人一掷千金。')}]},
+  {k:'fox',act:[1],t:'垂死的狐仙',x:'一只受了伤的老狐拦在路上，开口说了人话：「替我守住这座山，我便把余下的寿数给你。」',ch:()=>[
+    {t:L('应下'),s:L('最大生命 +12，牌组加入诅咒「狐债」'),f:()=>{R.maxHp+=12;R.hp+=12;R.deck.push(mkCard('huxian'));return L('一股温润的气息涌入四肢百骸。你知道这笔债迟早要还。')}},
+    {t:L('拒绝'),f:()=>L('你没有回头。')}]},
+  {k:'maomin',act:[1],t:'毛人炼蛊',x:'一个毛人蹲在路边炼蛊，手法娴熟得惊人。他愿意替你炼蛊，只收苗银。',ch:()=>[
+    {t:L('请他炼蛊'),s:L('花费 50 苗银，随机升级 2 张牌'),dis:R.gold<50,f:()=>{R.gold-=50;const cs=shuffle(R.deck.filter(c=>!c.up&&canUp(c))).slice(0,2);cs.forEach(c=>c.up=1);return L('毛人炼好了：{x}。',{x:cs.map(c=>CARDS[c.key].n).join(L('、'))||L('没有可升级的牌')})}},
+    {t:L('抢他的蛊'),s:L('与毛人一战'),f:()=>({fight:['maomin']})},
+    {t:L('离开'),f:()=>L('你走了。')}]},
+  {k:'xuehai',act:[1],t:'血蛊秘卷',x:'土司府的暗室里锁着一卷血蛊秘术，血腥气浓得化不开。',ch:()=>[
+    {t:L('炼化秘卷'),s:L('失去 6 最大生命，获得「蛊发」'),f:()=>{R.maxHp-=6;R.hp=Math.min(R.hp,R.maxHp);R.deck.push(mkCard('xuehai'));return L('血蛊的秘术入了心口，你的脸色白了几分。')}},
+    {t:L('离开'),f:()=>L('你把暗室重新锁上。')}]},
+  {k:'battlefield',act:[2],t:'两寨械斗之后',x:'昨夜两座寨子为争蛊窟入口打了一场，山坡上躺满了人。',ch:()=>[
+    {t:L('搜刮遗物'),s:L('获得 2 个药囊'),f:()=>{const a=pick(Object.keys(POTS)),b=pick(Object.keys(POTS));const ok=[addPotion(a),addPotion(b)].filter(Boolean).length;return ok?L('你从尸体上摸出了 {n} 个药囊。',{n:ok}):L('囊袋已满。')}},
+    {t:L('截杀落单的天师'),s:L('强敌战，胜则获得宝物'),f:()=>({fight:['wuzhuan'],elite:1})},
+    {t:L('离开'),f:()=>L('你绕过了这片山坡。')}]},
+  {k:'alliance',act:[2],t:'黑巫结社',x:'几个黑巫拦住了你：「入社吧。万蛊窟里的东西，大家一起分。」',ch:()=>[
+    {t:L('入社'),s:L('选一张传说牌，牌组加入诅咒「反噬」'),f:()=>{const cs=shuffle(cardPool('rare')).slice(0,3).map(k=>mkCard(k));R.deck.push(mkCard('xinmo'));return {choose:cs}}},
+    {t:L('拒绝'),s:L('回复 15 生命'),f:()=>{R.hp=Math.min(R.maxHp,R.hp+15);return L('你独来独往惯了。')}}]},
+  {k:'cicada',act:[0,1,2],t:'金蚕低鸣',x:'心口的金蚕轻轻一动。你感觉得到，它愿意用替你挡死的那点精气，换些别的东西。',ch:()=>[
+    {t:L('让金蚕吐宝'),s:R.cicada?L('金蚕沉睡（失去复活），获得两件宝物'):L('金蚕已在沉睡'),dis:!R.cicada,f:()=>{R.cicada=0;const a=rollRelic();gainRelic(a);const b=rollRelic();gainRelic(b);return L('金蚕沉沉睡去。你得到了{x}。',{x:[a,b].filter(Boolean).map(k=>Q(RELICS[k].n)).join(L('和'))})}},
+    {t:L('不理会'),f:()=>L('你压下了那个念头。')}]},
+  {k:'monk',act:[1,2],t:'山神庙',x:'荒山里一座破败的山神庙，供桌上放着一枚青铜色的蛊卵。',ch:()=>[
+    {t:L('取走'),s:L('获得「蜕变」'),f:()=>{R.deck.push(mkCard('sheli'));return L('你把蛊卵收进了蛊瓮。')}},
+    {t:L('参悟'),s:L('升级一张牌'),f:()=>({upgrade:1})}]},
+];
+function eventScreen(){
+  SCREEN='event';renderBar();
+  let pool=EVENTS.filter(e=>e.act.includes(R.act)&&!R.seen.includes(e.k));
+  if(!pool.length)pool=EVENTS.filter(e=>e.act.includes(R.act));
+  const ev=pick(pool);R.seen.push(ev.k);
+  const ch=ev.ch();
+  $('#screen').innerHTML=`<div class="panel withart"><div><h2>${ev.t}</h2><p class="lead">${ev.x}</p><div class="opts">${ch.map((c,i)=>`<button class="opt" type="button" data-c="${i}" ${c.dis?'disabled':''}><b>${c.t}</b>${c.s?`<span>${c.s}</span>`:''}</button>`).join('')}</div></div>${plate(EV_ART[ev.k]||'c:dizang')}</div>`;
+  $('#screen').querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>{
+    const res=ch[+b.dataset.c].f();
+    if(res&&res.fight){startBattle(res.fight,res.elite?'elite':'fight');return}
+    if(res&&res.choose){chooseCard(res.choose,c=>{if(c)R.deck.push(c);evDone(ev,L('你做出了选择。'))});return}
+    if(res&&res.remove){pickCard(L('淘汰'),L('选一张牌移除。'),()=>true,c=>{R.deck.splice(R.deck.indexOf(c),1);evDone(ev,L('寨老替你废掉了那只蛊。'))},{cancel:()=>evDone(ev,L('你改了主意。'))});return}
+    if(res&&res.upgrade){pickCard(L('参悟'),L('选一张牌升级。'),c=>!c.up&&canUp(c),c=>{c.up=1;evDone(ev,L('你若有所悟。'))},{preview:1,cancel:()=>evDone(ev,L('你什么也没悟到。'))});return}
+    evDone(ev,res);
+  });
+}
+function evDone(ev,text){
+  renderBar();saveRun();
+  $('#screen').innerHTML=`<div class="panel withart"><div><h2>${ev.t}</h2><p class="lead">${text}</p><div class="btnrow"><button class="btn key" id="go" type="button">${L('继续')}</button></div></div>${plate(EV_ART[ev.k]||'c:dizang')}</div>`;
+  $('#go').onclick=finishNode;$('#go').focus();
+}
+
+/* ================= 开局赐福 ================= */
+function boonScreen(){
+  SCREEN='boon';renderBar();
+  const all=[
+    {t:L('最大生命 +8'),f:()=>{R.maxHp+=8;R.hp+=8}},
+    {t:L('获得 100 苗银'),f:()=>{R.gold+=100}},
+    {t:L('选一张稀有牌'),f:()=>({choose:shuffle(cardPool('unc')).slice(0,3).map(k=>mkCard(k))})},
+    {t:L('移除一张牌'),f:()=>({remove:1})},
+    {t:L('获得一件普通宝物'),f:()=>{const p=relicPool('com');gainRelic(pick(p))}},
+    {t:L('获得 2 个药囊'),f:()=>{addPotion(pick(Object.keys(POTS)));addPotion(pick(Object.keys(POTS)))}},
+    unlocked('boon_qingzhu')&&{t:L('获得宝物「竹筒酒」'),f:()=>gainRelic('qingzhu')},
+    unlocked('boon_upgrade')&&{t:L('升级两张起始牌（蝶刃、银甲）'),f:()=>{const a=R.deck.find(c=>c.key==='yuedao'&&!c.up),b=R.deck.find(c=>c.key==='yupi'&&!c.up);if(a)a.up=1;if(b)b.up=1}},
+    unlocked('boon_lotus')&&{t:L('获得宝物「雪莲」'),f:()=>gainRelic('lianhua')},
+    unlocked('boon_cache')&&{t:L('失去 10 最大生命，获得一件传说宝物'),f:()=>{R.maxHp-=10;R.hp=Math.min(R.hp,R.maxHp);const p=relicPool('rare');gainRelic(pick(p))}},
+  ].filter(Boolean);
+  const unl=all.slice(6);const base=shuffle(all.slice(0,6));
+  const opts=shuffle([...(unl.length?[pick(unl)]:[]),...base]).slice(0,3);
+  $('#screen').innerHTML=`<div class="panel"><h2>${L('金蚕苏醒')}</h2><p class="lead">${L('青崖寨被血洗的那一夜，你倒在血泊里。心口一阵灼热——是本命金蚕在动。<br>它把最后一点精气渡给了你，还能为你换一样东西。')}</p>
+    <div class="opts">${opts.map((o,i)=>`<button class="opt key" type="button" data-b="${i}"><b>${o.t}</b></button>`).join('')}</div></div>`;
+  $('#screen').querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{
+    const res=opts[+b.dataset.b].f();
+    if(res&&res.choose){chooseCard(res.choose,c=>{if(c)R.deck.push(c);mapScreen()});return}
+    if(res&&res.remove){pickCard(L('移除'),L('选一张牌移除。'),()=>true,c=>{R.deck.splice(R.deck.indexOf(c),1);mapScreen()},{cancel:mapScreen});return}
+    mapScreen();
+  });
+}
+
+/* ================= 结算 ================= */
+function endRun(win){
+  SCREEN='end';
+  const s=R.stats;
+  const gain=s.floors*5+s.elites*15+s.bosses*60+(win?200:0);
+  const before=META.guang;
+  META.guang+=gain;META.runs++;if(win)META.wins++;META.best=Math.max(META.best,R.act*20+R.floor);
+  saveMeta();clearRun();
+  const newly=UNLOCKS.filter(u=>before<u.at&&META.guang>=u.at);
+  const nxt=UNLOCKS.find(u=>META.guang<u.at);
+  renderBar();
+  $('#screen').innerHTML=`<div class="panel"><h2 style="font-size:46px;color:${win?'var(--gold)':'var(--rust)'}">${L(win?'万蛊归瓮':'身死蛊散')}</h2>
+    <p class="lead">${win?L('万蛊窟塌了。南疆的蛊都安静下来，像在等它们的新主人。青崖寨的仇，报了。'):L('你倒在了{a}第 {f} 层。{c}这一世到此为止。',{a:ACTS[R.act],f:R.floor,c:R.cicada?'':L('金蚕已经沉睡，')})}</p>
+    <div class="stats"><div class="stat"><small>${L('到达')}</small><b>${L('{a} {f} 层',{a:ACTS[R.act],f:R.floor})}</b></div><div class="stat"><small>${L('斩杀')}</small><b class="num">${s.kills}</b></div><div class="stat"><small>${L('强敌')}</small><b class="num">${s.elites}</b></div><div class="stat"><small>${L('首领')}</small><b class="num">${s.bosses}</b></div><div class="stat"><small>${L('牌组')}</small><b class="num">${R.deck.length}</b></div><div class="stat"><small>${L('蛊名')}</small><b class="num">+${gain}</b></div></div>
+    ${newly.length?`<div class="opts">${newly.map(u=>`<div class="opt key"><b>${L('解锁 · {n}',{n:u.n})}</b><span>${u.d}</span></div>`).join('')}</div>`:''}
+    ${nxt?`<p style="margin-top:12px">${L('累计蛊名 {g}，距下一项解锁「{n}」还差 {d}。',{g:META.guang,n:nxt.n,d:nxt.at-META.guang})}</p><div class="meter"><i style="width:${Math.min(100,META.guang/nxt.at*100)}%"></i></div>`:`<p>${L('所有记忆均已解锁。')}</p>`}
+    <div class="btnrow"><button class="btn key" id="again" type="button">${L('再入轮回')}</button><button class="btn" id="home" type="button">${L('回到标题')}</button></div></div>`;
+  $('#again').onclick=newRun;$('#home').onclick=titleScreen;
+}
+
+/* ================= 标题 ================= */
+function titleScreen(){
+  SCREEN='title';B=null;
+  const sv=loadRun();
+  R=null;renderBar();
+  const nxt=UNLOCKS.find(u=>META.guang<u.at);
+  $('#screen').innerHTML=`<div class="title-screen" style="background-image:linear-gradient(90deg,rgba(14,21,19,.55),rgba(14,21,19,.92) 55%),url(${bgArt(0)})"><img class="tcicada" src="assets/enemy/nj_jincan.webp" alt=""><div class="vert ${LANG==='en'?'h':''}">${LANG==='en'?'Gu Master<br>of the South':BRAND()}<small>${LANG==='zh'?'金蚕':I18N[LANG].subtitle}</small></div><div class="ts">
+    <p class="big">${L('五毒入瓮，<br>相食者存。')}</p>
+    <p>${L('以蛊为牌，以心血为引。从瘴林一路杀进万蛊窟，三幕、三位首领。本命金蚕在心口，死一次也不要紧。')}</p>
+    <div class="btnrow">${sv?`<button class="btn key" id="cont" type="button">${L('继续此世 · {a} 第 {f} 层',{a:ACTS[sv.act],f:sv.floor})}</button>`:''}<button class="btn ${sv?'':'key'}" id="ng" type="button">${L(META.runs?'再入轮回':'睁开眼睛')}</button><button class="btn" id="hp" type="button">${L('玩法')}</button></div>
+    <p style="margin-top:16px">${L('累计蛊名 {g} · 轮回 {r} 次 · 胜 {w} 次',{g:`<b class="num" style="color:var(--gold)">${META.guang}</b>`,r:META.runs,w:META.wins})}</p>
+    <div class="unl">${UNLOCKS.map(u=>`<div class="${META.guang>=u.at?'on':''}"><b>${u.at}</b><span>${META.guang>=u.at?u.n+' · '+u.d:L('？？？')}</span></div>`).join('')}</div>
+    <p class="fan"><a href="https://local4a.com/" target="_blank" rel="noopener">${L('Local4a 出品 · 更多游戏 →')}</a></p>
+  </div></div>`;
+  if(sv)$('#cont').onclick=()=>resume(sv);
+  $('#ng').onclick=()=>{clearRun();newRun()};
+  $('#hp').onclick=helpView;
+}
+function resume(sv){
+  R=sv;UID=Math.max(1000,...R.deck.map(c=>c.uid||0));
+  if(R.pending&&R.pending!=='boss'&&R.pending!=='shop'){const t=R.pending;runNode(t);return}
+  if(R.pending==='boss'){runNode('boss');return}
+  if(R.pending==='shop'){shopScreen();return}
+  mapScreen();
+}
+
+/* ================= 特效与提示 ================= */
+function fxAt(el,text,kind){
+  if(!el||!SPEED)return;
+  const r=el.getBoundingClientRect();const t=document.createElement('div');
+  t.className='fxn '+kind;t.textContent=text;t.style.left=(r.left+r.width/2+RI(-14,14))+'px';t.style.top=(r.top+r.height*.35)+'px';
+  $('#fx').appendChild(t);setTimeout(()=>t.remove(),900);
+}
+function banner(s){if(!SPEED)return;const b=document.createElement('div');b.className='banner';b.textContent=s;document.body.appendChild(b);setTimeout(()=>b.remove(),1300)}
+const tip=$('#tip');
+document.addEventListener('mouseover',e=>{const el=e.target.closest('[data-tip]');if(!el){tip.hidden=true;return}tip.innerHTML=el.dataset.tip;tip.hidden=false;const r=el.getBoundingClientRect();const tw=tip.offsetWidth;let x=Math.min(innerWidth-tw-8,Math.max(8,r.left+r.width/2-tw/2));let y=r.bottom+8;if(y+tip.offsetHeight>innerHeight-8)y=r.top-tip.offsetHeight-8;tip.style.left=x+'px';tip.style.top=y+'px'});
+document.addEventListener('scroll',()=>tip.hidden=true,true);
+document.addEventListener('keydown',e=>{
+  if(!$('#ov').hidden){if(e.key==='Escape'&&$('#ov .closex'))$('#ov .closex').click();return}
+  if(SCREEN!=='battle'||!B)return;
+  if(e.key==='Escape'){SEL=null;renderBattle()}
+  else if(e.key==='e'||e.key==='E')endTurn();
+  else if(e.key==='a'||e.key==='A')setAuto(!autoOn());
+  else if(/^[0-9]$/.test(e.key)){const i=e.key==='0'?9:+e.key-1;clickCard(i)}
+});
+
+/* ================= 多语言 ================= */
+const ZH={};
+const BRAND=()=>LANG==='zh'?'南疆蛊师':I18N[LANG].title;
+const HERO=()=>LANG==='zh'?'阿岩':I18N[LANG].hero;
+const TAGN=t=>LANG==='zh'?t:(I18N[LANG].tags[t]||t);
+const Q=n=>LANG==='en'?`"${n}"`:`「${n}」`;
+function snapZh(){
+  if(ZH.done)return;ZH.done=1;
+  ZH.acts=[...ACTS];ZH.nodes={...NODE_N};ZH.tn={...TN};ZH.rn={...RN};
+  const m=(o,f)=>Object.fromEntries(Object.entries(o).map(([k,v])=>[k,f(v)]));
+  ZH.st=m(ST,v=>[v.n,v.d]);ZH.cards=m(CARDS,v=>[v.n,v.gu,v.desc]);ZH.relics=m(RELICS,v=>[v.n,v.d]);ZH.pots=m(POTS,v=>[v.n,v.d]);
+  ZH.en=m(EN,v=>[v.n,v.d,m(v.moves,mv=>mv.n)]);
+  ZH.unl=Object.fromEntries(UNLOCKS.map(u=>[u.k,[u.n,u.d]]));ZH.ev=Object.fromEntries(EVENTS.map(e=>[e.k,[e.t,e.x]]));
+}
+function applyLang(){
+  snapZh();
+  const T=LANG==='zh'?null:I18N[LANG];
+  const g=(tbl,k)=>(T&&T[tbl]&&T[tbl][k])||ZH[{st:'st',cards:'cards',relics:'relics',pots:'pots',enemies:'en',unlocks:'unl',events:'ev'}[tbl]][k];
+  ZH.acts.forEach((a,i)=>ACTS[i]=T?T.acts[i]:a);
+  for(const k in NODE_N)NODE_N[k]=T?T.nodes[k]:ZH.nodes[k];
+  for(const k in TN)TN[k]=T?T.types[k]:ZH.tn[k];
+  for(const k in RN)RN[k]=T?T.rar[k]:ZH.rn[k];
+  for(const k in ST){const v=g('st',k);ST[k].n=v[0];ST[k].d=v[1]}
+  for(const k in CARDS){const v=g('cards',k);CARDS[k].n=v[0];CARDS[k].gu=v[1];CARDS[k].desc=v[2]}
+  for(const k in RELICS){const v=g('relics',k);RELICS[k].n=v[0];RELICS[k].d=v[1]}
+  for(const k in POTS){const v=g('pots',k);POTS[k].n=v[0];POTS[k].d=v[1]}
+  for(const k in EN){const v=g('enemies',k);EN[k].n=v[0];EN[k].d=v[1];for(const mk in EN[k].moves)EN[k].moves[mk].n=(v[2]&&v[2][mk])||ZH.en[k][2][mk]}
+  UNLOCKS.forEach(u=>{const v=g('unlocks',u.k);u.n=v[0];u.d=v[1]});
+  EVENTS.forEach(e=>{const v=g('events',e.k);e.t=v[0];e.x=v[1]});
+  if(B)B.en.forEach(e=>e.n=e.def.n);
+  document.documentElement.lang=LANG==='zh'?'zh-CN':LANG;
+}
+function langButtons(){return `<span class="langs" role="group" aria-label="${L('语言')}">${LANGS.map(([c,l])=>`<button class="tbtn lang ${LANG===c?'on':''}" type="button" data-lang="${c}">${l}</button>`).join('')}</span>`}
+function bindLang(){document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang))}
+function setLang(c){
+  if(c===LANG)return;LANG=c;try{localStorage.setItem('njgs.cards.lang',c)}catch(e){}
+  applyLang();
+  // 只重画不会重新掷骰子的界面；其他界面先换顶栏，下一个界面起全部是新语言
+  if(SCREEN==='title')titleScreen();
+  else if(SCREEN==='map')mapScreen();
+  else if(SCREEN==='battle'&&B){buildBattle();renderBattle()}
+  else if(SCREEN==='shop')shopScreen();
+  else if(SCREEN==='rest')restScreen();
+  else renderBar();
+}
+
+/* ================= 启动 ================= */
+function start(d){
+  applyLang();
+  loadMeta();
+  if(d&&d.R){R=d.R;UID=Math.max(1000,...R.deck.map(c=>c.uid||0));mapScreen();return}
+  titleScreen();
+}
+const hot=window.claude?.hot;
+hot?.snapshot?.(()=>({R:SCREEN==='title'||SCREEN==='end'?null:R}));
+hot?.ready?hot.ready(start):start(hot?.data??{});
+</script>
