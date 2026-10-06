@@ -489,55 +489,55 @@ const EN={
   // ---- 第一幕 瘴林 ----
   boar:{n:'野猪',g:'猪',hp:[40,44],d:'瘴林里最常见的野兽，皮糙肉厚。',moves:{bite:{n:'撕咬',dmg:11},paw:{n:'刨地',buf:{str:3},blk:6},ram:{n:'冲撞',dmg:7,blk:5}},
     ai:e=>e.hist.length?rnd(e,{bite:45,paw:30,ram:25},{bite:2,paw:1,ram:2}):'bite'},
-  wolf:{n:'雷纹狼',g:'狼',hp:[20,24],d:'背生雷纹，成群出没。',moves:{bite:{n:'撕咬',dmg:6},spark:{n:'电光',dmg:4,deb:{vuln:1}}},ai:e=>rnd(e,{bite:60,spark:40},{bite:2,spark:1})},
+  wolf:{n:'雷纹狼',g:'狼',hp:[18,22],d:'背生雷纹，成群出没。',moves:{bite:{n:'撕咬',dmg:6},spark:{n:'电光',dmg:4,deb:{vuln:1}}},ai:e=>rnd(e,{bite:60,spark:40},{bite:2,spark:1})},
   snake:{n:'青竹蛇',g:'蛇',hp:[30,34],d:'藏在竹叶里的毒蛇。',moves:{fang:{n:'毒牙',dmg:5,deb:{bleed:3}},coil:{n:'盘踞',blk:8,buf:{str:2}}},ai:e=>rnd(e,{fang:65,coil:35},{fang:2,coil:1})},
   monkey:{n:'山魈',g:'魈',hp:[12,15],d:'山中精怪，眼如绿玉，成群而动。',moves:{rock:{n:'投石',dmg:5},claw:{n:'抓挠',dmg:3,hits:2},shriek:{n:'尖叫',deb:{weak:1}}},ai:e=>rnd(e,{rock:40,claw:40,shriek:20},{shriek:1})},
 
   patrol:{n:'邻寨蛊师',g:'蛊',hp:[46,50],d:'邻寨的蛊师，独自在山里巡猎。',moves:{blade:{n:'蝶刃',dmg:9},skin:{n:'银甲',blk:11},twin:{n:'双翼斩',dmg:5,hits:2}},ai:e=>rnd(e,{blade:40,skin:25,twin:35},{skin:1})},
   mobei:{n:'寨中恶少·岩猛',g:'岩',hp:[30,32],d:'仗着一身蛮力在寨中横行。',moves:{punch:{n:'重拳',dmg:8},rage:{n:'怒气',buf:{str:2}}},ai:e=>rnd(e,{punch:70,rage:30},{rage:1})},
   chicheng:{n:'土司之子·龙少卿',g:'龙',hp:[26,28],d:'土司的独子，心思阴沉。',moves:{heal:{n:'治疗',healAlly:8},sneak:{n:'阴招',dmg:4,deb:{weak:1}}},ai:e=>alive().some(a=>a!==e&&a.hp<a.max-6)&&e.hist[e.hist.length-1]!=='heal'?'heal':'sneak'},
-  bear:{n:'黑熊',g:'熊',hp:[82,86],elite:1,d:'山中一霸。一掌拍碎青石。',moves:{roar:{n:'咆哮',buf:{str:2},deb:{weak:1}},swipe:{n:'熊掌',dmg:13},double:{n:'连掌',dmg:6,hits:2},charge:{n:'蓄势',blk:10,chg:1},smash:{n:'千钧一掌',dmg:26}},
+  bear:{n:'黑熊',g:'熊',hp:[82,86],elite:1,d:'山中一霸。一掌拍碎青石。',moves:{roar:{n:'咆哮',buf:{str:2},deb:{weak:1}},swipe:{n:'熊掌',dmg:13},double:{n:'连掌',dmg:6,hits:2},charge:{n:'蓄势',blk:10,chg:1},smash:{n:'千钧一掌',dmg:22}},
     ai:e=>{if(!e.hist.length)return 'roar';if(e.hist[e.hist.length-1]==='charge')return 'smash';return rnd(e,{swipe:40,double:30,charge:30},{swipe:2,double:2,charge:1})}},
-  boarKing:{n:'野猪王',g:'王',hp:[88,92],elite:1,d:'獠牙如雪，一身怒鬃。你越防，它越狂。',init:e=>{e.st.bristle=2},moves:{rush:{n:'狂奔',buf:{str:2}},charge:{n:'冲撞',dmg:14},tusk:{n:'獠牙挑刺',dmg:8,deb:{vuln:2}}},
+  boarKing:{n:'野猪王',g:'王',hp:[76,80],elite:1,d:'獠牙如雪，一身怒鬃。你越防，它越狂。',init:e=>{e.st.bristle=1},moves:{rush:{n:'狂奔',buf:{str:2}},charge:{n:'冲撞',dmg:12},tusk:{n:'獠牙挑刺',dmg:8,deb:{vuln:2}}},
     ai:e=>e.hist.length?rnd(e,{charge:60,tusk:40},{charge:2,tusk:1}):'rush'},
-  monkeyKing:{n:'山魈王',g:'魈',hp:[70,74],elite:1,d:'山魈的王，守着一洞猴儿酒。',moves:{boulder:{n:'投掷巨石',dmg:16},beat:{n:'捶胸',bufAll:{str:2}},call:{n:'呼群',sum:['monkey']}},
+  monkeyKing:{n:'山魈王',g:'魈',hp:[70,74],elite:1,d:'山魈的王，守着一洞猴儿酒。',moves:{boulder:{n:'投掷巨石',dmg:13},beat:{n:'捶胸',bufAll:{str:2}},call:{n:'呼群',sum:['monkey']}},
     ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='call'?'call':rnd(e,{boulder:60,beat:40},{beat:1})},
-  thunder:{n:'雷狼王',g:'狼',hp:[220,220],boss:1,d:'瘴林狼群之首。头顶雷冠，电光缠身。',moves:{howl:{n:'狼嚎',sum:['wolf','wolf']},rally:{n:'狼嚎',bufAll:{str:2}},bite:{n:'电噬',dmg:8,hits:2},charge:{n:'蓄雷',blk:12,chg:1},crown:{n:'雷冠',dmg:30,deb:{vuln:2}}},
+  thunder:{n:'雷狼王',g:'狼',hp:[150,150],boss:1,d:'瘴林狼群之首。头顶雷冠，电光缠身。',moves:{howl:{n:'狼嚎',sum:['wolf']},rally:{n:'狼嚎',bufAll:{str:2}},bite:{n:'电噬',dmg:7,hits:2},charge:{n:'蓄雷',blk:12,chg:1},crown:{n:'雷冠',dmg:20,deb:{vuln:1}}},
     ai:e=>{const k=cyc(e,['howl','bite','charge','crown','bite']);return k==='howl'&&alive().length>=3?'rally':k}},
-  bai:{n:'冰蚕蛊师·雪婆',g:'冰',hp:[210,210],boss:1,d:'雪山上下来的蛊师，以冰蚕为本命，冷得像一块万年玄冰。',moves:{icicle:{n:'冰锥',dmg:6,hits:3},soul:{n:'冰蚕吐息',blk:15,add:{hanqi:2}},frost:{n:'霜降',dmg:16,deb:{frail:2}},burst:{n:'冰蚕暴走',buf:{str:4},blk:20}},
+  bai:{n:'冰蚕蛊师·雪婆',g:'冰',hp:[140,140],boss:1,d:'雪山上下来的蛊师，以冰蚕为本命，冷得像一块万年玄冰。',moves:{icicle:{n:'冰锥',dmg:5,hits:3},soul:{n:'冰蚕吐息',blk:15,add:{hanqi:1}},frost:{n:'霜降',dmg:13,deb:{frail:2}},burst:{n:'冰蚕暴走',buf:{str:3},blk:15}},
     ai:e=>cyc(e,['icicle','soul','frost']),hurt(e){if(!e.phase&&e.hp<=e.max/2){e.phase=1;e.mk='burst';e.move=e.def.moves.burst;banner('冰魄爆发')}}},
   // ---- 第二幕 黑水土司城 ----
-  rogue:{n:'山匪',g:'匪',hp:[60,66],d:'在黑水河边劫道的亡命徒。',moves:{blade:{n:'刀光',dmg:13},poison:{n:'毒雾',deb:{bleed:5}},slash:{n:'狠辣',dmg:7,hits:2}},ai:e=>rnd(e,{blade:40,poison:25,slash:35},{poison:1})},
-  duwolf:{n:'瘴狼',g:'狼',hp:[34,38],d:'被驯兽巫驱使的狼，须上带着瘴毒。',moves:{whisker:{n:'毒须',dmg:7,deb:{bleed:2}},pounce:{n:'扑咬',dmg:11}},ai:e=>rnd(e,{whisker:50,pounce:50},{whisker:2,pounce:2})},
-  guard:{n:'土司兵',g:'兵',hp:[44,48],d:'土司城的守卫，结阵而战。',moves:{shield:{n:'结阵',blkAlly:14},spear:{n:'长枪',dmg:13}},ai:e=>rnd(e,{shield:40,spear:60},{shield:1,spear:2})},
-  stoneman:{n:'石傀',g:'石',hp:[78,84],d:'巫师以山石炼成的傀儡。',moves:{fist:{n:'石拳',dmg:16},eat:{n:'吞石',blk:12,buf:{str:2}},quake:{n:'地裂',dmg:10,deb:{frail:1}}},ai:e=>rnd(e,{fist:45,eat:25,quake:30},{eat:1})},
-  maomin:{n:'毛人',g:'毛',hp:[54,58],d:'浑身长毛的异人，传说是《山海经》里毛民的后裔，天生会炼蛊。',moves:{refine:{n:'炼蛊',add:{shang:2}},swarm:{n:'蛊群',dmg:6,hits:2},bless:{n:'加持',bufAll:{str:2}}},ai:e=>rnd(e,{refine:30,swarm:45,bless:25},{refine:1,bless:1})},
-  fox:{n:'山狐',g:'狐',hp:[22,26],d:'在山里修行的狐狸，善迷人心。',moves:{charm:{n:'迷魂',dmg:4,deb:{weak:1}},bite:{n:'撕咬',dmg:8}},ai:e=>rnd(e,{charm:40,bite:60},{charm:1})},
-  ironcatch:{n:'官府捕快',g:'捕',hp:[118,124],elite:1,d:'巡检大人手下的捕快，专拿养蛊之人。',moves:{seize:{n:'锁拿',deb:{weak:2,vuln:2}},fist:{n:'铁拳',dmg:22},armor:{n:'铁布衫',blk:20,buf:{str:2}}},ai:e=>e.hist.length?rnd(e,{fist:55,armor:30,seize:15},{fist:2,armor:1,seize:1}):'seize'},
-  tamer:{n:'驯兽巫',g:'巫',hp:[70,74],elite:1,d:'以巫术驱使狼群的巫师。',moves:{command:{n:'号令',bufAll:{str:3}},call:{n:'唤狼',sum:['duwolf']},lash:{n:'鞭笞',dmg:12}},
+  rogue:{n:'山匪',g:'匪',hp:[46,50],d:'在黑水河边劫道的亡命徒。',moves:{blade:{n:'刀光',dmg:9},poison:{n:'毒雾',deb:{bleed:4}},slash:{n:'狠辣',dmg:6,hits:2}},ai:e=>rnd(e,{blade:40,poison:25,slash:35},{poison:1})},
+  duwolf:{n:'瘴狼',g:'狼',hp:[26,29],d:'被驯兽巫驱使的狼，须上带着瘴毒。',moves:{whisker:{n:'毒须',dmg:6,deb:{bleed:2}},pounce:{n:'扑咬',dmg:8}},ai:e=>rnd(e,{whisker:50,pounce:50},{whisker:2,pounce:2})},
+  guard:{n:'土司兵',g:'兵',hp:[34,37],d:'土司城的守卫，结阵而战。',moves:{shield:{n:'结阵',blkAlly:10},spear:{n:'长枪',dmg:9}},ai:e=>rnd(e,{shield:40,spear:60},{shield:1,spear:2})},
+  stoneman:{n:'石傀',g:'石',hp:[69,74],d:'巫师以山石炼成的傀儡。',moves:{fist:{n:'石拳',dmg:12},eat:{n:'吞石',blk:12,buf:{str:2}},quake:{n:'地裂',dmg:8,deb:{frail:1}}},ai:e=>rnd(e,{fist:45,eat:25,quake:30},{eat:1})},
+  maomin:{n:'毛人',g:'毛',hp:[42,45],d:'浑身长毛的异人，传说是《山海经》里毛民的后裔，天生会炼蛊。',moves:{refine:{n:'炼蛊',add:{shang:1}},swarm:{n:'蛊群',dmg:5,hits:2},bless:{n:'加持',bufAll:{str:1}}},ai:e=>rnd(e,{refine:30,swarm:45,bless:25},{refine:1,bless:1})},
+  fox:{n:'山狐',g:'狐',hp:[16,19],d:'在山里修行的狐狸，善迷人心。',moves:{charm:{n:'迷魂',dmg:3,deb:{weak:1}},bite:{n:'撕咬',dmg:6}},ai:e=>rnd(e,{charm:40,bite:60},{charm:1})},
+  ironcatch:{n:'官府捕快',g:'捕',hp:[104,109],elite:1,d:'巡检大人手下的捕快，专拿养蛊之人。',moves:{seize:{n:'锁拿',deb:{weak:2,vuln:2}},fist:{n:'铁拳',dmg:19},armor:{n:'铁布衫',blk:20,buf:{str:2}}},ai:e=>e.hist.length?rnd(e,{fist:55,armor:30,seize:15},{fist:2,armor:1,seize:1}):'seize'},
+  tamer:{n:'驯兽巫',g:'巫',hp:[62,65],elite:1,d:'以巫术驱使狼群的巫师。',moves:{command:{n:'号令',bufAll:{str:3}},call:{n:'唤狼',sum:['duwolf']},lash:{n:'鞭笞',dmg:10}},
     ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='call'?'call':rnd(e,{command:40,lash:60},{command:1})},
-  xuehun:{n:'血蛊怨魂',g:'魂',hp:[140,146],elite:1,d:'被血蛊吸干的人，死后怨气不散。',moves:{curse:{n:'血咒',deb:{bleed:7}},claw:{n:'血爪',dmg:15},drain:{n:'噬血',dmg:10,heal:10}},ai:e=>rnd(e,{curse:25,claw:45,drain:30},{curse:1,drain:1})},
-  tiexueleng:{n:'巡检大人',g:'巡',hp:[330,330],boss:1,d:'朝廷派来南疆的巡检，誓要剿尽养蛊之人。',moves:{verdict:{n:'断案',deb:{vuln:2,weak:2}},fists:{n:'铁拳连击',dmg:10,hits:3},law:{n:'王法',blk:25,buf:{str:3}},charge:{n:'蓄势',blk:10,chg:1},strike:{n:'雷霆一击',dmg:42}},
+  xuehun:{n:'血蛊怨魂',g:'魂',hp:[110,115],elite:1,d:'被血蛊吸干的人，死后怨气不散。',moves:{curse:{n:'血咒',deb:{bleed:7}},claw:{n:'血爪',dmg:12},drain:{n:'噬血',dmg:8,heal:10}},ai:e=>rnd(e,{curse:25,claw:45,drain:30},{curse:1,drain:1})},
+  tiexueleng:{n:'巡检大人',g:'巡',hp:[230,230],boss:1,d:'朝廷派来南疆的巡检，誓要剿尽养蛊之人。',moves:{verdict:{n:'断案',deb:{vuln:1,weak:1}},fists:{n:'铁拳连击',dmg:8,hits:3},law:{n:'王法',blk:18,buf:{str:2}},charge:{n:'蓄势',blk:10,chg:1},strike:{n:'雷霆一击',dmg:26}},
     ai:e=>cyc(e,['verdict','fists','law','charge','strike','fists'])},
-  langwang:{n:'狼王',g:'狼',hp:[290,290],boss:1,d:'驯兽巫供奉的狼神。一声号令，万狼奔腾。',moves:{summon:{n:'万狼奔腾',sum:['duwolf','duwolf']},bite:{n:'狼王噬',dmg:18},order:{n:'号令',bufAll:{str:3}},pack:{n:'群狼扑杀',dmg:5,hits:4}},
+  langwang:{n:'狼王',g:'狼',hp:[220,220],boss:1,d:'驯兽巫供奉的狼神。一声号令，万狼奔腾。',moves:{summon:{n:'万狼奔腾',sum:['duwolf']},bite:{n:'狼王噬',dmg:15},order:{n:'号令',bufAll:{str:2}},pack:{n:'群狼扑杀',dmg:4,hits:4}},
     ai:e=>{const k=cyc(e,['summon','bite','order','pack']);return k==='summon'&&alive().length>=3?'bite':k}},
   // ---- 第三幕 万蛊窟 ----
-  zhengdao:{n:'青城道士',g:'道',hp:[88,94],d:'受土司之邀入山除蛊的道士。',moves:{sword:{n:'剑气',dmg:15},combo:{n:'合击',dmg:9,hits:2},guard:{n:'护法',blk:18,blkAlly:10}},ai:e=>rnd(e,{sword:40,combo:35,guard:25},{guard:1})},
-  zombie:{n:'走尸',g:'尸',hp:[60,66],d:'赶尸匠赶着的尸身，额上贴着黄符。',moves:{claw:{n:'尸爪',dmg:13},venom:{n:'尸毒',deb:{bleed:6}}},ai:e=>rnd(e,{claw:65,venom:35},{venom:1})},
-  modao:{n:'黑巫',g:'巫',hp:[52,58],d:'在万蛊窟里修黑巫术的人。',moves:{fire:{n:'巫火',dmg:11,deb:{vuln:1}},frenzy:{n:'狂性',buf:{str:3}}},ai:e=>rnd(e,{fire:70,frenzy:30},{frenzy:1})},
-  jianke:{n:'御剑道人',g:'剑',hp:[96,104],d:'一身剑光，出手便是四剑。',moves:{blades:{n:'剑光',dmg:6,hits:4},focus:{n:'凝神',buf:{str:2},blk:10}},ai:e=>rnd(e,{blades:65,focus:35},{focus:1})},
-  wuzhuan:{n:'天师',g:'师',hp:[200,210],elite:1,d:'坐镇除蛊大阵的天师，法力深厚。',moves:{judge:{n:'天罚',deb:{vuln:2,weak:2,frail:2}},light:{n:'正光',dmg:8,hits:3},barrier:{n:'结界',blk:30}},ai:e=>e.hist.length?rnd(e,{light:55,barrier:25,judge:20},{judge:1,barrier:1}):'judge'},
-  jiangwang:{n:'赶尸匠',g:'尸',hp:[110,116],elite:1,d:'摇着铜铃的赶尸人，身后跟着一串走尸。',moves:{raise:{n:'起尸',sum:['zombie']},command:{n:'驱尸',bufAll:{str:3}},corpse:{n:'尸山',dmg:18}},
+  zhengdao:{n:'青城道士',g:'道',hp:[58,63],d:'受土司之邀入山除蛊的道士。',moves:{sword:{n:'剑气',dmg:11},combo:{n:'合击',dmg:6,hits:2},guard:{n:'护法',blk:14,blkAlly:8}},ai:e=>rnd(e,{sword:40,combo:35,guard:25},{guard:1})},
+  zombie:{n:'走尸',g:'尸',hp:[36,40],d:'赶尸匠赶着的尸身，额上贴着黄符。',moves:{claw:{n:'尸爪',dmg:9},venom:{n:'尸毒',deb:{bleed:4}}},ai:e=>rnd(e,{claw:65,venom:35},{venom:1})},
+  modao:{n:'黑巫',g:'巫',hp:[36,40],d:'在万蛊窟里修黑巫术的人。',moves:{fire:{n:'巫火',dmg:8,deb:{vuln:1}},frenzy:{n:'狂性',buf:{str:2}}},ai:e=>rnd(e,{fire:70,frenzy:30},{frenzy:1})},
+  jianke:{n:'御剑道人',g:'剑',hp:[62,68],d:'一身剑光，出手便是四剑。',moves:{blades:{n:'剑光',dmg:3,hits:4},focus:{n:'凝神',buf:{str:1},blk:10}},ai:e=>rnd(e,{blades:65,focus:35},{focus:1})},
+  wuzhuan:{n:'天师',g:'师',hp:[176,185],elite:1,d:'坐镇除蛊大阵的天师，法力深厚。',moves:{judge:{n:'天罚',deb:{vuln:1,weak:1,frail:1}},light:{n:'正光',dmg:7,hits:3},barrier:{n:'结界',blk:30}},ai:e=>e.hist.length?rnd(e,{light:55,barrier:25,judge:20},{judge:1,barrier:1}):'judge'},
+  jiangwang:{n:'赶尸匠',g:'尸',hp:[97,102],elite:1,d:'摇着铜铃的赶尸人，身后跟着一串走尸。',moves:{raise:{n:'起尸',sum:['zombie']},command:{n:'驱尸',bufAll:{str:2}},corpse:{n:'尸山',dmg:15}},
     ai:e=>alive().length<3&&e.hist[e.hist.length-1]!=='raise'?'raise':rnd(e,{command:35,corpse:65},{command:1})},
-  shangyanfei:{n:'土司·龙承恩',g:'龙',hp:[420,420],boss:1,d:'黑水土司，富甲南疆。青崖寨的血案，与他脱不了干系。',moves:{wealth:{n:'重金悬赏',sum:['guard']},gold:{n:'千金一掷',dmg:26},rain:{n:'苗银如雨',dmg:6,hits:5},shield:{n:'金身',blk:30,buf:{str:3}}},
+  shangyanfei:{n:'土司·龙承恩',g:'龙',hp:[300,300],boss:1,d:'黑水土司，富甲南疆。青崖寨的血案，与他脱不了干系。',moves:{wealth:{n:'重金悬赏',sum:['guard']},gold:{n:'千金一掷',dmg:22},rain:{n:'苗银如雨',dmg:5,hits:5},shield:{n:'金身',blk:30,buf:{str:2}}},
     ai:e=>{const k=cyc(e,['wealth','gold','rain','shield']);return k==='wealth'&&alive().length>=3?'gold':k}},
-  mowutian:{n:'黑巫王',g:'巫',hp:[400,400],boss:1,d:'万蛊窟的主人，想夺尽南疆之蛊，炼成蛊母。',moves:{heavenmo:{n:'黑巫降神',buf:{str:4}},demonfire:{n:'巫火焚天',dmg:22},devour:{n:'吞噬',dmg:14,heal:14},inferno:{n:'蛊火燎原',dmg:10,hits:3,add:{shang:1}}},
+  mowutian:{n:'黑巫王',g:'巫',hp:[300,300],boss:1,d:'万蛊窟的主人，想夺尽南疆之蛊，炼成蛊母。',moves:{heavenmo:{n:'黑巫降神',buf:{str:3}},demonfire:{n:'巫火焚天',dmg:19},devour:{n:'吞噬',dmg:12,heal:14},inferno:{n:'蛊火燎原',dmg:8,hits:3,add:{shang:1}}},
     ai:e=>cyc(e,['heavenmo','demonfire','devour','inferno','demonfire'])},
 };
 const GROUPS=[
   {easy:[['boar'],['wolf','wolf'],['snake'],['monkey','monkey']],hard:[['patrol'],['mobei','chicheng'],['wolf','wolf','wolf'],['monkey','monkey','monkey'],['boar','wolf']],elite:[['bear'],['boarKing'],['monkeyKing','monkey']],boss:[['thunder'],['bai']]},
   {easy:[['rogue'],['duwolf','duwolf'],['fox','fox','fox']],hard:[['stoneman'],['maomin','fox'],['guard','guard'],['rogue','duwolf'],['maomin','guard']],elite:[['ironcatch'],['tamer','duwolf'],['xuehun']],boss:[['tiexueleng'],['langwang']]},
-  {easy:[['zhengdao'],['zombie','zombie'],['modao','modao']],hard:[['jianke'],['zhengdao','modao'],['zombie','zombie','modao'],['jianke','zombie']],elite:[['wuzhuan'],['jiangwang','zombie'],['zhengdao','zhengdao','zhengdao']],boss:[['shangyanfei'],['mowutian']]},
+  {easy:[['zhengdao'],['zombie','zombie'],['modao','modao']],hard:[['jianke'],['zhengdao','modao'],['zombie','modao'],['jianke','zombie']],elite:[['wuzhuan'],['jiangwang','zombie'],['zhengdao','zhengdao','zhengdao']],boss:[['shangyanfei'],['mowutian']]},
 ];
 const BOSS_RELIC_OF={bai:'bingpo',thunder:'leiguan',tiexueleng:'jinling',langwang:'langxin',shangyanfei:'jinling',mowutian:'xuehai'};
 
@@ -576,7 +576,7 @@ function addPotion(k){const i=R.pots.indexOf(null);if(i<0)return false;R.pots[i]
 
 function newRun(){
   UID=0;
-  R={hp:70,maxHp:70,gold:99,act:0,floor:0,deck:[],relics:['chunqiu'],pots:[null,null,null],map:null,pos:null,pending:null,cicada:1,removals:0,stats:{kills:0,elites:0,bosses:0,floors:0},seen:[],bossKey:null,jiunang:0};
+  R={hp:80,maxHp:80,gold:99,act:0,floor:0,deck:[],relics:['chunqiu'],pots:[null,null,null],map:null,pos:null,pending:null,cicada:1,removals:0,stats:{kills:0,elites:0,bosses:0,floors:0},seen:[],bossKey:null,jiunang:0};
   for(let i=0;i<5;i++)R.deck.push(mkCard('yuedao'));
   for(let i=0;i<4;i++)R.deck.push(mkCard('yupi'));
   R.deck.push(mkCard('jiuchong'));
@@ -973,6 +973,20 @@ function autoPick(){
   }
   return best;
 }
+// 自动战斗用药：危急时回血/挡伤，首领与强敌开场用攻势药，囊袋满了也先用掉一个
+function autoPotion(){
+  if(!R.pots.some(Boolean))return false;
+  const hpPct=R.hp/R.maxHp,need=Math.max(0,alive().reduce((a,e)=>a+incE(e),0)-B.p.block);
+  const big=B.kind==='boss'||B.kind==='elite',full=R.pots.every(Boolean);
+  const want=k=>{
+    if(k==='leaf')return hpPct<.4;
+    if(k==='jade')return need>=R.hp*.5||(big&&need>=15);
+    return (big||full)&&B.turn<=2;
+  };
+  const i=R.pots.findIndex(k=>k&&want(k));
+  if(i<0)return false;
+  usePotion(i);return true;
+}
 const sleep=ms=>SPEED?new Promise(r=>setTimeout(r,ms)):Promise.resolve();
 async function autoRun(){
   if(autoRunning)return;
@@ -982,6 +996,7 @@ async function autoRun(){
       if(B.busy){await sleep(150);continue}
       await sleep(450);
       if(!autoOn()||SCREEN!=='battle'||B.over||B.busy)continue;
+      if(autoPotion())continue;
       const p=autoPick();
       if(p){
         const t=CARDS[p.c.key].tgt?(p.t||alive().slice().sort((a,b)=>a.hp-b.hp)[0]):alive()[0];
